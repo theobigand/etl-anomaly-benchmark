@@ -6170,6 +6170,226 @@
    "stratum": "C2b",
    "system": "wa_ecology_mandatory_ghg_reporting",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "seattle_fire_911_dispatch",
+   "id": "seattle_fire_911_calls",
+   "licence_class": "open",
+   "protocols": "P-SEQ",
+   "publisher": "city_of_seattle_fire",
+   "reason": "Seattle Fire Department 911 dispatch stream, calendar year 2023: 125,678 dispatched incidents with type and minute-resolution local timestamp, grouped into per-day chronological dispatch sequences (365 days); addresses and coordinates dropped, incident number hashed; each incident is one dispatch record, so the sequence is the daily dispatch stream, not a per-incident lifecycle",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata for kzjm-xkqj read 2026-11-23: licenseId PUBLIC_DOMAIN (Public Domain), attribution City of Seattle, provenance official",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "seattle_fire_department_911_dispatch",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "france_baac_road_accidents",
+   "id": "france_baac_road_accidents",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "french_interior_ministry_onisr",
+   "reason": "French BAAC injury-accident bulletins of calendar year 2024 (police and gendarmerie reports compiled by the national road-safety observatory): four related tables, 54,402 accidents, 70,248 place rows, 92,678 vehicles and 125,187 road users, keys verified (accident id on all tables, vehicle id between users and vehicles); same police-reported road-injury mechanism as the British STATS19 group but a separate national collection system and producer",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "data.gouv.fr dataset metadata read 2026-11-23: license fr-lo (Licence Ouverte), organization Ministere de l'interieur, dataset 'Bases de donnees annuelles des accidents corporels de la circulation routiere - Annees de 2005 a 2025'",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "french_police_gendarmerie_baac_injury_accident_reports",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "mitre_attack_knowledge_base",
+   "id": "mitre_attack_enterprise_stix",
+   "licence_class": "open",
+   "protocols": "P-NEST",
+   "publisher": "mitre_corporation",
+   "reason": "MITRE ATT&CK Enterprise STIX 2.1 bundle, release v20.1 (one pinned collection): heterogeneous STIX domain objects (techniques, sub-techniques, groups, software, campaigns, mitigations, data components, relationships) with nested external_references, kill_chain_phases, x_mitre_* arrays and optional fields; the Mobile and ICS collections are not acquired because they are the same curation system",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "LICENSE.txt of mitre-attack/attack-stix-data at tag v20.1 read 2026-11-23: MITRE grants a non-exclusive, royalty-free licence to use ATT&CK for research, development and commercial purposes; any copy must reproduce MITRE's copyright designation and the licence (not CC BY)",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "mitre_attack_enterprise_curated_stix_knowledge_base",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "seattle_sdci_building_permits",
+   "id": "seattle_building_permits",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "city_of_seattle_sdci",
+   "reason": "Seattle building permits applied for in calendar year 2023: 5,603 permit rows of 27 kept columns (class, type, status, housing units, estimated cost, review-cycle days, zoning), columns more than 50 percent empty (7) dropped; construction permitting workflow with applied, issued and completed dates",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata read 2026-11-23: license PUBLIC_DOMAIN (Public Domain), attribution City of Seattle, Seattle Department of Construction and Inspections",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "seattle_sdci_permit_tracking_system",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "delaware_dnrec_well_permits",
+   "id": "delaware_well_permits",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "delaware_dnrec",
+   "reason": "Delaware water well permits with an application received in 2018 to 2022: 20,123 permit rows of 57 kept columns (well type, status, capacity, depths, construction dates, materials, watershed flags), columns more than 50 percent empty (8) dropped; groundwater well permitting records",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata read 2026-11-23: license PUBLIC_DOMAIN (Public Domain), attribution Department of Natural Resources and Environmental Control, Division of Water, State of Delaware",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "delaware_dnrec_water_well_permitting",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "city_of_austin_campaign_finance",
+   "id": "austin_campaign_finance",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "city_of_austin_clerk",
+   "reason": "City of Austin campaign finance transactions dated in calendar year 2022: 3,654 transaction rows of 27 kept columns (transaction type, entity type, amount, dates, form, report and election type, office), contributions, expenditures, loans and pledges",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata read 2026-11-23: license PUBLIC_DOMAIN (Public Domain), attribution City of Austin, Texas - data.austintexas.gov (City Clerk campaign finance reports)",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "city_of_austin_campaign_finance_filing",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "delaware_state_purchasing_cards",
+   "id": "delaware_state_credit_cards",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "state_of_delaware_finance",
+   "reason": "State of Delaware purchasing-card (credit card) transactions of fiscal year 2023: 188,670 transaction rows of 8 columns (fiscal period, department, division, merchant category, transaction date, amount)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata read 2026-11-23: license PUBLIC_DOMAIN (Public Domain), attribution State of Delaware, Department of Finance, Division of Accounting",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "delaware_state_purchasing_card_ledger",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "montgomery_county_liquor_control_sales",
+   "id": "montgomery_dlc_sales",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "montgomery_county_md",
+   "reason": "Montgomery County (Maryland) Department of Liquor Control warehouse and retail sales of calendar year 2019: 138,638 item-month rows of 9 columns (supplier, item code, item type, retail sales, retail transfers, warehouse sales)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata read 2026-11-23: license PUBLIC_DOMAIN (Public Domain), attribution Montgomery County, MD (Department of Liquor Control)",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "montgomery_county_dlc_warehouse_retail_sales",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "fta_national_transit_database",
+   "id": "fta_ntd_monthly_ridership",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "us_fta",
+   "reason": "FTA National Transit Database monthly ridership module, months from January 2022: 74,173 agency-mode-month rows of 16 kept columns (agency, mode, type of service, urbanized area, unlinked passenger trips, vehicles operated in maximum service, revenue hours and miles)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata read 2026-11-23: license USGOV_WORKS (Public Domain U.S. Government), attribution Federal Transit Administration, National Transit Database (monthly module)",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "fta_national_transit_database_monthly_reporting",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "bloomington_utilities_water_plant",
+   "id": "bloomington_water_plant_energy",
+   "licence_class": "open",
+   "protocols": "P-TS",
+   "publisher": "city_of_bloomington_utilities",
+   "reason": "City of Bloomington Utilities Monroe Water Treatment Plant daily table, 6,109 days from 2010-01-01: grid electricity (kWh and peak kW on two meters), billed and total kWh, on-site solar kWh, finished and raw water volumes in million gallons; a drinking-water plant energy and throughput mechanism absent from the other time-series groups",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata read 2026-11-23: license PDDL (Open Data Commons Public Domain Dedication and License), attribution City of Bloomington Utilities",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "bloomington_monroe_water_treatment_plant_daily_meters",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "bloomington_locus_solar_monitoring",
+   "id": "bloomington_solar_sites",
+   "licence_class": "open",
+   "protocols": "P-TS",
+   "publisher": "locus_energy_bloomington",
+   "reason": "Daily generation of the City of Bloomington solar installations monitored by Locus Energy, 91,437 site-day rows (power minimum, maximum and average, energy generated and expected energy); photovoltaic monitoring panel with a modelled expectation next to the measurement",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata read 2026-11-23: license PDDL (Open Data Commons Public Domain Dedication and License), attribution Locus Energy (City of Bloomington solar installations)",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "locus_energy_pv_monitoring_bloomington_sites",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

@@ -1098,6 +1098,9 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _sea_ice_snapshot(root)
     _omni_snapshot(root)
     _socrata_snapshots(root)
+    _seattle_fire_911_snapshot(root)
+    _baac_snapshot(root)
+    _attack_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1113,7 +1116,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "zen_florida_bridges", "wri_power_plants", "paris_urban_trees", "zen_moodle_events", "zen_norp_solar_bursts", "zen_blazar_flares", "zen_wind_fragility", "zen_terralore_chronicle", "ncei_storm_events_2024", "ourairports_db", "cftc_cot_disaggregated", "ndbc_buoys_2023", "zen_daylight_events", "cpsc_recalls", "nih_reporter_projects_fy2024", "ecb_fx_reference_rates", "seattle_fremont_bridge", "nsidc_sea_ice_index", "nasa_omni_solar_wind", "sffd_fire_incidents", "colorado_storage_tanks", "colorado_dam_safety", "wa_ev_population", "tx_hhsc_child_care", "austin_water_quality", "wa_ghg_reporting", "sfo_air_traffic", "tx_hotel_occupancy_tax", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "zen_florida_bridges", "wri_power_plants", "paris_urban_trees", "zen_moodle_events", "zen_norp_solar_bursts", "zen_blazar_flares", "zen_wind_fragility", "zen_terralore_chronicle", "ncei_storm_events_2024", "ourairports_db", "cftc_cot_disaggregated", "ndbc_buoys_2023", "zen_daylight_events", "cpsc_recalls", "nih_reporter_projects_fy2024", "ecb_fx_reference_rates", "seattle_fremont_bridge", "nsidc_sea_ice_index", "nasa_omni_solar_wind", "sffd_fire_incidents", "colorado_storage_tanks", "colorado_dam_safety", "wa_ev_population", "tx_hhsc_child_care", "austin_water_quality", "wa_ghg_reporting", "sfo_air_traffic", "tx_hotel_occupancy_tax", "seattle_building_permits", "delaware_well_permits", "austin_campaign_finance", "delaware_state_credit_cards", "montgomery_dlc_sales", "fta_ntd_monthly_ridership", "bloomington_water_plant_energy", "bloomington_solar_sites", "seattle_fire_911_calls", "france_baac_road_accidents", "mitre_attack_enterprise_stix", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -10144,3 +10147,282 @@ def test_socrata_builder_writes_the_documented_view_and_manifest(view, tmp_path)
         assert entry["sampling"][f"last_{window}"] == "2023-05-06 07:08:09"
     else:
         assert not any(k.startswith("first_") for k in entry["sampling"])
+
+
+def _seattle_fire_911_snapshot(root):
+    raw = root / "seattle_fire_911_calls" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "fire_911_2023.csv").write_text(
+        "\n".join(
+            [
+                '"type","datetime","incident_number"',
+                '"Medic Response","2023-01-02T00:05:00.000","F230000003"',
+                '"Aid Response","2023-01-01T23:59:00.000","F230000002"',
+                '"Aid Response","2023-01-01T23:59:00.000","F230000001"',
+                '"Dup","2023-01-01T23:59:00.000","F230000001"',
+                '"No time","","F230000009"',
+                '"Bad time","soon","F230000008"',
+                '"","2023-01-02T01:00:00.000","F230000004"',
+            ]
+        )
+        + "\n"
+    )
+
+
+def test_seattle_fire_911_view_orders_keys_by_day_and_hashes_the_incident(tmp_path):
+    raw = pd.read_csv(
+        io.StringIO(
+            "type,datetime,incident_number\n"
+            "B,2023-01-02T00:05:00.000,F3\n"
+            "A,2023-01-01T23:59:00.000,F2\n"
+            "A,2023-01-01T23:59:00.000,F1\n"
+            "Z,2023-01-01T23:59:00.000,F1\n"
+            "N,,F9\n"
+            "T,soon,F8\n"
+            ",2023-01-02T01:00:00.000,F4\n"
+        ),
+        dtype=str,
+        keep_default_na=False,
+    )
+    view = ev.seattle_fire_911_view(raw)
+    assert view.columns.tolist() == ["event_date", "time", "type", "incident"]
+    assert view["incident"].tolist() == [ev.pseudonym(k) for k in ["F1", "F2", "F3", "F4"]][:2] + [
+        ev.pseudonym("F3"),
+        ev.pseudonym("F4"),
+    ]
+    assert view["event_date"].tolist() == ["2023-01-01", "2023-01-01", "2023-01-02", "2023-01-02"]
+    assert view["time"].tolist() == [
+        "2023-01-01 23:59:00",
+        "2023-01-01 23:59:00",
+        "2023-01-02 00:05:00",
+        "2023-01-02 01:00:00",
+    ]
+    assert view["type"].iloc[:3].tolist() == ["A", "A", "B"] and pd.isna(view["type"].iloc[3])
+    assert view.index.tolist() == [0, 1, 2, 3]
+
+
+def test_seattle_fire_911_builder_writes_the_view_and_manifest(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Seattle fire 911 file in the snapshot$"):
+        ev._build_seattle_fire_911(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _seattle_fire_911_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_seattle_fire_911(root, out, manifest)
+    ev._build_seattle_fire_911(root, out, manifest)
+    df = pd.read_csv(out / "seattle_fire_911_calls" / "events.csv")
+    assert df["event_date"].tolist() == ["2023-01-01", "2023-01-01", "2023-01-02", "2023-01-02"]
+    entry = manifest["seattle_fire_911_calls"]
+    assert entry["files"]["events.csv"]["rows"] == 4
+    assert entry["dropped"] == ["address", "latitude", "longitude", "report_location", "regions"]
+    assert entry["pseudonymised"] == ["incident_number"] and entry["salt_label"] == ev.SALT
+    assert entry["sampling"] == {
+        "method": "dispatches of calendar year 2023 ordered by time and incident number",
+        "days": 2,
+        "first_time": "2023-01-01 23:59:00",
+        "last_time": "2023-01-02 01:00:00",
+    }
+    assert entry["source_snapshot"] == f"seattle_fire_911_calls/{ev.WAVE28_SNAPSHOT}"
+
+
+def _baac_tables():
+    def table(text):
+        return pd.read_csv(io.StringIO(text), sep=";", dtype=str, keep_default_na=False)
+
+    return {
+        "caracteristiques": table(
+            "Num_Acc;jour;mois;an;hrmn;lum;dep;com;agg;int;atm;col;adr;lat;long\n"
+            "A1;01;02;2024;07:40;2;70;70285;1;1;5;1;D438;47,5;6,7\n"
+            "A2;03;02;2024;08:00;1;21;21054;2;3;7;6;RUE;47,0;4,8\n"
+            "A3;04;02;2024;09:00;1;21;21054;2;3;7;6;RUE;47,0;4,8\n"
+        ),
+        "lieux": table(
+            "Num_Acc;catr;voie;v1;v2;circ;nbv;vosp;prof;pr;pr1;plan;lartpc;larrout;surf;infra;situ;vma\n"
+            "A1;3;D438;0;N/A;2;2;0;1;1;260;2;;7;1;0;1;90\n"
+            "A1;3;D439;0;N/A;2;2;0;1;1;260;2;;7;1;0;1;90\n"
+            "A2;4;RUE;0;N/A;2;2;0;1; -1; -1;1;; -1;9;0;1;30\n"
+            "A9;4;RUE;0;N/A;2;2;0;1; -1; -1;1;; -1;9;0;1;30\n"
+        ),
+        "vehicules": table(
+            "Num_Acc;id_vehicule;num_veh;senc;catv;obs;obsm;choc;manv;motor;occutc\n"
+            "A1;V1;A01;1;7;0;2;1;13;1;\n"
+            "A1;V2;B01;2;14;0;2;2;21;1;\n"
+            "A2;V3;A01;1;7;0;2;1;13;1;\n"
+            "A2;V4;A01;1;7;0;2;1;13;1;\n"
+        ),
+        "usagers": table(
+            "Num_Acc;id_usager;id_vehicule;num_veh;place;catu;grav;sexe;an_nais;trajet;secu1;secu2;secu3;locp;actp;etatp\n"
+            "A1;U1;V1;A01;1;1;3;1;2003;2;1; -1; -1; -1; -1; -1\n"
+            "A1;U2;V2;B01;1;1;1;1;1997;4;1; -1; -1; -1; -1; -1\n"
+            "A2;U3;V9;C01;1;3;4;2;1980;0;0; -1; -1;1;1;1\n"
+            "A2;U4;;;1;3;4;2;1980;0;0; -1; -1;1;1;1\n"
+            "A8;U5;V1;A01;1;1;4;2;1980;0;0; -1; -1;1;1;1\n"
+        ),
+    }
+
+
+def test_baac_view_keeps_the_published_rows_and_reports_every_key_fact():
+    views, relations, facts = ev.baac_view(_baac_tables())
+    assert list(views) == ["caracteristiques", "lieux", "vehicules", "usagers"]
+    assert views["caracteristiques"].columns.tolist() == [
+        "Num_Acc", "jour", "mois", "an", "hrmn", "lum", "dep", "com", "agg", "int", "atm", "col",
+    ]  # fmt: skip
+    assert views["lieux"].columns.tolist() == [
+        "Num_Acc", "catr", "v1", "v2", "circ", "nbv", "vosp", "prof", "plan", "lartpc",
+        "larrout", "surf", "infra", "situ", "vma",
+    ]  # fmt: skip
+    assert views["vehicules"].columns.tolist() == list(_baac_tables()["vehicules"].columns)
+    assert views["usagers"].columns.tolist() == [
+        "Num_Acc", "id_usager", "id_vehicule", "num_veh", "place", "catu", "grav", "sexe",
+        "trajet", "secu1", "secu2", "secu3", "locp", "actp", "etatp",
+    ]  # fmt: skip
+    assert views["lieux"]["Num_Acc"].tolist() == ["A1", "A1", "A2", "A9"]  # published order
+    assert views["usagers"]["secu2"].iloc[0] == " -1"  # the coded missing value is kept
+    by_pair = {(r["child"], r["parent"]): r for r in relations}
+    assert len(relations) == 4
+    lieux = by_pair[("lieux.Num_Acc", "caracteristiques.Num_Acc")]
+    assert (lieux["checked"], lieux["orphans"]) == (4, 1)
+    assert by_pair[("vehicules.Num_Acc", "caracteristiques.Num_Acc")]["orphans"] == 0
+    assert by_pair[("usagers.Num_Acc", "caracteristiques.Num_Acc")]["orphans"] == 1
+    vehicle = by_pair[("usagers.id_vehicule", "vehicules.id_vehicule")]
+    assert (vehicle["checked"], vehicle["orphans"]) == (4, 1)  # a blank id is missing, not dangling
+    assert facts == {
+        "usagers_num_veh_without_vehicle": 2,  # (A2, C01) and (A8, A01); blank num_veh is missing
+        "usagers_num_veh_checked": 4,
+        "vehicules_duplicate_num_veh": 1,
+        "max_rows_per_accident": {"lieux": 2, "vehicules": 2, "usagers": 2},
+        "accidents_without_child": {"lieux": 1, "vehicules": 1, "usagers": 1},
+    }
+
+
+def _baac_snapshot(root):
+    raw = root / "france_baac_road_accidents" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    names = {
+        "caracteristiques": "caract-2024.csv",
+        "lieux": "lieux-2024.csv",
+        "vehicules": "vehicules-2024.csv",
+        "usagers": "usagers-2024.csv",
+    }
+    for name, frame in _baac_tables().items():
+        frame.to_csv(raw / names[name], sep=";", index=False)
+
+
+def test_baac_builder_writes_four_tables_and_the_relation_facts(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^missing BAAC tables in the snapshot$"):
+        ev._build_baac(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _baac_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_baac(root, out, manifest)
+    ev._build_baac(root, out, manifest)
+    entry = manifest["france_baac_road_accidents"]
+    assert {n: f["rows"] for n, f in entry["files"].items()} == {
+        "caracteristiques.csv": 3,
+        "lieux.csv": 4,
+        "vehicules.csv": 4,
+        "usagers.csv": 5,
+    }
+    written = pd.read_csv(out / "france_baac_road_accidents" / "usagers.csv", sep=",", dtype=str)
+    assert written["Num_Acc"].tolist() == ["A1", "A1", "A2", "A2", "A8"]
+    assert entry["dropped"] == ev.BAAC_DROPPED and entry["pseudonymised"] == []
+    assert len(entry["relations"]) == 4
+    assert entry["sampling"]["method"] == (
+        "complete 2024 annual release of the four BAAC tables, no row sampling"
+    )
+    assert entry["sampling"]["usagers_num_veh_without_vehicle"] == 2
+    assert entry["source_snapshot"] == f"france_baac_road_accidents/{ev.WAVE28_SNAPSHOT}"
+
+
+def _attack_bundle():
+    return {
+        "type": "bundle",
+        "id": "bundle--x",
+        "objects": [
+            {
+                "type": "relationship",
+                "id": "relationship--b",
+                "relationship_type": "uses",
+                "source_ref": "intrusion-set--a",
+                "target_ref": "attack-pattern--c",
+            },
+            {
+                "type": "attack-pattern",
+                "id": "attack-pattern--c",
+                "name": "T1",
+                "kill_chain_phases": [{"kill_chain_name": "mitre-attack", "phase_name": "x"}],
+                "external_references": [{"source_name": "mitre-attack", "external_id": "T1"}],
+                "x_mitre_contributors": ["Someone"],
+            },
+            {
+                "type": "intrusion-set",
+                "id": "intrusion-set--a",
+                "name": "G1",
+                "x_mitre_contributors": ["Another"],
+                "aliases": ["G1", "Group"],
+            },
+            {"type": "intrusion-set", "id": "intrusion-set--a", "name": "repeated"},
+        ],
+    }
+
+
+def test_attack_stix_view_orders_by_id_drops_contributor_names_and_keeps_the_nesting():
+    view, repeated = ev.attack_stix_view(_attack_bundle())
+    assert [r["id"] for r in view] == [
+        "attack-pattern--c",
+        "intrusion-set--a",
+        "relationship--b",
+    ]
+    assert repeated == 1
+    assert view[0] == {
+        "type": "attack-pattern",
+        "id": "attack-pattern--c",
+        "name": "T1",
+        "kill_chain_phases": [{"kill_chain_name": "mitre-attack", "phase_name": "x"}],
+        "external_references": [{"source_name": "mitre-attack", "external_id": "T1"}],
+    }
+    assert view[1]["aliases"] == ["G1", "Group"] and view[1]["name"] == "G1"  # first one kept
+    assert "x_mitre_contributors" not in view[1]
+    with pytest.raises(ev.ViewError, match=r"^not a STIX bundle$"):
+        ev.attack_stix_view({"type": "indicator", "objects": []})
+    with pytest.raises(ev.ViewError, match=r"^not a STIX bundle$"):
+        ev.attack_stix_view({"type": "bundle"})
+
+
+def _attack_snapshot(root):
+    raw = root / "mitre_attack_enterprise_stix" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "enterprise-attack-20.1.json").write_text(json.dumps(_attack_bundle()))
+    (raw / "LICENSE.txt").write_text("The licence text\n")
+
+
+def test_attack_stix_builder_writes_jsonl_notice_and_manifest(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no ATT&CK STIX bundle or licence in the snapshot$"):
+        ev._build_attack_stix(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _attack_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_attack_stix(root, out, manifest)
+    ev._build_attack_stix(root, out, manifest)
+    folder = out / "mitre_attack_enterprise_stix"
+    lines = (folder / "objects.jsonl").read_text().splitlines()
+    assert [json.loads(line)["id"] for line in lines] == [
+        "attack-pattern--c",
+        "intrusion-set--a",
+        "relationship--b",
+    ]
+    notice = (folder / "NOTICE.txt").read_text()
+    assert notice == ev.ATTACK_NOTICE + "\n\nThe licence text\n"
+    assert "The MITRE Corporation" in ev.ATTACK_NOTICE
+    entry = manifest["mitre_attack_enterprise_stix"]
+    assert entry["files"]["objects.jsonl"]["rows"] == 3
+    assert entry["dropped"] == ["x_mitre_contributors"] and entry["pseudonymised"] == []
+    assert entry["sampling"] == {
+        "method": "complete Enterprise STIX 2.1 bundle of ATT&CK release v20.1",
+        "release": "v20.1",
+        "repeated_ids": 1,
+        "object_types": {"attack-pattern": 1, "intrusion-set": 1, "relationship": 1},
+    }
+    assert entry["source_snapshot"] == f"mitre_attack_enterprise_stix/{ev.WAVE28_SNAPSHOT}"

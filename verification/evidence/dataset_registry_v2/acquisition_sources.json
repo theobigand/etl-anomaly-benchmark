@@ -11392,6 +11392,334 @@
    "stratum": "C2b",
    "upstream": "first party: Ecology collects the mandatory greenhouse gas reports",
    "upstream_verified": true
+  },
+  {
+   "attribution": "City of Seattle, Seattle Fire Department, Seattle Real Time Fire 911 Calls (data.seattle.gov dataset kzjm-xkqj, Public Domain); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "fire_911_2023.csv",
+     "observed": "2023-01-01 to 2023-12-31",
+     "url": "https://data.seattle.gov/resource/kzjm-xkqj.csv?%24where=datetime%20between%20%272023-01-01T00%3A00%3A00%27%20and%20%272023-12-31T23%3A59%3A59%27&%24order=datetime%2Cincident_number&%24limit=200000&%24select=type%2Cdatetime%2Cincident_number"
+    }
+   ],
+   "hosts": [
+    "data.seattle.gov"
+   ],
+   "id": "seattle_fire_911_calls",
+   "licence_class": "open",
+   "licence_location": "https://data.seattle.gov/api/views/kzjm-xkqj.json",
+   "licence_text": "Socrata view metadata for dataset kzjm-xkqj (read 2026-11-23): license 'Public Domain' (PUBLIC_DOMAIN); publisher City of Seattle; provenance official; description 'Seattle Fire Department 911 dispatches. Updated every 5 minutes.'",
+   "max_bytes": 16777216,
+   "method": "one export of the dispatches of calendar year 2023 ordered by time and incident number; address, coordinate and region columns are not requested",
+   "min_interval": 1.0,
+   "privacy": "dispatch type and time only; street addresses and coordinates are not downloaded, the incident number is hashed in the view; no personal names",
+   "publisher": "City of Seattle (Seattle Fire Department)",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Public Domain per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "first party: the Seattle Fire Department dispatch system records each response and the City publishes it through its open data portal",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Ministere de l'Interieur (ONISR), Bases de donnees annuelles des accidents corporels de la circulation routiere, annee 2024, via data.gouv.fr (Licence Ouverte); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "caract-2024.csv",
+     "observed": "calendar year 2024",
+     "url": "https://static.data.gouv.fr/resources/bases-de-donnees-annuelles-des-accidents-corporels-de-la-circulation-routiere-annees-de-2005-a-2024/20251021-115900/caract-2024.csv"
+    },
+    {
+     "name": "lieux-2024.csv",
+     "observed": "calendar year 2024",
+     "url": "https://static.data.gouv.fr/resources/bases-de-donnees-annuelles-des-accidents-corporels-de-la-circulation-routiere-annees-de-2005-a-2024/20251021-115812/lieux-2024.csv"
+    },
+    {
+     "name": "vehicules-2024.csv",
+     "observed": "calendar year 2024",
+     "url": "https://static.data.gouv.fr/resources/bases-de-donnees-annuelles-des-accidents-corporels-de-la-circulation-routiere-annees-de-2005-a-2024/20251107-100240/vehicules-2024.csv"
+    },
+    {
+     "name": "usagers-2024.csv",
+     "observed": "calendar year 2024",
+     "url": "https://static.data.gouv.fr/resources/bases-de-donnees-annuelles-des-accidents-corporels-de-la-circulation-routiere-annees-de-2005-a-2024/20251021-115506/usagers-2024.csv"
+    }
+   ],
+   "hosts": [
+    "static.data.gouv.fr"
+   ],
+   "id": "france_baac_road_accidents",
+   "licence_class": "open",
+   "licence_location": "https://www.data.gouv.fr/api/1/datasets/bases-de-donnees-annuelles-des-accidents-corporels-de-la-circulation-routiere-annees-de-2005-a-2025/",
+   "licence_text": "data.gouv.fr dataset metadata (read 2026-11-23): license fr-lo (Licence Ouverte / Open Licence), producer organization Ministere de l'interieur; four annual tables (Caracteristiques, Lieux, Vehicules, Usagers) per year",
+   "max_bytes": 33554432,
+   "method": "the four published 2024 annual tables, downloaded complete",
+   "min_interval": 1.0,
+   "privacy": "injury-accident bulletins without names; street addresses, coordinates, street names, kilometre markers and users' birth years are dropped in the view; accident, vehicle and road-user ids are published row ids",
+   "publisher": "Ministere de l'Interieur (Observatoire national interministeriel de la securite routiere)",
+   "rate_limit": "four requests with a descriptive User-Agent",
+   "redistribution": "Licence Ouverte per the publisher metadata; attribution required; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: police and gendarmerie units fill an accident bulletin (BAAC) for every injury accident; the Ministry of the Interior compiles and publishes the national files",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "(c) 2026 The MITRE Corporation. This work is reproduced and distributed with the permission of The MITRE Corporation. ATT&CK Enterprise STIX bundle v20.1 (mitre-attack/attack-stix-data); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "enterprise-attack-20.1.json",
+     "observed": "ATT&CK release v20.1",
+     "url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/v20.1/enterprise-attack/enterprise-attack-20.1.json"
+    },
+    {
+     "name": "LICENSE.txt",
+     "observed": "tag v20.1",
+     "url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/v20.1/LICENSE.txt"
+    }
+   ],
+   "hosts": [
+    "raw.githubusercontent.com"
+   ],
+   "id": "mitre_attack_enterprise_stix",
+   "licence_class": "open",
+   "licence_location": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/v20.1/LICENSE.txt",
+   "licence_text": "MITRE ATT&CK licence (LICENSE.txt at tag v20.1, read 2026-11-23): 'The MITRE Corporation (MITRE) hereby grants you a non-exclusive, royalty-free license to use ATT&CK for research, development, and commercial purposes. Any copy you make for such purposes is authorized provided that you reproduce MITRE's copyright designation and this license in any such copy.' Copyright designation: '(c) 2026 The MITRE Corporation. This work is reproduced and distributed with the permission of The MITRE Corporation.'",
+   "max_bytes": 67108864,
+   "method": "one pinned release file of the Enterprise STIX 2.1 bundle plus its licence file, downloaded complete",
+   "min_interval": 1.0,
+   "privacy": "public threat-intelligence knowledge base; no personal data beyond MITRE contributor display names",
+   "publisher": "The MITRE Corporation (ATT&CK)",
+   "rate_limit": "two requests with a descriptive User-Agent",
+   "redistribution": "MITRE ATT&CK licence: copies must reproduce the copyright designation and the licence; the view directory carries a NOTICE with both",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party: MITRE curates the knowledge base and publishes the STIX data on GitHub",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "City of Seattle, Seattle Department of Construction and Inspections (cos-data.seattle.gov dataset 76t5-zqzr, Public Domain); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "permits_2023.csv",
+     "observed": "permits applied for in 2023",
+     "url": "https://cos-data.seattle.gov/resource/76t5-zqzr.csv?%24where=applieddate+between+%272023-01-01T00%3A00%3A00%27+and+%272023-12-31T23%3A59%3A59%27&%24order=permitnum&%24limit=60000&%24select=permitnum%2Cpermitclass%2Cpermitclassmapped%2Cpermittypemapped%2Cpermittypedesc%2Cdescription%2Chousingunits%2Chousingunitsremoved%2Chousingunitsadded%2Cestprojectcost%2Capplieddate%2Cissueddate%2Cexpiresdate%2Ccompleteddate%2Cstatuscurrent%2Crelatedmup%2Coriginaladdress1%2Coriginalcity%2Coriginalstate%2Coriginalzip%2Ccontractorcompanyname%2Clink%2Clatitude%2Clongitude%2Clocation1%2Ctotaldaysplanreview%2Cdaysinitialplanreview%2Cdaysplanreviewcity%2Cdaysoutcorrections%2Cnumberreviewcycles%2Cinitialreviewcompletedate%2Cplanreviewcompletedate%2Cdaysissuepermitcity%2Creadytoissuedate%2Czoning%2Cdwellingunittype%2Cstandardplan%2Cdependentbuilding%2Cparentpermitnum%2Chousingcategory%2Cdevelopment_site"
+    }
+   ],
+   "hosts": [
+    "cos-data.seattle.gov"
+   ],
+   "id": "seattle_building_permits",
+   "licence_class": "open",
+   "licence_location": "https://cos-data.seattle.gov/api/views/76t5-zqzr.json",
+   "licence_text": "Socrata view metadata for dataset 76t5-zqzr (read 2026-11-23): license 'Public Domain' (PUBLIC_DOMAIN); City of Seattle, Seattle Department of Construction and Inspections",
+   "max_bytes": 67108864,
+   "method": "one export of the building permits applied for in calendar year 2023 ordered by permit number",
+   "min_interval": 1.0,
+   "privacy": "permit records of a city construction department; project descriptions, street addresses, contractor company names, links and coordinates are dropped in the view and the permit numbers are hashed; no personal names",
+   "publisher": "City of Seattle (Seattle Department of Construction and Inspections)",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Public Domain per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C2a",
+   "upstream": "first party: the Seattle Department of Construction and Inspections records each permit application and publishes the register through the city portal",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Department of Natural Resources and Environmental Control, Division of Water, State of Delaware (data.delaware.gov dataset 2655-qn8j, Public Domain); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "well_permits_2018_2022.csv",
+     "observed": "permit applications received 2018 to 2022",
+     "url": "https://data.delaware.gov/resource/2655-qn8j.csv?%24where=apprecdate+between+%272018-01-01T00%3A00%3A00%27+and+%272022-12-31T23%3A59%3A59%27&%24order=permitnumber&%24limit=60000&%24select=permitnumber%2Creference_number%2Clocalwellid%2Cwelltype%2Cwellstatus%2Curl_for_permit_details%2Cowner%2Cowneraddressfull%2Ctaxid%2Cestconstructdate%2Capprecdate%2Clocreviewdate%2Cproposedconstructionreviewdate%2Cpermitapprovaldate%2Ccompletionreportdate%2Cabandonreportdate%2Ctotaldepthprop%2Ctotaldepthactual%2Cestmaxcapacity%2Cestdailyuse%2Cminwelldiameter%2Cmaxwelldiameter%2Cwelltermunusinches%2Cwellterminustype%2Cscreentop%2Cscreenbase%2Cscreenmaterial%2Cinnercasingtop%2Cinnercasingbase%2Cinnercasingmaterial%2Cgrouttop%2Cgroutbase%2Cgroutmaterial%2Cgraveltop%2Cgravelbase%2Cgravelmaterial%2Cproposeddrillmethod%2Cpumpmaker%2Cpumpintakesetting%2Cpumptestrate%2Cpumpratedcapacity%2Cpumptesttime%2Cpumpingwaterlevel%2Cstaticwaterlevel%2Cwaterleveldate%2Csepticpermitnumber%2Creplacedwellpermitnumber%2Cwellabandonmentreason%2Cwellcomments%2Clicensenumber%2Cwellcontractor%2Cwellauthcode%2Cx%2Cy%2Clatitude%2Clongitude%2Clocationmethod%2Ccounty%2Cwatershed%2Cbasin%2Cpotable%2Ctesttemp%2Cgmz%2Cwellpit%2Creplacement%2Callocreview%2Crequiresallocpermit%2Csampled%2Ccpcn%2Cagprecdistrict%2Cfloodplain%2Csmalllot%2Cinjection%2Cpciv%2Cemergency%2Cconfined%2Creviewable%2Cexisting%2Cretainwell%2Cgeocoded_location"
+    }
+   ],
+   "hosts": [
+    "data.delaware.gov"
+   ],
+   "id": "delaware_well_permits",
+   "licence_class": "open",
+   "licence_location": "https://data.delaware.gov/api/views/2655-qn8j.json",
+   "licence_text": "Socrata view metadata for dataset 2655-qn8j (read 2026-11-23): license 'Public Domain' (PUBLIC_DOMAIN); Department of Natural Resources and Environmental Control, Division of Water, State of Delaware",
+   "max_bytes": 67108864,
+   "method": "one export of the well permits with an application received date in 2018 to 2022 ordered by permit number",
+   "min_interval": 1.0,
+   "privacy": "water well permit records; owner names and addresses, tax ids, comments, contractors, license numbers and coordinates are dropped in the view and the permit number is hashed; the publisher already redacts locations for some well types",
+   "publisher": "State of Delaware (Department of Natural Resources and Environmental Control, Division of Water)",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Public Domain per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C2a",
+   "upstream": "first party: the Division of Water issues and records the well permits and publishes the register through the state portal",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "City of Austin, Texas - data.austintexas.gov (City Clerk campaign finance reports) (datahub.austintexas.gov dataset g4yx-aw9r, Public Domain); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "campaign_finance_2022.csv",
+     "observed": "transactions dated in 2022",
+     "url": "https://datahub.austintexas.gov/resource/g4yx-aw9r.csv?%24where=transaction_date+between+%272022-01-01T00%3A00%3A00%27+and+%272022-12-31T23%3A59%3A59%27&%24order=transaction_id&%24limit=60000&%24select=transaction_type%2Cfiler_name%2Ctransactor_name%2Centity%2Ctransaction_amount%2Cdate_filed%2Cform%2Creport_id%2Ctransaction%2Ctransaction_id%2Cdate_due%2Creport_type%2Celection_date%2Celection_type%2Coffice_held%2Coffice_sought%2Clink_to_report%2Ccor_flag%2Cschedule_reported%2Ctransactor_address_2%2Ctransactor_city%2Ctransactor_state%2Ctransactor_zip_code%2Ctransaction_date%2Ctransaction_description%2Cexpense_description%2Ctransactor_employer%2Ctransactor_occupation%2Clender_institution%2Cinterest_rate%2Cmaturity_date%2Ccollateral%2Cpersonal_funds_deposited%2Cguarantor%2Cguarantor_name%2Cguarantor_address_2%2Cguarantor_city%2Camount_guaranteed%2Cguarantor_employer%2Cguarantor_occupation%2Coutside_travel%2Cpolitical_obligation%2Creimbursement_intended%2Creturned_to_filer%2Cout_of_state_pac%2Cout_of_state_pac_id"
+    }
+   ],
+   "hosts": [
+    "datahub.austintexas.gov"
+   ],
+   "id": "austin_campaign_finance",
+   "licence_class": "open",
+   "licence_location": "https://datahub.austintexas.gov/api/views/g4yx-aw9r.json",
+   "licence_text": "Socrata view metadata for dataset g4yx-aw9r (read 2026-11-23): license 'Public Domain' (PUBLIC_DOMAIN); City of Austin, Texas - data.austintexas.gov (City Clerk campaign finance reports)",
+   "max_bytes": 67108864,
+   "method": "one export of the campaign finance transactions dated in calendar year 2022 ordered by transaction id",
+   "min_interval": 1.0,
+   "privacy": "campaign finance transactions: filer, transactor and guarantor names, addresses, employers and occupations, lender, free-text descriptions and report links are dropped in the view; transaction and report ids are hashed",
+   "publisher": "City of Austin (City Clerk)",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Public Domain per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "first party: candidates and committees file the reports with the City of Austin and the city publishes the transactions",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "State of Delaware, Department of Finance, Division of Accounting (data.delaware.gov dataset nurt-5rqw, Public Domain); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "credit_card_fy2023.csv",
+     "observed": "fiscal year 2023",
+     "url": "https://data.delaware.gov/resource/nurt-5rqw.csv?%24where=fiscal_year%3D2023&%24order=trans_dt%2Cmerchant&%24limit=250000&%24select=fiscal_year%2Cfiscal_period%2Cdept_name%2Cdiv_name%2Cmerchant%2Ccat_descr%2Ctrans_dt%2Cmerchandise_amt"
+    }
+   ],
+   "hosts": [
+    "data.delaware.gov"
+   ],
+   "id": "delaware_state_credit_cards",
+   "licence_class": "open",
+   "licence_location": "https://data.delaware.gov/api/views/nurt-5rqw.json",
+   "licence_text": "Socrata view metadata for dataset nurt-5rqw (read 2026-11-23): license 'Public Domain' (PUBLIC_DOMAIN); State of Delaware, Department of Finance, Division of Accounting",
+   "max_bytes": 67108864,
+   "method": "one export of the state employee credit card transactions of fiscal year 2023 ordered by date and merchant",
+   "min_interval": 1.0,
+   "privacy": "purchasing-card transactions with department, merchant, merchant category and amount; no cardholder names; merchant names are hashed in the view",
+   "publisher": "State of Delaware (Department of Finance, Division of Accounting)",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Public Domain per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "first party: the Division of Accounting records the state purchasing-card transactions and publishes them through the state portal",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Montgomery County, MD (Department of Liquor Control) (data.montgomerycountymd.gov dataset v76h-r7br, Public Domain); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "warehouse_retail_sales_2019.csv",
+     "observed": "calendar year 2019",
+     "url": "https://data.montgomerycountymd.gov/resource/v76h-r7br.csv?%24where=calendar_year%3D2019&%24order=cal_month_num%2Citem_code&%24limit=200000&%24select=calendar_year%2Ccal_month_num%2Csupplier%2Citem_code%2Citem_description%2Citem_type%2Crtl_sales%2Crtl_transfers%2Cwhs_sales"
+    }
+   ],
+   "hosts": [
+    "data.montgomerycountymd.gov"
+   ],
+   "id": "montgomery_dlc_sales",
+   "licence_class": "open",
+   "licence_location": "https://data.montgomerycountymd.gov/api/views/v76h-r7br.json",
+   "licence_text": "Socrata view metadata for dataset v76h-r7br (read 2026-11-23): license 'Public Domain' (PUBLIC_DOMAIN); Montgomery County, MD (Department of Liquor Control)",
+   "max_bytes": 67108864,
+   "method": "one export of the warehouse and retail sales of calendar year 2019 ordered by month and item code",
+   "min_interval": 1.0,
+   "privacy": "item-level monthly sales of a county liquor wholesaler and retailer; no personal data",
+   "publisher": "Montgomery County, Maryland (Department of Liquor Control)",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Public Domain per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "first party: the county Department of Liquor Control operates the warehouse and the stores and publishes the item sales and movements",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Federal Transit Administration, National Transit Database (monthly module) (datahub.transportation.gov dataset 8bui-9xvu, Public Domain U.S. Government); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "ntd_monthly_2022_on.csv",
+     "observed": "months from January 2022",
+     "url": "https://datahub.transportation.gov/resource/8bui-9xvu.csv?%24where=date+%3E%3D+%272022-01-01T00%3A00%3A00%27&%24order=ntd_id%2Cmode%2Ctos%2Cdate&%24limit=200000&%24select=ntd_id%2Clegacy_ntd_id%2Cagency%2Cmode_type_of_service_status%2Creporter_type%2Cuace_cd%2Cuza_name%2Cmode%2Ctos%2C_3_mode%2Cdate%2Cupt%2Cvoms%2Cvrh%2Cvrm%2Cagency_mode_tos_date%2Cstate%2Cfta_region"
+    }
+   ],
+   "hosts": [
+    "datahub.transportation.gov"
+   ],
+   "id": "fta_ntd_monthly_ridership",
+   "licence_class": "open",
+   "licence_location": "https://datahub.transportation.gov/api/views/8bui-9xvu.json",
+   "licence_text": "Socrata view metadata for dataset 8bui-9xvu (read 2026-11-23): license 'Public Domain U.S. Government' (USGOV_WORKS); Federal Transit Administration, National Transit Database (monthly module)",
+   "max_bytes": 67108864,
+   "method": "one export of the monthly ridership rows from January 2022 ordered by agency, mode, service type and month",
+   "min_interval": 1.0,
+   "privacy": "agency-level monthly transit statistics; no personal data",
+   "publisher": "U.S. Department of Transportation (Federal Transit Administration, National Transit Database)",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Public Domain U.S. Government per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "first party: transit agencies report monthly unlinked trips, vehicles in operation, revenue hours and miles to the FTA, which publishes the compiled module",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "City of Bloomington Utilities (data.bloomington.in.gov dataset rzw5-gzjt, Open Data Commons Public Domain Dedication and License); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "mwtp_electricity_daily.csv",
+     "observed": "complete daily table",
+     "url": "https://data.bloomington.in.gov/resource/rzw5-gzjt.csv?%24where=date+%3E%3D+%272010-01-01T00%3A00%3A00%27&%24order=date&%24limit=10000&%24select=date%2Ckwh1%2Ckw1%2Ckwh2%2Ckw2%2Cbilled_kwh%2Csolar_kwh%2Ctotal_kwh%2Cmg_finish%2Cmg_raw"
+    }
+   ],
+   "hosts": [
+    "data.bloomington.in.gov"
+   ],
+   "id": "bloomington_water_plant_energy",
+   "licence_class": "open",
+   "licence_location": "https://data.bloomington.in.gov/api/views/rzw5-gzjt.json",
+   "licence_text": "Socrata view metadata for dataset rzw5-gzjt (read 2026-11-23): license 'Open Data Commons Public Domain Dedication and License' (PDDL); City of Bloomington Utilities",
+   "max_bytes": 67108864,
+   "method": "one complete export of the daily Monroe Water Treatment Plant table ordered by date",
+   "min_interval": 1.0,
+   "privacy": "daily utility meter and flow readings of a municipal water treatment plant; no personal data",
+   "publisher": "City of Bloomington Utilities (Monroe Water Treatment Plant)",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Open Data Commons Public Domain Dedication and License per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: the water utility records its plant electricity, solar generation and water flows and publishes the daily table",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Locus Energy (City of Bloomington solar installations) (data.bloomington.in.gov dataset 9t63-jmjk, Open Data Commons Public Domain Dedication and License); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "solar_sites_daily.csv",
+     "observed": "complete daily table",
+     "url": "https://data.bloomington.in.gov/resource/9t63-jmjk.csv?%24where=date+%3E%3D+%272017-01-01T00%3A00%3A00%27&%24order=site_id%2Cdate&%24limit=150000&%24select=site_id%2Cdate%2Cwatt_min%2Cwatt_max%2Cwatt_avg%2Cwatt_hours%2Cwatt_hours_expected%2Csite%2Caddress%2Clatitude%2Clongitude%2Cdepartment"
+    }
+   ],
+   "hosts": [
+    "data.bloomington.in.gov"
+   ],
+   "id": "bloomington_solar_sites",
+   "licence_class": "open",
+   "licence_location": "https://data.bloomington.in.gov/api/views/9t63-jmjk.json",
+   "licence_text": "Socrata view metadata for dataset 9t63-jmjk (read 2026-11-23): license 'Open Data Commons Public Domain Dedication and License' (PDDL); Locus Energy (City of Bloomington solar installations)",
+   "max_bytes": 67108864,
+   "method": "one complete export of the daily solar generation table ordered by site and date",
+   "min_interval": 1.0,
+   "privacy": "daily generation of municipal solar installations; site names, addresses and coordinates are dropped in the view; no personal data",
+   "publisher": "Locus Energy (monitoring) for the City of Bloomington",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Open Data Commons Public Domain Dedication and License per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: the PV monitoring platform of Locus Energy records the generation of the city solar installations and the city publishes the daily table",
+   "upstream_verified": true
   }
  ]
 }

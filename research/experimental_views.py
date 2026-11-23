@@ -8358,6 +8358,454 @@ SOCRATA_TABLES: dict[str, dict[str, Any]] = {
         "drop": ["www"],
         "pseudonymise": [],
     },
+    "seattle_building_permits": {
+        "file": "permits_2023.csv",
+        "table": "permits.csv",
+        "label": "Seattle building permit",
+        "method": "building permits applied for in calendar year 2023 ordered by permit number",
+        "columns": [
+            "permitnum",
+            "permitclass",
+            "permitclassmapped",
+            "permittypemapped",
+            "permittypedesc",
+            "description",
+            "housingunits",
+            "housingunitsremoved",
+            "housingunitsadded",
+            "estprojectcost",
+            "applieddate",
+            "issueddate",
+            "expiresdate",
+            "completeddate",
+            "statuscurrent",
+            "relatedmup",
+            "originaladdress1",
+            "originalcity",
+            "originalstate",
+            "originalzip",
+            "contractorcompanyname",
+            "link",
+            "latitude",
+            "longitude",
+            "location1",
+            "totaldaysplanreview",
+            "daysinitialplanreview",
+            "daysplanreviewcity",
+            "daysoutcorrections",
+            "numberreviewcycles",
+            "initialreviewcompletedate",
+            "planreviewcompletedate",
+            "daysissuepermitcity",
+            "readytoissuedate",
+            "zoning",
+            "dwellingunittype",
+            "standardplan",
+            "dependentbuilding",
+            "parentpermitnum",
+            "housingcategory",
+            "development_site",
+        ],
+        "numbers": [
+            "housingunits",
+            "housingunitsremoved",
+            "housingunitsadded",
+            "estprojectcost",
+            "totaldaysplanreview",
+            "daysinitialplanreview",
+            "daysplanreviewcity",
+            "daysoutcorrections",
+            "numberreviewcycles",
+        ],
+        "dates": [
+            "applieddate",
+            "issueddate",
+            "expiresdate",
+            "completeddate",
+            "initialreviewcompletedate",
+            "planreviewcompletedate",
+            "readytoissuedate",
+        ],
+        "drop": [
+            "description",
+            "originaladdress1",
+            "contractorcompanyname",
+            "link",
+            "latitude",
+            "longitude",
+            "location1",
+            "relatedmup",
+            "daysissuepermitcity",
+            "zoning",
+            "dwellingunittype",
+            "standardplan",
+            "parentpermitnum",
+            "development_site",
+        ],
+        "pseudonymise": ["permitnum"],
+        "window": "applieddate",
+    },
+    "delaware_well_permits": {
+        "file": "well_permits_2018_2022.csv",
+        "table": "permits.csv",
+        "label": "Delaware well permit",
+        "method": "well permits received in 2018 to 2022 ordered by permit number",
+        "columns": [
+            "permitnumber",
+            "reference_number",
+            "localwellid",
+            "welltype",
+            "wellstatus",
+            "url_for_permit_details",
+            "owner",
+            "owneraddressfull",
+            "taxid",
+            "estconstructdate",
+            "apprecdate",
+            "locreviewdate",
+            "proposedconstructionreviewdate",
+            "permitapprovaldate",
+            "completionreportdate",
+            "abandonreportdate",
+            "totaldepthprop",
+            "totaldepthactual",
+            "estmaxcapacity",
+            "estdailyuse",
+            "minwelldiameter",
+            "maxwelldiameter",
+            "welltermunusinches",
+            "wellterminustype",
+            "screentop",
+            "screenbase",
+            "screenmaterial",
+            "innercasingtop",
+            "innercasingbase",
+            "innercasingmaterial",
+            "grouttop",
+            "groutbase",
+            "groutmaterial",
+            "graveltop",
+            "gravelbase",
+            "gravelmaterial",
+            "proposeddrillmethod",
+            "pumpmaker",
+            "pumpintakesetting",
+            "pumptestrate",
+            "pumpratedcapacity",
+            "pumptesttime",
+            "pumpingwaterlevel",
+            "staticwaterlevel",
+            "waterleveldate",
+            "septicpermitnumber",
+            "replacedwellpermitnumber",
+            "wellabandonmentreason",
+            "wellcomments",
+            "licensenumber",
+            "wellcontractor",
+            "wellauthcode",
+            "x",
+            "y",
+            "latitude",
+            "longitude",
+            "locationmethod",
+            "county",
+            "watershed",
+            "basin",
+            "potable",
+            "testtemp",
+            "gmz",
+            "wellpit",
+            "replacement",
+            "allocreview",
+            "requiresallocpermit",
+            "sampled",
+            "cpcn",
+            "agprecdistrict",
+            "floodplain",
+            "smalllot",
+            "injection",
+            "pciv",
+            "emergency",
+            "confined",
+            "reviewable",
+            "existing",
+            "retainwell",
+            "geocoded_location",
+        ],
+        "numbers": [
+            "totaldepthprop",
+            "totaldepthactual",
+            "estmaxcapacity",
+            "estdailyuse",
+            "minwelldiameter",
+            "maxwelldiameter",
+            "welltermunusinches",
+            "screentop",
+            "screenbase",
+            "innercasingtop",
+            "innercasingbase",
+            "grouttop",
+            "groutbase",
+            "graveltop",
+            "gravelbase",
+            "pumptestrate",
+            "pumptesttime",
+            "pumpingwaterlevel",
+            "staticwaterlevel",
+        ],
+        "dates": [
+            "estconstructdate",
+            "apprecdate",
+            "locreviewdate",
+            "proposedconstructionreviewdate",
+            "permitapprovaldate",
+            "completionreportdate",
+        ],
+        "drop": [
+            "url_for_permit_details",
+            "owner",
+            "owneraddressfull",
+            "taxid",
+            "wellcomments",
+            "wellcontractor",
+            "licensenumber",
+            "localwellid",
+            "x",
+            "y",
+            "latitude",
+            "longitude",
+            "geocoded_location",
+            "septicpermitnumber",
+            "replacedwellpermitnumber",
+            "reference_number",
+            "abandonreportdate",
+            "wellterminustype",
+            "pumpmaker",
+            "pumpintakesetting",
+            "pumpratedcapacity",
+            "waterleveldate",
+            "wellabandonmentreason",
+        ],
+        "pseudonymise": ["permitnumber"],
+        "window": "apprecdate",
+    },
+    "austin_campaign_finance": {
+        "file": "campaign_finance_2022.csv",
+        "table": "transactions.csv",
+        "label": "Austin campaign finance",
+        "method": "campaign finance transactions of calendar year 2022 ordered by id",
+        "columns": [
+            "transaction_type",
+            "filer_name",
+            "transactor_name",
+            "entity",
+            "transaction_amount",
+            "date_filed",
+            "form",
+            "report_id",
+            "transaction",
+            "transaction_id",
+            "date_due",
+            "report_type",
+            "election_date",
+            "election_type",
+            "office_held",
+            "office_sought",
+            "link_to_report",
+            "cor_flag",
+            "schedule_reported",
+            "transactor_address_2",
+            "transactor_city",
+            "transactor_state",
+            "transactor_zip_code",
+            "transaction_date",
+            "transaction_description",
+            "expense_description",
+            "transactor_employer",
+            "transactor_occupation",
+            "lender_institution",
+            "interest_rate",
+            "maturity_date",
+            "collateral",
+            "personal_funds_deposited",
+            "guarantor",
+            "guarantor_name",
+            "guarantor_address_2",
+            "guarantor_city",
+            "amount_guaranteed",
+            "guarantor_employer",
+            "guarantor_occupation",
+            "outside_travel",
+            "political_obligation",
+            "reimbursement_intended",
+            "returned_to_filer",
+            "out_of_state_pac",
+            "out_of_state_pac_id",
+        ],
+        "numbers": ["transaction_amount", "amount_guaranteed"],
+        "dates": ["date_filed", "date_due", "election_date", "transaction_date", "maturity_date"],
+        "drop": [
+            "filer_name",
+            "transactor_name",
+            "transactor_address_2",
+            "transactor_city",
+            "transactor_state",
+            "transactor_zip_code",
+            "transactor_employer",
+            "transactor_occupation",
+            "lender_institution",
+            "guarantor",
+            "guarantor_name",
+            "guarantor_address_2",
+            "guarantor_city",
+            "guarantor_employer",
+            "guarantor_occupation",
+            "link_to_report",
+            "transaction_description",
+            "expense_description",
+            "collateral",
+        ],
+        "pseudonymise": ["transaction_id", "report_id"],
+        "window": "transaction_date",
+    },
+    "delaware_state_credit_cards": {
+        "file": "credit_card_fy2023.csv",
+        "table": "transactions.csv",
+        "label": "Delaware credit card",
+        "method": "state credit card transactions of fiscal year 2023 ordered by date and merchant",
+        "columns": [
+            "fiscal_year",
+            "fiscal_period",
+            "dept_name",
+            "div_name",
+            "merchant",
+            "cat_descr",
+            "trans_dt",
+            "merchandise_amt",
+        ],
+        "numbers": ["fiscal_year", "fiscal_period", "merchandise_amt"],
+        "dates": ["trans_dt"],
+        "drop": [],
+        "pseudonymise": ["merchant"],
+        "window": "trans_dt",
+    },
+    "montgomery_dlc_sales": {
+        "file": "warehouse_retail_sales_2019.csv",
+        "table": "sales.csv",
+        "label": "Montgomery County liquor sales",
+        "method": "warehouse and retail sales of calendar year 2019 ordered by month and item code",
+        "columns": [
+            "calendar_year",
+            "cal_month_num",
+            "supplier",
+            "item_code",
+            "item_description",
+            "item_type",
+            "rtl_sales",
+            "rtl_transfers",
+            "whs_sales",
+        ],
+        "numbers": ["calendar_year", "cal_month_num", "rtl_sales", "rtl_transfers", "whs_sales"],
+        "dates": [],
+        "drop": [],
+        "pseudonymise": [],
+    },
+    "fta_ntd_monthly_ridership": {
+        "file": "ntd_monthly_2022_on.csv",
+        "table": "ridership.csv",
+        "label": "FTA NTD ridership",
+        "method": "monthly ridership rows from January 2022 ordered by agency and month",
+        "columns": [
+            "ntd_id",
+            "legacy_ntd_id",
+            "agency",
+            "mode_type_of_service_status",
+            "reporter_type",
+            "uace_cd",
+            "uza_name",
+            "mode",
+            "tos",
+            "_3_mode",
+            "date",
+            "upt",
+            "voms",
+            "vrh",
+            "vrm",
+            "agency_mode_tos_date",
+            "state",
+            "fta_region",
+        ],
+        "numbers": ["upt", "voms", "vrh", "vrm"],
+        "dates": ["date"],
+        "drop": ["legacy_ntd_id", "agency_mode_tos_date"],
+        "pseudonymise": [],
+        "window": "date",
+    },
+    "bloomington_water_plant_energy": {
+        "file": "mwtp_electricity_daily.csv",
+        "table": "daily.csv",
+        "label": "Bloomington water plant",
+        "method": "complete daily table of the Monroe Water Treatment Plant ordered by date",
+        "columns": [
+            "date",
+            "kwh1",
+            "kw1",
+            "kwh2",
+            "kw2",
+            "billed_kwh",
+            "solar_kwh",
+            "total_kwh",
+            "mg_finish",
+            "mg_raw",
+        ],
+        "numbers": [
+            "kwh1",
+            "kw1",
+            "kwh2",
+            "kw2",
+            "billed_kwh",
+            "solar_kwh",
+            "total_kwh",
+            "mg_finish",
+            "mg_raw",
+        ],
+        "dates": ["date"],
+        "drop": [],
+        "pseudonymise": [],
+        "window": "date",
+    },
+    "bloomington_solar_sites": {
+        "file": "solar_sites_daily.csv",
+        "table": "daily.csv",
+        "label": "Bloomington solar",
+        "method": "complete daily solar generation table ordered by site and date",
+        "columns": [
+            "site_id",
+            "date",
+            "watt_min",
+            "watt_max",
+            "watt_avg",
+            "watt_hours",
+            "watt_hours_expected",
+            "site",
+            "address",
+            "latitude",
+            "longitude",
+            "department",
+        ],
+        "numbers": [
+            "site_id",
+            "watt_min",
+            "watt_max",
+            "watt_avg",
+            "watt_hours",
+            "watt_hours_expected",
+        ],
+        "dates": ["date"],
+        "drop": ["site", "address", "latitude", "longitude", "department"],
+        "pseudonymise": [],
+        "window": "date",
+    },
 }
 
 
@@ -8412,6 +8860,265 @@ for _view in SOCRATA_TABLES:
     _step.__name__ = f"_build_{_view}"  # type: ignore[attr-defined]
     SOCRATA_STEPS_LIST.append(_step)
 SOCRATA_STEPS = tuple(SOCRATA_STEPS_LIST)
+
+
+def seattle_fire_911_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """Per-day chronological dispatch sequence: one row per incident with a valid time."""
+    frame = raw.drop_duplicates(subset=["incident_number"]).copy()
+    frame["time"] = pd.to_datetime(frame["datetime"], errors="coerce")
+    frame = frame.dropna(subset=["time"]).sort_values(["time", "incident_number"])
+    return pd.DataFrame(
+        {
+            "event_date": frame["time"].dt.strftime("%Y-%m-%d"),
+            "time": frame["time"].dt.strftime("%Y-%m-%d %H:%M:%S"),
+            "type": frame["type"].mask(frame["type"] == ""),
+            "incident": frame["incident_number"].map(pseudonym),
+        }
+    ).reset_index(drop=True)
+
+
+def _build_seattle_fire_911(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "seattle_fire_911_calls" / WAVE28_SNAPSHOT / "raw" / "fire_911_2023.csv"
+    if not source.exists():
+        raise ViewError("no Seattle fire 911 file in the snapshot")
+    view = seattle_fire_911_view(pd.read_csv(source, dtype=str, keep_default_na=False))
+    folder = out / "seattle_fire_911_calls"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "events.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "seattle_fire_911_calls",
+        {"events.csv": (target, len(view))},
+        dropped=["address", "latitude", "longitude", "report_location", "regions"],
+        pseudonymised=["incident_number"],
+        salt_label=SALT,
+        sampling={
+            "method": "dispatches of calendar year 2023 ordered by time and incident number",
+            "days": int(view["event_date"].nunique()),
+            "first_time": str(view["time"].iloc[0]),
+            "last_time": str(view["time"].iloc[-1]),
+        },
+        source_snapshot=f"seattle_fire_911_calls/{WAVE28_SNAPSHOT}",
+    )
+
+
+BAAC_FILES = {
+    "caracteristiques": "caract-2024.csv",
+    "lieux": "lieux-2024.csv",
+    "vehicules": "vehicules-2024.csv",
+    "usagers": "usagers-2024.csv",
+}
+BAAC_SPEC: dict[str, Any] = {
+    "tables": {
+        "caracteristiques": {
+            "keep": [
+                "Num_Acc",
+                "jour",
+                "mois",
+                "an",
+                "hrmn",
+                "lum",
+                "dep",
+                "com",
+                "agg",
+                "int",
+                "atm",
+                "col",
+            ]  # fmt: skip
+        },
+        "lieux": {
+            "keep": [
+                "Num_Acc",
+                "catr",
+                "v1",
+                "v2",
+                "circ",
+                "nbv",
+                "vosp",
+                "prof",
+                "plan",
+                "lartpc",
+                "larrout",
+                "surf",
+                "infra",
+                "situ",
+                "vma",
+            ]  # fmt: skip
+        },
+        "vehicules": {
+            "keep": [
+                "Num_Acc",
+                "id_vehicule",
+                "num_veh",
+                "senc",
+                "catv",
+                "obs",
+                "obsm",
+                "choc",
+                "manv",
+                "motor",
+                "occutc",
+            ]  # fmt: skip
+        },
+        "usagers": {
+            "keep": [
+                "Num_Acc",
+                "id_usager",
+                "id_vehicule",
+                "num_veh",
+                "place",
+                "catu",
+                "grav",
+                "sexe",
+                "trajet",
+                "secu1",
+                "secu2",
+                "secu3",
+                "locp",
+                "actp",
+                "etatp",
+            ]  # fmt: skip
+        },
+    },
+    "relations": [
+        ["lieux", "Num_Acc", "caracteristiques", "Num_Acc"],
+        ["vehicules", "Num_Acc", "caracteristiques", "Num_Acc"],
+        ["usagers", "Num_Acc", "caracteristiques", "Num_Acc"],
+        ["usagers", "id_vehicule", "vehicules", "id_vehicule"],
+    ],
+}
+BAAC_DROPPED = [
+    "caracteristiques.adr",
+    "caracteristiques.lat",
+    "caracteristiques.long",
+    "lieux.voie",
+    "lieux.pr",
+    "lieux.pr1",
+    "usagers.an_nais",
+]
+
+
+def baac_view(
+    tables: dict[str, pd.DataFrame],
+) -> tuple[dict[str, pd.DataFrame], list[dict[str, Any]], dict[str, Any]]:
+    """BAAC accident tables without addresses, coordinates, street names and birth years.
+
+    The published row order is kept. Beyond the declared key relations the facts record the
+    composite vehicle key (accident, vehicle number) of the road users, the duplicated vehicle
+    numbers, and the rows per accident of each child table: lieux and usagers are one-to-many,
+    never one-to-one. Orphans are reported, never repaired.
+    """
+    views, relations = tables_view(tables, BAAC_SPEC)
+    vehicles, users = views["vehicules"], views["usagers"]
+    pairs = users[users["num_veh"] != ""]
+    known = set(zip(vehicles["Num_Acc"], vehicles["num_veh"], strict=True))
+    seen = zip(pairs["Num_Acc"], pairs["num_veh"], strict=True)
+    accidents = set(views["caracteristiques"]["Num_Acc"])
+    children = {name: views[name] for name in ("lieux", "vehicules", "usagers")}
+    facts = {
+        "usagers_num_veh_without_vehicle": sum(pair not in known for pair in seen),
+        "usagers_num_veh_checked": len(pairs),
+        "vehicules_duplicate_num_veh": int(vehicles.duplicated(["Num_Acc", "num_veh"]).sum()),
+        "max_rows_per_accident": {
+            name: int(frame["Num_Acc"].value_counts().max()) for name, frame in children.items()
+        },
+        "accidents_without_child": {
+            name: len(accidents - set(frame["Num_Acc"])) for name, frame in children.items()
+        },
+    }
+    return views, relations, facts
+
+
+def _build_baac(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "france_baac_road_accidents" / WAVE28_SNAPSHOT / "raw"
+    paths = {name: raw / file for name, file in BAAC_FILES.items()}
+    if not all(p.exists() for p in paths.values()):
+        raise ViewError("missing BAAC tables in the snapshot")
+    # every cell stays text: the coded missing value ' -1' and the 'N/A' road letter are values
+    tables = {
+        name: pd.read_csv(path, sep=";", dtype=str, keep_default_na=False)
+        for name, path in paths.items()
+    }
+    views, relations, facts = baac_view(tables)
+    folder = out / "france_baac_road_accidents"
+    folder.mkdir(parents=True, exist_ok=True)
+    files: dict[str, tuple[Path, int]] = {}
+    for name, frame in views.items():
+        target = folder / f"{name}.csv"
+        frame.to_csv(target, index=False)
+        files[f"{name}.csv"] = (target, len(frame))
+    _record(
+        manifest,
+        "france_baac_road_accidents",
+        files,
+        dropped=BAAC_DROPPED,
+        pseudonymised=[],
+        relations=relations,
+        sampling={
+            "method": "complete 2024 annual release of the four BAAC tables, no row sampling",
+            **facts,
+        },
+        source_snapshot=f"france_baac_road_accidents/{WAVE28_SNAPSHOT}",
+    )
+
+
+ATTACK_RELEASE = "v20.1"
+ATTACK_DROP = frozenset(["x_mitre_contributors"])
+ATTACK_NOTICE = (
+    "(c) 2026 The MITRE Corporation. This work is reproduced and distributed with the permission "
+    "of The MITRE Corporation. MITRE ATT&CK Enterprise STIX 2.1 bundle, release v20.1, derived "
+    "view without contributor names. The MITRE ATT&CK licence follows."
+)
+
+
+def attack_stix_view(bundle: dict[str, Any]) -> tuple[list[dict[str, Any]], int]:
+    """STIX objects of an ATT&CK bundle in identifier order, one per identifier.
+
+    Contributor names are dropped at every depth; every other field, optional part and nested
+    structure is kept as published. Returns the objects and the number of repeated identifiers
+    that were skipped (the first occurrence is kept).
+    """
+    if bundle.get("type") != "bundle" or "objects" not in bundle:
+        raise ViewError("not a STIX bundle")
+    unique: dict[str, dict[str, Any]] = {}
+    repeated = 0
+    for record in bundle["objects"]:
+        if record["id"] in unique:
+            repeated += 1
+        else:
+            unique[record["id"]] = record
+    return nested_view(list(unique.values()), ATTACK_DROP, lambda r: r["id"]), repeated
+
+
+def _build_attack_stix(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "mitre_attack_enterprise_stix" / WAVE28_SNAPSHOT / "raw"
+    bundle_path, licence_path = raw / "enterprise-attack-20.1.json", raw / "LICENSE.txt"
+    if not (bundle_path.exists() and licence_path.exists()):
+        raise ViewError("no ATT&CK STIX bundle or licence in the snapshot")
+    view, repeated = attack_stix_view(json.loads(bundle_path.read_text()))
+    folder = out / "mitre_attack_enterprise_stix"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "objects.jsonl"
+    target.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in view))
+    (folder / "NOTICE.txt").write_text(ATTACK_NOTICE + "\n\n" + licence_path.read_text())
+    types: dict[str, int] = {}
+    for record in view:
+        types[record["type"]] = types.get(record["type"], 0) + 1
+    _record(
+        manifest,
+        "mitre_attack_enterprise_stix",
+        {"objects.jsonl": (target, len(view))},
+        dropped=sorted(ATTACK_DROP),
+        pseudonymised=[],
+        sampling={
+            "method": "complete Enterprise STIX 2.1 bundle of ATT&CK release v20.1",
+            "release": ATTACK_RELEASE,
+            "repeated_ids": repeated,
+            "object_types": dict(sorted(types.items())),
+        },
+        source_snapshot=f"mitre_attack_enterprise_stix/{WAVE28_SNAPSHOT}",
+    )
 
 
 BUILD_STEPS = (
@@ -8517,6 +9224,9 @@ BUILD_STEPS = (
     _build_sea_ice,
     _build_omni,
     *SOCRATA_STEPS,
+    _build_seattle_fire_911,
+    _build_baac,
+    _build_attack_stix,
     _build_flat,
     _build_series,
     _build_ukspend,

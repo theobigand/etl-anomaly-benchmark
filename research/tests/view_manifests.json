@@ -162,6 +162,33 @@
    "source_snapshot": "epa_aqs_ozone_hourly/2026-11-22"
   }
  },
+ "attack": {
+  "mitre_attack_enterprise_stix": {
+   "dropped": [
+    "x_mitre_contributors"
+   ],
+   "files": {
+    "objects.jsonl": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "objects.jsonl": "{\"external_references\": [{\"external_id\": \"T1\", \"source_name\": \"mitre-attack\"}], \"id\": \"attack-pattern--c\", \"kill_chain_p"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "complete Enterprise STIX 2.1 bundle of ATT&CK release v20.1",
+    "object_types": {
+     "attack-pattern": 1,
+     "intrusion-set": 1,
+     "relationship": 1
+    },
+    "release": "v20.1",
+    "repeated_ids": 1
+   },
+   "source_snapshot": "mitre_attack_enterprise_stix/2026-11-23"
+  }
+ },
  "azure": {
   "azure_packing_2020": {
    "dropped": [
@@ -184,6 +211,87 @@
     "tenants": 1
    },
    "source_snapshot": "azure_packing_2020/2026-11-22"
+  }
+ },
+ "baac": {
+  "france_baac_road_accidents": {
+   "dropped": [
+    "caracteristiques.adr",
+    "caracteristiques.lat",
+    "caracteristiques.long",
+    "lieux.voie",
+    "lieux.pr",
+    "lieux.pr1",
+    "usagers.an_nais"
+   ],
+   "files": {
+    "caracteristiques.csv": {
+     "rows": 3
+    },
+    "lieux.csv": {
+     "rows": 4
+    },
+    "usagers.csv": {
+     "rows": 5
+    },
+    "vehicules.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "caracteristiques.csv": "Num_Acc,jour,mois,an,hrmn,lum,dep,com,agg,int,atm,col",
+    "lieux.csv": "Num_Acc,catr,v1,v2,circ,nbv,vosp,prof,plan,lartpc,larrout,surf,infra,situ,vma",
+    "usagers.csv": "Num_Acc,id_usager,id_vehicule,num_veh,place,catu,grav,sexe,trajet,secu1,secu2,secu3,locp,actp,etatp",
+    "vehicules.csv": "Num_Acc,id_vehicule,num_veh,senc,catv,obs,obsm,choc,manv,motor,occutc"
+   },
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 4,
+     "child": "lieux.Num_Acc",
+     "orphans": 1,
+     "parent": "caracteristiques.Num_Acc",
+     "share": 0.25
+    },
+    {
+     "checked": 4,
+     "child": "vehicules.Num_Acc",
+     "orphans": 0,
+     "parent": "caracteristiques.Num_Acc",
+     "share": 0.0
+    },
+    {
+     "checked": 5,
+     "child": "usagers.Num_Acc",
+     "orphans": 1,
+     "parent": "caracteristiques.Num_Acc",
+     "share": 0.2
+    },
+    {
+     "checked": 4,
+     "child": "usagers.id_vehicule",
+     "orphans": 1,
+     "parent": "vehicules.id_vehicule",
+     "share": 0.25
+    }
+   ],
+   "sampling": {
+    "accidents_without_child": {
+     "lieux": 1,
+     "usagers": 1,
+     "vehicules": 1
+    },
+    "max_rows_per_accident": {
+     "lieux": 2,
+     "usagers": 2,
+     "vehicules": 2
+    },
+    "method": "complete 2024 annual release of the four BAAC tables, no row sampling",
+    "usagers_num_veh_checked": 4,
+    "usagers_num_veh_without_vehicle": 2,
+    "vehicules_duplicate_num_veh": 1
+   },
+   "source_snapshot": "france_baac_road_accidents/2026-11-23"
   }
  },
  "backblaze": {
@@ -2189,6 +2297,36 @@
    "source_snapshot": "nsidc_sea_ice_index/2026-11-22"
   }
  },
+ "seattle_fire": {
+  "seattle_fire_911_calls": {
+   "dropped": [
+    "address",
+    "latitude",
+    "longitude",
+    "report_location",
+    "regions"
+   ],
+   "files": {
+    "events.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "events.csv": "event_date,time,type,incident"
+   },
+   "pseudonymised": [
+    "incident_number"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "days": 2,
+    "first_time": "2023-01-01 23:59:00",
+    "last_time": "2023-01-02 01:00:00",
+    "method": "dispatches of calendar year 2023 ordered by time and incident number"
+   },
+   "source_snapshot": "seattle_fire_911_calls/2026-11-23"
+  }
+ },
  "sncf_tgv": {
   "sncf_tgv_regularite": {
    "dropped": [
@@ -2211,6 +2349,51 @@
     "method": "complete monthly SNCF TGV route punctuality and delay-cause ledger"
    },
    "source_snapshot": "sncf_tgv_regularite/2026-11-22"
+  }
+ },
+ "socrata_austin_campaign_finance": {
+  "austin_campaign_finance": {
+   "dropped": [
+    "filer_name",
+    "transactor_name",
+    "transactor_address_2",
+    "transactor_city",
+    "transactor_state",
+    "transactor_zip_code",
+    "transactor_employer",
+    "transactor_occupation",
+    "lender_institution",
+    "guarantor",
+    "guarantor_name",
+    "guarantor_address_2",
+    "guarantor_city",
+    "guarantor_employer",
+    "guarantor_occupation",
+    "link_to_report",
+    "transaction_description",
+    "expense_description",
+    "collateral"
+   ],
+   "files": {
+    "transactions.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "transactions.csv": "transaction_type,entity,transaction_amount,date_filed,form,report_id,transaction,transaction_id,date_due,report_type,ele"
+   },
+   "pseudonymised": [
+    "transaction_id",
+    "report_id"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "columns": 27,
+    "first_transaction_date": "2023-05-06 07:08:09",
+    "last_transaction_date": "2023-05-06 07:08:09",
+    "method": "campaign finance transactions of calendar year 2022 ordered by id"
+   },
+   "source_snapshot": "austin_campaign_finance/2026-11-23"
   }
  },
  "socrata_austin_water_quality": {
@@ -2236,6 +2419,54 @@
     "method": "water quality results sampled in calendar year 2023 ordered by reference number"
    },
    "source_snapshot": "austin_water_quality/2026-11-23"
+  }
+ },
+ "socrata_bloomington_solar_sites": {
+  "bloomington_solar_sites": {
+   "dropped": [
+    "site",
+    "address",
+    "latitude",
+    "longitude",
+    "department"
+   ],
+   "files": {
+    "daily.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "daily.csv": "site_id,date,watt_min,watt_max,watt_avg,watt_hours,watt_hours_expected"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "columns": 7,
+    "first_date": "2023-05-06 07:08:09",
+    "last_date": "2023-05-06 07:08:09",
+    "method": "complete daily solar generation table ordered by site and date"
+   },
+   "source_snapshot": "bloomington_solar_sites/2026-11-23"
+  }
+ },
+ "socrata_bloomington_water_plant_energy": {
+  "bloomington_water_plant_energy": {
+   "dropped": [],
+   "files": {
+    "daily.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "daily.csv": "date,kwh1,kw1,kwh2,kw2,billed_kwh,solar_kwh,total_kwh,mg_finish,mg_raw"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "columns": 10,
+    "first_date": "2023-05-06 07:08:09",
+    "last_date": "2023-05-06 07:08:09",
+    "method": "complete daily table of the Monroe Water Treatment Plant ordered by date"
+   },
+   "source_snapshot": "bloomington_water_plant_energy/2026-11-23"
   }
  },
  "socrata_colorado_dam_safety": {
@@ -2317,6 +2548,160 @@
     "method": "complete regulated storage tank registry ordered by facility and tank"
    },
    "source_snapshot": "colorado_storage_tanks/2026-11-23"
+  }
+ },
+ "socrata_delaware_state_credit_cards": {
+  "delaware_state_credit_cards": {
+   "dropped": [],
+   "files": {
+    "transactions.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "transactions.csv": "fiscal_year,fiscal_period,dept_name,div_name,merchant,cat_descr,trans_dt,merchandise_amt"
+   },
+   "pseudonymised": [
+    "merchant"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "columns": 8,
+    "first_trans_dt": "2023-05-06 07:08:09",
+    "last_trans_dt": "2023-05-06 07:08:09",
+    "method": "state credit card transactions of fiscal year 2023 ordered by date and merchant"
+   },
+   "source_snapshot": "delaware_state_credit_cards/2026-11-23"
+  }
+ },
+ "socrata_delaware_well_permits": {
+  "delaware_well_permits": {
+   "dropped": [
+    "url_for_permit_details",
+    "owner",
+    "owneraddressfull",
+    "taxid",
+    "wellcomments",
+    "wellcontractor",
+    "licensenumber",
+    "localwellid",
+    "x",
+    "y",
+    "latitude",
+    "longitude",
+    "geocoded_location",
+    "septicpermitnumber",
+    "replacedwellpermitnumber",
+    "reference_number",
+    "abandonreportdate",
+    "wellterminustype",
+    "pumpmaker",
+    "pumpintakesetting",
+    "pumpratedcapacity",
+    "waterleveldate",
+    "wellabandonmentreason"
+   ],
+   "files": {
+    "permits.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "permits.csv": "permitnumber,welltype,wellstatus,estconstructdate,apprecdate,locreviewdate,proposedconstructionreviewdate,permitapproval"
+   },
+   "pseudonymised": [
+    "permitnumber"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "columns": 57,
+    "first_apprecdate": "2023-05-06 07:08:09",
+    "last_apprecdate": "2023-05-06 07:08:09",
+    "method": "well permits received in 2018 to 2022 ordered by permit number"
+   },
+   "source_snapshot": "delaware_well_permits/2026-11-23"
+  }
+ },
+ "socrata_fta_ntd_monthly_ridership": {
+  "fta_ntd_monthly_ridership": {
+   "dropped": [
+    "legacy_ntd_id",
+    "agency_mode_tos_date"
+   ],
+   "files": {
+    "ridership.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "ridership.csv": "ntd_id,agency,mode_type_of_service_status,reporter_type,uace_cd,uza_name,mode,tos,_3_mode,date,upt,voms,vrh,vrm,state,ft"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "columns": 16,
+    "first_date": "2023-05-06 07:08:09",
+    "last_date": "2023-05-06 07:08:09",
+    "method": "monthly ridership rows from January 2022 ordered by agency and month"
+   },
+   "source_snapshot": "fta_ntd_monthly_ridership/2026-11-23"
+  }
+ },
+ "socrata_montgomery_dlc_sales": {
+  "montgomery_dlc_sales": {
+   "dropped": [],
+   "files": {
+    "sales.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "sales.csv": "calendar_year,cal_month_num,supplier,item_code,item_description,item_type,rtl_sales,rtl_transfers,whs_sales"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "columns": 9,
+    "method": "warehouse and retail sales of calendar year 2019 ordered by month and item code"
+   },
+   "source_snapshot": "montgomery_dlc_sales/2026-11-23"
+  }
+ },
+ "socrata_seattle_building_permits": {
+  "seattle_building_permits": {
+   "dropped": [
+    "description",
+    "originaladdress1",
+    "contractorcompanyname",
+    "link",
+    "latitude",
+    "longitude",
+    "location1",
+    "relatedmup",
+    "daysissuepermitcity",
+    "zoning",
+    "dwellingunittype",
+    "standardplan",
+    "parentpermitnum",
+    "development_site"
+   ],
+   "files": {
+    "permits.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "permits.csv": "permitnum,permitclass,permitclassmapped,permittypemapped,permittypedesc,housingunits,housingunitsremoved,housingunitsadd"
+   },
+   "pseudonymised": [
+    "permitnum"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "columns": 27,
+    "first_applieddate": "2023-05-06 07:08:09",
+    "last_applieddate": "2023-05-06 07:08:09",
+    "method": "building permits applied for in calendar year 2023 ordered by permit number"
+   },
+   "source_snapshot": "seattle_building_permits/2026-11-23"
   }
  },
  "socrata_sffd_fire_incidents": {

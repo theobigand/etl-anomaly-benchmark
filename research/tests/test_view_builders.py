@@ -538,6 +538,18 @@ def _maude_case(root, tmp):
     tev._maude_snapshot(root)
 
 
+def _seattle_fire(root, tmp):
+    tev._seattle_fire_911_snapshot(root)
+
+
+def _baac(root, tmp):
+    tev._baac_snapshot(root)
+
+
+def _attack(root, tmp):
+    tev._attack_snapshot(root)
+
+
 def _socrata(view):
     def make(root, tmp):
         tev._socrata_snapshots_one(root, view)
@@ -641,6 +653,9 @@ CASES = {
                    "calendar": {"keep": ["x"], "optional": True}},
         "relations": [["ratings", "movieId", "movies", "movieId"]]}}}),
 }  # fmt: skip
+CASES["seattle_fire"] = (_seattle_fire, ev._build_seattle_fire_911, ["seattle_fire_911_calls"], {})
+CASES["baac"] = (_baac, ev._build_baac, ["france_baac_road_accidents"], {})
+CASES["attack"] = (_attack, ev._build_attack_stix, ["mitre_attack_enterprise_stix"], {})
 CASES.update(
     {
         f"socrata_{view}": (_socrata(view), step, [view], {})

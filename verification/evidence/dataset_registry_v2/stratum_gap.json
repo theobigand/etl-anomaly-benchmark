@@ -1,6 +1,6 @@
 {
  "licence_classes": {
-  "open": 289,
+  "open": 300,
   "research_only": 22
  },
  "strata": {
@@ -30,67 +30,67 @@
    "ambitious": 45,
    "minimum": 15,
    "missing_to_minimum": 0,
-   "missing_to_recommended": 2,
-   "publishers": 28,
+   "missing_to_recommended": 0,
+   "publishers": 30,
    "recommended": 30,
-   "sources": 28,
+   "sources": 30,
    "stratum": "categorical and mixed tables",
-   "systems": 28
+   "systems": 30
   },
   "C2b": {
    "ambitious": 45,
    "minimum": 15,
    "missing_to_minimum": 0,
-   "missing_to_recommended": 4,
-   "publishers": 26,
+   "missing_to_recommended": 0,
+   "publishers": 30,
    "recommended": 30,
-   "sources": 26,
+   "sources": 30,
    "stratum": "transactional events",
-   "systems": 28
+   "systems": 32
   },
   "C3": {
    "ambitious": 55,
    "minimum": 15,
    "missing_to_minimum": 0,
    "missing_to_recommended": 0,
-   "publishers": 60,
+   "publishers": 62,
    "recommended": 40,
-   "sources": 66,
+   "sources": 68,
    "stratum": "time series",
-   "systems": 68
+   "systems": 70
   },
   "C4": {
    "ambitious": 40,
    "minimum": 15,
    "missing_to_minimum": 0,
    "missing_to_recommended": 0,
-   "publishers": 24,
+   "publishers": 25,
    "recommended": 28,
-   "sources": 40,
+   "sources": 41,
    "stratum": "logs and event sequences",
-   "systems": 39
+   "systems": 40
   },
   "C5": {
    "ambitious": 55,
    "minimum": 15,
    "missing_to_minimum": 0,
-   "missing_to_recommended": 16,
-   "publishers": 31,
+   "missing_to_recommended": 15,
+   "publishers": 32,
    "recommended": 36,
-   "sources": 20,
+   "sources": 21,
    "stratum": "relational",
-   "systems": 40
+   "systems": 41
   },
   "C6": {
    "ambitious": 45,
    "minimum": 15,
    "missing_to_minimum": 0,
-   "missing_to_recommended": 6,
-   "publishers": 23,
+   "missing_to_recommended": 5,
+   "publishers": 24,
    "recommended": 30,
-   "sources": 24,
+   "sources": 25,
    "stratum": "nested",
-   "systems": 24
+   "systems": 25
   }
  },
  "time_candidates_not_yet_verified": [
@@ -98,5 +98,5 @@
   "uci:755",
   "uci:760"
  ],
- "total_sources": 311
+ "total_sources": 322
 }

@@ -2570,6 +2570,83 @@
   },
   {
    "failed": null,
+   "group": "seattle_fire_911_dispatch",
+   "id": "seattle_fire_911_calls",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "france_baac_road_accidents",
+   "id": "france_baac_road_accidents",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "mitre_attack_knowledge_base",
+   "id": "mitre_attack_enterprise_stix",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "seattle_sdci_building_permits",
+   "id": "seattle_building_permits",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "delaware_dnrec_well_permits",
+   "id": "delaware_well_permits",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "city_of_austin_campaign_finance",
+   "id": "austin_campaign_finance",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "delaware_state_purchasing_cards",
+   "id": "delaware_state_credit_cards",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "montgomery_county_liquor_control_sales",
+   "id": "montgomery_dlc_sales",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "fta_national_transit_database",
+   "id": "fta_ntd_monthly_ridership",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "bloomington_utilities_water_plant",
+   "id": "bloomington_water_plant_energy",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "bloomington_locus_solar_monitoring",
+   "id": "bloomington_solar_sites",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2740,6 +2817,7 @@
    "ademe_dpe",
    "colorado_dam_safety_registry",
    "colorado_regulated_storage_tanks",
+   "delaware_dnrec_well_permits",
    "dft_stats19",
    "dgal_alimconfiance",
    "florida_bridge_inspections",
@@ -2749,6 +2827,7 @@
    "paleobiology_database",
    "paris_urban_trees",
    "port_noumea_stopovers",
+   "seattle_sdci_building_permits",
    "sffd_fire_incidents",
    "tx_hhsc_child_care_operations",
    "uci:101",
@@ -2769,16 +2848,20 @@
   "C2b": [
    "austin_surface_water_quality",
    "cftc_cot_disaggregated",
+   "city_of_austin_campaign_finance",
    "coatings_multinational",
+   "delaware_state_purchasing_cards",
    "dgccrf_fuel_prices",
    "dgfip_dvf",
    "fdic_bank_financials",
+   "fta_national_transit_database",
    "georgia_procurement",
    "german_paying_agency",
    "hm_land_registry",
    "inpi_bce_ratios",
    "italian_road_fines",
    "lyft_bikeshare",
+   "montgomery_county_liquor_control_sales",
    "montreal_contracts",
    "ntnu_ev_charging",
    "nyc_tlc",
@@ -2797,6 +2880,8 @@
   "C3": [
    "airquality_italy",
    "backblaze",
+   "bloomington_locus_solar_monitoring",
+   "bloomington_utilities_water_plant",
    "candanedo_umons",
    "cnc_five_axis_milling",
    "cubico_kelmarsh",
@@ -2849,6 +2934,7 @@
    "moodle_lms_events",
    "naoj_norp_solar_bursts",
    "rabobank_ict",
+   "seattle_fire_911_dispatch",
    "surf_lisa_slurm",
    "tue_travel_claims",
    "unisg_smart_factory",
@@ -2859,6 +2945,7 @@
    "3pfl",
    "cordis_horizon_europe",
    "eicu_philips",
+   "france_baac_road_accidents",
    "georgia_procurement",
    "grouplens",
    "gtfs_fr_alterneo",
@@ -2899,6 +2986,7 @@
    "gbif_occurrences",
    "georgia_procurement",
    "met_museum",
+   "mitre_attack_knowledge_base",
    "montreal_contracts",
    "nist_nvd",
    "nws_alerts",
@@ -2925,58 +3013,58 @@
    "structurally_valid": 52
   },
   "C2a": {
-   "acquired": 54,
-   "discovered": 54,
-   "experiment_ready": 28,
-   "protocol_ready": 28,
-   "rights_verified": 54,
-   "scientifically_eligible": 28,
-   "structurally_valid": 28
+   "acquired": 56,
+   "discovered": 56,
+   "experiment_ready": 30,
+   "protocol_ready": 30,
+   "rights_verified": 56,
+   "scientifically_eligible": 30,
+   "structurally_valid": 30
   },
   "C2b": {
-   "acquired": 27,
-   "discovered": 33,
-   "experiment_ready": 27,
-   "protocol_ready": 27,
-   "rights_verified": 27,
-   "scientifically_eligible": 27,
-   "structurally_valid": 27
+   "acquired": 31,
+   "discovered": 37,
+   "experiment_ready": 31,
+   "protocol_ready": 31,
+   "rights_verified": 31,
+   "scientifically_eligible": 31,
+   "structurally_valid": 31
   },
   "C3": {
-   "acquired": 39,
-   "discovered": 60,
-   "experiment_ready": 36,
-   "protocol_ready": 36,
-   "rights_verified": 39,
-   "scientifically_eligible": 36,
-   "structurally_valid": 37
-  },
-  "C4": {
-   "acquired": 40,
-   "discovered": 41,
-   "experiment_ready": 39,
-   "protocol_ready": 39,
-   "rights_verified": 40,
-   "scientifically_eligible": 39,
+   "acquired": 41,
+   "discovered": 62,
+   "experiment_ready": 38,
+   "protocol_ready": 38,
+   "rights_verified": 41,
+   "scientifically_eligible": 38,
    "structurally_valid": 39
   },
-  "C5": {
-   "acquired": 40,
-   "discovered": 40,
+  "C4": {
+   "acquired": 41,
+   "discovered": 42,
    "experiment_ready": 40,
    "protocol_ready": 40,
-   "rights_verified": 40,
+   "rights_verified": 41,
    "scientifically_eligible": 40,
    "structurally_valid": 40
   },
+  "C5": {
+   "acquired": 41,
+   "discovered": 41,
+   "experiment_ready": 41,
+   "protocol_ready": 41,
+   "rights_verified": 41,
+   "scientifically_eligible": 41,
+   "structurally_valid": 41
+  },
   "C6": {
-   "acquired": 23,
-   "discovered": 26,
-   "experiment_ready": 23,
-   "protocol_ready": 23,
-   "rights_verified": 23,
-   "scientifically_eligible": 23,
-   "structurally_valid": 23
+   "acquired": 24,
+   "discovered": 27,
+   "experiment_ready": 24,
+   "protocol_ready": 24,
+   "rights_verified": 24,
+   "scientifically_eligible": 24,
+   "structurally_valid": 24
   }
  }
 }

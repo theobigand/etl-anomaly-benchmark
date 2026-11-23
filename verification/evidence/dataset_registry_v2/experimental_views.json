@@ -285,6 +285,47 @@
   },
   "source_snapshot": "ademe_dpe_existant/2026-11-22"
  },
+ "austin_campaign_finance": {
+  "dropped": [
+   "filer_name",
+   "transactor_name",
+   "transactor_address_2",
+   "transactor_city",
+   "transactor_state",
+   "transactor_zip_code",
+   "transactor_employer",
+   "transactor_occupation",
+   "lender_institution",
+   "guarantor",
+   "guarantor_name",
+   "guarantor_address_2",
+   "guarantor_city",
+   "guarantor_employer",
+   "guarantor_occupation",
+   "link_to_report",
+   "transaction_description",
+   "expense_description",
+   "collateral"
+  ],
+  "files": {
+   "transactions.csv": {
+    "rows": 3654,
+    "sha256": "a713b15157f333e839d26a680adca37dc0cdc4f6c52898cbac4b777bceefa892"
+   }
+  },
+  "pseudonymised": [
+   "transaction_id",
+   "report_id"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "columns": 27,
+   "first_transaction_date": "2022-01-16 00:00:00",
+   "last_transaction_date": "2022-12-31 00:00:00",
+   "method": "campaign finance transactions of calendar year 2022 ordered by id"
+  },
+  "source_snapshot": "austin_campaign_finance/2026-11-23"
+ },
  "austin_water_quality": {
   "dropped": [
    "ref_no",
@@ -379,6 +420,46 @@
   },
   "pseudonymised": [],
   "source_snapshot": "bikeshare_jc/2026-11-21"
+ },
+ "bloomington_solar_sites": {
+  "dropped": [
+   "site",
+   "address",
+   "latitude",
+   "longitude",
+   "department"
+  ],
+  "files": {
+   "daily.csv": {
+    "rows": 91437,
+    "sha256": "f0ed4e34e285e026910c591b7654e82735d33ba9f03b0d05145943e5a909b923"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "columns": 7,
+   "first_date": "2017-01-01 00:00:00",
+   "last_date": "2025-08-19 00:00:00",
+   "method": "complete daily solar generation table ordered by site and date"
+  },
+  "source_snapshot": "bloomington_solar_sites/2026-11-23"
+ },
+ "bloomington_water_plant_energy": {
+  "dropped": [],
+  "files": {
+   "daily.csv": {
+    "rows": 6109,
+    "sha256": "aba7cbc50a93838cbf98c17c5c950cdcf5eb2f88e3493fc626d99f632fbf1e5d"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "columns": 10,
+   "first_date": "2010-01-01 00:00:00",
+   "last_date": "2026-09-22 00:00:00",
+   "method": "complete daily table of the Monroe Water Treatment Plant ordered by date"
+  },
+  "source_snapshot": "bloomington_water_plant_energy/2026-11-23"
  },
  "cftc_cot_disaggregated": {
   "dropped": [
@@ -674,6 +755,70 @@
    "unique_dois": 1000
   },
   "source_snapshot": "datacite_dois/2026-11-22"
+ },
+ "delaware_state_credit_cards": {
+  "dropped": [],
+  "files": {
+   "transactions.csv": {
+    "rows": 188670,
+    "sha256": "7115b738cd1c49bacedeb7b3e3a0437908490df53c51b3717eae9b2bdc8ed215"
+   }
+  },
+  "pseudonymised": [
+   "merchant"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "columns": 8,
+   "first_trans_dt": "2022-06-20 00:00:00",
+   "last_trans_dt": "2023-06-27 00:00:00",
+   "method": "state credit card transactions of fiscal year 2023 ordered by date and merchant"
+  },
+  "source_snapshot": "delaware_state_credit_cards/2026-11-23"
+ },
+ "delaware_well_permits": {
+  "dropped": [
+   "url_for_permit_details",
+   "owner",
+   "owneraddressfull",
+   "taxid",
+   "wellcomments",
+   "wellcontractor",
+   "licensenumber",
+   "localwellid",
+   "x",
+   "y",
+   "latitude",
+   "longitude",
+   "geocoded_location",
+   "septicpermitnumber",
+   "replacedwellpermitnumber",
+   "reference_number",
+   "abandonreportdate",
+   "wellterminustype",
+   "pumpmaker",
+   "pumpintakesetting",
+   "pumpratedcapacity",
+   "waterleveldate",
+   "wellabandonmentreason"
+  ],
+  "files": {
+   "permits.csv": {
+    "rows": 20123,
+    "sha256": "bd46d5b205da709747f403177468369bde53dc31e6cb96fa82368ab974bdd23b"
+   }
+  },
+  "pseudonymised": [
+   "permitnumber"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "columns": 57,
+   "first_apprecdate": "2018-01-03 00:00:00",
+   "last_apprecdate": "2022-12-30 15:53:48",
+   "method": "well permits received in 2018 to 2022 ordered by permit number"
+  },
+  "source_snapshot": "delaware_well_permits/2026-11-23"
  },
  "dft_stats19_2023": {
   "dropped": [
@@ -2128,6 +2273,103 @@
   "stratum": "C2a",
   "table": "uci:967"
  },
+ "france_baac_road_accidents": {
+  "dropped": [
+   "caracteristiques.adr",
+   "caracteristiques.lat",
+   "caracteristiques.long",
+   "lieux.voie",
+   "lieux.pr",
+   "lieux.pr1",
+   "usagers.an_nais"
+  ],
+  "files": {
+   "caracteristiques.csv": {
+    "rows": 54402,
+    "sha256": "0f69d0a929a4ccf3ac9028676b849ba68619c791600af68af303a155eb0d6013"
+   },
+   "lieux.csv": {
+    "rows": 70248,
+    "sha256": "e2cd802d6440c6b79577f04eb7dfdd49259ffa7746395f2ae8d62dc4de0c1a15"
+   },
+   "usagers.csv": {
+    "rows": 125187,
+    "sha256": "0cf82ae00449576f92cd7130b5cab2a86656d1f3de8b50c4d0f09318c07afb9a"
+   },
+   "vehicules.csv": {
+    "rows": 92678,
+    "sha256": "1a19bb298fe022ff5f155ed2ef9ef543de8bbbf5c6e632229786dded112b288a"
+   }
+  },
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 70248,
+    "child": "lieux.Num_Acc",
+    "orphans": 0,
+    "parent": "caracteristiques.Num_Acc",
+    "share": 0.0
+   },
+   {
+    "checked": 92678,
+    "child": "vehicules.Num_Acc",
+    "orphans": 0,
+    "parent": "caracteristiques.Num_Acc",
+    "share": 0.0
+   },
+   {
+    "checked": 125187,
+    "child": "usagers.Num_Acc",
+    "orphans": 0,
+    "parent": "caracteristiques.Num_Acc",
+    "share": 0.0
+   },
+   {
+    "checked": 125187,
+    "child": "usagers.id_vehicule",
+    "orphans": 0,
+    "parent": "vehicules.id_vehicule",
+    "share": 0.0
+   }
+  ],
+  "sampling": {
+   "accidents_without_child": {
+    "lieux": 0,
+    "usagers": 0,
+    "vehicules": 0
+   },
+   "max_rows_per_accident": {
+    "lieux": 5,
+    "usagers": 56,
+    "vehicules": 11
+   },
+   "method": "complete 2024 annual release of the four BAAC tables, no row sampling",
+   "usagers_num_veh_checked": 125187,
+   "usagers_num_veh_without_vehicle": 0,
+   "vehicules_duplicate_num_veh": 1
+  },
+  "source_snapshot": "france_baac_road_accidents/2026-11-23"
+ },
+ "fta_ntd_monthly_ridership": {
+  "dropped": [
+   "legacy_ntd_id",
+   "agency_mode_tos_date"
+  ],
+  "files": {
+   "ridership.csv": {
+    "rows": 74173,
+    "sha256": "2967bbad2d15448994f9685377f0132d2e76f614ae62a3d0ec028029bc1541dc"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "columns": 16,
+   "first_date": "2022-01-01 00:00:00",
+   "last_date": "2026-09-01 00:00:00",
+   "method": "monthly ridership rows from January 2022 ordered by agency and month"
+  },
+  "source_snapshot": "fta_ntd_monthly_ridership/2026-11-23"
+ },
  "gbif_cc0_occurrences": {
   "dropped": [
    "creator",
@@ -3273,6 +3515,42 @@
   },
   "source_snapshot": "met_museum_objects/2026-11-21"
  },
+ "mitre_attack_enterprise_stix": {
+  "dropped": [
+   "x_mitre_contributors"
+  ],
+  "files": {
+   "objects.jsonl": {
+    "rows": 26699,
+    "sha256": "6235c8dabde5249f9ebfab209809929b938b0b7c68982bf44df8b961f0d37ad9"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "complete Enterprise STIX 2.1 bundle of ATT&CK release v20.1",
+   "object_types": {
+    "attack-pattern": 867,
+    "campaign": 57,
+    "course-of-action": 268,
+    "identity": 1,
+    "intrusion-set": 193,
+    "malware": 750,
+    "marking-definition": 1,
+    "relationship": 21822,
+    "tool": 95,
+    "x-mitre-analytic": 1773,
+    "x-mitre-collection": 1,
+    "x-mitre-data-component": 109,
+    "x-mitre-data-source": 38,
+    "x-mitre-detection-strategy": 708,
+    "x-mitre-matrix": 1,
+    "x-mitre-tactic": 15
+   },
+   "release": "v20.1",
+   "repeated_ids": 0
+  },
+  "source_snapshot": "mitre_attack_enterprise_stix/2026-11-23"
+ },
  "monash_pedestrian": {
   "dropped": [],
   "files": {
@@ -3283,6 +3561,21 @@
   },
   "pseudonymised": [],
   "source_snapshot": "monash_zenodo/2026-11-21"
+ },
+ "montgomery_dlc_sales": {
+  "dropped": [],
+  "files": {
+   "sales.csv": {
+    "rows": 138638,
+    "sha256": "4b530226f9b7d3520a1b8b2b033d582db1ec5ebbd3bd1ba54fa95378a3921292"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "columns": 9,
+   "method": "warehouse and retail sales of calendar year 2019 ordered by month and item code"
+  },
+  "source_snapshot": "montgomery_dlc_sales/2026-11-23"
  },
  "nasa_omni_solar_wind": {
   "dropped": [
@@ -4223,6 +4516,67 @@
    "unreadable_timestamps": 0
   },
   "source_snapshot": "rte_eco2mix_national/2026-11-22"
+ },
+ "seattle_building_permits": {
+  "dropped": [
+   "description",
+   "originaladdress1",
+   "contractorcompanyname",
+   "link",
+   "latitude",
+   "longitude",
+   "location1",
+   "relatedmup",
+   "daysissuepermitcity",
+   "zoning",
+   "dwellingunittype",
+   "standardplan",
+   "parentpermitnum",
+   "development_site"
+  ],
+  "files": {
+   "permits.csv": {
+    "rows": 5603,
+    "sha256": "810e8b521a9d6f0a80a3d7fa1fe6e28162124da44ab08d20e59186211fd23220"
+   }
+  },
+  "pseudonymised": [
+   "permitnum"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "columns": 27,
+   "first_applieddate": "2023-01-02 00:00:00",
+   "last_applieddate": "2023-12-30 00:00:00",
+   "method": "building permits applied for in calendar year 2023 ordered by permit number"
+  },
+  "source_snapshot": "seattle_building_permits/2026-11-23"
+ },
+ "seattle_fire_911_calls": {
+  "dropped": [
+   "address",
+   "latitude",
+   "longitude",
+   "report_location",
+   "regions"
+  ],
+  "files": {
+   "events.csv": {
+    "rows": 125678,
+    "sha256": "3f337322d28400bce8f6cb1aad285130dfbefa57f4007f906a374b381681eb59"
+   }
+  },
+  "pseudonymised": [
+   "incident_number"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "days": 365,
+   "first_time": "2023-01-01 00:04:00",
+   "last_time": "2023-12-31 23:59:00",
+   "method": "dispatches of calendar year 2023 ordered by time and incident number"
+  },
+  "source_snapshot": "seattle_fire_911_calls/2026-11-23"
  },
  "seattle_fremont_bridge": {
   "dropped": [],

@@ -211,6 +211,21 @@
    "units": 50000,
    "view": "ademe_dpe_existant"
   },
+  "austin_campaign_finance": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "calendar year 2022 slice of the Austin campaign finance table (145,683 rows over all years): a contiguous transaction-date window, not a random sample; 3,654 transaction rows",
+    "filer, transactor and guarantor names and addresses, employers, occupations, lender and free text dropped; transaction and report ids pseudonymised"
+   ],
+   "first_party": true,
+   "independent_group": "city_of_austin_campaign_finance",
+   "min_units": 500,
+   "partitions": "hash of report_id so the transactions of one report stay together 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 3654,
+   "view": "austin_campaign_finance"
+  },
   "austin_water_quality": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -305,6 +320,52 @@
    "protocol_id": "P-TAB",
    "units": 319159,
    "view": "bikeshare_jc"
+  },
+  "bloomington_solar_sites": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete daily export: 91,437 site-day rows from 2017-01-01 over the municipal solar installations; leading and outage days are blank and kept as missing",
+    "weather, season, soiling and inverter outages are baseline dynamics, not injected faults"
+   ],
+   "first_party": true,
+   "independent_group": "bloomington_locus_solar_monitoring",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on date",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies against the seasonal generation curve",
+    "level shift, inverter outage, stuck value and missing intervals"
+   ],
+   "temporal_span": "about 9 years of daily generation per site (2017 onward)",
+   "units": 91437,
+   "unsupported_fault_mechanisms": [
+    "sub-daily irradiance and inverter-level behaviour"
+   ],
+   "view": "bloomington_solar_sites"
+  },
+  "bloomington_water_plant_energy": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete daily export of the plant table: 6,109 daily rows from 2010-01-01; publisher blanks kept as missing",
+    "weekly operations, seasonal demand, solar installation start and maintenance outages are baseline dynamics, not injected faults"
+   ],
+   "first_party": true,
+   "independent_group": "bloomington_utilities_water_plant",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on date",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies against seasonal demand",
+    "level shift, meter outage, stuck value and missing intervals"
+   ],
+   "temporal_span": "about 16 years of daily plant readings (2010 onward)",
+   "units": 6109,
+   "unsupported_fault_mechanisms": [
+    "sub-daily process dynamics"
+   ],
+   "view": "bloomington_water_plant_energy"
   },
   "cftc_cot_disaggregated": {
    "anomaly_origin": "controlled_injection",
@@ -446,6 +507,36 @@
    "protocol_id": "P-NEST",
    "units": 1000,
    "view": "datacite_dois"
+  },
+  "delaware_state_credit_cards": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "fiscal year 2023 slice of the Delaware credit card table (2,268,380 rows over all years): a contiguous fiscal-year window, not a random sample; 188,670 transaction rows",
+    "merchant names pseudonymised; no cardholder identity is published"
+   ],
+   "first_party": true,
+   "independent_group": "delaware_state_purchasing_cards",
+   "min_units": 500,
+   "partitions": "hash of the merchant 70/15/15 so the transactions of one merchant stay together",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 188670,
+   "view": "delaware_state_credit_cards"
+  },
+  "delaware_well_permits": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2018 to 2022 application window of the Delaware well permit table (187,992 rows in all): a contiguous window, not a random sample; 20,123 permit rows",
+    "owner, address, tax id, comment, contractor, license and coordinate columns dropped, permit number pseudonymised; columns more than 50 percent missing dropped"
+   ],
+   "first_party": true,
+   "independent_group": "delaware_dnrec_well_permits",
+   "min_units": 500,
+   "partitions": "hash of permitnumber 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 20123,
+   "view": "delaware_well_permits"
   },
   "dft_stats19_2023": {
    "anomaly_origin": "controlled_injection",
@@ -1646,6 +1737,38 @@
    "units": 235795,
    "view": "flat_uci_967_C2a"
   },
+  "france_baac_road_accidents": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 2024 annual release, no sampling: 54,402 accidents, 70,248 place rows, 92,678 vehicles, 125,187 road users; natural key facts are recorded in the view manifest",
+    "address, coordinate, street name, kilometre marker and birth-year columns dropped; coded missing values and the 'N/A' road letter kept as published",
+    "police-reported road-injury mechanism shared with STATS19 (separate national system); not a new scientific domain"
+   ],
+   "first_party": true,
+   "independent_group": "france_baac_road_accidents",
+   "min_units": 1000,
+   "natural_labels": "none; the injury severity grade is a published outcome, not an ETL fault",
+   "partitions": "hash of Num_Acc 70/15/15 so an accident and its places, vehicles and users stay together",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 342515,
+   "view": "france_baac_road_accidents"
+  },
+  "fta_ntd_monthly_ridership": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "months from January 2022 of the NTD monthly module (374,103 rows over all years): a contiguous window, not a random sample; 74,173 agency-mode-month rows",
+    "agency estimates and adjustments are published as reported; blanks are kept"
+   ],
+   "first_party": true,
+   "independent_group": "fta_national_transit_database",
+   "min_units": 500,
+   "partitions": "hash of ntd_id so the months of one agency stay together 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 74173,
+   "view": "fta_ntd_monthly_ridership"
+  },
   "gbif_cc0_occurrences": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2273,6 +2396,23 @@
    "units": 1000,
    "view": "met_museum_objects"
   },
+  "mitre_attack_enterprise_stix": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "pinned ATT&CK Enterprise release v20.1, complete collection bundle; optional fields vary by STIX object type and by revision",
+    "revoked and deprecated objects are published states and kept; object types are heterogeneous by design",
+    "MITRE copyright designation and licence reproduced in the view NOTICE"
+   ],
+   "first_party": true,
+   "independent_group": "mitre_attack_knowledge_base",
+   "min_units": 1000,
+   "natural_labels": "none; revoked and deprecated flags are curation states, not ETL faults",
+   "partitions": "hash of the STIX object id 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-NEST",
+   "units": 26699,
+   "view": "mitre_attack_enterprise_stix"
+  },
   "monash:4656626": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2289,6 +2429,21 @@
    "protocol_id": "P-TS",
    "units": 98723,
    "view": "monash_pedestrian"
+  },
+  "montgomery_dlc_sales": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "calendar year 2019 slice of the Montgomery County sales table (352,419 rows; the portal publishes 2017 to 2020 and 2026 only): a contiguous calendar year, not a random sample; 138,638 item-month rows",
+    "negative and zero movements are published states and kept"
+   ],
+   "first_party": true,
+   "independent_group": "montgomery_county_liquor_control_sales",
+   "min_units": 500,
+   "partitions": "hash of item_code 70/15/15 so the months of one item stay together",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 138638,
+   "view": "montgomery_dlc_sales"
   },
   "nasa_omni_solar_wind": {
    "anomaly_origin": "controlled_injection",
@@ -2868,6 +3023,37 @@
     "sub-half-hourly grid frequency transients"
    ],
    "view": "rte_eco2mix_national"
+  },
+  "seattle_building_permits": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "calendar year 2023 slice of the Seattle building permit table (194,432 rows over all years): a contiguous application-date window, not a random sample; 5,603 permit rows",
+    "project descriptions, street addresses, contractor names, links and coordinates dropped, permit numbers pseudonymised; columns more than 50 percent missing dropped"
+   ],
+   "first_party": true,
+   "independent_group": "seattle_sdci_building_permits",
+   "min_units": 500,
+   "partitions": "hash of permitnum so a permit and its dependent permits stay together 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 5603,
+   "view": "seattle_building_permits"
+  },
+  "seattle_fire_911_calls": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "calendar year 2023 window of the Seattle fire dispatch table (2,228,311 rows since 2003): contiguous, not a random sample; 125,678 dispatches over 365 local days",
+    "address, coordinate and region columns never downloaded, incident number pseudonymised; type is the dispatch type vocabulary of 133 values; one record per incident, so there is no per-incident lifecycle"
+   ],
+   "first_party": true,
+   "independent_group": "seattle_fire_911_dispatch",
+   "min_units": 100,
+   "natural_labels": "none; dispatch types are operational categories, not ETL faults",
+   "partitions": "hash of event_date 70/15/15 so daily dispatch sequences stay together",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 365,
+   "view": "seattle_fire_911_calls"
   },
   "seattle_fremont_bridge": {
    "anomaly_origin": "controlled_injection",

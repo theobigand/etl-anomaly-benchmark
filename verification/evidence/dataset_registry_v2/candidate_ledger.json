@@ -2976,6 +2976,171 @@
    "size": "2,521 rows",
    "source_url": "https://data.wa.gov/resource/idhm-59de",
    "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "seattle:fire-911",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Seattle Real Time Fire 911 Calls, 2023",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as seattle_fire_911_calls (per-day dispatch sequences; addresses and coordinates never downloaded)",
+   "publisher": "City of Seattle (Seattle Fire Department)",
+   "reason": "Emergency-dispatch event stream outside business-process execution, distinct from police calls and the transport counter",
+   "size": "125,678 dispatch rows",
+   "source_url": "https://data.seattle.gov/resource/kzjm-xkqj",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "fr:baac-2024",
+   "licence": "Licence Ouverte (data.gouv.fr dataset metadata)",
+   "name": "French BAAC road injury accidents 2024 (four tables)",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as france_baac_road_accidents (complete 2024 tables; addresses, coordinates, street names and birth years dropped); shares the police-reported road-injury mechanism with STATS19 but is a separate national system",
+   "publisher": "Ministere de l'Interieur (Observatoire national interministeriel de la securite routiere)",
+   "reason": "Relational system outside timetable networks; a second police-reporting road-safety group with its own producer",
+   "size": "54,402 accidents, 70,248 places, 92,678 vehicles, 125,187 users",
+   "source_url": "https://www.data.gouv.fr/datasets/bases-de-donnees-annuelles-des-accidents-corporels-de-la-circulation-routiere-annees-de-2005-a-2025",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "mitre:attack-enterprise-v20.1",
+   "licence": "MITRE ATT&CK licence (reproduce copyright and licence)",
+   "name": "MITRE ATT&CK Enterprise STIX 2.1 bundle v20.1",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as mitre_attack_enterprise_stix (pinned v20.1; Enterprise only: Mobile and ICS are the same curation system); MITRE also administers the CVE programme, a separate generating system recorded under nist_nvd",
+   "publisher": "The MITRE Corporation (ATT&CK)",
+   "reason": "Curated threat-knowledge graph with heterogeneous STIX objects and nested references",
+   "size": "STIX objects of the Enterprise bundle",
+   "source_url": "https://github.com/mitre-attack/attack-stix-data",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "seattle:building-permits",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Seattle building permits, applications of 2023",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as seattle_building_permits (Socrata export; descriptions, addresses, contractor names, links and coordinates dropped)",
+   "publisher": "City of Seattle (Seattle Department of Construction and Inspections)",
+   "reason": "Municipal construction permitting workflow, distinct from registries of facilities or vehicles",
+   "size": "5,603 rows",
+   "source_url": "https://cos-data.seattle.gov/resource/76t5-zqzr",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "delaware:well-permits",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Delaware water well permits, applications 2018 to 2022",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as delaware_well_permits (Socrata export; owners, addresses, tax ids, comments, contractors and coordinates dropped)",
+   "publisher": "State of Delaware (Department of Natural Resources and Environmental Control, Division of Water)",
+   "reason": "Groundwater well permitting with engineering attributes, a mechanism outside facility registers",
+   "size": "20,123 rows",
+   "source_url": "https://data.delaware.gov/resource/2655-qn8j",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "austin:campaign-finance",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "City of Austin campaign finance transactions, 2022",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as austin_campaign_finance (Socrata export; names, addresses, employers, occupations and free text dropped)",
+   "publisher": "City of Austin (City Clerk)",
+   "reason": "Political finance disclosure ledger, a transactional mechanism outside procurement and payments",
+   "size": "3,654 rows",
+   "source_url": "https://datahub.austintexas.gov/resource/g4yx-aw9r",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "delaware:credit-card-transactions",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "State of Delaware employee credit card transactions, fiscal year 2023",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as delaware_state_credit_cards (Socrata export; merchant names hashed)",
+   "publisher": "State of Delaware (Department of Finance, Division of Accounting)",
+   "reason": "Card-payment ledger of a state government, distinct from checkbook payments and procurement awards",
+   "size": "188,670 rows",
+   "source_url": "https://data.delaware.gov/resource/nurt-5rqw",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "montgomery-md:dlc-sales",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Montgomery County MD warehouse and retail sales, 2019",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as montgomery_dlc_sales (Socrata export; item descriptions kept as published product names)",
+   "publisher": "Montgomery County, Maryland (Department of Liquor Control)",
+   "reason": "Wholesale and retail inventory movement of a county alcohol monopoly, a sales mechanism outside government payments",
+   "size": "138,638 rows",
+   "source_url": "https://data.montgomerycountymd.gov/resource/v76h-r7br",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "fta:ntd-monthly",
+   "licence": "Public Domain U.S. Government (Socrata view metadata)",
+   "name": "FTA National Transit Database monthly ridership, from 2022",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as fta_ntd_monthly_ridership (Socrata export; the concatenated key and legacy id dropped)",
+   "publisher": "U.S. Department of Transportation (Federal Transit Administration, National Transit Database)",
+   "reason": "Federally compiled operational counts reported by hundreds of transit agencies, distinct from airport and bridge counters",
+   "size": "74,173 rows",
+   "source_url": "https://datahub.transportation.gov/resource/8bui-9xvu",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "bloomington:mwtp-daily",
+   "licence": "Open Data Commons Public Domain Dedication and License (Socrata view metadata)",
+   "name": "Bloomington Monroe Water Treatment Plant daily electricity and water, 2010 onward",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as bloomington_water_plant_energy (complete Socrata export)",
+   "publisher": "City of Bloomington Utilities (Monroe Water Treatment Plant)",
+   "reason": "Industrial utility process meters of a water plant, outside grid, weather and hydrology series",
+   "size": "6,109 rows",
+   "source_url": "https://data.bloomington.in.gov/resource/rzw5-gzjt",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "bloomington:solar-sites",
+   "licence": "Open Data Commons Public Domain Dedication and License (Socrata view metadata)",
+   "name": "Bloomington municipal solar installations, daily generation",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as bloomington_solar_sites (complete Socrata export; site names, addresses and coordinates dropped)",
+   "publisher": "Locus Energy (monitoring) for the City of Bloomington",
+   "reason": "Photovoltaic generation monitoring panel with expected-energy model, outside grid telemetry and wind SCADA",
+   "size": "91,437 rows",
+   "source_url": "https://data.bloomington.in.gov/resource/9t63-jmjk",
+   "status": "acquired"
   }
  ],
  "date": "2026-11-22",

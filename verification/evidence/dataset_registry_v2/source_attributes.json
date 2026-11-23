@@ -83,6 +83,28 @@
    "C3": "daily SMART series per drive with natural failure flag"
   }
  },
+ "bloomington_locus_solar_monitoring": {
+  "curator": "data.bloomington.in.gov",
+  "domain": "distributed photovoltaic generation monitoring",
+  "generating_system": "Locus Energy PV monitoring of Bloomington sites",
+  "note": "panel of the sites of one monitoring platform; shares the city portal with the Bloomington water plant group (separate system)",
+  "producer": "Locus Energy (for the City of Bloomington)",
+  "schema_family": "photovoltaic site daily panel",
+  "structure": {
+   "C3": "site-day rows with power statistics, energy and expected energy"
+  }
+ },
+ "bloomington_utilities_water_plant": {
+  "curator": "data.bloomington.in.gov",
+  "domain": "drinking water plant operations",
+  "generating_system": "Bloomington Utilities water plant daily meters",
+  "note": "one plant, one daily series; the second Bloomington group is a separate generating system (solar monitoring vendor)",
+  "producer": "City of Bloomington Utilities",
+  "schema_family": "utility plant daily meter series",
+  "structure": {
+   "C3": "daily electricity, solar generation and water volume columns of one plant"
+  }
+ },
  "candanedo_umons": {
   "curator": "uci",
   "domain": "building energy and occupancy",
@@ -125,6 +147,17 @@
   "schema_family": "small-molecule pharmacology json",
   "structure": {
    "C6": "medicinal chemistry molecule hierarchy json"
+  }
+ },
+ "city_of_austin_campaign_finance": {
+  "curator": "datahub.austintexas.gov",
+  "domain": "political campaign finance disclosure",
+  "generating_system": "City of Austin campaign finance filings",
+  "note": "one portal export; the other City of Austin group is a separate department and system; publisher blanks preserved",
+  "producer": "City of Austin (City Clerk)",
+  "schema_family": "campaign finance transaction ledger",
+  "structure": {
+   "C2b": "contribution, expenditure, loan and pledge rows with amount, entity type, dates and report fields"
   }
  },
  "clinicaltrials_gov": {
@@ -257,6 +290,28 @@
   "schema_family": "datacite metadata json",
   "structure": {
    "C6": "dataset doi registration metadata json"
+  }
+ },
+ "delaware_dnrec_well_permits": {
+  "curator": "data.delaware.gov",
+  "domain": "groundwater well regulation",
+  "generating_system": "Delaware DNREC water well permitting",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "State of Delaware (DNREC, Division of Water)",
+  "schema_family": "well permit records",
+  "structure": {
+   "C2a": "permit rows with well type, status, capacity, depths, materials and review flags"
+  }
+ },
+ "delaware_state_purchasing_cards": {
+  "curator": "data.delaware.gov",
+  "domain": "public purchasing-card spending",
+  "generating_system": "Delaware state purchasing card ledger",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "State of Delaware (Department of Finance, Division of Accounting)",
+  "schema_family": "card transaction ledger",
+  "structure": {
+   "C2b": "card transaction rows with department, merchant category, date and amount"
   }
  },
  "dft_stats19": {
@@ -479,6 +534,17 @@
    "C2a": "bridge inspection ratings and traffic class inventory"
   }
  },
+ "france_baac_road_accidents": {
+  "curator": "data.gouv.fr",
+  "domain": "road safety",
+  "generating_system": "French police and gendarmerie BAAC injury accident bulletins",
+  "note": "same broad mechanism as the STATS19 group (police-reported road-injury incidents) from a different national collection system and producer; four related tables, one group",
+  "producer": "Ministere de l'Interieur (ONISR; police and gendarmerie)",
+  "schema_family": "road collision coded tables",
+  "structure": {
+   "C5": "accident, place, vehicle and road-user tables joined by the accident id and the vehicle id (places and users are one-to-many)"
+  }
+ },
  "fraunhofer_iee_care_wind_b": {
   "curator": "zenodo",
   "descriptors": {
@@ -492,6 +558,17 @@
   "schema_family": "care wind turbine datasets",
   "structure": {
    "C3": "wind turbine SCADA with equipment-fault events"
+  }
+ },
+ "fta_national_transit_database": {
+  "curator": "datahub.transportation.gov",
+  "domain": "public transit operations reporting",
+  "generating_system": "FTA National Transit Database monthly reporting",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "U.S. Department of Transportation (Federal Transit Administration)",
+  "schema_family": "agency-mode-month activity counts",
+  "structure": {
+   "C2b": "agency-mode-month rows with unlinked trips, vehicles, revenue hours and miles"
   }
  },
  "fugaku_riken": {
@@ -896,6 +973,28 @@
    "C5": "clinical record graph"
   }
  },
+ "mitre_attack_knowledge_base": {
+  "curator": "github.com/mitre-attack",
+  "domain": "cyber threat knowledge base",
+  "generating_system": "MITRE ATT&CK curated adversary behaviour knowledge base",
+  "note": "one curation system; Enterprise, Mobile and ICS collections are not counted separately; MITRE also runs the CVE programme (separate system)",
+  "producer": "The MITRE Corporation",
+  "schema_family": "stix 2.1 bundle json",
+  "structure": {
+   "C6": "heterogeneous STIX domain objects with nested external references, kill-chain phases and x_mitre arrays"
+  }
+ },
+ "montgomery_county_liquor_control_sales": {
+  "curator": "data.montgomerycountymd.gov",
+  "domain": "public liquor wholesale and retail",
+  "generating_system": "Montgomery County DLC warehouse and retail sales",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "Montgomery County, Maryland (Department of Liquor Control)",
+  "schema_family": "item-month sales ledger",
+  "structure": {
+   "C2b": "item-month rows with supplier, item type, retail sales, transfers and warehouse sales"
+  }
+ },
  "montreal_contracts": {
   "curator": "ocds registry",
   "domain": "public procurement",
@@ -1266,6 +1365,17 @@
    "C3": "half-hourly load, generation by fuel, CO2 rate and cross-border flows"
   }
  },
+ "seattle_fire_911_dispatch": {
+  "curator": "data.seattle.gov",
+  "domain": "emergency fire and medical dispatch",
+  "generating_system": "Seattle Fire Department 911 computer-aided dispatch feed",
+  "note": "one portal export; shares the municipal portal with the Fremont Bridge counter (separate department, separate generating system); each row is one dispatched incident so sequences are per-day dispatch streams",
+  "producer": "Seattle Fire Department (City of Seattle)",
+  "schema_family": "dispatch event stream",
+  "structure": {
+   "C4": "chronological daily dispatch sequences with incident type, minute timestamp and incident id"
+  }
+ },
  "seattle_fremont_bridge_counter": {
   "curator": "data.seattle.gov",
   "domain": "urban cycling infrastructure counting",
@@ -1275,6 +1385,17 @@
   "schema_family": "single-site hourly counter series",
   "structure": {
    "C3": "hourly bicycle and scooter counts for the east and west pathways of one bridge with natural blank hours"
+  }
+ },
+ "seattle_sdci_building_permits": {
+  "curator": "data.seattle.gov",
+  "domain": "building permitting",
+  "generating_system": "Seattle SDCI permit tracking",
+  "note": "one portal export; shares the municipal portal with the Seattle Fire and Fremont Bridge groups (separate department and generating system); publisher blanks preserved",
+  "producer": "City of Seattle (Seattle Department of Construction and Inspections)",
+  "schema_family": "permit application register",
+  "structure": {
+   "C2a": "permit rows with class, type, status, review days, housing units and estimated cost"
   }
  },
  "seoul_bike": {
