@@ -6390,6 +6390,366 @@
    "stratum": "C3",
    "system": "locus_energy_pv_monitoring_bloomington_sites",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "bts_umd_daily_mobility_statistics",
+   "id": "bts_daily_mobility_national",
+   "licence_class": "open",
+   "protocols": "P-TS",
+   "publisher": "us_bts_umd",
+   "reason": "BTS and University of Maryland daily mobility statistics, national level, 1,923 days from 2019-01-01 to 2024-04-06: population staying at home and not, and trip counts by distance band; a mobile-device-panel mobility mechanism absent from the other time-series groups",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata read 2026-11-23: license USGOV_WORKS (Public Domain U.S. Government), attribution Bureau of Transportation Statistics; Maryland Transportation Institute and CATT Laboratory, University of Maryland",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "umd_mti_mobile_device_panel_daily_mobility",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "eia_petroleum_spot_prices",
+   "id": "eia_petroleum_spot_prices",
+   "licence_class": "open",
+   "protocols": "P-TS",
+   "publisher": "us_eia",
+   "reason": "EIA petroleum bulk file (PET), daily spot price series: WTI Cushing, Brent, New York Harbor and Gulf Coast gasoline, diesel, heating oil and jet fuel, Los Angeles gasoline and diesel and Mont Belvieu propane, joined on the date (10,473 business days from 1986-01-02 to 2026-11-17), publisher gaps kept as missing; commodity market price mechanism absent from the other time-series groups (futures contracts and non-daily series left out)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "EIA Copyrights and Reuse page read 2026-11-23: U.S. government publications are in the public domain and not subject to copyright; data may be used and distributed with an acknowledgement that includes the publication date",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "eia_petroleum_spot_price_compilation",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "noaa_nhc_hurdat2_best_track",
+   "id": "nhc_hurdat2_atlantic",
+   "licence_class": "open",
+   "protocols": "P-SEQ",
+   "publisher": "noaa_nhc",
+   "reason": "NHC HURDAT2 Atlantic best-track database (file 1851-2025, version 092326): every tropical and subtropical cyclone of the basin as a chronological sequence of six-hourly (and landfall or intensity-extremum) analysis records with status, position, maximum wind, pressure and wind radii; the unit of sequence is one storm, so statuses and intensity transitions follow the storm life cycle; a post-season analysis mechanism outside business processes",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "NHC (NWS) disclaimer page read 2026-11-23: information on government servers is in the public domain unless annotated otherwise and may be used freely by the public; it shall not be modified in content and presented as official government material",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "noaa_nhc_hurdat2_atlantic_best_track_analysis",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "nces_ipeds_postsecondary_surveys",
+   "id": "nces_ipeds_2023",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "us_nces_ipeds",
+   "reason": "U.S. Department of Education NCES IPEDS 2023 survey collection of postsecondary institutions: institutional characteristics (6,163 institutions), institutional characteristics survey (IC), admissions (ADM), 12-month enrolment (EFFY) and completions (C_A, 300 thousand institution-programme-award rows), all keyed by the institution id UNITID with the institution table as parent; a relational survey database outside timetable networks",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "NCES disclaimer page read 2026-11-23: unless stated otherwise all information on the IES website is in the public domain and may be reproduced, published, linked to or otherwise used without IES permission (citation: U.S. Department of Education, Institute of Education Sciences)",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "nces_ipeds_institutional_survey_collection",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "apis_guru_openapi_directory",
+   "id": "apis_guru_openapi_directory",
+   "licence_class": "open",
+   "protocols": "P-NEST",
+   "publisher": "apis_guru",
+   "reason": "APIs.guru OpenAPI directory list (v2 list.json): 2,529 API entries, each with versions that nest info objects (categories, logos, external docs, vendor extensions), spec URLs and OpenAPI versions; the heterogeneous vendor extensions and varying version sets give the optional-field and shape variation of a curated API registry; contact objects dropped",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "LICENSE (CC0 1.0 Universal) and README of APIs-guru/openapi-directory read 2026-11-23: all API definitions contributed to the project are covered by the CC0 1.0 licence",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "apis_guru_openapi_directory_curation",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "zenodo_repository_records",
+   "id": "zenodo_dataset_records_2023_03",
+   "licence_class": "open",
+   "protocols": "P-NEST",
+   "publisher": "cern_zenodo",
+   "reason": "Zenodo repository record objects of datasets published in March 2023 (API pages of 25): nested metadata, relations, file lists with checksums and sizes, resource types, licences, subjects, communities and statistics with optional fields varying by record; creators, contributors, owners, free-text descriptions and links dropped",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Zenodo Terms of Use read 2026-11-23: unless specified otherwise, Zenodo metadata may be freely reused under the CC0 waiver",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "zenodo_repository_record_store",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "cincinnati_fire_dispatch",
+   "id": "cincinnati_fire_cad",
+   "licence_class": "open",
+   "protocols": "P-SEQ",
+   "publisher": "city_of_cincinnati_fire",
+   "reason": "Cincinnati Fire Department computer-aided dispatch incidents created in calendar year 2023: 96,072 incident rows (96,071 distinct event numbers) become 359,125 lifecycle events (incident created, primary unit dispatched, primary unit arrived, incident closed), ordered by time within each incident; blank lifecycle timestamps are not events (unit dispatched 9,039, unit arrived 13,405, incident closed 2,719); addresses, coordinates and beats never downloaded, event numbers hashed",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata for vnsz-a3wp read 2026-11-23: license Public Domain (PUBLIC_DOMAIN), attribution City of Cincinnati",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "cincinnati_fire_department_cad_system",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "austin_police_dispatch",
+   "id": "austin_apd_cad",
+   "licence_class": "open",
+   "protocols": "P-SEQ",
+   "publisher": "city_of_austin_apd",
+   "reason": "Austin Police Department computer-aided dispatch incidents of the first quarter of 2023: 88,817 incident rows (88,816 distinct incident numbers) become 266,451 lifecycle events (call responded, first unit arrived, call closed), ordered by time within each incident; locations, districts, sectors, flags and injury counts never downloaded, incident numbers hashed",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata for 22de-7rzg read 2026-11-23: license Public Domain (PUBLIC_DOMAIN), attribution City of Austin, Texas - data.austintexas.gov",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "austin_police_department_cad_system",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "fec_federal_campaign_finance_filings",
+   "id": "fec_federal_campaign_finance_2024",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "us_fec",
+   "reason": "U.S. Federal Election Commission bulk files of the 2023-2024 cycle: candidate master, committee master, candidate-committee linkages and committee-to-candidate contributions (itpas2, hundreds of thousands of transactions), related by candidate id and committee id; names, treasurers, addresses, payee fields and memo text dropped; a relational political-finance filing database outside timetable networks",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "FEC page on the sale or use of contributor information read 2026-11-23: FEC reports are public records; individual contributor information may be used for bona fide academic research that does not involve sale or commercial use or soliciting contributions (advisory opinion 1986-25); this view contains no individual contributor information",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "fec_campaign_finance_filing_database",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "reactome_curated_pathway_database",
+   "id": "reactome_pathway_knowledgebase",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "reactome",
+   "reason": "Reactome release 98 flat files: 23,652 pathways with species, 23,762 parent-child hierarchy edges, 325,971 UniProt-to-pathway and 113,522 ChEBI-to-pathway mappings, all referring to the pathway identifier; a curated biological knowledge base with a pathway hierarchy (a directed acyclic parent-child relation) outside timetable networks",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Reactome licence page read 2026-11-23: all data in the Reactome database and files derived from it are licensed under CC0 (Creative Commons Public Domain Dedication); attribution encouraged, not required",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "reactome_curated_pathway_knowledgebase",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "github_advisory_database",
+   "id": "github_reviewed_advisories",
+   "licence_class": "open",
+   "protocols": "P-NEST",
+   "publisher": "github_advisory",
+   "reason": "GitHub reviewed security advisories (the first 100 of each publication year 2017 to 2026): nested records with vulnerabilities (package, ranges, patched versions), identifiers, references, CVSS and CWE arrays, EPSS; optional parts vary by advisory; credits (people) dropped",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "GitHub advisory-database repository LICENSE read 2026-11-23: the advisory data are licensed CC BY 4.0",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "github_reviewed_security_advisory_database",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "ncbi_pubchem_compound_records",
+   "id": "pubchem_compounds",
+   "licence_class": "open",
+   "protocols": "P-NEST",
+   "publisher": "ncbi_pubchem",
+   "reason": "PubChem compound records of CID 1 to 1000 (PUG REST JSON): nested atom, bond, coordinate and computed property arrays with mixed property types per record; computed compound descriptors only, no depositor text",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "NCBI policies page read 2026-11-23: NCBI itself places no restrictions on the use or distribution of the data, while some original submitters may claim rights in portions of the data",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "ncbi_pubchem_compound_database",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "nasa_common_metadata_repository",
+   "id": "nasa_cmr_collections",
+   "licence_class": "open",
+   "protocols": "P-NEST",
+   "publisher": "nasa_earthdata_cmr",
+   "reason": "NASA Common Metadata Repository collection records (UMM-C JSON) of nine data providers, the first 100 of each by entry title: nested science keywords, temporal and spatial extents, platforms and instruments, related URLs, data centers and processing levels with optional sections that vary by provider; contact persons and groups dropped",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "NASA Earthdata Data and Information Guidance page read 2026-11-23: NASA promotes the full and open sharing of data with the research and applications communities, private industry, academia and the general public",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "nasa_earthdata_common_metadata_repository_collection_records",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "doaj_directory_of_open_access_journals",
+   "id": "doaj_journals",
+   "licence_class": "open",
+   "protocols": "P-NEST",
+   "publisher": "doaj",
+   "reason": "DOAJ journal records (the first 999 by creation date, API pages of 50): nested bibjson with editorial, licence, subject, language, APC, preservation, article and publisher sub-objects and arrays, optional fields varying by journal; a curated journal registry",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "DOAJ terms page read 2026-11-23: the journal-level metadata is available with a CC0 waiver (API, CSV, OAI-PMH, data dump)",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "doaj_journal_index_curation",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "gene_ontology_consortium_annotations",
+   "id": "gene_ontology_annotations",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "gene_ontology_consortium",
+   "reason": "Gene Ontology release (go-basic) with its human UniProt-GOA annotation file: ontology terms, their is-a and relationship edges (a directed acyclic hierarchy) and annotations of proteins to terms with evidence codes and references, related by the GO identifier; a curated biological ontology and annotation database outside timetable networks (object names and synonyms dropped)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Gene Ontology citation policy page read 2026-11-23: GO data are licensed under CC BY 4.0 and attribution with the release date is requested; the UniProt-GOA annotation file is distributed through the same GO release",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "gene_ontology_and_goa_curation",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "cincinnati_emergency_communications_calls",
+   "id": "cincinnati_ecc_calls",
+   "licence_class": "open",
+   "protocols": "P-SEQ",
+   "publisher": "city_of_cincinnati_ecc",
+   "reason": "Cincinnati Emergency Communications Center 911 call records seized in January and February 2023: 164,525 calls become 391,439 telephony events (call seized, location queried, transfer received, call released), ordered by time within each call; blank timestamps are not events (location queried 105,193, transfer received 161,468); queues, agents, line numbers, durations and caller locations never downloaded, call record ids hashed; a telephony call-handling mechanism, distinct from incident dispatch",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata for 5f3f-hgt9 read 2026-11-23: license Public Domain (PUBLIC_DOMAIN), attribution City of Cincinnati",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "cincinnati_ecc_911_telephony_call_records",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "cdc_covid_vaccination_reporting",
+   "id": "cdc_covid_vaccination_trends_us",
+   "licence_class": "open",
+   "protocols": "P-TS",
+   "publisher": "us_cdc",
+   "reason": "CDC COVID-19 vaccination trends, national (US) rows: 1,476 date rows from 2020-12-13 to 2023-05-10 in two reporting views (by administration date and by report date), daily and cumulative doses, rolling averages and population percentages for the first, series-complete, booster and bivalent doses; a public-health reporting mechanism with strong reporting-date effects",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata read 2026-11-23: license USGOV_WORKS (Public Domain U.S. Government), attribution Centers for Disease Control and Prevention, IISInfo (COVID-19 vaccination trends)",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "cdc_covid_vaccination_reporting_from_immunization_information_systems",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "noaa_cpc_arctic_oscillation_index",
+   "id": "noaa_cpc_daily_ao_index",
+   "licence_class": "open",
+   "protocols": "P-TS",
+   "publisher": "noaa_cpc",
+   "reason": "NOAA Climate Prediction Center daily Arctic Oscillation index (CDAS 1000 hPa height projection) from 1950: about 28,000 daily values with the publisher's blanks kept; a derived atmospheric circulation index of the northern hemisphere, absent from the other time-series groups",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "NWS disclaimer page read 2026-11-23, the page the CPC pages link to: information on NWS web pages is in the public domain unless specifically noted otherwise and may be used without charge for any lawful purpose, without claiming it as one's own, implying endorsement, or modifying it and presenting it as official government material",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "noaa_cpc_cdas_arctic_oscillation_index_computation",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

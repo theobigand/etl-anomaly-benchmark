@@ -1,6 +1,6 @@
 {
  "licence_classes": {
-  "open": 300,
+  "open": 318,
   "research_only": 22
  },
  "strata": {
@@ -53,44 +53,44 @@
    "minimum": 15,
    "missing_to_minimum": 0,
    "missing_to_recommended": 0,
-   "publishers": 62,
+   "publishers": 66,
    "recommended": 40,
-   "sources": 68,
+   "sources": 72,
    "stratum": "time series",
-   "systems": 70
+   "systems": 74
   },
   "C4": {
    "ambitious": 40,
    "minimum": 15,
    "missing_to_minimum": 0,
    "missing_to_recommended": 0,
-   "publishers": 25,
+   "publishers": 29,
    "recommended": 28,
-   "sources": 41,
+   "sources": 45,
    "stratum": "logs and event sequences",
-   "systems": 40
+   "systems": 44
   },
   "C5": {
    "ambitious": 55,
    "minimum": 15,
    "missing_to_minimum": 0,
-   "missing_to_recommended": 15,
-   "publishers": 32,
+   "missing_to_recommended": 11,
+   "publishers": 36,
    "recommended": 36,
-   "sources": 21,
+   "sources": 25,
    "stratum": "relational",
-   "systems": 41
+   "systems": 45
   },
   "C6": {
    "ambitious": 45,
    "minimum": 15,
    "missing_to_minimum": 0,
-   "missing_to_recommended": 5,
-   "publishers": 24,
+   "missing_to_recommended": 0,
+   "publishers": 30,
    "recommended": 30,
-   "sources": 25,
+   "sources": 31,
    "stratum": "nested",
-   "systems": 25
+   "systems": 31
   }
  },
  "time_candidates_not_yet_verified": [
@@ -98,5 +98,5 @@
   "uci:755",
   "uci:760"
  ],
- "total_sources": 322
+ "total_sources": 340
 }

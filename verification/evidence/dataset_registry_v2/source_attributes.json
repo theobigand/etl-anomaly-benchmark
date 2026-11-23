@@ -57,6 +57,28 @@
    "C4": "real-time strategy gameplay event sequences"
   }
  },
+ "apis_guru_openapi_directory": {
+  "curator": "github.com/APIs-guru",
+  "domain": "web API description registry",
+  "generating_system": "APIs.guru OpenAPI directory curation",
+  "note": "one directory list; versions are nested, not counted as separate systems",
+  "producer": "APIs.guru maintainers",
+  "schema_family": "openapi directory json",
+  "structure": {
+   "C6": "API entries with nested version objects, info metadata, categories and vendor extensions"
+  }
+ },
+ "austin_police_dispatch": {
+  "curator": "datahub.austintexas.gov",
+  "domain": "police dispatch",
+  "generating_system": "Austin Police Department computer-aided dispatch",
+  "note": "per-incident lifecycle events; the same broad emergency-dispatch mechanism as the Seattle Fire and Cincinnati Fire groups, from a police CAD system of a separate city department; shares the Austin portal with other City of Austin groups",
+  "producer": "City of Austin (Austin Police Department)",
+  "schema_family": "dispatch lifecycle timestamps",
+  "structure": {
+   "C4": "per-incident response, arrival and closure events with problem category"
+  }
+ },
  "austin_surface_water_quality": {
   "curator": "datahub.austintexas.gov",
   "domain": "surface water quality sampling",
@@ -105,6 +127,17 @@
    "C3": "daily electricity, solar generation and water volume columns of one plant"
   }
  },
+ "bts_umd_daily_mobility_statistics": {
+  "curator": "data.bts.gov",
+  "domain": "population mobility",
+  "generating_system": "University of Maryland mobile-device panel daily mobility statistics",
+  "note": "national daily series of one derived panel; state and county levels are not counted separately",
+  "producer": "U.S. Department of Transportation (BTS) with the University of Maryland",
+  "schema_family": "derived mobility indicator panel",
+  "structure": {
+   "C3": "daily national stay-at-home population and trip counts by distance band"
+  }
+ },
  "candanedo_umons": {
   "curator": "uci",
   "domain": "building energy and occupancy",
@@ -127,6 +160,17 @@
    "C4": "operational job trace"
   }
  },
+ "cdc_covid_vaccination_reporting": {
+  "curator": "data.cdc.gov",
+  "domain": "public health immunization reporting",
+  "generating_system": "CDC COVID-19 vaccination reporting from immunization information systems",
+  "note": "national rows of one reporting table; the jurisdiction rows are not counted separately; the RKI emergency department group is a separate national surveillance system",
+  "producer": "U.S. Centers for Disease Control and Prevention",
+  "schema_family": "vaccination reporting counts",
+  "structure": {
+   "C3": "daily national dose counts with cumulative, rolling and percentage columns in administration-date and report-date views"
+  }
+ },
  "cftc_cot_disaggregated": {
   "curator": "publicreporting.cftc.gov",
   "domain": "commodity derivatives positioning",
@@ -147,6 +191,28 @@
   "schema_family": "small-molecule pharmacology json",
   "structure": {
    "C6": "medicinal chemistry molecule hierarchy json"
+  }
+ },
+ "cincinnati_emergency_communications_calls": {
+  "curator": "data.cincinnati-oh.gov",
+  "domain": "emergency call handling",
+  "generating_system": "Cincinnati ECC 911 telephony call records",
+  "note": "per-call telephony events; the call records are separate from the fire and police dispatch systems, which the publisher says carry the nature of the emergency; shares the city portal with the Cincinnati Fire group (separate department and system)",
+  "producer": "City of Cincinnati (Emergency Communications Center)",
+  "schema_family": "telephony call lifecycle timestamps",
+  "structure": {
+   "C4": "per-call seizure, location query, transfer and release events with call type"
+  }
+ },
+ "cincinnati_fire_dispatch": {
+  "curator": "data.cincinnati-oh.gov",
+  "domain": "emergency fire and medical dispatch",
+  "generating_system": "Cincinnati Fire Department computer-aided dispatch",
+  "note": "per-incident lifecycle events; same broad mechanism as the Seattle Fire group (emergency dispatch) from a separate department, city and CAD system",
+  "producer": "City of Cincinnati (Cincinnati Fire Department)",
+  "schema_family": "dispatch lifecycle timestamps",
+  "structure": {
+   "C4": "per-incident dispatch, arrival and closure events with incident type"
   }
  },
  "city_of_austin_campaign_finance": {
@@ -369,6 +435,17 @@
    "C3": "spacecraft polar-orbit particle spectrometer auroral boundary time series"
   }
  },
+ "doaj_directory_of_open_access_journals": {
+  "curator": "doaj.org",
+  "domain": "open access journal registry",
+  "generating_system": "DOAJ journal index curation",
+  "note": "creation-ordered prefix of the journal records; article-level records are not used",
+  "producer": "Directory of Open Access Journals",
+  "schema_family": "doaj bibjson journal records",
+  "structure": {
+   "C6": "journal records with nested editorial, licence, subject, APC and preservation sub-objects"
+  }
+ },
  "dutch_municipalities": {
   "curator": "4tu",
   "domain": "public administration",
@@ -432,6 +509,17 @@
    "C3": "wind turbine SCADA with logbook fault events"
   }
  },
+ "eia_petroleum_spot_prices": {
+  "curator": "eia.gov",
+  "domain": "energy commodity markets",
+  "generating_system": "EIA petroleum spot price compilation",
+  "note": "one bulk file; futures contracts and non-daily series are not used",
+  "producer": "U.S. Energy Information Administration",
+  "schema_family": "commodity spot price panel",
+  "structure": {
+   "C3": "daily spot prices of crude oil and refined products joined on the date"
+  }
+ },
  "eicu_philips": {
   "curator": "physionet",
   "domain": "intensive care",
@@ -488,6 +576,17 @@
   "schema_family": "bank regulatory call reports",
   "structure": {
    "C2b": "insured bank quarterly financial statement cross-sections"
+  }
+ },
+ "fec_federal_campaign_finance_filings": {
+  "curator": "fec.gov",
+  "domain": "federal campaign finance",
+  "generating_system": "FEC campaign finance filing database",
+  "note": "one election cycle; the individual contribution files are not used; the City of Austin campaign finance group is a separate municipal system",
+  "producer": "U.S. Federal Election Commission",
+  "schema_family": "campaign finance relational tables",
+  "structure": {
+   "C5": "candidate and committee master tables with linkage and committee-to-candidate contribution tables keyed by candidate and committee ids"
   }
  },
  "federal_register": {
@@ -593,6 +692,17 @@
    "C6": "georeferenced species occurrence json"
   }
  },
+ "gene_ontology_consortium_annotations": {
+  "curator": "geneontology.org",
+  "domain": "gene function ontology and annotation",
+  "generating_system": "Gene Ontology Consortium and UniProt-GOA curation",
+  "note": "one release of the ontology and the human annotation file; UniProt is an identifier namespace used as annotation key; the Reactome group is a separate curation system",
+  "producer": "Gene Ontology Consortium; EMBL-EBI (UniProt-GOA)",
+  "schema_family": "ontology term and annotation tables",
+  "structure": {
+   "C5": "ontology terms with an is-a and relationship hierarchy and protein-to-term annotation rows keyed by the GO identifier"
+  }
+ },
  "georgia_procurement": {
   "curator": "ocds registry",
   "domain": "public procurement",
@@ -653,6 +763,17 @@
   "schema_family": "git ci workflow change history",
   "structure": {
    "C4": "per-repository workflow edit events with git_change_type, YAML validity flags and file content hashes"
+  }
+ },
+ "github_advisory_database": {
+  "curator": "github.com",
+  "domain": "software vulnerability advisories",
+  "generating_system": "GitHub reviewed security advisory database",
+  "note": "first 100 reviewed advisories of each publication year; shares the subject with the Go vulnerability database and the NVD but is a separate curation system",
+  "producer": "GitHub, Inc.",
+  "schema_family": "github advisory json",
+  "structure": {
+   "C6": "advisory records with nested vulnerabilities, package ranges, identifiers, references, CVSS, CWE and EPSS objects"
   }
  },
  "grouplens": {
@@ -1029,6 +1150,17 @@
    "C4": "chromospheric solar radio burst event catalog"
   }
  },
+ "nasa_common_metadata_repository": {
+  "curator": "cmr.earthdata.nasa.gov",
+  "domain": "earth science data catalogue",
+  "generating_system": "NASA Earthdata CMR collection metadata",
+  "note": "title-ordered prefix of nine providers; records are provider-contributed, the repository is one system",
+  "producer": "NASA Earth Science Data and Information System",
+  "schema_family": "umm-c collection json",
+  "structure": {
+   "C6": "collection records with nested keywords, extents, platforms and instruments, related URLs and data centers"
+  }
+ },
  "nasa_omni_near_earth_solar_wind": {
   "curator": "nasa_spdf",
   "domain": "heliospheric space physics",
@@ -1038,6 +1170,28 @@
   "schema_family": "hourly fixed-format spacecraft compilation",
   "structure": {
    "C3": "hourly interplanetary magnetic field and solar wind plasma measurements with publisher fill values and spacecraft identifiers"
+  }
+ },
+ "ncbi_pubchem_compound_records": {
+  "curator": "pubchem.ncbi.nlm.nih.gov",
+  "domain": "chemical structure records",
+  "generating_system": "NCBI PubChem compound standardisation",
+  "note": "identifier-ordered prefix of the compound table; the ChEMBL group is a separate curation system of the same subject",
+  "producer": "National Center for Biotechnology Information",
+  "schema_family": "pubchem pug compound json",
+  "structure": {
+   "C6": "compound records with nested atom, bond, coordinate and typed property arrays"
+  }
+ },
+ "nces_ipeds_postsecondary_surveys": {
+  "curator": "nces.ed.gov",
+  "domain": "postsecondary education statistics",
+  "generating_system": "NCES IPEDS institutional survey collection",
+  "note": "one survey year; the other IPEDS years and survey components are the same system",
+  "producer": "U.S. Department of Education (NCES)",
+  "schema_family": "institutional survey relational tables",
+  "structure": {
+   "C5": "institution characteristics parent table with admissions, enrolment and completions child tables keyed by UNITID"
   }
  },
  "ndbc_moored_buoys": {
@@ -1098,6 +1252,17 @@
    "C3": "hourly coastal sea-level and astronomical tide telemetry with quality flags"
   }
  },
+ "noaa_cpc_arctic_oscillation_index": {
+  "curator": "cpc.ncep.noaa.gov",
+  "domain": "atmospheric circulation climate index",
+  "generating_system": "NOAA CPC CDAS Arctic Oscillation index computation",
+  "note": "one derived daily index; the NOAA National Weather Service is the wider publisher of the separate CAP alert and HURDAT2 groups",
+  "producer": "NOAA National Weather Service, Climate Prediction Center",
+  "schema_family": "daily climate index",
+  "structure": {
+   "C3": "daily Arctic Oscillation index values from 1950"
+  }
+ },
  "noaa_gml_co2": {
   "curator": "noaa",
   "domain": "environmental monitoring",
@@ -1118,6 +1283,17 @@
   "schema_family": "storm event impact relational tables",
   "structure": {
    "C5": "meteorological episode-event-location-fatality hierarchy"
+  }
+ },
+ "noaa_nhc_hurdat2_best_track": {
+  "curator": "nhc.noaa.gov",
+  "domain": "tropical cyclone climatology",
+  "generating_system": "NOAA NHC HURDAT2 best-track post-season analysis",
+  "note": "Atlantic file only; one record is one analysed storm position; the NOAA National Weather Service is the wider publisher of the separate CAP alert group",
+  "producer": "NOAA National Hurricane Center",
+  "schema_family": "best-track storm record file",
+  "structure": {
+   "C4": "chronological per-storm analysis records with status, position, wind, pressure and wind radii"
   }
  },
  "nsidc_sea_ice_index": {
@@ -1323,6 +1499,17 @@
   "schema_family": "mmcif pdbx structure json",
   "structure": {
    "C6": "macromolecular experimental structure JSON documents with optional crystallographic refinement subtrees"
+  }
+ },
+ "reactome_curated_pathway_database": {
+  "curator": "reactome.org",
+  "domain": "molecular pathway biology",
+  "generating_system": "Reactome curated pathway knowledge base",
+  "note": "one release; UniProt and ChEBI are identifier namespaces of other systems used only as mapping keys",
+  "producer": "Reactome (OICR, EMBL-EBI, NYULMC, CSHL)",
+  "schema_family": "pathway hierarchy and identifier mapping tables",
+  "structure": {
+   "C5": "pathway table with a parent-child hierarchy and UniProt and ChEBI mapping tables keyed by the pathway identifier"
   }
  },
  "rki_surveillance": {
@@ -2491,6 +2678,17 @@
    "C2b": "contract award",
    "C5": "procurement releases (shallow)",
    "C6": "procurement release"
+  }
+ },
+ "zenodo_repository_records": {
+  "curator": "zenodo.org",
+  "domain": "research data repository",
+  "generating_system": "Zenodo repository record store",
+  "note": "one query window; Zenodo DOIs are registered with DataCite, a separate system recorded under datacite_dois",
+  "producer": "CERN (Zenodo)",
+  "schema_family": "repository record json",
+  "structure": {
+   "C6": "record objects with nested metadata, relations, file lists and statistics"
   }
  }
 }

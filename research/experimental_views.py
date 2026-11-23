@@ -7,6 +7,7 @@ salted hashes: they keep joins working, they do not make the data anonymous. Vie
 
 from __future__ import annotations
 
+import csv
 import functools
 import hashlib
 import io
@@ -14,6 +15,7 @@ import json
 import re
 import sys
 import zipfile
+from collections.abc import Iterable
 from pathlib import Path
 from typing import Any
 
@@ -8806,6 +8808,122 @@ SOCRATA_TABLES: dict[str, dict[str, Any]] = {
         "pseudonymise": [],
         "window": "date",
     },
+    "bts_daily_mobility_national": {
+        "file": "daily_mobility_national.csv",
+        "table": "daily.csv",
+        "label": "BTS national mobility",
+        "method": "national-level daily mobility rows ordered by date",
+        "columns": [
+            "level",
+            "date",
+            "state_fips",
+            "state_code",
+            "county_fips",
+            "county",
+            "pop_stay_at_home",
+            "pop_not_stay_at_home",
+            "trips",
+            "trips_1",
+            "trips_1_3",
+            "trips_3_5",
+            "trips_5_10",
+            "trips_10_25",
+            "trips_25_50",
+            "trips_50_100",
+            "trips_100_250",
+            "trips_250_500",
+            "trips_500",
+            "row_id",
+            "week",
+            "month",
+        ],
+        "numbers": [
+            "pop_stay_at_home",
+            "pop_not_stay_at_home",
+            "trips",
+            "trips_1",
+            "trips_1_3",
+            "trips_3_5",
+            "trips_5_10",
+            "trips_10_25",
+            "trips_25_50",
+            "trips_50_100",
+            "trips_100_250",
+            "trips_250_500",
+            "trips_500",
+            "week",
+            "month",
+        ],
+        "dates": ["date"],
+        "drop": ["level", "state_fips", "state_code", "county_fips", "county", "row_id"],
+        "pseudonymise": [],
+        "window": "date",
+    },
+    "cdc_covid_vaccination_trends_us": {
+        "file": "vaccination_trends_us.csv",
+        "table": "daily.csv",
+        "label": "CDC vaccination trends",
+        "method": "national vaccination trend rows ordered by date type and date",
+        "columns": [
+            "date",
+            "date_type",
+            "mmwr_week",
+            "location",
+            "administered_daily",
+            "administered_cumulative",
+            "administered_7_day_rolling",
+            "admin_dose_1_daily",
+            "admin_dose_1_cumulative",
+            "admin_dose_1_day_rolling",
+            "administered_dose1_pop_pct",
+            "administered_daily_change",
+            "administered_daily_change_1",
+            "series_complete_daily",
+            "series_complete_cumulative",
+            "series_complete_day_rolling",
+            "series_complete_pop_pct",
+            "booster_daily",
+            "booster_cumulative",
+            "booster_7_day_rolling_average",
+            "additional_doses_vax_pct",
+            "second_booster_50plus_daily",
+            "second_booster_50plus_cumulative",
+            "second_booster_50plus_7_day_rolling_average",
+            "second_booster_50plus_vax_pct",
+            "bivalent_booster_daily",
+            "bivalent_booster_cumulative",
+            "bivalent_booster_7_day_rolling_average",
+            "bivalent_booster_pop_pct",
+        ],
+        "numbers": [
+            "mmwr_week",
+            "administered_daily",
+            "administered_cumulative",
+            "administered_7_day_rolling",
+            "admin_dose_1_daily",
+            "admin_dose_1_cumulative",
+            "admin_dose_1_day_rolling",
+            "administered_dose1_pop_pct",
+            "administered_daily_change",
+            "administered_daily_change_1",
+            "series_complete_daily",
+            "series_complete_cumulative",
+            "series_complete_day_rolling",
+            "series_complete_pop_pct",
+            "booster_daily",
+            "booster_cumulative",
+            "booster_7_day_rolling_average",
+            "additional_doses_vax_pct",
+            "second_booster_50plus_daily",
+            "second_booster_50plus_cumulative",
+            "second_booster_50plus_7_day_rolling_average",
+            "second_booster_50plus_vax_pct",
+        ],
+        "dates": ["date"],
+        "drop": ["location"],
+        "pseudonymise": [],
+        "window": "date",
+    },
 }
 
 
@@ -8870,7 +8988,7 @@ def seattle_fire_911_view(raw: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(
         {
             "event_date": frame["time"].dt.strftime("%Y-%m-%d"),
-            "time": frame["time"].dt.strftime("%Y-%m-%d %H:%M:%S"),
+            "time": frame["time"],
             "type": frame["type"].mask(frame["type"] == ""),
             "incident": frame["incident_number"].map(pseudonym),
         }
@@ -9011,13 +9129,14 @@ def baac_view(
     """
     views, relations = tables_view(tables, BAAC_SPEC)
     vehicles, users = views["vehicules"], views["usagers"]
-    pairs = users[users["num_veh"] != ""]
-    known = set(zip(vehicles["Num_Acc"], vehicles["num_veh"], strict=True))
-    seen = zip(pairs["Num_Acc"], pairs["num_veh"], strict=True)
+    pairs = users.loc[users["num_veh"] != "", ["Num_Acc", "num_veh"]]
+    joined = pairs.merge(
+        vehicles[["Num_Acc", "num_veh"]].drop_duplicates(), how="left", indicator=True
+    )
     accidents = set(views["caracteristiques"]["Num_Acc"])
     children = {name: views[name] for name in ("lieux", "vehicules", "usagers")}
     facts = {
-        "usagers_num_veh_without_vehicle": sum(pair not in known for pair in seen),
+        "usagers_num_veh_without_vehicle": int((joined["_merge"] == "left_only").sum()),
         "usagers_num_veh_checked": len(pairs),
         "vehicules_duplicate_num_veh": int(vehicles.duplicated(["Num_Acc", "num_veh"]).sum()),
         "max_rows_per_accident": {
@@ -9118,6 +9237,889 @@ def _build_attack_stix(root: Path, out: Path, manifest: dict[str, Any]) -> None:
             "object_types": dict(sorted(types.items())),
         },
         source_snapshot=f"mitre_attack_enterprise_stix/{WAVE28_SNAPSHOT}",
+    )
+
+
+def eia_spot_view(lines: Iterable[str]) -> pd.DataFrame:
+    """Daily spot price series of the EIA petroleum bulk file as one table joined on the date.
+
+    A series qualifies when its frequency is daily and its name says spot price; futures
+    contracts and weekly, monthly or annual series are left out. Cells without a value stay
+    missing. Columns follow the file order of the series.
+    """
+    series: dict[str, pd.Series] = {}
+    for line in lines:
+        if "Spot Price" not in line:  # cheap pre-filter: most lines are other series
+            continue
+        record = json.loads(line)
+        if record.get("f") != "D" or "Spot Price" not in record["name"]:
+            continue
+        column = re.sub(r"[^a-z0-9]+", "_", record["series_id"].lower())
+        dates = pd.to_datetime([d for d, _ in record["data"]], format="%Y%m%d")
+        values = pd.to_numeric([v for _, v in record["data"]], errors="coerce")
+        series[column] = pd.Series(values, index=dates)
+    if not series:
+        raise ViewError("no daily spot price series in the EIA file")
+    frame = pd.DataFrame(series).sort_index()
+    return frame.rename_axis("timestamp").reset_index()
+
+
+def _build_eia_spot(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "eia_petroleum_spot_prices" / WAVE28_SNAPSHOT / "raw" / "PET.zip"
+    if not source.exists():
+        raise ViewError("no EIA petroleum bulk file in the snapshot")
+    with zipfile.ZipFile(source) as archive, archive.open("PET.txt") as member:
+        view = eia_spot_view(line.decode() for line in member)
+    folder = out / "eia_petroleum_spot_prices"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "spot_prices.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "eia_petroleum_spot_prices",
+        {"spot_prices.csv": (target, len(view))},
+        dropped=["futures contracts", "weekly, monthly and annual series"],
+        pseudonymised=[],
+        sampling={
+            "method": "daily spot price series of the EIA petroleum bulk file, joined on the date",
+            "series": sorted(view.columns[1:]),
+            "first_timestamp": str(view["timestamp"].min()),
+            "last_timestamp": str(view["timestamp"].max()),
+        },
+        source_snapshot=f"eia_petroleum_spot_prices/{WAVE28_SNAPSHOT}",
+    )
+
+
+HURDAT_RADII = tuple(f"r{wind}_{quadrant}_nmi" for wind in (34, 50, 64) for quadrant in
+                     ("ne", "se", "sw", "nw"))  # fmt: skip
+HURDAT_COLUMNS = (
+    "storm_id", "storm_name", "timestamp", "record_identifier", "status", "latitude",
+    "longitude", "max_wind_kt", "min_pressure_mb", *HURDAT_RADII,
+)  # fmt: skip
+
+
+def _hurdat_coordinate(text: str) -> float:
+    value = float(text[:-1])
+    return -value if text[-1] in "SW" else value
+
+
+def hurdat2_view(text: str) -> pd.DataFrame:
+    """Best-track records of every storm in a HURDAT2 file, in the published order.
+
+    A header line gives the storm id, name and record count; each record carries date, time,
+    record identifier, status, position, winds, pressure and wind radii. Missing codes (-99 and
+    -999) become missing values; a storm whose record count differs from its header is refused.
+    """
+    rows: list[list[Any]] = []
+    storms = [line for line in text.splitlines() if line.strip()]
+    position = 0
+    while position < len(storms):
+        storm_id, name, count = (field.strip() for field in storms[position].split(",")[:3])
+        records = storms[position + 1 : position + 1 + int(count)]
+        found = len([r for r in records if r[:2].isdigit()])
+        if found != int(count):
+            raise ViewError(f"storm {storm_id} declares {count} records but has {found}")
+        for record in records:
+            f = [field.strip() for field in record.split(",")]
+            numbers = [float(v) if float(v) > -99 else None for v in (f[6], f[7], *f[8:20])]
+            stamp = pd.Timestamp(f"{f[0]} {f[1]}")
+            rows.append(
+                [storm_id, name, stamp, f[2], f[3], _hurdat_coordinate(f[4]),
+                 _hurdat_coordinate(f[5]), *numbers]
+            )  # fmt: skip
+        position += 1 + int(count)
+    if not rows:
+        raise ViewError("no storm in the HURDAT2 file")
+    return pd.DataFrame(rows, columns=list(HURDAT_COLUMNS))
+
+
+def _build_hurdat2(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "nhc_hurdat2_atlantic" / WAVE28_SNAPSHOT / "raw" / "hurdat2-atlantic.txt"
+    if not source.exists():
+        raise ViewError("no HURDAT2 file in the snapshot")
+    view = hurdat2_view(source.read_text())
+    folder = out / "nhc_hurdat2_atlantic"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "events.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "nhc_hurdat2_atlantic",
+        {"events.csv": (target, len(view))},
+        dropped=[],
+        pseudonymised=[],
+        sampling={
+            "method": "complete HURDAT2 Atlantic best-track file, every storm and record",
+            "storms": int(view["storm_id"].nunique()),
+            "first_timestamp": str(view["timestamp"].min()),
+            "last_timestamp": str(view["timestamp"].max()),
+        },
+        source_snapshot=f"nhc_hurdat2_atlantic/{WAVE28_SNAPSHOT}",
+    )
+
+
+IPEDS_ARCHIVES = {
+    "hd": "HD2023.zip",
+    "ic": "IC2023.zip",
+    "adm": "ADM2023.zip",
+    "effy": "EFFY2023.zip",
+    "c": "C2023_A.zip",
+}
+IPEDS_KEYS = {
+    "hd": ["UNITID"],
+    "ic": ["UNITID"],
+    "adm": ["UNITID"],
+    "effy": ["UNITID", "EFFYALEV", "EFFYLEV"],
+    "c": ["UNITID", "CIPCODE", "MAJORNUM", "AWLEVEL"],
+}
+IPEDS_DROP = {
+    "hd": [
+        "INSTNM", "IALIAS", "ADDR", "CITY", "ZIP", "CHFNM", "CHFTITLE", "GENTELE", "EIN", "UEIS",
+        "WEBADDR", "ADMINURL", "FAIDURL", "APPLURL", "NPRICURL", "VETURL", "ATHURL", "DISAURL",
+        "F1SYSNAM", "LONGITUD", "LATITUDE",
+    ],
+}  # fmt: skip
+IPEDS_DROPPED = [f"{table}.{column}" for table, names in IPEDS_DROP.items() for column in names]
+
+
+def ipeds_view(
+    tables: dict[str, pd.DataFrame],
+) -> tuple[dict[str, pd.DataFrame], list[dict[str, Any]], dict[str, Any]]:
+    """IPEDS tables without institution names, addresses, contacts, web links and coordinates.
+
+    Every institution table is keyed by UNITID; the child tables relate to the characteristics
+    table by that key. Orphans are reported, never removed, and so are repeated composite keys.
+    """
+    spec = {
+        "tables": {
+            name: {"keep": [c for c in frame.columns if c not in IPEDS_DROP.get(name, [])]}
+            for name, frame in tables.items()
+        },
+        "relations": [[name, "UNITID", "hd", "UNITID"] for name in tables if name != "hd"],
+    }
+    views, relations = tables_view(tables, spec)
+    institutions = set(views["hd"]["UNITID"])
+    facts = {
+        "duplicate_keys": {
+            name: int(tables[name].duplicated(IPEDS_KEYS[name]).sum()) for name in tables
+        },
+        "institutions_without_child": {
+            name: len(institutions - set(views[name]["UNITID"])) for name in tables if name != "hd"
+        },
+    }
+    return views, relations, facts
+
+
+def _ipeds_member(archive: zipfile.ZipFile) -> str:
+    members = [m for m in archive.namelist() if m.lower().endswith(".csv")]
+    revised = [m for m in members if m.lower().endswith("_rv.csv")]
+    return revised[0] if revised else min(members, key=len)
+
+
+def _build_ipeds(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "nces_ipeds_2023" / WAVE28_SNAPSHOT / "raw"
+    paths = {name: raw / archive for name, archive in IPEDS_ARCHIVES.items()}
+    if not all(p.exists() for p in paths.values()):
+        raise ViewError("missing IPEDS tables in the snapshot")
+    tables = {}
+    for name, path in paths.items():
+        with zipfile.ZipFile(path) as archive:
+            text = archive.read(_ipeds_member(archive)).decode("utf-8-sig", errors="replace")
+        # every cell stays text: the state code NA and coded blanks are values
+        tables[name] = pd.read_csv(io.StringIO(text), dtype=str, keep_default_na=False)
+    views, relations, facts = ipeds_view(tables)
+    folder = out / "nces_ipeds_2023"
+    folder.mkdir(parents=True, exist_ok=True)
+    files: dict[str, tuple[Path, int]] = {}
+    for name, frame in views.items():
+        target = folder / f"{name}.csv"
+        frame.to_csv(target, index=False)
+        files[f"{name}.csv"] = (target, len(frame))
+    _record(
+        manifest,
+        "nces_ipeds_2023",
+        files,
+        dropped=IPEDS_DROPPED,
+        pseudonymised=[],
+        relations=relations,
+        sampling={
+            "method": (
+                "complete 2023 IPEDS institutional characteristics, admissions, enrolment and "
+                "completions tables (revised files where published)"
+            ),
+            **facts,
+        },
+        source_snapshot=f"nces_ipeds_2023/{WAVE28_SNAPSHOT}",
+    )
+
+
+APIS_GURU_DROP = frozenset(["contact"])
+ZENODO_DROP = frozenset(["contributors", "creators", "description", "links", "owners", "swh"])
+
+
+def apis_guru_view(directory: dict[str, Any]) -> list[dict[str, Any]]:
+    """One record per API of the APIs.guru directory list, in API-name order.
+
+    The directory maps an API name to its versions; the name becomes the ``api`` field and the
+    contact objects (names, addresses, links) are dropped at every depth.
+    """
+    if not isinstance(directory, dict):
+        raise ViewError("not an API directory")
+    records = [{"api": name, **entry} for name, entry in directory.items()]
+    return nested_view(records, APIS_GURU_DROP, lambda r: r["api"])
+
+
+def _build_apis_guru(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "apis_guru_openapi_directory" / WAVE28_SNAPSHOT / "raw" / "list.json"
+    if not source.exists():
+        raise ViewError("no API directory in the snapshot")
+    view = apis_guru_view(json.loads(source.read_text()))
+    folder = out / "apis_guru_openapi_directory"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "apis.jsonl"
+    target.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in view))
+    _record(
+        manifest,
+        "apis_guru_openapi_directory",
+        {"apis.jsonl": (target, len(view))},
+        dropped=sorted(APIS_GURU_DROP),
+        pseudonymised=[],
+        sampling={
+            "method": "complete APIs.guru directory list, one record per API",
+            "versions": sum(len(r["versions"]) for r in view),
+        },
+        source_snapshot=f"apis_guru_openapi_directory/{WAVE28_SNAPSHOT}",
+    )
+
+
+def zenodo_records_view(pages: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], int]:
+    """Zenodo record objects of API pages in identifier order, one per identifier.
+
+    People, free-text descriptions, links and ownership are dropped at every depth. Returns the
+    records and the number of repeated identifiers that were skipped (the first is kept).
+    """
+    unique: dict[Any, dict[str, Any]] = {}
+    repeated = 0
+    for page in pages:
+        if "hits" not in page:
+            raise ViewError("no Zenodo record page")
+        for record in page["hits"]["hits"]:
+            if record["id"] in unique:
+                repeated += 1
+            else:
+                unique[record["id"]] = record
+    return nested_view(list(unique.values()), ZENODO_DROP, lambda r: r["id"]), repeated
+
+
+def _build_zenodo_records(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "zenodo_dataset_records_2023_03" / WAVE28_SNAPSHOT / "raw"
+    files = sorted(raw.glob("records_*.json"), key=lambda p: int(p.stem.split("_")[1]))
+    if not files:
+        raise ViewError("no Zenodo record page in the snapshot")
+    pages = [json.loads(path.read_text()) for path in files]
+    view, repeated = zenodo_records_view(pages)
+    folder = out / "zenodo_dataset_records_2023_03"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "records.jsonl"
+    target.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in view))
+    _record(
+        manifest,
+        "zenodo_dataset_records_2023_03",
+        {"records.jsonl": (target, len(view))},
+        dropped=sorted(ZENODO_DROP),
+        pseudonymised=[],
+        sampling={
+            "method": "dataset records published in March 2023, sorted by recency, paged by 25",
+            "pages": [p.name for p in files],
+            "total_results": [page["hits"]["total"] for page in pages],
+            "repeated_ids": repeated,
+        },
+        source_snapshot=f"zenodo_dataset_records_2023_03/{WAVE28_SNAPSHOT}",
+    )
+
+
+# Computer-aided dispatch exports whose incident rows carry several lifecycle timestamps: each
+# timestamp becomes one event of the incident (the case), in the order of ``activities``.
+LIFECYCLE_STREAMS: dict[str, dict[str, Any]] = {
+    "cincinnati_fire_cad": {
+        "file": "fire_cad_2023.csv",
+        "label": "Cincinnati fire dispatch",
+        "case": "event_number",
+        "type": "incident_type_desc",
+        "activities": {
+            "create_time_incident": "incident_created",
+            "dispatch_time_primary_unit": "unit_dispatched",
+            "arrival_time_primary_unit": "unit_arrived",
+            "closed_time_incident": "incident_closed",
+        },
+        "method": "fire and EMS incidents created in calendar year 2023 ordered by event number",
+        "dropped": ["address_x", "latitude_x", "longitude_x", "neighborhood", "beat"],
+    },
+    "cincinnati_ecc_calls": {
+        "file": "ecc_calls_2023_janfeb.csv",
+        "label": "Cincinnati emergency communications call",
+        "case": "call_record_id",
+        "type": "call_type_id",
+        "activities": {
+            "seizure_datetime": "call_seized",
+            "ali_query_timestamp": "location_queried",
+            "transfer_received_time": "transfer_received",
+            "release_datetime": "call_released",
+        },
+        "method": "calls seized in January and February 2023 ordered by call record id",
+        "dropped": ["queues", "agents", "line numbers", "durations", "locations"],
+    },
+    "austin_apd_cad": {
+        "file": "apd_cad_2023q1.csv",
+        "label": "Austin police dispatch",
+        "case": "incident_number",
+        "type": "initial_problem_category",
+        "activities": {
+            "response_datetime": "call_responded",
+            "first_unit_arrived_datetime": "first_unit_arrived",
+            "call_closed_datetime": "call_closed",
+        },
+        "method": "dispatched incidents of the first quarter of 2023 ordered by incident number",
+        "dropped": ["geoid", "blkgpnm", "council_district", "sector"],
+    },
+}
+
+
+def lifecycle_events_view(
+    raw: pd.DataFrame, spec: dict[str, Any]
+) -> tuple[pd.DataFrame, dict[str, Any]]:
+    """One event per usable lifecycle timestamp of each incident, ordered within the incident.
+
+    Timestamps that are blank or unreadable are not events and are counted per activity; the
+    case identifier is hashed. Ties in time keep the order of the activities in the spec.
+    """
+    times = {
+        activity: pd.to_datetime(raw[column].mask(raw[column] == ""), errors="coerce")
+        for column, activity in spec["activities"].items()
+    }
+    events = pd.concat(
+        [
+            pd.DataFrame(
+                {
+                    "source_case": raw[spec["case"]],
+                    "activity": activity,
+                    "timestamp": stamp,
+                    "type": raw[spec["type"]].mask(raw[spec["type"]] == ""),
+                    "order": order,
+                }
+            )
+            for order, (activity, stamp) in enumerate(times.items())
+        ],
+        ignore_index=True,
+    )
+    events = events.dropna(subset=["timestamp"]).sort_values(
+        ["source_case", "timestamp", "order"], kind="stable"
+    )
+    view = pd.DataFrame(
+        {
+            "case": events["source_case"].map(pseudonym),
+            "activity": events["activity"],
+            "timestamp": events["timestamp"],
+            "type": events["type"],
+        }
+    ).reset_index(drop=True)
+    facts = {
+        "rows": len(raw),
+        "cases": int(events["source_case"].nunique()),
+        "events": len(view),
+        "unusable_timestamps": {a: int(s.isna().sum()) for a, s in times.items()},
+    }
+    return view, facts
+
+
+def _build_lifecycle(root: Path, out: Path, manifest: dict[str, Any], view: str) -> None:
+    spec = LIFECYCLE_STREAMS[view]
+    source = root / view / WAVE28_SNAPSHOT / "raw" / spec["file"]
+    if not source.exists():
+        raise ViewError(f"no {spec['label']} file in the snapshot")
+    events, facts = lifecycle_events_view(
+        pd.read_csv(source, dtype=str, keep_default_na=False), spec
+    )
+    folder = out / view
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "events.csv"
+    events.to_csv(target, index=False)
+    _record(
+        manifest,
+        view,
+        {"events.csv": (target, len(events))},
+        dropped=spec["dropped"],
+        pseudonymised=[spec["case"]],
+        salt_label=SALT,
+        sampling={
+            "method": spec["method"],
+            **facts,
+            "first_timestamp": str(events["timestamp"].min()),
+            "last_timestamp": str(events["timestamp"].max()),
+        },
+        source_snapshot=f"{view}/{WAVE28_SNAPSHOT}",
+    )
+
+
+LIFECYCLE_STEPS_LIST = []
+for _view in LIFECYCLE_STREAMS:
+    _lifecycle_step = functools.partial(_build_lifecycle, view=_view)
+    _lifecycle_step.__name__ = f"_build_{_view}"  # type: ignore[attr-defined]
+    LIFECYCLE_STEPS_LIST.append(_lifecycle_step)
+LIFECYCLE_STEPS = tuple(LIFECYCLE_STEPS_LIST)
+
+
+FEC_ARCHIVES = {"cn": "cn24.zip", "cm": "cm24.zip", "ccl": "ccl24.zip", "pas2": "pas224.zip"}
+FEC_MEMBERS = {"cn": "cn.txt", "cm": "cm.txt", "ccl": "ccl.txt", "pas2": "itpas2.txt"}
+FEC_KEYS = {
+    "cn": ["CAND_ID"],
+    "cm": ["CMTE_ID"],
+    "ccl": ["CAND_ID", "FEC_ELECTION_YR", "CMTE_ID"],
+    "pas2": ["SUB_ID"],
+}
+FEC_DROP = {
+    "cn": ["CAND_NAME", "CAND_ST1", "CAND_ST2", "CAND_CITY", "CAND_ZIP"],
+    "cm": [
+        "CMTE_NM", "TRES_NM", "CMTE_ST1", "CMTE_ST2", "CMTE_CITY", "CMTE_ZIP", "CONNECTED_ORG_NM",
+    ],
+    "pas2": ["NAME", "CITY", "STATE", "ZIP_CODE", "EMPLOYER", "OCCUPATION", "MEMO_TEXT"],
+}  # fmt: skip
+FEC_DROPPED = [f"{table}.{column}" for table, names in FEC_DROP.items() for column in names]
+FEC_RELATIONS = [
+    ["cm", "CAND_ID", "cn", "CAND_ID"],
+    ["ccl", "CAND_ID", "cn", "CAND_ID"],
+    ["ccl", "CMTE_ID", "cm", "CMTE_ID"],
+    ["pas2", "CMTE_ID", "cm", "CMTE_ID"],
+    ["pas2", "OTHER_ID", "cm", "CMTE_ID"],
+    ["pas2", "CAND_ID", "cn", "CAND_ID"],
+]
+
+
+def fec_view(
+    tables: dict[str, pd.DataFrame],
+) -> tuple[dict[str, pd.DataFrame], list[dict[str, Any]], dict[str, Any]]:
+    """FEC candidate, committee, linkage and committee-contribution tables without names.
+
+    Candidate and committee names, treasurers, street addresses and the payee name, address,
+    employer, occupation and memo text of each contribution are dropped. Key relations are
+    checked, never repaired; a blank key is a missing key. Repeated keys are counted.
+    """
+    spec = {
+        "tables": {
+            name: {"keep": [c for c in frame.columns if c not in FEC_DROP.get(name, [])]}
+            for name, frame in tables.items()
+        },
+        "relations": FEC_RELATIONS,
+    }
+    views, relations = tables_view(tables, spec)
+    facts = {
+        "duplicate_keys": {
+            name: int(tables[name].duplicated(FEC_KEYS[name]).sum()) for name in tables
+        }
+    }
+    return views, relations, facts
+
+
+def _build_fec(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "fec_federal_campaign_finance_2024" / WAVE28_SNAPSHOT / "raw"
+    archives = {name: raw / archive for name, archive in FEC_ARCHIVES.items()}
+    headers = {name: raw / f"{name}_header_file.csv" for name in FEC_ARCHIVES}
+    if not all(p.exists() for p in (*archives.values(), *headers.values())):
+        raise ViewError("missing FEC tables in the snapshot")
+    tables = {}
+    for name, path in archives.items():
+        names = headers[name].read_text().strip().split(",")
+        with zipfile.ZipFile(path) as archive:
+            text = archive.read(FEC_MEMBERS[name]).decode("latin-1")
+        # headerless pipe-separated text; names may hold quotes, so quoting is off
+        tables[name] = pd.read_csv(
+            io.StringIO(text), sep="|", header=None, names=names, dtype=str,
+            keep_default_na=False, quoting=csv.QUOTE_NONE,
+        )  # fmt: skip
+    views, relations, facts = fec_view(tables)
+    folder = out / "fec_federal_campaign_finance_2024"
+    folder.mkdir(parents=True, exist_ok=True)
+    files: dict[str, tuple[Path, int]] = {}
+    for name, frame in views.items():
+        target = folder / f"{name}.csv"
+        frame.to_csv(target, index=False)
+        files[f"{name}.csv"] = (target, len(frame))
+    _record(
+        manifest,
+        "fec_federal_campaign_finance_2024",
+        files,
+        dropped=FEC_DROPPED,
+        pseudonymised=[],
+        relations=relations,
+        sampling={
+            "method": (
+                "complete 2023-2024 cycle candidate, committee, linkage and committee-to-candidate "
+                "contribution files"
+            ),
+            **facts,
+        },
+        source_snapshot=f"fec_federal_campaign_finance_2024/{WAVE28_SNAPSHOT}",
+    )
+
+
+REACTOME_FILES = {
+    "pathways": "ReactomePathways.txt",
+    "relations": "ReactomePathwaysRelation.txt",
+    "uniprot": "UniProt2Reactome.txt",
+    "chebi": "ChEBI2Reactome.txt",
+}
+REACTOME_COLUMNS = {
+    "pathways": ["pathway_id", "pathway_name", "species"],
+    "relations": ["parent_id", "child_id"],
+    "uniprot": ["uniprot_id", "pathway_id", "url", "pathway_name", "evidence", "species"],
+    "chebi": ["chebi_id", "pathway_id", "url", "pathway_name", "evidence", "species"],
+}
+REACTOME_KEYS = {
+    "pathways": ["pathway_id"],
+    "relations": ["parent_id", "child_id"],
+    "uniprot": ["uniprot_id", "pathway_id"],
+    "chebi": ["chebi_id", "pathway_id"],
+}
+REACTOME_DROP = {"uniprot": ["url"], "chebi": ["url"]}
+REACTOME_DROPPED = [f"{t}.{c}" for t, names in REACTOME_DROP.items() for c in names]
+REACTOME_SPEC: dict[str, Any] = {
+    "tables": {
+        name: {"keep": [c for c in columns if c not in REACTOME_DROP.get(name, [])]}
+        for name, columns in REACTOME_COLUMNS.items()
+    },
+    "relations": [
+        ["relations", "parent_id", "pathways", "pathway_id"],
+        ["relations", "child_id", "pathways", "pathway_id"],
+        ["uniprot", "pathway_id", "pathways", "pathway_id"],
+        ["chebi", "pathway_id", "pathways", "pathway_id"],
+    ],
+}
+
+
+def reactome_view(
+    tables: dict[str, pd.DataFrame],
+) -> tuple[dict[str, pd.DataFrame], list[dict[str, Any]], dict[str, Any]]:
+    """Reactome pathways, pathway hierarchy and UniProt and ChEBI mappings without links.
+
+    Every pathway reference of the other tables is checked against the pathway table; orphans
+    and repeated keys are reported, never repaired.
+    """
+    views, relations = tables_view(tables, REACTOME_SPEC)
+    linked = set(views["relations"]["parent_id"]) | set(views["relations"]["child_id"])
+    facts = {
+        "duplicate_keys": {
+            name: int(tables[name].duplicated(REACTOME_KEYS[name]).sum()) for name in tables
+        },
+        "pathways_without_relation": len(set(views["pathways"]["pathway_id"]) - linked),
+    }
+    return views, relations, facts
+
+
+def _build_reactome(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "reactome_pathway_knowledgebase" / WAVE28_SNAPSHOT / "raw"
+    paths = {name: raw / file for name, file in REACTOME_FILES.items()}
+    version = raw / "reactome_version.txt"
+    if not all(p.exists() for p in (*paths.values(), version)):
+        raise ViewError("missing Reactome files in the snapshot")
+    # headerless tab-separated text; names may hold quotes, so quoting is off
+    tables = {
+        name: pd.read_csv(
+            path,
+            sep="\t",
+            header=None,
+            names=REACTOME_COLUMNS[name],
+            dtype=str,
+            keep_default_na=False,
+            quoting=csv.QUOTE_NONE,
+        )  # fmt: skip
+        for name, path in paths.items()
+    }
+    views, relations, facts = reactome_view(tables)
+    folder = out / "reactome_pathway_knowledgebase"
+    folder.mkdir(parents=True, exist_ok=True)
+    files: dict[str, tuple[Path, int]] = {}
+    for name, frame in views.items():
+        target = folder / f"{name}.csv"
+        frame.to_csv(target, index=False)
+        files[f"{name}.csv"] = (target, len(frame))
+    _record(
+        manifest,
+        "reactome_pathway_knowledgebase",
+        files,
+        dropped=REACTOME_DROPPED,
+        pseudonymised=[],
+        relations=relations,
+        sampling={
+            "method": (
+                "complete Reactome current release files: pathways, pathway hierarchy, UniProt "
+                "and ChEBI mappings"
+            ),
+            "release": version.read_text().strip(),
+            **facts,
+        },
+        source_snapshot=f"reactome_pathway_knowledgebase/{WAVE28_SNAPSHOT}",
+    )
+
+
+# Paged JSON sources whose records are nested objects: where the records sit in a page, the path
+# of the identifier inside a record, and the keys dropped at every depth.
+NESTED_SOURCES: dict[str, dict[str, Any]] = {
+    "nasa_cmr_collections": {
+        "label": "NASA CMR collection",
+        "glob": "collections_*.json",
+        "path": ["items"],
+        "id": ["meta", "concept-id"],
+        "drop": ["ContactGroups", "ContactPersons"],
+        "method": "collection records of nine providers, the first 100 of each",
+    },
+    "doaj_journals": {
+        "label": "DOAJ journal",
+        "glob": "journals_*.json",
+        "path": ["results"],
+        "id": ["id"],
+        "drop": [],
+        "method": "journal records in creation order, the first 20 pages of 50",
+    },
+    "github_reviewed_advisories": {
+        "label": "GitHub advisory",
+        "glob": "advisories_*.json",
+        "path": [],
+        "id": ["ghsa_id"],
+        "drop": ["credits"],
+        "method": "reviewed advisories of 2017 to 2026, the first 100 of each year",
+    },
+    "pubchem_compounds": {
+        "label": "PubChem compound",
+        "glob": "compounds_*.json",
+        "path": ["PC_Compounds"],
+        "id": ["id", "id", "cid"],
+        "drop": [],
+        "method": "compound records of CID 1 to 1000, ten requests of 100 identifiers",
+    },
+}
+
+
+def _path_get(record: Any, path: list[str]) -> Any:
+    for key in path:
+        record = record[key]
+    return record
+
+
+def nested_pages_view(pages: list[Any], spec: dict[str, Any]) -> tuple[list[dict[str, Any]], int]:
+    """Nested records of API pages in identifier order, one per identifier.
+
+    The records of a page sit at ``spec['path']``; their identifier sits at ``spec['id']``. The
+    keys in ``spec['drop']`` are removed at every depth. Returns the records and the number of
+    repeated identifiers that were skipped (the first occurrence is kept).
+    """
+    unique: dict[Any, dict[str, Any]] = {}
+    repeated = 0
+    for page in pages:
+        try:
+            records = _path_get(page, spec["path"])
+        except (KeyError, TypeError) as error:
+            raise ViewError(f"no records at {'/'.join(spec['path'])}") from error
+        for record in records:
+            uid = _path_get(record, spec["id"])
+            if uid in unique:
+                repeated += 1
+            else:
+                unique[uid] = record
+    return (
+        nested_view(
+            list(unique.values()), frozenset(spec["drop"]), lambda r: _path_get(r, spec["id"])
+        ),
+        repeated,
+    )
+
+
+def _build_nested(root: Path, out: Path, manifest: dict[str, Any], view: str) -> None:
+    spec = NESTED_SOURCES[view]
+    raw = root / view / WAVE28_SNAPSHOT / "raw"
+    files = sorted(raw.glob(spec["glob"]), key=lambda p: int(re.search(r"(\d+)\.json$", p.name)[1]))  # type: ignore[index]
+    if not files:
+        raise ViewError(f"no {spec['label']} page in the snapshot")
+    records, repeated = nested_pages_view([json.loads(p.read_text()) for p in files], spec)
+    folder = out / view
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "records.jsonl"
+    target.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in records))
+    _record(
+        manifest,
+        view,
+        {"records.jsonl": (target, len(records))},
+        dropped=sorted(spec["drop"]),
+        pseudonymised=[],
+        sampling={
+            "method": spec["method"],
+            "pages": [p.name for p in files],
+            "repeated_ids": repeated,
+        },
+        source_snapshot=f"{view}/{WAVE28_SNAPSHOT}",
+    )
+
+
+NESTED_STEPS_LIST = []
+for _view in NESTED_SOURCES:
+    _nested_step = functools.partial(_build_nested, view=_view)
+    _nested_step.__name__ = f"_build_{_view}"  # type: ignore[attr-defined]
+    NESTED_STEPS_LIST.append(_nested_step)
+NESTED_STEPS = tuple(NESTED_STEPS_LIST)
+
+
+GO_NOTICE = (
+    "Gene Ontology data from the Gene Ontology Consortium (geneontology.org) and the UniProt-GOA "
+    "human annotations (EMBL-EBI), licensed under the Creative Commons Attribution 4.0 "
+    "International licence (CC BY 4.0, https://creativecommons.org/licenses/by/4.0/); this is "
+    "a derived view without annotated object names and synonyms."
+)
+GAF_COLUMNS = (
+    "db", "db_object_id", "symbol", "qualifier", "go_id", "reference", "evidence_code",
+    "with_from", "aspect", "object_name", "synonym", "object_type", "taxon", "date",
+    "assigned_by", "annotation_extension", "gene_product_form_id",
+)  # fmt: skip
+GO_DROP = ("object_name", "synonym")
+GO_DROPPED = [f"annotations.{column}" for column in GO_DROP]
+GO_SPEC: dict[str, Any] = {
+    "tables": {
+        "terms": {"keep": ["id", "name", "namespace", "is_obsolete"]},
+        "relations": {"keep": ["child_id", "parent_id", "relation"]},
+        "annotations": {"keep": [c for c in GAF_COLUMNS if c not in GO_DROP]},
+    },
+    "relations": [
+        ["relations", "child_id", "terms", "id"],
+        ["relations", "parent_id", "terms", "id"],
+        ["annotations", "go_id", "terms", "id"],
+    ],
+}
+
+
+def _obo_terms(text: str) -> tuple[list[list[str]], list[list[str]]]:
+    terms: list[list[str]] = []
+    edges: list[list[str]] = []
+    for block in text.split("\n\n"):
+        lines = block.strip().splitlines()
+        if not lines or lines[0] != "[Term]":
+            continue
+        fields: dict[str, str] = {}
+        for line in lines[1:]:
+            key, _, value = line.partition(": ")
+            fields.setdefault(key, value)
+            if key == "is_a":
+                edges.append([fields["id"], value.split(" ")[0], "is_a"])
+            elif key == "relationship":
+                relation, parent = value.split(" ")[:2]
+                edges.append([fields["id"], parent, relation])
+        terms.append(
+            [fields["id"], fields.get("name", ""), fields.get("namespace", ""),
+             fields.get("is_obsolete", "false")]
+        )  # fmt: skip
+    return terms, edges
+
+
+def go_view(
+    obo_text: str, gaf_text: str
+) -> tuple[dict[str, pd.DataFrame], list[dict[str, Any]], dict[str, Any]]:
+    """Gene Ontology terms, term relations and UniProt-GOA annotations as three tables.
+
+    Terms and their is-a and relationship edges come from the OBO file, annotations from a GAF
+    file without the object names and synonyms. Edge and annotation references are checked
+    against the term table; orphans (alternative ids, for instance) are reported, never repaired.
+    """
+    terms, edges = _obo_terms(obo_text)
+    if not terms:
+        raise ViewError("no GO term in the ontology file")
+    rows = [line.split("\t") for line in gaf_text.splitlines() if line and line[0] != "!"]
+    if not rows:
+        raise ViewError("no annotation in the GAF file")
+    tables = {
+        "terms": pd.DataFrame(terms, columns=GO_SPEC["tables"]["terms"]["keep"]),
+        "relations": pd.DataFrame(edges, columns=GO_SPEC["tables"]["relations"]["keep"]),
+        "annotations": pd.DataFrame(rows, columns=list(GAF_COLUMNS)),
+    }
+    views, relations = tables_view(tables, GO_SPEC)
+    versions = [
+        line.split(": ", 1)[1] for line in gaf_text.splitlines() if line.startswith("!go-version")
+    ]
+    release = re.search(r"^data-version: (.*)$", obo_text, re.MULTILINE)
+    facts = {
+        "ontology_release": release[1] if release else "",
+        "gaf_go_version": versions[0] if versions else "",
+        "duplicate_annotation_rows": int(tables["annotations"].duplicated().sum()),
+    }
+    return views, relations, facts
+
+
+def _build_go(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import gzip
+
+    raw = root / "gene_ontology_annotations" / WAVE28_SNAPSHOT / "raw"
+    obo, gaf = raw / "go-basic.obo", raw / "goa_human.gaf.gz"
+    if not (obo.exists() and gaf.exists()):
+        raise ViewError("missing Gene Ontology files in the snapshot")
+    with gzip.open(gaf, "rt", encoding="utf-8") as handle:
+        views, relations, facts = go_view(obo.read_text(), handle.read())
+    folder = out / "gene_ontology_annotations"
+    folder.mkdir(parents=True, exist_ok=True)
+    files: dict[str, tuple[Path, int]] = {}
+    for name, frame in views.items():
+        target = folder / f"{name}.csv"
+        frame.to_csv(target, index=False)
+        files[f"{name}.csv"] = (target, len(frame))
+    (folder / "NOTICE.txt").write_text(GO_NOTICE + "\n")
+    _record(
+        manifest,
+        "gene_ontology_annotations",
+        files,
+        dropped=GO_DROPPED,
+        pseudonymised=[],
+        relations=relations,
+        sampling={
+            "method": "complete go-basic ontology and the UniProt human GAF annotation file",
+            **facts,
+        },
+        source_snapshot=f"gene_ontology_annotations/{WAVE28_SNAPSHOT}",
+    )
+
+
+def cpc_ao_view(text: str) -> tuple[pd.DataFrame, int]:
+    """Daily Arctic Oscillation index of the CPC file as a dated series in time order.
+
+    The year, month and day columns give the date; rows that are not a calendar date are
+    dropped and counted, blank index values stay missing.
+    """
+    frame = pd.read_csv(io.StringIO(text))
+    if not {"year", "month", "day", "ao_index_cdas"} <= set(frame.columns):
+        raise ViewError("not a CPC daily AO index file")
+    stamp = pd.to_datetime(frame[["year", "month", "day"]], errors="coerce")
+    view = pd.DataFrame({"timestamp": stamp, "ao_index_cdas": frame["ao_index_cdas"]})
+    kept = view.dropna(subset=["timestamp"]).sort_values("timestamp").reset_index(drop=True)
+    return kept, len(view) - len(kept)
+
+
+def _build_cpc_ao(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "noaa_cpc_daily_ao_index" / WAVE28_SNAPSHOT / "raw" / "ao_daily.csv"
+    if not source.exists():
+        raise ViewError("no CPC AO index file in the snapshot")
+    view, invalid = cpc_ao_view(source.read_text())
+    folder = out / "noaa_cpc_daily_ao_index"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "ao_index.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "noaa_cpc_daily_ao_index",
+        {"ao_index.csv": (target, len(view))},
+        dropped=[],
+        pseudonymised=[],
+        sampling={
+            "method": "complete daily Arctic Oscillation index file, impossible dates removed",
+            "first_timestamp": str(view["timestamp"].min()),
+            "last_timestamp": str(view["timestamp"].max()),
+            "impossible_dates_dropped": invalid,
+            "missing_values": int(view["ao_index_cdas"].isna().sum()),
+        },
+        source_snapshot=f"noaa_cpc_daily_ao_index/{WAVE28_SNAPSHOT}",
     )
 
 
@@ -9227,6 +10229,17 @@ BUILD_STEPS = (
     _build_seattle_fire_911,
     _build_baac,
     _build_attack_stix,
+    _build_eia_spot,
+    _build_cpc_ao,
+    _build_hurdat2,
+    _build_ipeds,
+    _build_apis_guru,
+    _build_zenodo_records,
+    *LIFECYCLE_STEPS,
+    _build_fec,
+    _build_reactome,
+    _build_go,
+    *NESTED_STEPS,
     _build_flat,
     _build_series,
     _build_ukspend,

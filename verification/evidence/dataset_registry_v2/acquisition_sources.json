@@ -11720,6 +11720,799 @@
    "stratum": "C3",
    "upstream": "first party: the PV monitoring platform of Locus Energy records the generation of the city solar installations and the city publishes the daily table",
    "upstream_verified": true
+  },
+  {
+   "attribution": "Bureau of Transportation Statistics; Maryland Transportation Institute and CATT Laboratory, University of Maryland (data.bts.gov dataset w96p-f2qv, Public Domain U.S. Government); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "daily_mobility_national.csv",
+     "observed": "2019-01-01 to 2024-04-06",
+     "url": "https://data.bts.gov/resource/w96p-f2qv.csv?%24where=level%3D%27National%27&%24order=date&%24limit=5000&%24select=level%2Cdate%2Cstate_fips%2Cstate_code%2Ccounty_fips%2Ccounty%2Cpop_stay_at_home%2Cpop_not_stay_at_home%2Ctrips%2Ctrips_1%2Ctrips_1_3%2Ctrips_3_5%2Ctrips_5_10%2Ctrips_10_25%2Ctrips_25_50%2Ctrips_50_100%2Ctrips_100_250%2Ctrips_250_500%2Ctrips_500%2Crow_id%2Cweek%2Cmonth"
+    }
+   ],
+   "hosts": [
+    "data.bts.gov"
+   ],
+   "id": "bts_daily_mobility_national",
+   "licence_class": "open",
+   "licence_location": "https://data.bts.gov/api/views/w96p-f2qv.json",
+   "licence_text": "Socrata view metadata for dataset w96p-f2qv (read 2026-11-23): license 'Public Domain U.S. Government' (USGOV_WORKS); Bureau of Transportation Statistics; Maryland Transportation Institute and CATT Laboratory, University of Maryland",
+   "max_bytes": 67108864,
+   "method": "the national-level rows of the daily mobility statistics ordered by date",
+   "min_interval": 1.0,
+   "privacy": "daily national aggregates derived from anonymised mobile-device panels; no individual records",
+   "publisher": "U.S. Department of Transportation (Bureau of Transportation Statistics) with the University of Maryland (MTI and CATT Laboratory)",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Public Domain U.S. Government per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: the University of Maryland team derives the statistics from a merged mobile-device location panel and the Bureau of Transportation Statistics publishes them",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Source: U.S. Energy Information Administration, Petroleum and Other Liquids bulk file PET (https://www.eia.gov/opendata/bulk/PET.zip), accessed 2026-11-23",
+   "files": [
+    {
+     "name": "PET.zip",
+     "observed": "series to 2026-11-17",
+     "url": "https://www.eia.gov/opendata/bulk/PET.zip"
+    },
+    {
+     "name": "copyrights_reuse.html",
+     "observed": "read 2026-11-23",
+     "url": "https://www.eia.gov/about/copyrights_reuse.php"
+    }
+   ],
+   "hosts": [
+    "www.eia.gov"
+   ],
+   "id": "eia_petroleum_spot_prices",
+   "licence_class": "open",
+   "licence_location": "https://www.eia.gov/about/copyrights_reuse.php",
+   "licence_text": "EIA Copyrights and Reuse (read 2026-11-23): 'U.S. government publications are in the public domain and are not subject to copyright protection. You may use and/or distribute any of our data, files, databases, reports, graphs, charts, and other information products that are on our website ... you should use an acknowledgment, which includes the publication date'",
+   "max_bytes": 67108864,
+   "method": "one complete bulk file of the petroleum series plus the reuse page",
+   "min_interval": 1.0,
+   "privacy": "market price statistics; no personal data",
+   "publisher": "U.S. Energy Information Administration",
+   "rate_limit": "two requests with a descriptive User-Agent",
+   "redistribution": "public domain per the EIA reuse page; acknowledgement with the publication date; the raw file stays local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: EIA compiles the spot prices from the price reporting data it licenses and publishes them in its bulk files; the series carry the copyright field 'None'",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "NOAA National Hurricane Center, HURDAT2 Atlantic hurricane database (hurdat2-1851-2025-092326.txt), accessed 2026-11-23",
+   "files": [
+    {
+     "name": "hurdat2-atlantic.txt",
+     "observed": "1851 to 2025 seasons",
+     "url": "https://www.nhc.noaa.gov/data/hurdat/hurdat2-1851-2025-092326.txt"
+    },
+    {
+     "name": "nhc_disclaimer.html",
+     "observed": "read 2026-11-23",
+     "url": "https://www.nhc.noaa.gov/disclaimer.shtml"
+    }
+   ],
+   "hosts": [
+    "www.nhc.noaa.gov"
+   ],
+   "id": "nhc_hurdat2_atlantic",
+   "licence_class": "open",
+   "licence_location": "https://www.nhc.noaa.gov/disclaimer.shtml",
+   "licence_text": "NHC disclaimer (read 2026-11-23): 'The information on government servers are in the public domain, unless specifically annotated otherwise, and may be used freely by the public. This information shall not be modified in content and then presented as offical government material.'",
+   "max_bytes": 16777216,
+   "method": "one complete HURDAT2 Atlantic file plus the disclaimer page",
+   "min_interval": 1.0,
+   "privacy": "storm tracks; storm names are public designations; no personal data",
+   "publisher": "NOAA National Hurricane Center",
+   "rate_limit": "two requests with a descriptive User-Agent",
+   "redistribution": "public domain per the NHC disclaimer; the raw file stays local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "first party: the National Hurricane Center re-analyses every storm after the season and publishes the best-track file",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "U.S. Department of Education, Institute of Education Sciences, National Center for Education Statistics, Integrated Postsecondary Education Data System (IPEDS) 2023 data files; accessed 2026-11-23",
+   "files": [
+    {
+     "name": "HD2023.zip",
+     "observed": "IPEDS 2023 collection",
+     "url": "https://nces.ed.gov/ipeds/datacenter/data/HD2023.zip"
+    },
+    {
+     "name": "IC2023.zip",
+     "observed": "IPEDS 2023 collection",
+     "url": "https://nces.ed.gov/ipeds/datacenter/data/IC2023.zip"
+    },
+    {
+     "name": "ADM2023.zip",
+     "observed": "IPEDS 2023 collection",
+     "url": "https://nces.ed.gov/ipeds/datacenter/data/ADM2023.zip"
+    },
+    {
+     "name": "EFFY2023.zip",
+     "observed": "IPEDS 2023 collection",
+     "url": "https://nces.ed.gov/ipeds/datacenter/data/EFFY2023.zip"
+    },
+    {
+     "name": "C2023_A.zip",
+     "observed": "IPEDS 2023 collection",
+     "url": "https://nces.ed.gov/ipeds/datacenter/data/C2023_A.zip"
+    },
+    {
+     "name": "nces_disclaimer.html",
+     "observed": "read 2026-11-23",
+     "url": "https://nces.ed.gov/help/disclaimer.asp"
+    }
+   ],
+   "hosts": [
+    "nces.ed.gov"
+   ],
+   "id": "nces_ipeds_2023",
+   "licence_class": "open",
+   "licence_location": "https://nces.ed.gov/help/disclaimer.asp",
+   "licence_text": "NCES disclaimer (read 2026-11-23): 'Unless stated otherwise, all information on the U.S. Department of Education's IES website at http://ies.ed.gov is in the public domain and may be reproduced, published, linked to, or otherwise used without IES' permission.'",
+   "max_bytes": 16777216,
+   "method": "five complete 2023 IPEDS data files (zip) plus the disclaimer page",
+   "min_interval": 1.0,
+   "privacy": "institution-level survey statistics; institution names, addresses, contact names and telephone numbers, web links and coordinates are dropped in the view; no personal data",
+   "publisher": "U.S. Department of Education, NCES (IPEDS)",
+   "rate_limit": "six requests with a descriptive User-Agent",
+   "redistribution": "public domain per the NCES disclaimer; the raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: institutions report to NCES through the IPEDS surveys and NCES publishes the compiled data files",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "APIs.guru OpenAPI directory (api.apis.guru/v2/list.json; repository APIs-guru/openapi-directory, CC0 1.0); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "list.json",
+     "observed": "directory list on 2026-11-23",
+     "url": "https://api.apis.guru/v2/list.json"
+    },
+    {
+     "name": "LICENSE.txt",
+     "observed": "main branch",
+     "url": "https://raw.githubusercontent.com/APIs-guru/openapi-directory/main/LICENSE"
+    }
+   ],
+   "hosts": [
+    "api.apis.guru",
+    "raw.githubusercontent.com"
+   ],
+   "id": "apis_guru_openapi_directory",
+   "licence_class": "open",
+   "licence_location": "https://raw.githubusercontent.com/APIs-guru/openapi-directory/main/LICENSE",
+   "licence_text": "APIs-guru/openapi-directory LICENSE (CC0 1.0 Universal, read 2026-11-23); README: 'All API definitions contributed to project by authors are covered by the CC0 1.0 license.'",
+   "max_bytes": 16777216,
+   "method": "one complete directory list plus the licence file",
+   "min_interval": 1.0,
+   "privacy": "public API registry metadata; contact names, addresses and links are dropped in the view",
+   "publisher": "APIs.guru (openapi-directory)",
+   "rate_limit": "two requests with a descriptive User-Agent",
+   "redistribution": "CC0 1.0 per the repository; the raw list stays local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party: the APIs.guru maintainers curate and publish the directory; individual API owners keep their own rights over the described services",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Zenodo (CERN) records API, datasets published 2023-03-01 to 2023-03-31 (metadata CC0); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "zenodo_terms.html",
+     "observed": "read 2026-11-23",
+     "url": "https://about.zenodo.org/terms/"
+    }
+   ],
+   "hosts": [
+    "zenodo.org",
+    "about.zenodo.org"
+   ],
+   "id": "zenodo_dataset_records_2023_03",
+   "licence_class": "open",
+   "licence_location": "https://about.zenodo.org/terms/",
+   "licence_text": "Zenodo Terms of Use (read 2026-11-23): 'Unless specified otherwise, Zenodo metadata may be freely reused under the CC0 waiver.'",
+   "max_bytes": 16777216,
+   "method": "official records API, 165 pages of 25, one query of the March 2023 dataset publications",
+   "min_interval": 3.0,
+   "pages": {
+    "count": 165,
+    "name": "records_{n}.json",
+    "observed": "published in March 2023",
+    "size": 25,
+    "url": "https://zenodo.org/api/records?q=publication_date%3A%5B2023-03-01+TO+2023-03-31%5D+AND+resource_type.type%3Adataset&size=25&page={n1}&sort=mostrecent"
+   },
+   "privacy": "repository metadata; creator, contributor and owner objects, descriptions and links are dropped in the view",
+   "publisher": "CERN (Zenodo)",
+   "rate_limit": "sequential requests, 3 s apart, with a descriptive User-Agent",
+   "redistribution": "CC0 for metadata per the Zenodo terms; the raw pages stay local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party: the Zenodo service stores and describes the records and publishes them through its API",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "City of Cincinnati, Cincinnati Fire Department (data.cincinnati-oh.gov dataset vnsz-a3wp, Public Domain); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "fire_cad_2023.csv",
+     "observed": "incidents created in 2023",
+     "url": "https://data.cincinnati-oh.gov/resource/vnsz-a3wp.csv?%24where=create_time_incident+between+%272023-01-01T00%3A00%3A00%27+and+%272023-12-31T23%3A59%3A59%27&%24order=event_number&%24limit=200000&%24select=create_time_incident%2Cevent_number%2Cincident_type_desc%2Carrival_time_primary_unit%2Cclosed_time_incident%2Cdispatch_time_primary_unit"
+    }
+   ],
+   "hosts": [
+    "data.cincinnati-oh.gov"
+   ],
+   "id": "cincinnati_fire_cad",
+   "licence_class": "open",
+   "licence_location": "https://data.cincinnati-oh.gov/api/views/vnsz-a3wp.json",
+   "licence_text": "Socrata view metadata for dataset vnsz-a3wp (read 2026-11-23): license 'Public Domain' (PUBLIC_DOMAIN); City of Cincinnati, Cincinnati Fire Department",
+   "max_bytes": 67108864,
+   "method": "one export of the fire and EMS incidents created in calendar year 2023 ordered by event number",
+   "min_interval": 1.0,
+   "privacy": "fire and EMS incident lifecycle timestamps and incident type only; addresses, coordinates, neighbourhoods and beats are not requested and the event number is hashed in the view; no personal names",
+   "publisher": "City of Cincinnati (Cincinnati Fire Department)",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Public Domain per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "first party: the fire department dispatch system (CAD) records each incident and the city publishes the incident table",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "City of Austin, Texas - data.austintexas.gov (Austin Police Department CAD) (datahub.austintexas.gov dataset 22de-7rzg, Public Domain); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "apd_cad_2023q1.csv",
+     "observed": "dispatched incidents of 2023 Q1",
+     "url": "https://datahub.austintexas.gov/resource/22de-7rzg.csv?%24where=response_datetime+between+%272023-01-01T00%3A00%3A00%27+and+%272023-03-31T23%3A59%3A59%27&%24order=incident_number&%24limit=200000&%24select=incident_number%2Cresponse_datetime%2Cfirst_unit_arrived_datetime%2Ccall_closed_datetime%2Cinitial_problem_category"
+    }
+   ],
+   "hosts": [
+    "datahub.austintexas.gov"
+   ],
+   "id": "austin_apd_cad",
+   "licence_class": "open",
+   "licence_location": "https://datahub.austintexas.gov/api/views/22de-7rzg.json",
+   "licence_text": "Socrata view metadata for dataset 22de-7rzg (read 2026-11-23): license 'Public Domain' (PUBLIC_DOMAIN); City of Austin, Texas - data.austintexas.gov (Austin Police Department CAD)",
+   "max_bytes": 67108864,
+   "method": "one export of the dispatched incidents of the first quarter of 2023 ordered by incident number",
+   "min_interval": 1.0,
+   "privacy": "police dispatch lifecycle timestamps and problem category only; locations, districts, sectors, flags and injury counts are not requested and the incident number is hashed in the view; no personal names",
+   "publisher": "City of Austin (Austin Police Department)",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Public Domain per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "first party: the police department computer-aided dispatch system records each incident and the city publishes the incident table",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "U.S. Federal Election Commission, bulk data downloads for the 2024 cycle (cn24, cm24, ccl24, pas224) and data dictionaries; accessed 2026-11-23",
+   "files": [
+    {
+     "name": "cn24.zip",
+     "observed": "2023-2024 election cycle",
+     "url": "https://www.fec.gov/files/bulk-downloads/2024/cn24.zip"
+    },
+    {
+     "name": "cm24.zip",
+     "observed": "2023-2024 election cycle",
+     "url": "https://www.fec.gov/files/bulk-downloads/2024/cm24.zip"
+    },
+    {
+     "name": "ccl24.zip",
+     "observed": "2023-2024 election cycle",
+     "url": "https://www.fec.gov/files/bulk-downloads/2024/ccl24.zip"
+    },
+    {
+     "name": "pas224.zip",
+     "observed": "2023-2024 election cycle",
+     "url": "https://www.fec.gov/files/bulk-downloads/2024/pas224.zip"
+    },
+    {
+     "name": "cn_header_file.csv",
+     "observed": "data dictionary",
+     "url": "https://www.fec.gov/files/bulk-downloads/data_dictionaries/cn_header_file.csv"
+    },
+    {
+     "name": "cm_header_file.csv",
+     "observed": "data dictionary",
+     "url": "https://www.fec.gov/files/bulk-downloads/data_dictionaries/cm_header_file.csv"
+    },
+    {
+     "name": "ccl_header_file.csv",
+     "observed": "data dictionary",
+     "url": "https://www.fec.gov/files/bulk-downloads/data_dictionaries/ccl_header_file.csv"
+    },
+    {
+     "name": "pas2_header_file.csv",
+     "observed": "data dictionary",
+     "url": "https://www.fec.gov/files/bulk-downloads/data_dictionaries/pas2_header_file.csv"
+    },
+    {
+     "name": "fec_sale_or_use.html",
+     "observed": "read 2026-11-23",
+     "url": "https://www.fec.gov/updates/sale-or-use-contributor-information/"
+    }
+   ],
+   "hosts": [
+    "www.fec.gov",
+    "cg-519a459a-0ea3-42c2-b7bc-fa1143481f74.s3-us-gov-west-1.amazonaws.com"
+   ],
+   "id": "fec_federal_campaign_finance_2024",
+   "licence_class": "open",
+   "licence_location": "https://www.fec.gov/updates/sale-or-use-contributor-information/",
+   "licence_text": "FEC sale-or-use page (read 2026-11-23): campaign finance reports are public records; contributor information may not be sold or used to solicit contributions or for commercial purposes, while bona fide academic research is a permissible use (AO 1986-25); the downloaded tables are candidate, committee, linkage and committee-contribution files and the view drops names and addresses",
+   "max_bytes": 134217728,
+   "method": "four complete bulk files of the 2024 cycle, four data dictionaries and the rights page",
+   "min_interval": 1.0,
+   "privacy": "public campaign finance filings; candidate, committee, treasurer and payee names, addresses, employers, occupations and memo text are dropped in the view; committee and candidate ids are public identifiers",
+   "publisher": "U.S. Federal Election Commission",
+   "rate_limit": "nine requests with a descriptive User-Agent",
+   "redistribution": "public records; no sale or solicitation use; the raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: committees file reports with the FEC and the FEC publishes the processed bulk files",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Reactome pathway knowledgebase release 98 (reactome.org/download/current), CC0 1.0; accessed 2026-11-23",
+   "files": [
+    {
+     "name": "ReactomePathways.txt",
+     "observed": "release 98 (current on 2026-11-23)",
+     "url": "https://reactome.org/download/current/ReactomePathways.txt"
+    },
+    {
+     "name": "ReactomePathwaysRelation.txt",
+     "observed": "release 98 (current on 2026-11-23)",
+     "url": "https://reactome.org/download/current/ReactomePathwaysRelation.txt"
+    },
+    {
+     "name": "UniProt2Reactome.txt",
+     "observed": "release 98 (current on 2026-11-23)",
+     "url": "https://reactome.org/download/current/UniProt2Reactome.txt"
+    },
+    {
+     "name": "ChEBI2Reactome.txt",
+     "observed": "release 98 (current on 2026-11-23)",
+     "url": "https://reactome.org/download/current/ChEBI2Reactome.txt"
+    },
+    {
+     "name": "reactome_version.txt",
+     "observed": "read 2026-11-23",
+     "url": "https://reactome.org/ContentService/data/database/version"
+    },
+    {
+     "name": "reactome_license.html",
+     "observed": "read 2026-11-23",
+     "url": "https://reactome.org/license"
+    }
+   ],
+   "hosts": [
+    "reactome.org"
+   ],
+   "id": "reactome_pathway_knowledgebase",
+   "licence_class": "open",
+   "licence_location": "https://reactome.org/license",
+   "licence_text": "Reactome licence page (read 2026-11-23): 'All data in the Reactome database and files derived from that data are licensed under the Creative Commons Public Domain Dedication (CC0). User may copy, modify, and distribute these data, even for commercial purposes, without asking for permission. Attribution is encouraged but not required.'",
+   "max_bytes": 67108864,
+   "method": "four complete current-release files, the release number and the licence page",
+   "min_interval": 1.0,
+   "privacy": "curated biological pathway data; no personal data",
+   "publisher": "Reactome (OICR, EMBL-EBI, NYULMC and CSHL)",
+   "rate_limit": "six requests with a descriptive User-Agent",
+   "redistribution": "CC0 per the Reactome licence page; the raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: Reactome curators and the participating institutes publish the database and its derived files",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "GitHub Advisory Database (github/advisory-database, CC BY 4.0) via the GitHub REST advisories API, reviewed advisories; accessed 2026-11-23",
+   "files": [
+    {
+     "name": "advisories_0.json",
+     "observed": "published in 2017",
+     "url": "https://api.github.com/advisories?per_page=100&type=reviewed&sort=published&direction=asc&published=2017-01-01..2017-12-31"
+    },
+    {
+     "name": "advisories_1.json",
+     "observed": "published in 2018",
+     "url": "https://api.github.com/advisories?per_page=100&type=reviewed&sort=published&direction=asc&published=2018-01-01..2018-12-31"
+    },
+    {
+     "name": "advisories_2.json",
+     "observed": "published in 2019",
+     "url": "https://api.github.com/advisories?per_page=100&type=reviewed&sort=published&direction=asc&published=2019-01-01..2019-12-31"
+    },
+    {
+     "name": "advisories_3.json",
+     "observed": "published in 2020",
+     "url": "https://api.github.com/advisories?per_page=100&type=reviewed&sort=published&direction=asc&published=2020-01-01..2020-12-31"
+    },
+    {
+     "name": "advisories_4.json",
+     "observed": "published in 2021",
+     "url": "https://api.github.com/advisories?per_page=100&type=reviewed&sort=published&direction=asc&published=2021-01-01..2021-12-31"
+    },
+    {
+     "name": "advisories_5.json",
+     "observed": "published in 2022",
+     "url": "https://api.github.com/advisories?per_page=100&type=reviewed&sort=published&direction=asc&published=2022-01-01..2022-12-31"
+    },
+    {
+     "name": "advisories_6.json",
+     "observed": "published in 2023",
+     "url": "https://api.github.com/advisories?per_page=100&type=reviewed&sort=published&direction=asc&published=2023-01-01..2023-12-31"
+    },
+    {
+     "name": "advisories_7.json",
+     "observed": "published in 2024",
+     "url": "https://api.github.com/advisories?per_page=100&type=reviewed&sort=published&direction=asc&published=2024-01-01..2024-12-31"
+    },
+    {
+     "name": "advisories_8.json",
+     "observed": "published in 2025",
+     "url": "https://api.github.com/advisories?per_page=100&type=reviewed&sort=published&direction=asc&published=2025-01-01..2025-12-31"
+    },
+    {
+     "name": "advisories_9.json",
+     "observed": "published in 2026",
+     "url": "https://api.github.com/advisories?per_page=100&type=reviewed&sort=published&direction=asc&published=2026-01-01..2026-12-31"
+    },
+    {
+     "name": "advisory_database_license.md",
+     "observed": "main branch",
+     "url": "https://raw.githubusercontent.com/github/advisory-database/main/LICENSE.md"
+    }
+   ],
+   "hosts": [
+    "api.github.com",
+    "raw.githubusercontent.com"
+   ],
+   "id": "github_reviewed_advisories",
+   "licence_class": "open",
+   "licence_location": "https://raw.githubusercontent.com/github/advisory-database/main/LICENSE.md",
+   "licence_text": "github/advisory-database LICENSE.md (read 2026-11-23): the advisory data are licensed under the Creative Commons Attribution 4.0 International licence; GitHub must be attributed",
+   "max_bytes": 33554432,
+   "method": "official REST advisories API, one request per publication year 2017 to 2026, the first 100 reviewed advisories of each year in publication order",
+   "min_interval": 1.0,
+   "privacy": "public security advisories; the credits objects (contributor handles) are dropped in the view",
+   "publisher": "GitHub, Inc. (GitHub Advisory Database)",
+   "rate_limit": "eleven requests with a descriptive User-Agent (unauthenticated limit 60 per hour)",
+   "redistribution": "CC BY 4.0 with attribution to GitHub; the raw pages stay local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party: GitHub security staff review and publish the advisories",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "National Center for Biotechnology Information, PubChem compound records CID 1 to 1000 via PUG REST; accessed 2026-11-23",
+   "files": [
+    {
+     "name": "compounds_0.json",
+     "observed": "CID range",
+     "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100/JSON"
+    },
+    {
+     "name": "compounds_1.json",
+     "observed": "CID range",
+     "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200/JSON"
+    },
+    {
+     "name": "compounds_2.json",
+     "observed": "CID range",
+     "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300/JSON"
+    },
+    {
+     "name": "compounds_3.json",
+     "observed": "CID range",
+     "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400/JSON"
+    },
+    {
+     "name": "compounds_4.json",
+     "observed": "CID range",
+     "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500/JSON"
+    },
+    {
+     "name": "compounds_5.json",
+     "observed": "CID range",
+     "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522,523,524,525,526,527,528,529,530,531,532,533,534,535,536,537,538,539,540,541,542,543,544,545,546,547,548,549,550,551,552,553,554,555,556,557,558,559,560,561,562,563,564,565,566,567,568,569,570,571,572,573,574,575,576,577,578,579,580,581,582,583,584,585,586,587,588,589,590,591,592,593,594,595,596,597,598,599,600/JSON"
+    },
+    {
+     "name": "compounds_6.json",
+     "observed": "CID range",
+     "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,628,629,630,631,632,633,634,635,636,637,638,639,640,641,642,643,644,645,646,647,648,649,650,651,652,653,654,655,656,657,658,659,660,661,662,663,664,665,666,667,668,669,670,671,672,673,674,675,676,677,678,679,680,681,682,683,684,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700/JSON"
+    },
+    {
+     "name": "compounds_7.json",
+     "observed": "CID range",
+     "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,720,721,722,723,724,725,726,727,728,729,730,731,732,733,734,735,736,737,738,739,740,741,742,743,744,745,746,747,748,749,750,751,752,753,754,755,756,757,758,759,760,761,762,763,764,765,766,767,768,769,770,771,772,773,774,775,776,777,778,779,780,781,782,783,784,785,786,787,788,789,790,791,792,793,794,795,796,797,798,799,800/JSON"
+    },
+    {
+     "name": "compounds_8.json",
+     "observed": "CID range",
+     "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/801,802,803,804,805,806,807,808,809,810,811,812,813,814,815,816,817,818,819,820,821,822,823,824,825,826,827,828,829,830,831,832,833,834,835,836,837,838,839,840,841,842,843,844,845,846,847,848,849,850,851,852,853,854,855,856,857,858,859,860,861,862,863,864,865,866,867,868,869,870,871,872,873,874,875,876,877,878,879,880,881,882,883,884,885,886,887,888,889,890,891,892,893,894,895,896,897,898,899,900/JSON"
+    },
+    {
+     "name": "compounds_9.json",
+     "observed": "CID range",
+     "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/901,902,903,904,905,906,907,908,909,910,911,912,913,914,915,916,917,918,919,920,921,922,923,924,925,926,927,928,929,930,931,932,933,934,935,936,937,938,939,940,941,942,943,944,945,946,947,948,949,950,951,952,953,954,955,956,957,958,959,960,961,962,963,964,965,966,967,968,969,970,971,972,973,974,975,976,977,978,979,980,981,982,983,984,985,986,987,988,989,990,991,992,993,994,995,996,997,998,999,1000/JSON"
+    },
+    {
+     "name": "ncbi_policies.html",
+     "observed": "read 2026-11-23",
+     "url": "https://www.ncbi.nlm.nih.gov/home/about/policies/"
+    }
+   ],
+   "hosts": [
+    "pubchem.ncbi.nlm.nih.gov",
+    "www.ncbi.nlm.nih.gov"
+   ],
+   "id": "pubchem_compounds",
+   "licence_class": "open",
+   "licence_location": "https://www.ncbi.nlm.nih.gov/home/about/policies/",
+   "licence_text": "NCBI Website and Data Usage Policies (read 2026-11-23): 'NCBI itself places no restrictions on the use or distribution of the data contained therein. Nor do we accept data when the submitter has requested restrictions on reuse or redistribution. However, some submitters of the original data ... may claim patent, copyright, or other intellectual property rights in all or a portion of the data.'",
+   "max_bytes": 33554432,
+   "method": "PUG REST compound records of ten identifier ranges of 100 (CID 1 to 1000)",
+   "min_interval": 1.0,
+   "privacy": "chemical structure records; no personal data",
+   "publisher": "National Center for Biotechnology Information (PubChem)",
+   "rate_limit": "eleven requests with a descriptive User-Agent, one per second",
+   "redistribution": "no NCBI restriction; submitters' possible rights apply to depositor content, which is not acquired; the raw pages stay local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party: PubChem standardises and publishes the compound records",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "NASA Earth Science Data and Information System, Common Metadata Repository (cmr.earthdata.nasa.gov) collection records; accessed 2026-11-23",
+   "files": [
+    {
+     "name": "collections_0.json",
+     "observed": "provider GES_DISC",
+     "url": "https://cmr.earthdata.nasa.gov/search/collections.umm_json?provider=GES_DISC&sort_key=entry_title&page_size=100"
+    },
+    {
+     "name": "collections_1.json",
+     "observed": "provider LPCLOUD",
+     "url": "https://cmr.earthdata.nasa.gov/search/collections.umm_json?provider=LPCLOUD&sort_key=entry_title&page_size=100"
+    },
+    {
+     "name": "collections_2.json",
+     "observed": "provider ORNL_CLOUD",
+     "url": "https://cmr.earthdata.nasa.gov/search/collections.umm_json?provider=ORNL_CLOUD&sort_key=entry_title&page_size=100"
+    },
+    {
+     "name": "collections_3.json",
+     "observed": "provider OB_CLOUD",
+     "url": "https://cmr.earthdata.nasa.gov/search/collections.umm_json?provider=OB_CLOUD&sort_key=entry_title&page_size=100"
+    },
+    {
+     "name": "collections_4.json",
+     "observed": "provider ASF",
+     "url": "https://cmr.earthdata.nasa.gov/search/collections.umm_json?provider=ASF&sort_key=entry_title&page_size=100"
+    },
+    {
+     "name": "collections_5.json",
+     "observed": "provider GHRC_DAAC",
+     "url": "https://cmr.earthdata.nasa.gov/search/collections.umm_json?provider=GHRC_DAAC&sort_key=entry_title&page_size=100"
+    },
+    {
+     "name": "collections_6.json",
+     "observed": "provider LAADS",
+     "url": "https://cmr.earthdata.nasa.gov/search/collections.umm_json?provider=LAADS&sort_key=entry_title&page_size=100"
+    },
+    {
+     "name": "collections_7.json",
+     "observed": "provider POCLOUD",
+     "url": "https://cmr.earthdata.nasa.gov/search/collections.umm_json?provider=POCLOUD&sort_key=entry_title&page_size=100"
+    },
+    {
+     "name": "collections_8.json",
+     "observed": "provider NSIDC_CPRD",
+     "url": "https://cmr.earthdata.nasa.gov/search/collections.umm_json?provider=NSIDC_CPRD&sort_key=entry_title&page_size=100"
+    },
+    {
+     "name": "nasa_data_policy.html",
+     "observed": "read 2026-11-23",
+     "url": "https://www.earthdata.nasa.gov/engage/open-data-services-and-software/data-and-information-policy"
+    }
+   ],
+   "hosts": [
+    "cmr.earthdata.nasa.gov",
+    "www.earthdata.nasa.gov"
+   ],
+   "id": "nasa_cmr_collections",
+   "licence_class": "open",
+   "licence_location": "https://www.earthdata.nasa.gov/engage/open-data-services-and-software/data-and-information-policy",
+   "licence_text": "NASA Earthdata Data and Information Guidance (read 2026-11-23): 'NASA promotes the full and open sharing of data with the research and applications communities, private industry, academia, and the general public.' The CMR serves the metadata of those data collections without authentication.",
+   "max_bytes": 33554432,
+   "method": "official CMR search API, one request per provider (nine providers), the first 100 collections of each by entry title",
+   "min_interval": 1.0,
+   "privacy": "public science data collection metadata; contact persons and groups are dropped in the view",
+   "publisher": "NASA (Earth Science Data and Information System, CMR)",
+   "rate_limit": "ten requests with a descriptive User-Agent",
+   "redistribution": "NASA open data policy; the raw pages stay local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party: NASA data centers and other providers publish their collection metadata to the CMR, which serves it",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Directory of Open Access Journals (doaj.org), journal-level metadata under CC0; accessed 2026-11-23",
+   "files": [
+    {
+     "name": "doaj_terms.html",
+     "observed": "read 2026-11-23",
+     "url": "https://doaj.org/terms/"
+    }
+   ],
+   "hosts": [
+    "doaj.org"
+   ],
+   "id": "doaj_journals",
+   "licence_class": "open",
+   "licence_location": "https://doaj.org/terms/",
+   "licence_text": "DOAJ Terms and conditions, metadata section (read 2026-11-23): 'The journal-level metadata is available with a CC0 waiver. ... via our API, in the journal CSV file, in our OAI-PMH feed ... and in the full data dump of all journal metadata.'",
+   "max_bytes": 33554432,
+   "method": "official search API, twenty pages of 50 journals sorted by creation date",
+   "min_interval": 1.0,
+   "pages": {
+    "count": 20,
+    "name": "journals_{n}.json",
+    "observed": "journals by creation date",
+    "size": 50,
+    "url": "https://doaj.org/api/search/journals/*?pageSize=50&page={n1}&sort=created_date%3Aasc"
+   },
+   "privacy": "journal-level registry metadata; no personal data",
+   "publisher": "Directory of Open Access Journals",
+   "rate_limit": "twenty-one requests with a descriptive User-Agent",
+   "redistribution": "CC0 for journal-level metadata per the DOAJ terms; the raw pages stay local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party: DOAJ editors review and publish the journal records",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Gene Ontology Consortium, go-basic.obo and UniProt-GOA goa_human.gaf.gz from current.geneontology.org (CC BY 4.0); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "go-basic.obo",
+     "observed": "release in the file header",
+     "url": "https://current.geneontology.org/ontology/go-basic.obo"
+    },
+    {
+     "name": "goa_human.gaf.gz",
+     "observed": "current human annotations",
+     "url": "https://current.geneontology.org/annotations/goa_human.gaf.gz"
+    },
+    {
+     "name": "go_citation_policy.html",
+     "observed": "read 2026-11-23",
+     "url": "https://geneontology.org/docs/go-citation-policy/"
+    }
+   ],
+   "hosts": [
+    "current.geneontology.org",
+    "geneontology.org",
+    "release.geneontology.org",
+    "go-data-product-release.s3.amazonaws.com"
+   ],
+   "id": "gene_ontology_annotations",
+   "licence_class": "open",
+   "licence_location": "https://geneontology.org/docs/go-citation-policy/",
+   "licence_text": "GO citation policy (read 2026-11-23): 'According to the terms of GO's CC BY 4.0 license, those using our data publicly or redistributing it must provide: identification of the creator(s) ..., a copyright notice, a notice that refers to this Public License, a notice that refers to the disclaimer of warranties.' The release date should be cited.",
+   "max_bytes": 50331648,
+   "method": "two complete current-release files and the citation policy page",
+   "min_interval": 1.0,
+   "privacy": "curated ontology and protein annotation data; no personal data",
+   "publisher": "Gene Ontology Consortium; EMBL-EBI (UniProt-GOA)",
+   "rate_limit": "three requests with a descriptive User-Agent",
+   "redistribution": "CC BY 4.0 with attribution; the view directory carries a NOTICE; the raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: the Gene Ontology Consortium and the UniProt-GOA group curate and publish the ontology and annotation files",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "City of Cincinnati, Emergency Communications Center (data.cincinnati-oh.gov dataset 5f3f-hgt9, Public Domain); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "ecc_calls_2023_janfeb.csv",
+     "observed": "calls of January and February 2023",
+     "url": "https://data.cincinnati-oh.gov/resource/5f3f-hgt9.csv?%24where=seizure_datetime+between+%272023-01-01T00%3A00%3A00%27+and+%272023-02-28T23%3A59%3A59%27&%24order=call_record_id&%24limit=250000&%24select=seizure_datetime%2Cali_query_timestamp%2Ccall_record_id%2Ccall_type_id%2Crelease_datetime%2Ctransfer_received_time"
+    }
+   ],
+   "hosts": [
+    "data.cincinnati-oh.gov"
+   ],
+   "id": "cincinnati_ecc_calls",
+   "licence_class": "open",
+   "licence_location": "https://data.cincinnati-oh.gov/api/views/5f3f-hgt9.json",
+   "licence_text": "Socrata view metadata for dataset 5f3f-hgt9 (read 2026-11-23): license 'Public Domain' (PUBLIC_DOMAIN); City of Cincinnati, Emergency Communications Center",
+   "max_bytes": 67108864,
+   "method": "one export of the emergency communications center call records seized in January and February 2023 ordered by call record id",
+   "min_interval": 1.0,
+   "privacy": "call-handling timestamps and call type only; caller locations, queues, agents, numbers and durations are not requested and the call record id is hashed in the view; no personal data",
+   "publisher": "City of Cincinnati (Emergency Communications Center)",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Public Domain per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "first party: the emergency communications center telephony system records each 911 call and the city publishes the call records",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Centers for Disease Control and Prevention, IISInfo (COVID-19 vaccination trends) (data.cdc.gov dataset rh2h-3yt2, Public Domain U.S. Government); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "vaccination_trends_us.csv",
+     "observed": "2020-12-13 to 2023-05-10",
+     "url": "https://data.cdc.gov/resource/rh2h-3yt2.csv?%24where=location%3D%27US%27&%24order=date_type%2Cdate&%24limit=5000&%24select=date%2Cdate_type%2Cmmwr_week%2Clocation%2Cadministered_daily%2Cadministered_cumulative%2Cadministered_7_day_rolling%2Cadmin_dose_1_daily%2Cadmin_dose_1_cumulative%2Cadmin_dose_1_day_rolling%2Cadministered_dose1_pop_pct%2Cadministered_daily_change%2Cadministered_daily_change_1%2Cseries_complete_daily%2Cseries_complete_cumulative%2Cseries_complete_day_rolling%2Cseries_complete_pop_pct%2Cbooster_daily%2Cbooster_cumulative%2Cbooster_7_day_rolling_average%2Cadditional_doses_vax_pct%2Csecond_booster_50plus_daily%2Csecond_booster_50plus_cumulative%2Csecond_booster_50plus_7_day_rolling_average%2Csecond_booster_50plus_vax_pct%2Cbivalent_booster_daily%2Cbivalent_booster_cumulative%2Cbivalent_booster_7_day_rolling_average%2Cbivalent_booster_pop_pct"
+    }
+   ],
+   "hosts": [
+    "data.cdc.gov"
+   ],
+   "id": "cdc_covid_vaccination_trends_us",
+   "licence_class": "open",
+   "licence_location": "https://data.cdc.gov/api/views/rh2h-3yt2.json",
+   "licence_text": "Socrata view metadata for dataset rh2h-3yt2 (read 2026-11-23): license 'Public Domain U.S. Government' (USGOV_WORKS); Centers for Disease Control and Prevention, IISInfo (COVID-19 vaccination trends)",
+   "max_bytes": 67108864,
+   "method": "the national (US) rows of the vaccination trends table ordered by date type and date",
+   "min_interval": 1.0,
+   "privacy": "daily national immunization counts reported by jurisdictions; no individual records",
+   "publisher": "U.S. Centers for Disease Control and Prevention (IISInfo)",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Public Domain U.S. Government per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: jurisdictions and federal partners report vaccinations to the CDC immunization information system data flow and the CDC publishes the national trends",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "NOAA National Weather Service, Climate Prediction Center, daily AO index (norm.daily.ao.cdas.z1000.19500101_current.csv); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "ao_daily.csv",
+     "observed": "1950 to 2026",
+     "url": "https://ftp.cpc.ncep.noaa.gov/cwlinks/norm.daily.ao.cdas.z1000.19500101_current.csv"
+    },
+    {
+     "name": "nws_disclaimer.html",
+     "observed": "read 2026-11-23",
+     "url": "https://www.weather.gov/disclaimer"
+    }
+   ],
+   "hosts": [
+    "ftp.cpc.ncep.noaa.gov",
+    "www.weather.gov"
+   ],
+   "id": "noaa_cpc_daily_ao_index",
+   "licence_class": "open",
+   "licence_location": "https://www.weather.gov/disclaimer",
+   "licence_text": "NWS disclaimer (read 2026-11-23; linked from the CPC AO index page): 'The information on National Weather Service (NWS) Web pages are in the public domain, unless specifically noted otherwise, and may be used without charge for any lawful purpose so long as you do not: 1) claim it is your own, 2) use it in a manner that implies an endorsement or affiliation with NOAA/NWS, or 3) modify its content and then present it as official government material.'",
+   "max_bytes": 4194304,
+   "method": "one complete daily index file plus the disclaimer page",
+   "min_interval": 1.0,
+   "privacy": "climate index values; no personal data",
+   "publisher": "NOAA National Weather Service, Climate Prediction Center",
+   "rate_limit": "two requests with a descriptive User-Agent",
+   "redistribution": "public domain per the NWS disclaimer; the raw file stays local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: the Climate Prediction Center computes the index from the CDAS analysis and publishes it",
+   "upstream_verified": true
   }
  ]
 }

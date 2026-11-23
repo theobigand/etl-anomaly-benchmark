@@ -1101,6 +1101,17 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _seattle_fire_911_snapshot(root)
     _baac_snapshot(root)
     _attack_snapshot(root)
+    _eia_snapshot(root)
+    _cpc_ao_snapshot(root)
+    _hurdat_snapshot(root)
+    _ipeds_snapshot(root)
+    _apis_guru_snapshot(root)
+    _zenodo_snapshot(root)
+    _lifecycle_snapshot(root)
+    _fec_snapshot(root)
+    _reactome_snapshot(root)
+    _go_snapshot(root)
+    _nested_snapshots(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1116,7 +1127,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "zen_florida_bridges", "wri_power_plants", "paris_urban_trees", "zen_moodle_events", "zen_norp_solar_bursts", "zen_blazar_flares", "zen_wind_fragility", "zen_terralore_chronicle", "ncei_storm_events_2024", "ourairports_db", "cftc_cot_disaggregated", "ndbc_buoys_2023", "zen_daylight_events", "cpsc_recalls", "nih_reporter_projects_fy2024", "ecb_fx_reference_rates", "seattle_fremont_bridge", "nsidc_sea_ice_index", "nasa_omni_solar_wind", "sffd_fire_incidents", "colorado_storage_tanks", "colorado_dam_safety", "wa_ev_population", "tx_hhsc_child_care", "austin_water_quality", "wa_ghg_reporting", "sfo_air_traffic", "tx_hotel_occupancy_tax", "seattle_building_permits", "delaware_well_permits", "austin_campaign_finance", "delaware_state_credit_cards", "montgomery_dlc_sales", "fta_ntd_monthly_ridership", "bloomington_water_plant_energy", "bloomington_solar_sites", "seattle_fire_911_calls", "france_baac_road_accidents", "mitre_attack_enterprise_stix", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "zen_florida_bridges", "wri_power_plants", "paris_urban_trees", "zen_moodle_events", "zen_norp_solar_bursts", "zen_blazar_flares", "zen_wind_fragility", "zen_terralore_chronicle", "ncei_storm_events_2024", "ourairports_db", "cftc_cot_disaggregated", "ndbc_buoys_2023", "zen_daylight_events", "cpsc_recalls", "nih_reporter_projects_fy2024", "ecb_fx_reference_rates", "seattle_fremont_bridge", "nsidc_sea_ice_index", "nasa_omni_solar_wind", "sffd_fire_incidents", "colorado_storage_tanks", "colorado_dam_safety", "wa_ev_population", "tx_hhsc_child_care", "austin_water_quality", "wa_ghg_reporting", "sfo_air_traffic", "tx_hotel_occupancy_tax", "seattle_building_permits", "delaware_well_permits", "austin_campaign_finance", "delaware_state_credit_cards", "montgomery_dlc_sales", "fta_ntd_monthly_ridership", "bloomington_water_plant_energy", "bloomington_solar_sites", "bts_daily_mobility_national", "cdc_covid_vaccination_trends_us", "seattle_fire_911_calls", "france_baac_road_accidents", "mitre_attack_enterprise_stix", "eia_petroleum_spot_prices", "noaa_cpc_daily_ao_index", "nhc_hurdat2_atlantic", "nces_ipeds_2023", "apis_guru_openapi_directory", "zenodo_dataset_records_2023_03", "cincinnati_fire_cad", "cincinnati_ecc_calls", "austin_apd_cad", "fec_federal_campaign_finance_2024", "reactome_pathway_knowledgebase", "gene_ontology_annotations", "nasa_cmr_collections", "doaj_journals", "github_reviewed_advisories", "pubchem_compounds", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -10156,13 +10167,13 @@ def _seattle_fire_911_snapshot(root):
         "\n".join(
             [
                 '"type","datetime","incident_number"',
-                '"Medic Response","2023-01-02T00:05:00.000","F230000003"',
-                '"Aid Response","2023-01-01T23:59:00.000","F230000002"',
-                '"Aid Response","2023-01-01T23:59:00.000","F230000001"',
-                '"Dup","2023-01-01T23:59:00.000","F230000001"',
-                '"No time","","F230000009"',
-                '"Bad time","soon","F230000008"',
-                '"","2023-01-02T01:00:00.000","F230000004"',
+                '"Medic Response","2023-01-02T00:05:00.000","0003"',
+                '"Aid Response","2023-01-01T23:59:00.000","0002"',
+                '"NA","2023-01-01T23:58:00.000","007"',
+                '"Dup","2023-01-01T23:58:00.000","007"',
+                '"No time","","0009"',
+                '"Bad time","soon","0008"',
+                '"","2023-01-02T01:00:00.000","0004"',
             ]
         )
         + "\n"
@@ -10184,21 +10195,21 @@ def test_seattle_fire_911_view_orders_keys_by_day_and_hashes_the_incident(tmp_pa
         dtype=str,
         keep_default_na=False,
     )
+    raw.loc[len(raw)] = [None, "2023-01-02T02:00:00.000", "F5"]  # a missing type is not a drop
     view = ev.seattle_fire_911_view(raw)
     assert view.columns.tolist() == ["event_date", "time", "type", "incident"]
-    assert view["incident"].tolist() == [ev.pseudonym(k) for k in ["F1", "F2", "F3", "F4"]][:2] + [
-        ev.pseudonym("F3"),
-        ev.pseudonym("F4"),
-    ]
-    assert view["event_date"].tolist() == ["2023-01-01", "2023-01-01", "2023-01-02", "2023-01-02"]
+    assert view["incident"].tolist() == [ev.pseudonym(f"F{n}") for n in (1, 2, 3, 4, 5)]
+    assert view["event_date"].tolist() == ["2023-01-01"] * 2 + ["2023-01-02"] * 3
     assert view["time"].tolist() == [
-        "2023-01-01 23:59:00",
-        "2023-01-01 23:59:00",
-        "2023-01-02 00:05:00",
-        "2023-01-02 01:00:00",
+        pd.Timestamp("2023-01-01 23:59:00"),
+        pd.Timestamp("2023-01-01 23:59:00"),
+        pd.Timestamp("2023-01-02 00:05:00"),
+        pd.Timestamp("2023-01-02 01:00:00"),
+        pd.Timestamp("2023-01-02 02:00:00"),
     ]
-    assert view["type"].iloc[:3].tolist() == ["A", "A", "B"] and pd.isna(view["type"].iloc[3])
-    assert view.index.tolist() == [0, 1, 2, 3]
+    assert view["type"].iloc[:3].tolist() == ["A", "A", "B"]
+    assert view["type"].isna().tolist() == [False, False, False, True, True]
+    assert view.index.tolist() == [0, 1, 2, 3, 4]
 
 
 def test_seattle_fire_911_builder_writes_the_view_and_manifest(tmp_path):
@@ -10210,8 +10221,9 @@ def test_seattle_fire_911_builder_writes_the_view_and_manifest(tmp_path):
     out = tmp_path / "deep" / "out"
     ev._build_seattle_fire_911(root, out, manifest)
     ev._build_seattle_fire_911(root, out, manifest)
-    df = pd.read_csv(out / "seattle_fire_911_calls" / "events.csv")
-    assert df["event_date"].tolist() == ["2023-01-01", "2023-01-01", "2023-01-02", "2023-01-02"]
+    df = pd.read_csv(out / "seattle_fire_911_calls" / "events.csv", keep_default_na=False)
+    assert df["event_date"].tolist() == ["2023-01-01"] * 2 + ["2023-01-02"] * 2
+    assert df["incident"].iloc[0] == ev.pseudonym("007") and df["type"].iloc[0] == "NA"
     entry = manifest["seattle_fire_911_calls"]
     assert entry["files"]["events.csv"]["rows"] == 4
     assert entry["dropped"] == ["address", "latitude", "longitude", "report_location", "regions"]
@@ -10219,7 +10231,7 @@ def test_seattle_fire_911_builder_writes_the_view_and_manifest(tmp_path):
     assert entry["sampling"] == {
         "method": "dispatches of calendar year 2023 ordered by time and incident number",
         "days": 2,
-        "first_time": "2023-01-01 23:59:00",
+        "first_time": "2023-01-01 23:58:00",
         "last_time": "2023-01-02 01:00:00",
     }
     assert entry["source_snapshot"] == f"seattle_fire_911_calls/{ev.WAVE28_SNAPSHOT}"
@@ -10232,13 +10244,13 @@ def _baac_tables():
     return {
         "caracteristiques": table(
             "Num_Acc;jour;mois;an;hrmn;lum;dep;com;agg;int;atm;col;adr;lat;long\n"
-            "A1;01;02;2024;07:40;2;70;70285;1;1;5;1;D438;47,5;6,7\n"
+            "A1;01;02;2024;07:40;2;01;70285;1;1;5;1;D438;47,5;6,7\n"
             "A2;03;02;2024;08:00;1;21;21054;2;3;7;6;RUE;47,0;4,8\n"
             "A3;04;02;2024;09:00;1;21;21054;2;3;7;6;RUE;47,0;4,8\n"
         ),
         "lieux": table(
             "Num_Acc;catr;voie;v1;v2;circ;nbv;vosp;prof;pr;pr1;plan;lartpc;larrout;surf;infra;situ;vma\n"
-            "A1;3;D438;0;N/A;2;2;0;1;1;260;2;;7;1;0;1;90\n"
+            "A1;3;D438, RUE;0;N/A;2;2;0;1;1;260;2;;7;1;0;1;90\n"
             "A1;3;D439;0;N/A;2;2;0;1;1;260;2;;7;1;0;1;90\n"
             "A2;4;RUE;0;N/A;2;2;0;1; -1; -1;1;; -1;9;0;1;30\n"
             "A9;4;RUE;0;N/A;2;2;0;1; -1; -1;1;; -1;9;0;1;30\n"
@@ -10254,6 +10266,7 @@ def _baac_tables():
             "Num_Acc;id_usager;id_vehicule;num_veh;place;catu;grav;sexe;an_nais;trajet;secu1;secu2;secu3;locp;actp;etatp\n"
             "A1;U1;V1;A01;1;1;3;1;2003;2;1; -1; -1; -1; -1; -1\n"
             "A1;U2;V2;B01;1;1;1;1;1997;4;1; -1; -1; -1; -1; -1\n"
+            "A1;U6;V1;A01;2;2;4;2;1980;0;0; -1; -1;1;1;1\n"
             "A2;U3;V9;C01;1;3;4;2;1980;0;0; -1; -1;1;1;1\n"
             "A2;U4;;;1;3;4;2;1980;0;0; -1; -1;1;1;1\n"
             "A8;U5;V1;A01;1;1;4;2;1980;0;0; -1; -1;1;1;1\n"
@@ -10285,12 +10298,12 @@ def test_baac_view_keeps_the_published_rows_and_reports_every_key_fact():
     assert by_pair[("vehicules.Num_Acc", "caracteristiques.Num_Acc")]["orphans"] == 0
     assert by_pair[("usagers.Num_Acc", "caracteristiques.Num_Acc")]["orphans"] == 1
     vehicle = by_pair[("usagers.id_vehicule", "vehicules.id_vehicule")]
-    assert (vehicle["checked"], vehicle["orphans"]) == (4, 1)  # a blank id is missing, not dangling
+    assert (vehicle["checked"], vehicle["orphans"]) == (5, 1)  # a blank id is missing, not dangling
     assert facts == {
         "usagers_num_veh_without_vehicle": 2,  # (A2, C01) and (A8, A01); blank num_veh is missing
-        "usagers_num_veh_checked": 4,
+        "usagers_num_veh_checked": 5,
         "vehicules_duplicate_num_veh": 1,
-        "max_rows_per_accident": {"lieux": 2, "vehicules": 2, "usagers": 2},
+        "max_rows_per_accident": {"lieux": 2, "vehicules": 2, "usagers": 3},
         "accidents_without_child": {"lieux": 1, "vehicules": 1, "usagers": 1},
     }
 
@@ -10322,10 +10335,16 @@ def test_baac_builder_writes_four_tables_and_the_relation_facts(tmp_path):
         "caracteristiques.csv": 3,
         "lieux.csv": 4,
         "vehicules.csv": 4,
-        "usagers.csv": 5,
+        "usagers.csv": 6,
     }
-    written = pd.read_csv(out / "france_baac_road_accidents" / "usagers.csv", sep=",", dtype=str)
-    assert written["Num_Acc"].tolist() == ["A1", "A1", "A2", "A2", "A8"]
+    folder = out / "france_baac_road_accidents"
+
+    def written(name):
+        return pd.read_csv(folder / f"{name}.csv", dtype=str, keep_default_na=False)
+
+    assert written("usagers")["Num_Acc"].tolist() == ["A1", "A1", "A1", "A2", "A2", "A8"]
+    assert written("caracteristiques")["dep"].tolist() == ["01", "21", "21"]  # text, not numbers
+    assert written("lieux")["v2"].iloc[0] == "N/A"  # the publisher's text is not a missing cell
     assert entry["dropped"] == ev.BAAC_DROPPED and entry["pseudonymised"] == []
     assert len(entry["relations"]) == 4
     assert entry["sampling"]["method"] == (
@@ -10363,6 +10382,8 @@ def _attack_bundle():
                 "aliases": ["G1", "Group"],
             },
             {"type": "intrusion-set", "id": "intrusion-set--a", "name": "repeated"},
+            {"type": "relationship", "id": "relationship--b", "relationship_type": "again"},
+            {"type": "attack-pattern", "id": "attack-pattern--d", "name": "T2"},
         ],
     }
 
@@ -10371,10 +10392,11 @@ def test_attack_stix_view_orders_by_id_drops_contributor_names_and_keeps_the_nes
     view, repeated = ev.attack_stix_view(_attack_bundle())
     assert [r["id"] for r in view] == [
         "attack-pattern--c",
+        "attack-pattern--d",
         "intrusion-set--a",
         "relationship--b",
     ]
-    assert repeated == 1
+    assert repeated == 2
     assert view[0] == {
         "type": "attack-pattern",
         "id": "attack-pattern--c",
@@ -10382,8 +10404,8 @@ def test_attack_stix_view_orders_by_id_drops_contributor_names_and_keeps_the_nes
         "kill_chain_phases": [{"kill_chain_name": "mitre-attack", "phase_name": "x"}],
         "external_references": [{"source_name": "mitre-attack", "external_id": "T1"}],
     }
-    assert view[1]["aliases"] == ["G1", "Group"] and view[1]["name"] == "G1"  # first one kept
-    assert "x_mitre_contributors" not in view[1]
+    assert view[2]["aliases"] == ["G1", "Group"] and view[2]["name"] == "G1"  # first one kept
+    assert "x_mitre_contributors" not in view[2]
     with pytest.raises(ev.ViewError, match=r"^not a STIX bundle$"):
         ev.attack_stix_view({"type": "indicator", "objects": []})
     with pytest.raises(ev.ViewError, match=r"^not a STIX bundle$"):
@@ -10410,6 +10432,7 @@ def test_attack_stix_builder_writes_jsonl_notice_and_manifest(tmp_path):
     lines = (folder / "objects.jsonl").read_text().splitlines()
     assert [json.loads(line)["id"] for line in lines] == [
         "attack-pattern--c",
+        "attack-pattern--d",
         "intrusion-set--a",
         "relationship--b",
     ]
@@ -10417,12 +10440,913 @@ def test_attack_stix_builder_writes_jsonl_notice_and_manifest(tmp_path):
     assert notice == ev.ATTACK_NOTICE + "\n\nThe licence text\n"
     assert "The MITRE Corporation" in ev.ATTACK_NOTICE
     entry = manifest["mitre_attack_enterprise_stix"]
-    assert entry["files"]["objects.jsonl"]["rows"] == 3
+    assert entry["files"]["objects.jsonl"]["rows"] == 4
     assert entry["dropped"] == ["x_mitre_contributors"] and entry["pseudonymised"] == []
     assert entry["sampling"] == {
         "method": "complete Enterprise STIX 2.1 bundle of ATT&CK release v20.1",
         "release": "v20.1",
-        "repeated_ids": 1,
-        "object_types": {"attack-pattern": 1, "intrusion-set": 1, "relationship": 1},
+        "repeated_ids": 2,
+        "object_types": {"attack-pattern": 2, "intrusion-set": 1, "relationship": 1},
     }
     assert entry["source_snapshot"] == f"mitre_attack_enterprise_stix/{ev.WAVE28_SNAPSHOT}"
+    (root / "mitre_attack_enterprise_stix" / ev.WAVE28_SNAPSHOT / "raw" / "LICENSE.txt").unlink()
+    with pytest.raises(ev.ViewError, match=r"^no ATT&CK STIX bundle or licence in the snapshot$"):
+        ev._build_attack_stix(root, tmp_path / "err2", {})  # the bundle alone is not enough
+
+
+def _eia_line(series_id, name, freq, data, units="Dollars per Barrel"):
+    return json.dumps(
+        {"series_id": series_id, "name": name, "units": units, "f": freq, "data": data}
+    )
+
+
+EIA_LINES = [
+    _eia_line(
+        "PET.RCLC1.D", "Cushing, OK Crude Oil Future Contract 1, Daily", "D", [["20200102", 1.0]]
+    ),  # fmt: skip
+    _eia_line("PET.RWTC.W", "Cushing, OK WTI Spot Price FOB, Weekly", "W", [["20200103", 9.0]]),
+    "",
+    json.dumps({"category_id": "1", "name": "not a series"}),
+    _eia_line(
+        "PET.RWTC.D",
+        "Cushing, OK WTI Spot Price FOB, Daily",
+        "D",
+        [["20200103", 63.0], ["20200102", 61.5], ["20200101", None], ["20200104", "NA"]],
+    ),  # fmt: skip
+    _eia_line(
+        "PET.RBRTE.D",
+        "Europe Brent Spot Price FOB, Daily",
+        "D",
+        [["20200103", 68.0], ["20200102", 66.0]],
+    ),  # fmt: skip
+]
+
+
+def test_eia_spot_view_keeps_daily_spot_series_only_and_aligns_on_the_date():
+    view = ev.eia_spot_view(EIA_LINES)
+    assert view.columns.tolist() == ["timestamp", "pet_rwtc_d", "pet_rbrte_d"]
+    assert view["timestamp"].tolist() == [
+        pd.Timestamp("2020-01-01"),
+        pd.Timestamp("2020-01-02"),
+        pd.Timestamp("2020-01-03"),
+        pd.Timestamp("2020-01-04"),
+    ]
+    assert pd.isna(view["pet_rwtc_d"].iloc[0]) and view["pet_rwtc_d"].iloc[2] == 63.0
+    assert pd.isna(view["pet_rwtc_d"].iloc[3])  # a text cell is a missing value
+    assert pd.isna(view["pet_rbrte_d"].iloc[0]) and view["pet_rbrte_d"].tolist()[1:3] == [
+        66.0,
+        68.0,
+    ]
+    with pytest.raises(ev.ViewError, match=r"^no daily spot price series in the EIA file$"):
+        ev.eia_spot_view([EIA_LINES[1]])
+
+
+def _eia_snapshot(root):
+    raw = root / "eia_petroleum_spot_prices" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with zipfile.ZipFile(raw / "PET.zip", "w") as z:
+        z.writestr("PET.txt", "\n".join(EIA_LINES) + "\n")
+    (raw / "copyrights_reuse.html").write_text("Public domain")
+
+
+def test_eia_builder_writes_the_wide_table_and_manifest(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no EIA petroleum bulk file in the snapshot$"):
+        ev._build_eia_spot(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _eia_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_eia_spot(root, out, manifest)
+    ev._build_eia_spot(root, out, manifest)
+    lines = (out / "eia_petroleum_spot_prices" / "spot_prices.csv").read_text().splitlines()
+    assert lines[0] == "timestamp,pet_rwtc_d,pet_rbrte_d"
+    assert lines[1] == "2020-01-01,,"
+    entry = manifest["eia_petroleum_spot_prices"]
+    assert entry["files"]["spot_prices.csv"]["rows"] == 4
+    assert entry["dropped"] == ["futures contracts", "weekly, monthly and annual series"]
+    assert entry["sampling"] == {
+        "method": "daily spot price series of the EIA petroleum bulk file, joined on the date",
+        "series": ["pet_rbrte_d", "pet_rwtc_d"],
+        "first_timestamp": "2020-01-01 00:00:00",
+        "last_timestamp": "2020-01-04 00:00:00",
+    }
+    assert entry["source_snapshot"] == f"eia_petroleum_spot_prices/{ev.WAVE28_SNAPSHOT}"
+
+
+HURDAT_TEXT = (
+    "AL011851,            UNNAMED,      3,\n"
+    "18510625, 0000,  , HU, 28.0N,  94.8W,  80, -999, -999, -999, -999, -999, -999, -999, "
+    "-999, -999, -999, -999, -999, -999,\n"
+    "18510625, 0600,  , HU, 28.0N,  95.4W,  80, -999, -999, -999, -999, -999, -999, -999, "
+    "-999, -999, -999, -999, -999, -999,\n"
+    "18510625, 1800, L, TS, 28.5S,   1.0E,  70,  990,   50,   60,   70,   80,   20,   30,   "
+    "40,   50,   10,   11,   12,   13,\n"
+    "AL021852,            ALPHA,      1,\n"
+    "18520822, 0000,  , TS, 27.0N,  95.0W,  50, 1000,    0,    0,    0,    0,    0,    0,    "
+    "0,    0,    0,    0,    0,    0,\n"
+)
+
+
+def test_hurdat2_view_parses_storm_blocks_signs_and_missing_codes():
+    view = ev.hurdat2_view(HURDAT_TEXT)
+    assert view.columns.tolist() == [
+        "storm_id", "storm_name", "timestamp", "record_identifier", "status", "latitude",
+        "longitude", "max_wind_kt", "min_pressure_mb",
+        "r34_ne_nmi", "r34_se_nmi", "r34_sw_nmi", "r34_nw_nmi",
+        "r50_ne_nmi", "r50_se_nmi", "r50_sw_nmi", "r50_nw_nmi",
+        "r64_ne_nmi", "r64_se_nmi", "r64_sw_nmi", "r64_nw_nmi",
+    ]  # fmt: skip
+    assert view["storm_id"].tolist() == ["AL011851"] * 3 + ["AL021852"]
+    assert view["storm_name"].tolist() == ["UNNAMED"] * 3 + ["ALPHA"]
+    assert view["timestamp"].tolist() == [
+        pd.Timestamp("1851-06-25 00:00"),
+        pd.Timestamp("1851-06-25 06:00"),
+        pd.Timestamp("1851-06-25 18:00"),
+        pd.Timestamp("1852-08-22 00:00"),
+    ]
+    assert view["record_identifier"].tolist() == ["", "", "L", ""]
+    assert view["status"].tolist() == ["HU", "HU", "TS", "TS"]
+    assert view["latitude"].tolist() == [28.0, 28.0, -28.5, 27.0]  # S is negative
+    assert view["longitude"].tolist() == [-94.8, -95.4, 1.0, -95.0]  # W negative, E positive
+    assert view["max_wind_kt"].tolist() == [80, 80, 70, 50]
+    assert pd.isna(view["min_pressure_mb"].iloc[0]) and view["min_pressure_mb"].iloc[2] == 990
+    assert pd.isna(view["r34_ne_nmi"].iloc[0]) and view["r34_ne_nmi"].iloc[2] == 50
+    assert view["r64_nw_nmi"].iloc[2] == 13 and view["r34_ne_nmi"].iloc[3] == 0
+
+
+def test_hurdat2_view_refuses_a_storm_with_a_different_number_of_records():
+    broken = HURDAT_TEXT.replace("UNNAMED,      3,", "UNNAMED,      4,")
+    with pytest.raises(ev.ViewError, match=r"^storm AL011851 declares 4 records but has 3$"):
+        ev.hurdat2_view(broken)
+    with pytest.raises(ev.ViewError, match=r"^no storm in the HURDAT2 file$"):
+        ev.hurdat2_view("\n")
+
+
+def _hurdat_snapshot(root):
+    raw = root / "nhc_hurdat2_atlantic" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "hurdat2-atlantic.txt").write_text(HURDAT_TEXT)
+
+
+def test_hurdat2_builder_writes_the_storm_event_view_and_manifest(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no HURDAT2 file in the snapshot$"):
+        ev._build_hurdat2(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _hurdat_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_hurdat2(root, out, manifest)
+    ev._build_hurdat2(root, out, manifest)
+    df = pd.read_csv(out / "nhc_hurdat2_atlantic" / "events.csv", keep_default_na=False)
+    assert df["storm_id"].tolist() == ["AL011851"] * 3 + ["AL021852"]
+    assert df["timestamp"].iloc[0] == "1851-06-25 00:00:00"
+    entry = manifest["nhc_hurdat2_atlantic"]
+    assert entry["files"]["events.csv"]["rows"] == 4
+    assert entry["dropped"] == [] and entry["pseudonymised"] == []
+    assert entry["sampling"] == {
+        "method": "complete HURDAT2 Atlantic best-track file, every storm and record",
+        "storms": 2,
+        "first_timestamp": "1851-06-25 00:00:00",
+        "last_timestamp": "1852-08-22 00:00:00",
+    }
+    assert entry["source_snapshot"] == f"nhc_hurdat2_atlantic/{ev.WAVE28_SNAPSHOT}"
+
+
+def _ipeds_tables():
+    def table(text):
+        return pd.read_csv(io.StringIO(text), dtype=str, keep_default_na=False)
+
+    return {
+        "hd": table(
+            "UNITID,INSTNM,IALIAS,ADDR,CITY,STABBR,ZIP,CHFNM,CHFTITLE,GENTELE,EIN,UEIS,WEBADDR,"
+            "ADMINURL,FAIDURL,APPLURL,NPRICURL,VETURL,ATHURL,DISAURL,F1SYSNAM,LONGITUD,LATITUDE,"
+            "SECTOR\n"
+            "1,Name A,,1 Rd,Town,NA,00001,Chief,Pres,555,E1,U1,w,a,f,p,n,v,t,d,Sys,1.5,2.5,1\n"
+            "2,Name B,,2 Rd,Town,CA,00002,Chief,Pres,556,E2,U2,w,a,f,p,n,v,t,d,Sys,1.6,2.6,2\n"
+        ),
+        "ic": table("UNITID,LEVEL1,TUITPL\n1,1,2\n2,1,\n9,0,0\n"),
+        "adm": table("UNITID,ADMCON1\n1,5\n"),
+        "effy": table(
+            "UNITID,EFFYALEV,EFFYLEV,EFYTOTLT\n1,1,1,10\n1,1,1,11\n1,2,2,5\n2,1,1,\n8,1,1,3\n"
+        ),
+        "c": table(
+            "UNITID,CIPCODE,MAJORNUM,AWLEVEL,CTOTALT\n"
+            "1,01.0101,1,5,4\n2,01.0101,1,5,3\n2,01.0101,1,5,2\n"
+        ),
+    }
+
+
+def test_ipeds_view_drops_names_and_contacts_and_reports_keys_without_repairing():
+    views, relations, facts = ev.ipeds_view(_ipeds_tables())
+    assert list(views) == ["hd", "ic", "adm", "effy", "c"]
+    assert views["hd"].columns.tolist() == ["UNITID", "STABBR", "SECTOR"]
+    assert views["hd"]["STABBR"].tolist() == ["NA", "CA"]  # the state code NA is a value
+    assert views["ic"].columns.tolist() == ["UNITID", "LEVEL1", "TUITPL"]
+    assert views["ic"]["UNITID"].tolist() == ["1", "2", "9"]  # the orphan row stays
+    assert views["effy"]["EFYTOTLT"].tolist() == ["10", "11", "5", "", "3"]
+    by_child = {r["child"]: r for r in relations}
+    assert [r["child"] for r in relations] == [
+        "ic.UNITID", "adm.UNITID", "effy.UNITID", "c.UNITID",
+    ]  # fmt: skip
+    assert all(r["parent"] == "hd.UNITID" for r in relations)
+    assert (by_child["ic.UNITID"]["checked"], by_child["ic.UNITID"]["orphans"]) == (3, 1)
+    assert by_child["adm.UNITID"]["orphans"] == 0 and by_child["c.UNITID"]["orphans"] == 0
+    assert (by_child["effy.UNITID"]["checked"], by_child["effy.UNITID"]["orphans"]) == (5, 1)
+    assert facts == {
+        "duplicate_keys": {"hd": 0, "ic": 0, "adm": 0, "effy": 1, "c": 1},
+        "institutions_without_child": {"ic": 0, "adm": 1, "effy": 0, "c": 0},
+    }
+
+
+def _ipeds_snapshot(root):
+    raw = root / "nces_ipeds_2023" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    members = {
+        "hd": ("HD2023.zip", "HD2023.csv"),
+        "ic": ("IC2023.zip", "IC2023_RV.csv"),
+        "adm": ("ADM2023.zip", "adm2023.csv"),
+        "effy": ("EFFY2023.zip", "EFFY2023_RV.csv"),
+        "c": ("C2023_A.zip", "C2023_a_RV.csv"),
+    }
+    for name, frame in _ipeds_tables().items():
+        archive, member = members[name]
+        with zipfile.ZipFile(raw / archive, "w") as z:
+            z.writestr(member, "\ufeff" + frame.to_csv(index=False))
+            z.writestr(member.replace(".csv", "_other.csv"), "UNITID\nignored\n")
+
+
+def test_ipeds_builder_reads_the_revised_member_of_each_zip(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^missing IPEDS tables in the snapshot$"):
+        ev._build_ipeds(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _ipeds_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_ipeds(root, out, manifest)
+    ev._build_ipeds(root, out, manifest)
+    entry = manifest["nces_ipeds_2023"]
+    assert {n: f["rows"] for n, f in entry["files"].items()} == {
+        "hd.csv": 2, "ic.csv": 3, "adm.csv": 1, "effy.csv": 5, "c.csv": 3,
+    }  # fmt: skip
+    written = pd.read_csv(out / "nces_ipeds_2023" / "hd.csv", dtype=str, keep_default_na=False)
+    assert written["STABBR"].tolist() == ["NA", "CA"]
+    assert entry["dropped"] == ev.IPEDS_DROPPED and entry["pseudonymised"] == []
+    assert len(entry["relations"]) == 4
+    assert entry["sampling"]["method"] == (
+        "complete 2023 IPEDS institutional characteristics, admissions, enrolment and "
+        "completions tables (revised files where published)"
+    )
+    assert entry["sampling"]["duplicate_keys"]["effy"] == 1
+    assert entry["source_snapshot"] == f"nces_ipeds_2023/{ev.WAVE28_SNAPSHOT}"
+
+
+def _apis_guru_directory():
+    return {
+        "b.example": {
+            "added": "2020-01-01",
+            "preferred": "2.0",
+            "versions": {
+                "2.0": {
+                    "info": {
+                        "title": "B",
+                        "contact": {"email": "b@example.org", "name": "B Corp", "url": "https://b"},
+                        "x-apisguru-categories": ["cloud"],
+                    },
+                    "swaggerUrl": "https://b/swagger.json",
+                }
+            },
+        },
+        "a.example": {
+            "added": "2019-01-01",
+            "preferred": "1.0",
+            "versions": {"1.0": {"info": {"title": "A"}, "openapiVer": "3.0.0"}},
+        },
+    }
+
+
+def test_apis_guru_view_orders_by_api_and_drops_contacts_at_every_depth():
+    view = ev.apis_guru_view(_apis_guru_directory())
+    assert [r["api"] for r in view] == ["a.example", "b.example"]
+    assert view[0] == {
+        "api": "a.example",
+        "added": "2019-01-01",
+        "preferred": "1.0",
+        "versions": {"1.0": {"info": {"title": "A"}, "openapiVer": "3.0.0"}},
+    }
+    second = view[1]["versions"]["2.0"]
+    assert second["info"] == {"title": "B", "x-apisguru-categories": ["cloud"]}  # no contact
+    assert second["swaggerUrl"] == "https://b/swagger.json"
+    with pytest.raises(ev.ViewError, match=r"^not an API directory$"):
+        ev.apis_guru_view([])
+
+
+def _apis_guru_snapshot(root):
+    raw = root / "apis_guru_openapi_directory" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "list.json").write_text(json.dumps(_apis_guru_directory()))
+
+
+def test_apis_guru_builder_writes_jsonl_and_manifest(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no API directory in the snapshot$"):
+        ev._build_apis_guru(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _apis_guru_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_apis_guru(root, out, manifest)
+    ev._build_apis_guru(root, out, manifest)
+    lines = (out / "apis_guru_openapi_directory" / "apis.jsonl").read_text().splitlines()
+    assert [json.loads(line)["api"] for line in lines] == ["a.example", "b.example"]
+    entry = manifest["apis_guru_openapi_directory"]
+    assert entry["files"]["apis.jsonl"]["rows"] == 2
+    assert entry["dropped"] == ["contact"] and entry["pseudonymised"] == []
+    assert entry["sampling"] == {
+        "method": "complete APIs.guru directory list, one record per API",
+        "versions": 2,
+    }
+    assert entry["source_snapshot"] == f"apis_guru_openapi_directory/{ev.WAVE28_SNAPSHOT}"
+
+
+def _zenodo_hit(record_id, **extra):
+    return {
+        "id": record_id,
+        "created": "2023-03-01",
+        "metadata": {
+            "title": f"T{record_id}",
+            "description": "free text",
+            "creators": [{"name": "Person", "orcid": "0000"}],
+            "license": {"id": "cc-by-4.0"},
+            "relations": {"version": [{"index": 0, "is_last": True}]},
+        },
+        "files": [{"key": "a.csv", "size": 3, "checksum": "md5:x", "links": {"self": "u"}}],
+        "links": {"self": "u"},
+        "owners": [{"id": 1}],
+        **extra,
+    }
+
+
+def _zenodo_pages():
+    return [
+        {"hits": {"total": 3, "hits": [_zenodo_hit(5), _zenodo_hit(2, swh={"x": 1})]}},
+        {"hits": {"total": 3, "hits": [_zenodo_hit(5), _zenodo_hit(9)]}},
+    ]
+
+
+def test_zenodo_records_view_dedupes_orders_and_drops_people_text_and_links():
+    view, repeated = ev.zenodo_records_view(_zenodo_pages())
+    assert [r["id"] for r in view] == [2, 5, 9]
+    assert repeated == 1
+    assert view[0] == {
+        "id": 2,
+        "created": "2023-03-01",
+        "metadata": {
+            "title": "T2",
+            "license": {"id": "cc-by-4.0"},
+            "relations": {"version": [{"index": 0, "is_last": True}]},
+        },
+        "files": [{"key": "a.csv", "size": 3, "checksum": "md5:x"}],
+    }
+    with pytest.raises(ev.ViewError, match=r"^no Zenodo record page$"):
+        ev.zenodo_records_view([{"nothing": 1}])
+
+
+def _zenodo_snapshot(root):
+    raw = root / "zenodo_dataset_records_2023_03" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    for n, page in enumerate(_zenodo_pages()):
+        (raw / f"records_{n}.json").write_text(json.dumps(page))
+
+
+def test_zenodo_builder_writes_jsonl_and_manifest(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Zenodo record page in the snapshot$"):
+        ev._build_zenodo_records(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _zenodo_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_zenodo_records(root, out, manifest)
+    ev._build_zenodo_records(root, out, manifest)
+    lines = (out / "zenodo_dataset_records_2023_03" / "records.jsonl").read_text().splitlines()
+    assert [json.loads(line)["id"] for line in lines] == [2, 5, 9]
+    entry = manifest["zenodo_dataset_records_2023_03"]
+    assert entry["files"]["records.jsonl"]["rows"] == 3
+    assert entry["dropped"] == sorted(ev.ZENODO_DROP) and entry["pseudonymised"] == []
+    assert entry["sampling"] == {
+        "method": "dataset records published in March 2023, sorted by recency, paged by 25",
+        "pages": ["records_0.json", "records_1.json"],
+        "total_results": [3, 3],
+        "repeated_ids": 1,
+    }
+    assert entry["source_snapshot"] == f"zenodo_dataset_records_2023_03/{ev.WAVE28_SNAPSHOT}"
+
+
+LIFECYCLE_SPEC = {
+    "label": "demo dispatch",
+    "file": "demo.csv",
+    "case": "id",
+    "type": "kind",
+    "activities": {"t_create": "created", "t_arrive": "arrived", "t_close": "closed"},
+    "method": "demo method",
+}
+LIFECYCLE_RAW = (
+    "id,kind,t_create,t_arrive,t_close\n"
+    "B2,fire,2023-01-01T10:00:00.000,2023-01-01T10:05:00.000,2023-01-01T10:30:00.000\n"
+    "A1,,2023-01-01T09:00:00.000,,2023-01-01T09:00:00.000\n"
+    "A1,,2023-01-01T09:00:00.000,not a time,\n"
+    "C3,aid,,,\n"
+)
+
+
+def test_lifecycle_events_view_melts_timestamps_into_ordered_events_and_hashes_the_case():
+    raw = pd.read_csv(io.StringIO(LIFECYCLE_RAW), dtype=str, keep_default_na=False)
+    view, facts = ev.lifecycle_events_view(raw, LIFECYCLE_SPEC)
+    assert view.columns.tolist() == ["case", "activity", "timestamp", "type"]
+    assert view["case"].tolist() == [ev.pseudonym(c) for c in ["A1"] * 3 + ["B2"] * 3]
+    assert view["activity"].tolist() == [
+        "created", "created", "closed", "created", "arrived", "closed",
+    ]  # fmt: skip
+    assert view["timestamp"].iloc[3] == pd.Timestamp("2023-01-01 10:00:00")
+    assert view["type"].isna().tolist()[:3] == [True, True, True] and view["type"].iloc[3] == "fire"
+    assert facts == {
+        "rows": 4,
+        "cases": 2,
+        "events": 6,
+        "unusable_timestamps": {"created": 1, "arrived": 3, "closed": 2},
+    }
+    only_tie = pd.DataFrame(
+        {"id": ["Z"], "kind": ["x"], "t_create": ["2023-01-01"], "t_arrive": ["2023-01-01"],
+         "t_close": ["2023-01-01"]}
+    )  # fmt: skip
+    tied, _ = ev.lifecycle_events_view(only_tie, LIFECYCLE_SPEC)
+    assert tied["activity"].tolist() == ["created", "arrived", "closed"]  # tie keeps spec order
+
+
+def _lifecycle_snapshot_one(root, view):
+    spec = ev.LIFECYCLE_STREAMS[view]
+    raw = root / view / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    columns = [spec["case"], spec["type"], *spec["activities"]]
+    rows = [
+        ["K1", "kind", *["2023-01-01T00:00:00.000"] * len(spec["activities"])],
+        ["K2", "", *["2023-01-02T00:00:00.000"] * len(spec["activities"])],
+    ]
+    (raw / spec["file"]).write_text(pd.DataFrame(rows, columns=columns).to_csv(index=False))
+
+
+def _lifecycle_snapshot(root):
+    for view in ev.LIFECYCLE_STREAMS:
+        _lifecycle_snapshot_one(root, view)
+
+
+@pytest.mark.parametrize("view", sorted(ev.LIFECYCLE_STREAMS))
+def test_lifecycle_builder_writes_the_event_view_and_manifest(view, tmp_path):
+    spec = ev.LIFECYCLE_STREAMS[view]
+    step = ev.LIFECYCLE_STEPS[list(ev.LIFECYCLE_STREAMS).index(view)]
+    with pytest.raises(ev.ViewError, match=rf"^no {spec['label']} file in the snapshot$"):
+        step(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _lifecycle_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    step(root, out, manifest)
+    step(root, out, manifest)
+    n = len(spec["activities"])
+    df = pd.read_csv(out / view / "events.csv", keep_default_na=False)
+    assert len(df) == 2 * n and df["activity"].iloc[:n].tolist() == list(
+        spec["activities"].values()
+    )
+    entry = manifest[view]
+    assert entry["files"]["events.csv"]["rows"] == 2 * n
+    assert entry["dropped"] == spec["dropped"] and entry["pseudonymised"] == [spec["case"]]
+    assert entry["salt_label"] == ev.SALT
+    assert entry["sampling"]["method"] == spec["method"]
+    assert entry["sampling"]["cases"] == 2 and entry["sampling"]["events"] == 2 * n
+    assert entry["sampling"]["first_timestamp"] == "2023-01-01 00:00:00"
+    assert entry["sampling"]["last_timestamp"] == "2023-01-02 00:00:00"
+    assert entry["source_snapshot"] == f"{view}/{ev.WAVE28_SNAPSHOT}"
+
+
+def _fec_tables():
+    def table(text):
+        return pd.read_csv(io.StringIO(text), sep="|", dtype=str, keep_default_na=False)
+
+    return {
+        "cn": table(
+            "CAND_ID|CAND_NAME|CAND_PTY_AFFILIATION|CAND_ELECTION_YR|CAND_OFFICE|CAND_ST1|CAND_ZIP\n"
+            "H1|DOE, JANE|NA|2024|H|1 Rd|00001\nS2|ROE, RICHARD|REP|2024|S|2 Rd|00002\n"
+        ),
+        "cm": table(
+            "CMTE_ID|CMTE_NM|TRES_NM|CMTE_ST1|CMTE_CITY|CMTE_ZIP|CMTE_TP|CAND_ID\n"
+            "C1|PAC ONE|TREAS, A|3 Rd|Town|1|Q|\nC2|PAC TWO|TREAS, B|4 Rd|Town|2|H|H1\n"
+            "C3|PAC THREE|TREAS, C|5 Rd|Town|3|H|X9\n"
+        ),
+        "ccl": table(
+            "CAND_ID|CAND_ELECTION_YR|FEC_ELECTION_YR|CMTE_ID|CMTE_TP|CMTE_DSGN|LINKAGE_ID\n"
+            "H1|2024|2024|C2|H|P|10\nH1|2024|2024|C2|H|P|11\nS2|2024|2024|C9|S|P|12\n"
+        ),
+        "pas2": table(
+            "CMTE_ID|TRANSACTION_TP|NAME|CITY|STATE|ZIP_CODE|EMPLOYER|OCCUPATION|MEMO_TEXT|"
+            "TRANSACTION_DT|TRANSACTION_AMT|OTHER_ID|CAND_ID|SUB_ID\n"
+            "C1|24K|X PAC|Town|TX|1|||note|01012024|500|C2|H1|7\n"
+            "C1|24K|Y|Town|TX|1|||note|01022024|250||S2|8\n"
+            "C7|24K|Z|Town|TX|1|||note|01032024|100|C8|H5|8\n"
+        ),
+    }
+
+
+def test_fec_view_drops_names_addresses_and_free_text_and_reports_every_key_fact():
+    views, relations, facts = ev.fec_view(_fec_tables())
+    assert list(views) == ["cn", "cm", "ccl", "pas2"]
+    assert views["cn"].columns.tolist() == [
+        "CAND_ID", "CAND_PTY_AFFILIATION", "CAND_ELECTION_YR", "CAND_OFFICE",
+    ]  # fmt: skip
+    assert views["cn"]["CAND_PTY_AFFILIATION"].tolist() == ["NA", "REP"]  # NA is a value
+    assert views["cm"].columns.tolist() == ["CMTE_ID", "CMTE_TP", "CAND_ID"]
+    assert views["ccl"].columns.tolist() == _fec_tables()["ccl"].columns.tolist()
+    assert views["pas2"].columns.tolist() == [
+        "CMTE_ID", "TRANSACTION_TP", "TRANSACTION_DT", "TRANSACTION_AMT", "OTHER_ID", "CAND_ID",
+        "SUB_ID",
+    ]  # fmt: skip
+    got = {(r["child"], r["parent"]): (r["checked"], r["orphans"]) for r in relations}
+    assert got == {
+        ("cm.CAND_ID", "cn.CAND_ID"): (2, 1),
+        ("ccl.CAND_ID", "cn.CAND_ID"): (3, 0),
+        ("ccl.CMTE_ID", "cm.CMTE_ID"): (3, 1),
+        ("pas2.CMTE_ID", "cm.CMTE_ID"): (3, 1),
+        ("pas2.OTHER_ID", "cm.CMTE_ID"): (2, 1),
+        ("pas2.CAND_ID", "cn.CAND_ID"): (3, 1),
+    }
+    assert facts == {"duplicate_keys": {"cn": 0, "cm": 0, "ccl": 1, "pas2": 1}}
+
+
+def _fec_snapshot(root):
+    raw = root / "fec_federal_campaign_finance_2024" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    members = {"cn": "cn.txt", "cm": "cm.txt", "ccl": "ccl.txt", "pas2": "itpas2.txt"}
+    for name, frame in _fec_tables().items():
+        with zipfile.ZipFile(raw / ev.FEC_ARCHIVES[name], "w") as z:
+            z.writestr(members[name], frame.to_csv(sep="|", index=False, header=False))
+        (raw / f"{name}_header_file.csv").write_text(",".join(frame.columns) + "\n")
+
+
+def test_fec_builder_applies_the_published_headers_to_the_headerless_files(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^missing FEC tables in the snapshot$"):
+        ev._build_fec(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _fec_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_fec(root, out, manifest)
+    ev._build_fec(root, out, manifest)
+    entry = manifest["fec_federal_campaign_finance_2024"]
+    assert {n: f["rows"] for n, f in entry["files"].items()} == {
+        "cn.csv": 2, "cm.csv": 3, "ccl.csv": 3, "pas2.csv": 3,
+    }  # fmt: skip
+    written = pd.read_csv(
+        out / "fec_federal_campaign_finance_2024" / "cn.csv", dtype=str, keep_default_na=False
+    )
+    assert written["CAND_PTY_AFFILIATION"].tolist() == ["NA", "REP"]
+    assert entry["dropped"] == ev.FEC_DROPPED and entry["pseudonymised"] == []
+    assert len(entry["relations"]) == 6
+    assert entry["sampling"]["method"] == (
+        "complete 2023-2024 cycle candidate, committee, linkage and committee-to-candidate "
+        "contribution files"
+    )
+    assert entry["sampling"]["duplicate_keys"]["ccl"] == 1
+    assert entry["source_snapshot"] == f"fec_federal_campaign_finance_2024/{ev.WAVE28_SNAPSHOT}"
+
+
+def _reactome_tables():
+    def table(text, names):
+        return pd.read_csv(
+            io.StringIO(text), sep="\t", header=None, names=names, dtype=str, keep_default_na=False
+        )
+
+    return {
+        "pathways": table(
+            "R-A-1\tPathway one\tHomo sapiens\nR-A-2\tPathway two\tHomo sapiens\n",
+            ["pathway_id", "pathway_name", "species"],
+        ),
+        "relations": table(
+            "R-A-1\tR-A-2\nR-A-1\tR-A-9\nR-A-1\tR-A-2\n",
+            ["parent_id", "child_id"],
+        ),
+        "uniprot": table(
+            "P1\tR-A-1\thttps://x/R-A-1\tPathway one\tIEA\tHomo sapiens\n"
+            "P1\tR-A-7\thttps://x/R-A-7\tGone\tTAS\tHomo sapiens\n",
+            ["uniprot_id", "pathway_id", "url", "pathway_name", "evidence", "species"],
+        ),
+        "chebi": table(
+            "1\tR-A-2\thttps://x/R-A-2\tPathway two\tTAS\tHomo sapiens\n",
+            ["chebi_id", "pathway_id", "url", "pathway_name", "evidence", "species"],
+        ),
+    }
+
+
+def test_reactome_view_drops_links_and_reports_hierarchy_and_mapping_keys():
+    views, relations, facts = ev.reactome_view(_reactome_tables())
+    assert list(views) == ["pathways", "relations", "uniprot", "chebi"]
+    assert views["uniprot"].columns.tolist() == [
+        "uniprot_id", "pathway_id", "pathway_name", "evidence", "species",
+    ]  # fmt: skip
+    assert views["chebi"].columns.tolist() == [
+        "chebi_id", "pathway_id", "pathway_name", "evidence", "species",
+    ]  # fmt: skip
+    assert views["pathways"].columns.tolist() == ["pathway_id", "pathway_name", "species"]
+    got = {(r["child"], r["parent"]): (r["checked"], r["orphans"]) for r in relations}
+    assert got == {
+        ("relations.parent_id", "pathways.pathway_id"): (3, 0),
+        ("relations.child_id", "pathways.pathway_id"): (3, 1),
+        ("uniprot.pathway_id", "pathways.pathway_id"): (2, 1),
+        ("chebi.pathway_id", "pathways.pathway_id"): (1, 0),
+    }
+    assert facts == {
+        "duplicate_keys": {"pathways": 0, "relations": 1, "uniprot": 0, "chebi": 0},
+        "pathways_without_relation": 0,
+    }
+
+
+def _reactome_snapshot(root):
+    raw = root / "reactome_pathway_knowledgebase" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    for name, frame in _reactome_tables().items():
+        (raw / ev.REACTOME_FILES[name]).write_text(
+            frame.to_csv(sep="\t", index=False, header=False)
+        )
+    (raw / "reactome_version.txt").write_text("98\n")
+
+
+def test_reactome_builder_reads_headerless_files_and_records_the_release(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^missing Reactome files in the snapshot$"):
+        ev._build_reactome(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _reactome_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_reactome(root, out, manifest)
+    ev._build_reactome(root, out, manifest)
+    entry = manifest["reactome_pathway_knowledgebase"]
+    assert {n: f["rows"] for n, f in entry["files"].items()} == {
+        "pathways.csv": 2, "relations.csv": 3, "uniprot.csv": 2, "chebi.csv": 1,
+    }  # fmt: skip
+    assert entry["dropped"] == ["uniprot.url", "chebi.url"] and entry["pseudonymised"] == []
+    assert len(entry["relations"]) == 4
+    assert entry["sampling"]["method"] == (
+        "complete Reactome current release files: pathways, pathway hierarchy, UniProt and "
+        "ChEBI mappings"
+    )
+    assert entry["sampling"]["release"] == "98"
+    assert entry["sampling"]["duplicate_keys"]["relations"] == 1
+    assert entry["source_snapshot"] == f"reactome_pathway_knowledgebase/{ev.WAVE28_SNAPSHOT}"
+
+
+NESTED_SPEC = {
+    "label": "demo nested",
+    "glob": "demo_*.json",
+    "path": ["outer", "items"],
+    "id": ["meta", "uid"],
+    "drop": ["secret"],
+    "method": "demo method",
+}
+
+
+def _nested_page(*uids, secret="s"):
+    items = [
+        {"meta": {"uid": u, "secret": secret}, "tags": [{"k": u, "secret": secret}]} for u in uids
+    ]
+    return {"outer": {"items": items}}
+
+
+def test_nested_pages_view_follows_the_path_dedupes_orders_and_drops_keys_at_every_depth():
+    view, repeated = ev.nested_pages_view([_nested_page(5, 2), _nested_page(2, 9)], NESTED_SPEC)
+    assert [r["meta"]["uid"] for r in view] == [2, 5, 9]
+    assert repeated == 1
+    assert view[0] == {"meta": {"uid": 2}, "tags": [{"k": 2}]}
+    top = ev.nested_pages_view([[{"id": 1}, {"id": 0}]], {"path": [], "id": ["id"], "drop": []})
+    assert top == ([{"id": 0}, {"id": 1}], 0)
+    with pytest.raises(ev.ViewError, match=r"^no records at outer/items$"):
+        ev.nested_pages_view([{"outer": {}}], NESTED_SPEC)
+
+
+def _nested_record(spec, uid):
+    record: dict = {}
+    cursor = record
+    for key in spec["id"][:-1]:
+        cursor[key] = {}
+        cursor = cursor[key]
+    cursor[spec["id"][-1]] = uid
+    record.update({key: "drop me" for key in spec["drop"]})
+    return record
+
+
+def _nested_page_for(spec, *uids):
+    page: object = [_nested_record(spec, uid) for uid in uids]
+    for key in reversed(spec["path"]):
+        page = {key: page}
+    return page
+
+
+def _nested_snapshot_one(root, view):
+    spec = ev.NESTED_SOURCES[view]
+    raw = root / view / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    for n, uids in enumerate([(3, 1), (1, 2)]):
+        name = spec["glob"].replace("*", str(n))
+        (raw / name).write_text(json.dumps(_nested_page_for(spec, *uids)))
+
+
+def _nested_snapshots(root):
+    for view in ev.NESTED_SOURCES:
+        _nested_snapshot_one(root, view)
+
+
+@pytest.mark.parametrize("view", sorted(ev.NESTED_SOURCES))
+def test_nested_builder_writes_jsonl_and_manifest(view, tmp_path):
+    spec = ev.NESTED_SOURCES[view]
+    step = ev.NESTED_STEPS[list(ev.NESTED_SOURCES).index(view)]
+    with pytest.raises(ev.ViewError, match=rf"^no {spec['label']} page in the snapshot$"):
+        step(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _nested_snapshot_one(root, view)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    step(root, out, manifest)
+    step(root, out, manifest)
+    lines = (out / view / "records.jsonl").read_text().splitlines()
+    assert len(lines) == 3
+    assert "drop me" not in "".join(lines)
+    entry = manifest[view]
+    assert entry["files"]["records.jsonl"]["rows"] == 3
+    assert entry["dropped"] == sorted(spec["drop"]) and entry["pseudonymised"] == []
+    assert entry["sampling"] == {
+        "method": spec["method"],
+        "pages": [spec["glob"].replace("*", "0"), spec["glob"].replace("*", "1")],
+        "repeated_ids": 1,
+    }
+    assert entry["source_snapshot"] == f"{view}/{ev.WAVE28_SNAPSHOT}"
+
+
+GO_OBO = """format-version: 1.2
+data-version: releases/2026-07-26
+ontology: go
+
+[Term]
+id: GO:0000001
+name: root process
+namespace: biological_process
+
+[Term]
+id: GO:0000002
+name: child process
+namespace: biological_process
+is_a: GO:0000001 ! root process
+relationship: part_of GO:0000001 ! root process
+relationship: regulates GO:0000009 ! missing parent
+alt_id: GO:0000099
+
+[Term]
+id: GO:0000003
+name: old thing
+namespace: cellular_component
+is_obsolete: true
+
+[Typedef]
+id: part_of
+name: part of
+"""
+GO_GAF = (
+    "!gaf-version: 2.2\n"
+    "!go-version: http://x/releases/2026-07-26/go.owl\n"
+    "UniProtKB\tP1\tSYM1\t\tGO:0000002\tPMID:1\tIDA\t\tP\tName one\tSyn\tprotein\ttaxon:9606"
+    "\t20240101\tUniProt\t\t\n"
+    "UniProtKB\tP1\tSYM1\tenables\tGO:0000099\tPMID:2\tIEA\tX\tF\tName one\tSyn\tprotein"
+    "\ttaxon:9606\t20240102\tUniProt\tpart_of(GO:1)\t\n"
+    "UniProtKB\tP1\tSYM1\t\tGO:0000002\tPMID:1\tIDA\t\tP\tName one\tSyn\tprotein\ttaxon:9606"
+    "\t20240101\tUniProt\t\t\n"
+)
+
+
+def test_go_view_parses_terms_relations_and_annotations_and_reports_keys():
+    views, relations, facts = ev.go_view(GO_OBO, GO_GAF)
+    assert list(views) == ["terms", "relations", "annotations"]
+    assert views["terms"].to_dict("list") == {
+        "id": ["GO:0000001", "GO:0000002", "GO:0000003"],
+        "name": ["root process", "child process", "old thing"],
+        "namespace": ["biological_process", "biological_process", "cellular_component"],
+        "is_obsolete": ["false", "false", "true"],
+    }
+    assert views["relations"].to_dict("list") == {
+        "child_id": ["GO:0000002", "GO:0000002", "GO:0000002"],
+        "parent_id": ["GO:0000001", "GO:0000001", "GO:0000009"],
+        "relation": ["is_a", "part_of", "regulates"],
+    }
+    assert views["annotations"].columns.tolist() == [
+        "db", "db_object_id", "symbol", "qualifier", "go_id", "reference", "evidence_code",
+        "with_from", "aspect", "object_type", "taxon", "date", "assigned_by",
+        "annotation_extension", "gene_product_form_id",
+    ]  # fmt: skip
+    assert views["annotations"]["with_from"].tolist() == ["", "X", ""]
+    got = {(r["child"], r["parent"]): (r["checked"], r["orphans"]) for r in relations}
+    assert got == {
+        ("relations.child_id", "terms.id"): (3, 0),
+        ("relations.parent_id", "terms.id"): (3, 1),
+        ("annotations.go_id", "terms.id"): (3, 1),  # an alternative id is not a term id
+    }
+    assert facts == {
+        "gaf_go_version": "http://x/releases/2026-07-26/go.owl",
+        "ontology_release": "releases/2026-07-26",
+        "duplicate_annotation_rows": 1,
+    }
+    with pytest.raises(ev.ViewError, match=r"^no GO term in the ontology file$"):
+        ev.go_view("format-version: 1.2\n", GO_GAF)
+    with pytest.raises(ev.ViewError, match=r"^no annotation in the GAF file$"):
+        ev.go_view(GO_OBO, "!gaf-version: 2.2\n")
+
+
+def _go_snapshot(root):
+    import gzip
+
+    raw = root / "gene_ontology_annotations" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "go-basic.obo").write_text(GO_OBO)
+    with gzip.open(raw / "goa_human.gaf.gz", "wt") as handle:
+        handle.write(GO_GAF)
+    (raw / "go_citation_policy.html").write_text("CC BY 4.0")
+
+
+def test_go_builder_writes_three_tables_and_records_both_releases(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^missing Gene Ontology files in the snapshot$"):
+        ev._build_go(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _go_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_go(root, out, manifest)
+    ev._build_go(root, out, manifest)
+    entry = manifest["gene_ontology_annotations"]
+    assert {n: f["rows"] for n, f in entry["files"].items()} == {
+        "terms.csv": 3, "relations.csv": 3, "annotations.csv": 3,
+    }  # fmt: skip
+    assert entry["dropped"] == ["annotations.object_name", "annotations.synonym"]
+    assert entry["pseudonymised"] == [] and len(entry["relations"]) == 3
+    assert entry["sampling"]["method"] == (
+        "complete go-basic ontology and the UniProt human GAF annotation file"
+    )
+    assert entry["sampling"]["ontology_release"] == "releases/2026-07-26"
+    assert entry["source_snapshot"] == f"gene_ontology_annotations/{ev.WAVE28_SNAPSHOT}"
+    notice = (out / "gene_ontology_annotations" / "NOTICE.txt").read_text()
+    assert notice == ev.GO_NOTICE + "\n"
+
+
+CPC_AO = "year,month,day,ao_index_cdas\n1950,1,2,-1.5\n1950,1,1,-2.25\n1950,2,30,0.5\n1950,1,3,\n"
+
+
+def test_cpc_ao_view_builds_dates_sorts_and_drops_impossible_days():
+    view, invalid = ev.cpc_ao_view(CPC_AO)
+    assert view.columns.tolist() == ["timestamp", "ao_index_cdas"]
+    assert view["timestamp"].tolist() == [
+        pd.Timestamp("1950-01-01"),
+        pd.Timestamp("1950-01-02"),
+        pd.Timestamp("1950-01-03"),
+    ]
+    assert view["ao_index_cdas"].iloc[:2].tolist() == [-2.25, -1.5]
+    assert pd.isna(view["ao_index_cdas"].iloc[2])  # a blank value is a missing day, not a drop
+    assert invalid == 1  # 30 February
+    with pytest.raises(ev.ViewError, match=r"^not a CPC daily AO index file$"):
+        ev.cpc_ao_view("year,month,day\n1950,1,1\n")
+
+
+def _cpc_ao_snapshot(root):
+    raw = root / "noaa_cpc_daily_ao_index" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "ao_daily.csv").write_text(CPC_AO)
+    (raw / "nws_disclaimer.html").write_text("public domain")
+
+
+def test_cpc_ao_builder_writes_the_series_and_manifest(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no CPC AO index file in the snapshot$"):
+        ev._build_cpc_ao(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _cpc_ao_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_cpc_ao(root, out, manifest)
+    ev._build_cpc_ao(root, out, manifest)
+    lines = (out / "noaa_cpc_daily_ao_index" / "ao_index.csv").read_text().splitlines()
+    assert lines == [
+        "timestamp,ao_index_cdas",
+        "1950-01-01,-2.25",
+        "1950-01-02,-1.5",
+        "1950-01-03,",
+    ]
+    entry = manifest["noaa_cpc_daily_ao_index"]
+    assert entry["files"]["ao_index.csv"]["rows"] == 3
+    assert entry["dropped"] == [] and entry["pseudonymised"] == []
+    assert entry["sampling"] == {
+        "method": "complete daily Arctic Oscillation index file, impossible dates removed",
+        "first_timestamp": "1950-01-01 00:00:00",
+        "last_timestamp": "1950-01-03 00:00:00",
+        "impossible_dates_dropped": 1,
+        "missing_values": 1,
+    }
+    assert entry["source_snapshot"] == f"noaa_cpc_daily_ao_index/{ev.WAVE28_SNAPSHOT}"

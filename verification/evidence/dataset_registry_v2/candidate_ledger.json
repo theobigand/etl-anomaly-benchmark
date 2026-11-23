@@ -3141,6 +3141,443 @@
    "size": "91,437 rows",
    "source_url": "https://data.bloomington.in.gov/resource/9t63-jmjk",
    "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "bts:daily-mobility-national",
+   "licence": "Public Domain U.S. Government (Socrata view metadata)",
+   "name": "BTS Daily Mobility Statistics, national level",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as bts_daily_mobility_national (national rows only; the state and county levels are the same system)",
+   "publisher": "U.S. Department of Transportation (Bureau of Transportation Statistics) with the University of Maryland (MTI and CATT Laboratory)",
+   "reason": "Aggregated mobile-device mobility indicators with a pandemic regime change",
+   "size": "1,923 rows",
+   "source_url": "https://data.bts.gov/resource/w96p-f2qv",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "eia:petroleum-spot",
+   "licence": "EIA public domain (Copyrights and Reuse page)",
+   "name": "EIA petroleum spot prices, daily",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as eia_petroleum_spot_prices (daily spot series of the PET bulk file; futures and non-daily series left out)",
+   "publisher": "U.S. Energy Information Administration",
+   "reason": "Commodity spot price market series, distinct from retail fuel prices and the electricity grid",
+   "size": "10,473 daily rows, 11 series",
+   "source_url": "https://www.eia.gov/opendata/bulk/PET.zip",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "nhc:hurdat2-atlantic",
+   "licence": "NHC disclaimer: public domain",
+   "name": "NHC HURDAT2 Atlantic best-track database, 1851-2025",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as nhc_hurdat2_atlantic (complete file; the Northeast Pacific file is the same system and not acquired)",
+   "publisher": "NOAA National Hurricane Center",
+   "reason": "Tropical cyclone life-cycle sequences from a post-season analysis system",
+   "size": "complete Atlantic file",
+   "source_url": "https://www.nhc.noaa.gov/data/hurdat/",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "nces:ipeds-2023",
+   "licence": "NCES disclaimer: public domain",
+   "name": "NCES IPEDS 2023 institutional characteristics, admissions, enrolment and completions",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as nces_ipeds_2023 (five tables; names, addresses, contacts, links and coordinates dropped; revised files used where published)",
+   "publisher": "U.S. Department of Education, NCES (IPEDS)",
+   "reason": "Relational postsecondary survey database keyed by institution id",
+   "size": "6,163 institutions; 303k completion rows",
+   "source_url": "https://nces.ed.gov/ipeds/datacenter/DataFiles.aspx",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "apis-guru:openapi-directory",
+   "licence": "CC0 1.0 (repository LICENSE and README)",
+   "name": "APIs.guru OpenAPI directory list",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as apis_guru_openapi_directory (complete list.json; contact objects dropped; the per-API specification files are not acquired)",
+   "publisher": "APIs.guru (openapi-directory)",
+   "reason": "Curated registry of API descriptions with nested versions and vendor extensions",
+   "size": "2,529 API entries",
+   "source_url": "https://api.apis.guru/v2/list.json",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "zenodo:records-2023-03",
+   "licence": "Zenodo metadata CC0 (Terms of Use)",
+   "name": "Zenodo dataset records published in March 2023",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as zenodo_dataset_records_2023_03 (API pages; people, descriptions and links dropped); the DOI registry DataCite is a separate generating system; record files are not acquired",
+   "publisher": "CERN (Zenodo)",
+   "reason": "Repository record objects with nested relations and file lists",
+   "size": "about 4,100 records",
+   "source_url": "https://zenodo.org/api/records",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "cincinnati:fire-cad-2023",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Cincinnati Fire Incidents (CAD), 2023",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as cincinnati_fire_cad (lifecycle timestamps melted into events; locations never downloaded)",
+   "publisher": "City of Cincinnati (Cincinnati Fire Department)",
+   "reason": "Per-incident emergency response lifecycle outside business-process execution",
+   "size": "96,072 incident rows",
+   "source_url": "https://data.cincinnati-oh.gov/resource/vnsz-a3wp",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "austin:apd-cad-2023q1",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Austin APD Computer Aided Dispatch incidents, 2023 Q1",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as austin_apd_cad (lifecycle timestamps melted into events; locations and counts never downloaded)",
+   "publisher": "City of Austin (Austin Police Department)",
+   "reason": "Per-incident police response lifecycle outside business-process execution",
+   "size": "88,817 incident rows",
+   "source_url": "https://datahub.austintexas.gov/resource/22de-7rzg",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "fec:bulk-2024",
+   "licence": "FEC public records; sale-or-use restriction on contributor information (not used)",
+   "name": "FEC bulk data 2024 cycle: candidates, committees, linkages, committee contributions",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as fec_federal_campaign_finance_2024 (four tables; names, addresses and payee text dropped; individual contribution files not acquired)",
+   "publisher": "U.S. Federal Election Commission",
+   "reason": "Relational federal campaign finance filing database keyed by candidate and committee ids",
+   "size": "9,796 candidates, 20,937 committees, 8,619 linkages, 703k contributions",
+   "source_url": "https://www.fec.gov/data/browse-data/?tab=bulk-data",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "reactome:release-98",
+   "licence": "CC0 (Reactome licence page)",
+   "name": "Reactome pathways, hierarchy and UniProt and ChEBI mappings, release 98",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as reactome_pathway_knowledgebase (four files; mapping URLs dropped)",
+   "publisher": "Reactome (OICR, EMBL-EBI, NYULMC and CSHL)",
+   "reason": "Curated pathway hierarchy with identifier mappings, a relational knowledge base outside timetable networks",
+   "size": "23,652 pathways; 439k mappings",
+   "source_url": "https://reactome.org/download-data",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "github:advisories-reviewed",
+   "licence": "CC BY 4.0 (repository LICENSE.md)",
+   "name": "GitHub reviewed security advisories, first 100 of each year 2017 to 2026",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as github_reviewed_advisories (ten API requests, one per publication year; credits dropped); the OSV-schema Go advisories are a separate generating system",
+   "publisher": "GitHub, Inc. (GitHub Advisory Database)",
+   "reason": "Nested advisory records with vulnerability, package and scoring arrays",
+   "size": "1,000 advisories",
+   "source_url": "https://github.com/advisories",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "pubchem:cid-1-1000",
+   "licence": "NCBI policies: no NCBI restrictions",
+   "name": "PubChem compound records CID 1 to 1000",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as pubchem_compounds (ten PUG REST requests; computed records only)",
+   "publisher": "National Center for Biotechnology Information (PubChem)",
+   "reason": "Nested chemical structure records with typed property arrays",
+   "size": "1,000 compounds",
+   "source_url": "https://pubchem.ncbi.nlm.nih.gov/",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "nasa:cmr-collections",
+   "licence": "NASA full and open data policy",
+   "name": "NASA CMR collection records, first 100 of nine providers",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as nasa_cmr_collections (nine provider requests; contacts dropped)",
+   "publisher": "NASA (Earth Science Data and Information System, CMR)",
+   "reason": "Nested UMM-C collection metadata with provider-specific optional sections",
+   "size": "900 collection records",
+   "source_url": "https://cmr.earthdata.nasa.gov/search/collections.umm_json",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "doaj:journals",
+   "licence": "CC0 for journal-level metadata (DOAJ terms)",
+   "name": "DOAJ journal records, first 999 by creation date",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as doaj_journals (ten API pages)",
+   "publisher": "Directory of Open Access Journals",
+   "reason": "Curated journal registry with nested policy and licence sub-objects",
+   "size": "999 of about 23,800 journals",
+   "source_url": "https://doaj.org/api/search/journals",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "go:ontology-and-goa-human",
+   "licence": "CC BY 4.0 (GO citation policy)",
+   "name": "Gene Ontology go-basic and UniProt-GOA human annotations",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as gene_ontology_annotations (complete files; object names and synonyms dropped; NOTICE with CC BY 4.0 attribution)",
+   "publisher": "Gene Ontology Consortium; EMBL-EBI (UniProt-GOA)",
+   "reason": "Curated ontology hierarchy with protein annotations, a relational knowledge base outside timetable networks",
+   "size": "about 40k terms and 700k annotations",
+   "source_url": "https://geneontology.org/docs/download-ontology/",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "cincinnati:ecc-calls-2023",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Cincinnati Emergency Communications Center calls, January and February 2023",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as cincinnati_ecc_calls (telephony timestamps melted into events; caller data never downloaded)",
+   "publisher": "City of Cincinnati (Emergency Communications Center)",
+   "reason": "Call-handling telephony records, an event mechanism outside business processes and incident dispatch",
+   "size": "164,525 call rows",
+   "source_url": "https://data.cincinnati-oh.gov/resource/5f3f-hgt9",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "cdc:covid-vaccination-trends-us",
+   "licence": "Public Domain U.S. Government (Socrata view metadata)",
+   "name": "CDC COVID-19 vaccination trends, national rows",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as cdc_covid_vaccination_trends_us (national rows only; the jurisdiction rows are the same reporting system)",
+   "publisher": "U.S. Centers for Disease Control and Prevention (IISInfo)",
+   "reason": "Immunization reporting counts with administration-date and report-date views, distinct from environmental sensors",
+   "size": "1,476 rows",
+   "source_url": "https://data.cdc.gov/resource/rh2h-3yt2",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "noaa-cpc:daily-ao-index",
+   "licence": "NWS disclaimer: public domain",
+   "name": "NOAA CPC daily Arctic Oscillation index, 1950 onward",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as noaa_cpc_daily_ao_index (complete daily file)",
+   "publisher": "NOAA National Weather Service, Climate Prediction Center",
+   "reason": "Daily atmospheric circulation index, derived from reanalysis rather than a station or instrument series",
+   "size": "about 28,000 daily rows",
+   "source_url": "https://www.cpc.ncep.noaa.gov/products/precip/CWlink/daily_ao_index/ao.shtml",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "sec:companyfacts",
+   "licence": "public domain (U.S. government work), fair-access policy",
+   "name": "SEC EDGAR XBRL company facts",
+   "next_step": "owner decision: provide a contact for the SEC User-Agent, or leave blocked",
+   "notes": "The fair-access policy rejected the generic client (HTTP 403, request rate threshold) and asks for a declared contact in the User-Agent; no contact was supplied on the owner's behalf",
+   "publisher": "U.S. Securities and Exchange Commission",
+   "reason": "The fair-access policy rejected the generic client (HTTP 403, request rate threshold) and asks for a declared contact in the User-Agent; no contact was supplied on the owner's behalf",
+   "size": null,
+   "source_url": "https://data.sec.gov/api/xbrl/companyfacts/",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "encode:experiments",
+   "licence": "ENCODE data use policy: no restrictions",
+   "name": "ENCODE portal experiment objects",
+   "next_step": "retry later with one request per minute if still needed",
+   "notes": "The portal answered one search with HTTP 200 and then returned 403 to the same searches; not retried to avoid evading a block",
+   "publisher": "ENCODE Data Coordination Center",
+   "reason": "The portal answered one search with HTTP 200 and then returned 403 to the same searches; not retried to avoid evading a block",
+   "size": null,
+   "source_url": "https://www.encodeproject.org/search/?type=Experiment",
+   "status": "temporarily_inaccessible"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "homebrew:formulae",
+   "licence": "no data-specific licence found (the license page is 404)",
+   "name": "Homebrew formulae API",
+   "next_step": "find the data licence before any download",
+   "notes": "Package metadata is served with 8,741 nested formulae, but no licence statement for the API data was found",
+   "publisher": "Homebrew",
+   "reason": "Package metadata is served with 8,741 nested formulae, but no licence statement for the API data was found",
+   "size": null,
+   "source_url": "https://formulae.brew.sh/api/formula.json",
+   "status": "unclear"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "wikimedia:pageviews",
+   "licence": "only the CC BY-SA licence of the documentation page was found",
+   "name": "Wikimedia pageviews REST API",
+   "next_step": "read the REST API terms in a browser",
+   "notes": "No licence statement for the returned data was found",
+   "publisher": "Wikimedia Foundation",
+   "reason": "No licence statement for the returned data was found",
+   "size": null,
+   "source_url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/",
+   "status": "unclear"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "treasury:par-yield-curve",
+   "licence": "U.S. government work expected, no data-specific statement retrievable",
+   "name": "U.S. Treasury daily par yield curve",
+   "next_step": "find a rights statement for the interest-rate statistics",
+   "notes": "The downloadable CSV works but the site notice pages returned 404 to the client",
+   "publisher": "U.S. Department of the Treasury",
+   "reason": "The downloadable CSV works but the site notice pages returned 404 to the client",
+   "size": null,
+   "source_url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/",
+   "status": "unclear"
+  },
+  {
+   "categories": [
+    "C2b",
+    "C3"
+   ],
+   "id": "mta:subway-hourly-ridership",
+   "licence": "portal licence field empty",
+   "name": "MTA subway hourly ridership",
+   "next_step": "read the New York State open data terms",
+   "notes": "The Socrata metadata has no licence and the NY open data terms were not retrievable",
+   "publisher": "Metropolitan Transportation Authority",
+   "reason": "The Socrata metadata has no licence and the NY open data terms were not retrievable",
+   "size": null,
+   "source_url": "https://data.ny.gov/resource/5wq4-mkjj",
+   "status": "unclear"
+  },
+  {
+   "categories": [
+    "C2b",
+    "C3"
+   ],
+   "id": "nys:thruway-od",
+   "licence": "portal licence field empty",
+   "name": "NYS Thruway origin and destination counts",
+   "next_step": "read the New York State open data terms",
+   "notes": "Same portal terms question as the MTA datasets",
+   "publisher": "New York State Thruway Authority",
+   "reason": "Same portal terms question as the MTA datasets",
+   "size": null,
+   "source_url": "https://data.ny.gov/resource/4dbf-24u2",
+   "status": "unclear"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "cdc:nwss-wastewater",
+   "licence": "portal licence field empty",
+   "name": "CDC NWSS public SARS-CoV-2 wastewater metrics",
+   "next_step": "read the CDC data use statement",
+   "notes": "No licence field in the portal metadata; the RKI emergency department series already covers the surveillance mechanism",
+   "publisher": "U.S. Centers for Disease Control and Prevention",
+   "reason": "No licence field in the portal metadata; the RKI emergency department series already covers the surveillance mechanism",
+   "size": null,
+   "source_url": "https://data.cdc.gov/resource/2ew6-ywp6",
+   "status": "unclear"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "bdg2:electricity",
+   "licence": "Zenodo record CC BY 4.0, repository LICENSE CC BY-SA 4.0",
+   "name": "Building Data Genome Project 2 hourly electricity meters",
+   "next_step": "decide which licence governs the data",
+   "notes": "The repository file is a Git LFS object of 175 MB and the two licence statements differ",
+   "publisher": "Building Data Genome Project 2",
+   "reason": "The repository file is a Git LFS object of 175 MB and the two licence statements differ",
+   "size": null,
+   "source_url": "https://zenodo.org/records/3887306",
+   "status": "unclear"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "crates:db-dump",
+   "licence": "crates.io data access policy",
+   "name": "crates.io database dump",
+   "next_step": "none unless a bounded extraction is justified",
+   "notes": "The 2.3 GB gzip tar cannot be read as a bounded prefix with relational completeness",
+   "publisher": "crates.io (Rust Foundation)",
+   "reason": "The 2.3 GB gzip tar cannot be read as a bounded prefix with relational completeness",
+   "size": null,
+   "source_url": "https://static.crates.io/db-dump.tar.gz",
+   "status": "structurally_unsuitable"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "lichess:standard-games",
+   "licence": "CC0",
+   "name": "Lichess standard rated games",
+   "next_step": "add an optional zstd reader only if justified",
+   "notes": "The monthly files are zstd streams and no zstd reader is installed; a new dependency was not added as a side effect",
+   "publisher": "Lichess",
+   "reason": "The monthly files are zstd streams and no zstd reader is installed; a new dependency was not added as a side effect",
+   "size": null,
+   "source_url": "https://database.lichess.org/",
+   "status": "needs_bounded_extraction"
   }
  ],
  "date": "2026-11-22",

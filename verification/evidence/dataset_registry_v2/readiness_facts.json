@@ -211,6 +211,39 @@
    "units": 50000,
    "view": "ademe_dpe_existant"
   },
+  "apis_guru_openapi_directory": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete directory list at the snapshot date: 2,529 API entries with optional and vendor-specific fields (x- extensions) varying by entry",
+    "contact objects dropped at every depth; no per-API specification content"
+   ],
+   "first_party": true,
+   "independent_group": "apis_guru_openapi_directory",
+   "min_units": 1000,
+   "natural_labels": "none",
+   "partitions": "hash of the api name 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 2529,
+   "view": "apis_guru_openapi_directory"
+  },
+  "austin_apd_cad": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "first quarter 2023 slice of the Austin APD CAD table (4,233,902 rows over all years): a contiguous response-time window, not a random sample; 88,817 incident rows",
+    "lifecycle events are the three published timestamps of each incident; a repeated incident number (one) is kept",
+    "officer-initiated incidents and 911 calls are both included as the publisher states"
+   ],
+   "first_party": true,
+   "independent_group": "austin_police_dispatch",
+   "min_units": 1000,
+   "natural_labels": "none; dispositions are operational outcomes, not ETL faults",
+   "partitions": "hash of the incident number 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 88816,
+   "view": "austin_apd_cad"
+  },
   "austin_campaign_finance": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -367,6 +400,53 @@
    ],
    "view": "bloomington_water_plant_energy"
   },
+  "bts_daily_mobility_national": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "national level of the daily mobility panel: 1,923 daily rows from 2019-01-01 to 2024-04-06, no missing days expected",
+    "weekly cycle, holidays, the 2020 pandemic regime change and panel changes are baseline dynamics, not injected faults"
+   ],
+   "first_party": true,
+   "independent_group": "bts_umd_daily_mobility_statistics",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on date",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies against weekly and holiday profiles",
+    "level shift, regime change, stuck value and missing intervals"
+   ],
+   "temporal_span": "5 years of daily national indicators (2019-01-01 to 2024-04-06)",
+   "units": 1923,
+   "unsupported_fault_mechanisms": [
+    "regional and individual-level mobility"
+   ],
+   "view": "bts_daily_mobility_national"
+  },
+  "cdc_covid_vaccination_trends_us": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "national (US) rows of the vaccination trends table: 1,476 rows over 2020-12-13 to 2023-05-10, a closed reporting period; the Admin and Report date types are two views of the same flows and stay in one table",
+    "rolling averages and cumulative counts are derived columns published by the CDC; late reports revise earlier counts, so the report-date view is not the administration-date view",
+    "bivalent booster columns are published as text and are empty before the bivalent rollout"
+   ],
+   "first_party": true,
+   "independent_group": "cdc_covid_vaccination_reporting",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on date within each date type",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies against campaign-driven daily profiles",
+    "level shift, reporting backlog, stuck value and missing intervals"
+   ],
+   "temporal_span": "about 2.4 years of daily national counts (2020-12-13 to 2023-05-10)",
+   "units": 1476,
+   "unsupported_fault_mechanisms": [
+    "jurisdiction-level and individual-level reporting"
+   ],
+   "view": "cdc_covid_vaccination_trends_us"
+  },
   "cftc_cot_disaggregated": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -397,6 +477,40 @@
    "protocol_id": "P-NEST",
    "units": 1000,
    "view": "chembl_molecules"
+  },
+  "cincinnati_ecc_calls": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "January and February 2023 slice of the Cincinnati ECC call table (7,996,500 rows over all years): a contiguous seizure-time window, not a random sample; 164,525 call rows",
+    "telephony events are the four published timestamps of each call; blank timestamps are natural missing steps; the location query can precede the seizure timestamp, and events are ordered by time",
+    "caller locations, queues, agents, line numbers and durations never downloaded; call record ids pseudonymised"
+   ],
+   "first_party": true,
+   "independent_group": "cincinnati_emergency_communications_calls",
+   "min_units": 1000,
+   "natural_labels": "none; call types are operational categories, not ETL faults",
+   "partitions": "hash of the call record id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 164525,
+   "view": "cincinnati_ecc_calls"
+  },
+  "cincinnati_fire_cad": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "calendar year 2023 slice of the Cincinnati fire CAD table (1,068,376 rows over all years): a contiguous creation-time window, not a random sample; 96,072 incident rows",
+    "lifecycle events are the four published timestamps of each incident; blank timestamps are natural missing steps and a repeated event number (one) is kept",
+    "published timestamps are not guaranteed to be ordered the way the lifecycle suggests; events are ordered by time"
+   ],
+   "first_party": true,
+   "independent_group": "cincinnati_fire_dispatch",
+   "min_units": 1000,
+   "natural_labels": "none; dispositions are operational outcomes, not ETL faults",
+   "partitions": "hash of the event number 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 96071,
+   "view": "cincinnati_fire_cad"
   },
   "clinicaltrials_v2": {
    "anomaly_origin": "controlled_injection",
@@ -603,6 +717,22 @@
    "units": 75985,
    "view": "dgfip_dvf"
   },
+  "doaj_journals": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "creation-ordered prefix of 999 of about 23,800 journal records (the oldest records): not a random sample",
+    "optional sub-objects vary by journal"
+   ],
+   "first_party": true,
+   "independent_group": "doaj_directory_of_open_access_journals",
+   "min_units": 500,
+   "natural_labels": "none",
+   "partitions": "hash of the journal id 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-NEST",
+   "units": 999,
+   "view": "doaj_journals"
+  },
   "dwd_hourly_climate": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -669,6 +799,29 @@
    ],
    "view": "ecb_fx_reference_rates"
   },
+  "eia_petroleum_spot_prices": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "daily spot price series of the PET bulk file joined on the date: business days from 1986-01-02 (series start at different dates, so earlier cells are missing)",
+    "market shocks (the 2008 and 2020 collapses), regime changes and holidays are baseline dynamics, not injected faults"
+   ],
+   "first_party": true,
+   "independent_group": "eia_petroleum_spot_prices",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on date",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies on price levels and returns",
+    "level shift, volatility change, stale values and missing intervals"
+   ],
+   "temporal_span": "about 40 years of business-day prices (1986-01-02 to 2026-11-17)",
+   "units": 10473,
+   "unsupported_fault_mechanisms": [
+    "intraday quotation behaviour"
+   ],
+   "view": "eia_petroleum_spot_prices"
+  },
   "epa_aqs_ozone_hourly": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -712,6 +865,22 @@
    "protocol_id": "P-TAB",
    "units": 18402,
    "view": "fdic_bank_financials"
+  },
+  "fec_federal_campaign_finance_2024": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 2023-2024 cycle files of four tables (9,796 candidates, 20,937 committees, 8,619 linkages, 703,181 committee contributions); the natural orphans are published states and nothing is repaired: 23 of 8,218 committee candidate ids, 154 of 8,619 linkage candidate ids, 160 of 8,619 linkage committee ids, 84,215 of 703,181 recipient committee ids and 8,903 of 701,557 contribution candidate ids are absent from the master files of the cycle (earlier-cycle candidates and committees)",
+    "candidate and committee names, treasurers, addresses, payee names and memo text dropped; the party code NA is kept as a value",
+    "blank committee or candidate ids are missing keys, not dangling ones; 35 repeated candidate-committee-year linkage keys are kept"
+   ],
+   "first_party": true,
+   "independent_group": "fec_federal_campaign_finance_filings",
+   "min_units": 1000,
+   "partitions": "hash of CMTE_ID 70/15/15 so a committee and its contribution rows stay together",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 742533,
+   "view": "fec_federal_campaign_finance_2024"
   },
   "flat:uci:101:C2a": {
    "anomaly_origin": "controlled_injection",
@@ -1785,6 +1954,21 @@
    "units": 1500,
    "view": "gbif_cc0_occurrences"
   },
+  "gene_ontology_annotations": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete go-basic release 2026-07-26 (48,340 terms, 71,496 hierarchy edges) with the human UniProt-GOA annotation file (906,445 annotation rows, built on the ontology release of 2026-04-27 as its header states): every edge and annotation resolves to a term (0 orphans in 71,496 edges on both ends and 906,445 annotations), and 23 annotation rows are exact repeats, kept as published",
+    "annotation object names and synonyms dropped"
+   ],
+   "first_party": true,
+   "independent_group": "gene_ontology_consortium_annotations",
+   "min_units": 1000,
+   "partitions": "hash of the GO term id 70/15/15 so a term and its edges stay together",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "units": 1026281,
+   "view": "gene_ontology_annotations"
+  },
   "gfz_kp_index": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -1810,6 +1994,22 @@
     "sub-three-hour transient glitches"
    ],
    "view": "gfz_kp_index"
+  },
+  "github_reviewed_advisories": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "the first 100 reviewed advisories of each publication year 2017 to 2026 in publication order (1,000 records at most): not a random sample",
+    "optional parts (CVE id, withdrawal, patched versions, scoring versions) vary by advisory; credits dropped"
+   ],
+   "first_party": true,
+   "independent_group": "github_advisory_database",
+   "min_units": 500,
+   "natural_labels": "none",
+   "partitions": "hash of the GHSA id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 1000,
+   "view": "github_reviewed_advisories"
   },
   "grouplens_movielens": {
    "anomaly_origin": "controlled_injection",
@@ -2445,6 +2645,22 @@
    "units": 138638,
    "view": "montgomery_dlc_sales"
   },
+  "nasa_cmr_collections": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "first 100 collections of each of nine providers by entry title (900 records): not a random sample",
+    "provider-specific optional sections vary; contact persons and groups dropped"
+   ],
+   "first_party": true,
+   "independent_group": "nasa_common_metadata_repository",
+   "min_units": 500,
+   "natural_labels": "none",
+   "partitions": "hash of the concept id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 900,
+   "view": "nasa_cmr_collections"
+  },
   "nasa_omni_solar_wind": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2485,6 +2701,22 @@
    "units": 111202,
    "view": "ncei_storm_events_2024"
   },
+  "nces_ipeds_2023": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 2023 collection of five IPEDS tables (revised files where published); key facts are recorded in the view manifest",
+    "institution names, addresses, contacts, links and coordinates dropped; the state code NA is kept as a value",
+    "child tables list institutions absent from the characteristics table only where the manifest reports orphans; none are repaired"
+   ],
+   "first_party": true,
+   "independent_group": "nces_ipeds_postsecondary_surveys",
+   "min_units": 1000,
+   "partitions": "hash of UNITID 70/15/15 so an institution and its child rows stay together",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 434081,
+   "view": "nces_ipeds_2023"
+  },
   "ndbc_buoys_2023": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2500,6 +2732,22 @@
    "protocol_id": "P-TS",
    "units": 360156,
    "view": "ndbc_buoys_2023"
+  },
+  "nhc_hurdat2_atlantic": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete HURDAT2 Atlantic file, 1851 to 2025: storms with records every six hours; observation practice changes over the period (the satellite era from 1966 and aircraft reconnaissance), so early storms have fewer records and missing pressure and radii",
+    "missing codes -99 and -999 are kept as missing values"
+   ],
+   "first_party": true,
+   "independent_group": "noaa_nhc_hurdat2_best_track",
+   "min_units": 100,
+   "natural_labels": "none; status codes and intensity classes are analysis outputs, not ETL faults",
+   "partitions": "hash of storm_id 70/15/15 so a storm stays in one partition",
+   "privacy": "not_needed",
+   "protocol_id": "P-SEQ",
+   "units": 1988,
+   "view": "nhc_hurdat2_atlantic"
   },
   "nih_reporter_projects_fy2024": {
    "anomaly_origin": "controlled_injection",
@@ -2541,6 +2789,29 @@
     "sub-hourly coastal seiches"
    ],
    "view": "noaa_coops_tides"
+  },
+  "noaa_cpc_daily_ao_index": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete daily file: dates from 1950-01-01, derived from a reanalysis whose inputs changed over the decades",
+    "the index is a model-based projection, so level shifts across observing-system changes are baseline dynamics, not injected faults"
+   ],
+   "first_party": true,
+   "independent_group": "noaa_cpc_arctic_oscillation_index",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on date",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies against the seasonal variance",
+    "level shift, variance change, stuck value and missing intervals"
+   ],
+   "temporal_span": "about 76 years of daily values (1950 onward)",
+   "units": 28083,
+   "unsupported_fault_mechanisms": [
+    "sub-daily variation and regional detail"
+   ],
+   "view": "noaa_cpc_daily_ao_index"
   },
   "noaa_gml_co2_weekly": {
    "anomaly_origin": "controlled_injection",
@@ -2937,6 +3208,22 @@
    "units": 107727,
    "view": "physionet_mimic_iv_demo"
   },
+  "pubchem_compounds": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "identifier-ordered prefix CID 1 to 1000: the oldest, best-curated compounds, not a random sample",
+    "property arrays mix value types per record; computed descriptors only"
+   ],
+   "first_party": true,
+   "independent_group": "ncbi_pubchem_compound_records",
+   "min_units": 500,
+   "natural_labels": "none",
+   "partitions": "hash of the CID 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-NEST",
+   "units": 1000,
+   "view": "pubchem_compounds"
+  },
   "rcsb_pdb_entries": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2952,6 +3239,22 @@
    "protocol_id": "P-NEST",
    "units": 1000,
    "view": "rcsb_pdb_entries"
+  },
+  "reactome_pathway_knowledgebase": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete release 98 files: 23,652 pathways, 23,762 hierarchy edges, 325,971 UniProt and 113,522 ChEBI mappings; the hierarchy resolves with 0 orphans on both ends, while 13 UniProt mapping rows and 3 ChEBI mapping rows name a pathway absent from the pathway file (natural, kept)",
+    "repeated mapping keys are published states and kept: 4,606 repeated UniProt-pathway pairs and 1,115 repeated ChEBI-pathway pairs (different evidence codes)",
+    "mapping URLs dropped; pathway names are repeated in the mapping files as published"
+   ],
+   "first_party": true,
+   "independent_group": "reactome_curated_pathway_database",
+   "min_units": 1000,
+   "partitions": "hash of the top-level species pathway 70/15/15 so a pathway and its mappings stay together",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "units": 486907,
+   "view": "reactome_pathway_knowledgebase"
   },
   "rki_hospitalisation": {
    "anomaly_origin": "controlled_injection",
@@ -4306,6 +4609,22 @@
    "protocol_id": "P-REL",
    "units": 48662,
    "view": "zen_wind_fragility"
+  },
+  "zenodo_dataset_records_2023_03": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "March 2023 dataset publications (4,105 records at the snapshot date): a contiguous publication-date window, records are revised after publication",
+    "people, descriptions and links dropped; optional metadata sections vary by record"
+   ],
+   "first_party": true,
+   "independent_group": "zenodo_repository_records",
+   "min_units": 1000,
+   "natural_labels": "none",
+   "partitions": "hash of the record id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 4105,
+   "view": "zenodo_dataset_records_2023_03"
   }
  }
 }

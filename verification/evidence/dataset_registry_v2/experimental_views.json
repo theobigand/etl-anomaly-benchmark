@@ -285,6 +285,55 @@
   },
   "source_snapshot": "ademe_dpe_existant/2026-11-22"
  },
+ "apis_guru_openapi_directory": {
+  "dropped": [
+   "contact"
+  ],
+  "files": {
+   "apis.jsonl": {
+    "rows": 2529,
+    "sha256": "0867a58d92dcdbece4628406145be552a78f055387bfcad1d93b230bdfe70df1"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "complete APIs.guru directory list, one record per API",
+   "versions": 3992
+  },
+  "source_snapshot": "apis_guru_openapi_directory/2026-11-23"
+ },
+ "austin_apd_cad": {
+  "dropped": [
+   "geoid",
+   "blkgpnm",
+   "council_district",
+   "sector"
+  ],
+  "files": {
+   "events.csv": {
+    "rows": 266451,
+    "sha256": "ecd5f4ea5565ea80c28201d01464e109f1d586468c1f2ad0d1f1f955ff318e86"
+   }
+  },
+  "pseudonymised": [
+   "incident_number"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "cases": 88816,
+   "events": 266451,
+   "first_timestamp": "2023-01-01 00:01:00",
+   "last_timestamp": "2023-04-01 14:48:44",
+   "method": "dispatched incidents of the first quarter of 2023 ordered by incident number",
+   "rows": 88817,
+   "unusable_timestamps": {
+    "call_closed": 0,
+    "call_responded": 0,
+    "first_unit_arrived": 0
+   }
+  },
+  "source_snapshot": "austin_apd_cad/2026-11-23"
+ },
  "austin_campaign_finance": {
   "dropped": [
    "filer_name",
@@ -461,6 +510,49 @@
   },
   "source_snapshot": "bloomington_water_plant_energy/2026-11-23"
  },
+ "bts_daily_mobility_national": {
+  "dropped": [
+   "level",
+   "state_fips",
+   "state_code",
+   "county_fips",
+   "county",
+   "row_id"
+  ],
+  "files": {
+   "daily.csv": {
+    "rows": 1923,
+    "sha256": "36320a045d39e6217dee2fb7f3b8cf00d54b1df7f0abc238209013764b7ff3e3"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "columns": 16,
+   "first_date": "2019-01-01 00:00:00",
+   "last_date": "2024-04-06 00:00:00",
+   "method": "national-level daily mobility rows ordered by date"
+  },
+  "source_snapshot": "bts_daily_mobility_national/2026-11-23"
+ },
+ "cdc_covid_vaccination_trends_us": {
+  "dropped": [
+   "location"
+  ],
+  "files": {
+   "daily.csv": {
+    "rows": 1476,
+    "sha256": "49e49125455031d4ddcbd47e34bd6f7aefdec46ecfef7380775ab8836b6ed09d"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "columns": 28,
+   "first_date": "2020-12-13 00:00:00",
+   "last_date": "2023-05-10 00:00:00",
+   "method": "national vaccination trend rows ordered by date type and date"
+  },
+  "source_snapshot": "cdc_covid_vaccination_trends_us/2026-11-23"
+ },
  "cftc_cot_disaggregated": {
   "dropped": [
    "id",
@@ -508,6 +600,74 @@
    "unique_molecules": 1000
   },
   "source_snapshot": "chembl_molecules/2026-11-22"
+ },
+ "cincinnati_ecc_calls": {
+  "dropped": [
+   "queues",
+   "agents",
+   "line numbers",
+   "durations",
+   "locations"
+  ],
+  "files": {
+   "events.csv": {
+    "rows": 391439,
+    "sha256": "8a320d51b21b02cd741a44441b2386ecdc487ba392516ec4aaa4686239401bd5"
+   }
+  },
+  "pseudonymised": [
+   "call_record_id"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "cases": 164525,
+   "events": 391439,
+   "first_timestamp": "2023-01-01 01:00:00",
+   "last_timestamp": "2023-02-28 12:59:56",
+   "method": "calls seized in January and February 2023 ordered by call record id",
+   "rows": 164525,
+   "unusable_timestamps": {
+    "call_released": 0,
+    "call_seized": 0,
+    "location_queried": 105193,
+    "transfer_received": 161468
+   }
+  },
+  "source_snapshot": "cincinnati_ecc_calls/2026-11-23"
+ },
+ "cincinnati_fire_cad": {
+  "dropped": [
+   "address_x",
+   "latitude_x",
+   "longitude_x",
+   "neighborhood",
+   "beat"
+  ],
+  "files": {
+   "events.csv": {
+    "rows": 359125,
+    "sha256": "6de3b673ec31179178514defd49830d7f4b3d17f02a8a97d6bdffae24ba833d4"
+   }
+  },
+  "pseudonymised": [
+   "event_number"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "cases": 96071,
+   "events": 359125,
+   "first_timestamp": "2023-01-01 00:01:09",
+   "last_timestamp": "2023-12-31 23:59:01",
+   "method": "fire and EMS incidents created in calendar year 2023 ordered by event number",
+   "rows": 96072,
+   "unusable_timestamps": {
+    "incident_closed": 2719,
+    "incident_created": 0,
+    "unit_arrived": 13405,
+    "unit_dispatched": 9039
+   }
+  },
+  "source_snapshot": "cincinnati_fire_cad/2026-11-23"
  },
  "clinicaltrials_v2": {
   "dropped": [
@@ -940,6 +1100,43 @@
   },
   "source_snapshot": "dgfip_dvf/2026-11-21"
  },
+ "doaj_journals": {
+  "dropped": [],
+  "files": {
+   "records.jsonl": {
+    "rows": 999,
+    "sha256": "bcb017a0077e27a053ca6de31a73ae588b8caa71861641a67644e4e0a9e9926e"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "journal records in creation order, the first 20 pages of 50",
+   "pages": [
+    "journals_0.json",
+    "journals_1.json",
+    "journals_2.json",
+    "journals_3.json",
+    "journals_4.json",
+    "journals_5.json",
+    "journals_6.json",
+    "journals_7.json",
+    "journals_8.json",
+    "journals_9.json",
+    "journals_10.json",
+    "journals_11.json",
+    "journals_12.json",
+    "journals_13.json",
+    "journals_14.json",
+    "journals_15.json",
+    "journals_16.json",
+    "journals_17.json",
+    "journals_18.json",
+    "journals_19.json"
+   ],
+   "repeated_ids": 1
+  },
+  "source_snapshot": "doaj_journals/2026-11-23"
+ },
  "dwd_hourly_climate": {
   "dropped": [
    "eor_marker"
@@ -1002,6 +1199,38 @@
    "missing_cells": 70644
   },
   "source_snapshot": "ecb_fx_reference_rates/2026-11-22"
+ },
+ "eia_petroleum_spot_prices": {
+  "dropped": [
+   "futures contracts",
+   "weekly, monthly and annual series"
+  ],
+  "files": {
+   "spot_prices.csv": {
+    "rows": 10473,
+    "sha256": "30fc513359ab6c43e0ef199c0bf80ee743182783b2a5367e8d42b563a26456b1"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "first_timestamp": "1986-01-02 00:00:00",
+   "last_timestamp": "2026-11-17 00:00:00",
+   "method": "daily spot price series of the EIA petroleum bulk file, joined on the date",
+   "series": [
+    "pet_eer_epd2dc_pf4_y05la_dpg_d",
+    "pet_eer_epd2dxl0_pf4_rgc_dpg_d",
+    "pet_eer_epd2dxl0_pf4_y35ny_dpg_d",
+    "pet_eer_epd2f_pf4_y35ny_dpg_d",
+    "pet_eer_epjk_pf4_rgc_dpg_d",
+    "pet_eer_epllpa_pf4_y44mb_dpg_d",
+    "pet_eer_epmrr_pf4_y05la_dpg_d",
+    "pet_eer_epmru_pf4_rgc_dpg_d",
+    "pet_eer_epmru_pf4_y35ny_dpg_d",
+    "pet_rbrte_d",
+    "pet_rwtc_d"
+   ]
+  },
+  "source_snapshot": "eia_petroleum_spot_prices/2026-11-23"
  },
  "epa_aqs_ozone_hourly": {
   "dropped": [
@@ -1094,6 +1323,102 @@
    "snapshots": 4
   },
   "source_snapshot": "fdic_bank_financials/2026-11-22"
+ },
+ "fec_federal_campaign_finance_2024": {
+  "dropped": [
+   "cn.CAND_NAME",
+   "cn.CAND_ST1",
+   "cn.CAND_ST2",
+   "cn.CAND_CITY",
+   "cn.CAND_ZIP",
+   "cm.CMTE_NM",
+   "cm.TRES_NM",
+   "cm.CMTE_ST1",
+   "cm.CMTE_ST2",
+   "cm.CMTE_CITY",
+   "cm.CMTE_ZIP",
+   "cm.CONNECTED_ORG_NM",
+   "pas2.NAME",
+   "pas2.CITY",
+   "pas2.STATE",
+   "pas2.ZIP_CODE",
+   "pas2.EMPLOYER",
+   "pas2.OCCUPATION",
+   "pas2.MEMO_TEXT"
+  ],
+  "files": {
+   "ccl.csv": {
+    "rows": 8619,
+    "sha256": "a3cdc38eecaa3a78e5a074852f88a3274f92ff95b3d92cb69edaeccfe639e423"
+   },
+   "cm.csv": {
+    "rows": 20937,
+    "sha256": "519a50786050849a7cc790ef2dbf866c6a2729e15672859b30d818bef43a888d"
+   },
+   "cn.csv": {
+    "rows": 9796,
+    "sha256": "de196fa8032686a98c8f763bb144fd87242fda6efdbdc251668994113dca10cb"
+   },
+   "pas2.csv": {
+    "rows": 703181,
+    "sha256": "a745f21f1c12d5b058a0145961dfd219cbb2cd2c92312b69f1465f7c0554f63b"
+   }
+  },
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 8218,
+    "child": "cm.CAND_ID",
+    "orphans": 23,
+    "parent": "cn.CAND_ID",
+    "share": 0.002798734485276223
+   },
+   {
+    "checked": 8619,
+    "child": "ccl.CAND_ID",
+    "orphans": 154,
+    "parent": "cn.CAND_ID",
+    "share": 0.01786750203039796
+   },
+   {
+    "checked": 8619,
+    "child": "ccl.CMTE_ID",
+    "orphans": 160,
+    "parent": "cm.CMTE_ID",
+    "share": 0.018563638473140735
+   },
+   {
+    "checked": 703181,
+    "child": "pas2.CMTE_ID",
+    "orphans": 0,
+    "parent": "cm.CMTE_ID",
+    "share": 0.0
+   },
+   {
+    "checked": 703181,
+    "child": "pas2.OTHER_ID",
+    "orphans": 84215,
+    "parent": "cm.CMTE_ID",
+    "share": 0.11976290599433147
+   },
+   {
+    "checked": 701557,
+    "child": "pas2.CAND_ID",
+    "orphans": 8903,
+    "parent": "cn.CAND_ID",
+    "share": 0.012690344476642667
+   }
+  ],
+  "sampling": {
+   "duplicate_keys": {
+    "ccl": 35,
+    "cm": 0,
+    "cn": 0,
+    "pas2": 0
+   },
+   "method": "complete 2023-2024 cycle candidate, committee, linkage and committee-to-candidate contribution files"
+  },
+  "source_snapshot": "fec_federal_campaign_finance_2024/2026-11-23"
  },
  "flat_uci_101_C2a": {
   "dropped": [],
@@ -2408,6 +2733,57 @@
   },
   "source_snapshot": "gbif_cc0_occurrences/2026-11-22"
  },
+ "gene_ontology_annotations": {
+  "dropped": [
+   "annotations.object_name",
+   "annotations.synonym"
+  ],
+  "files": {
+   "annotations.csv": {
+    "rows": 906445,
+    "sha256": "f4b6b934875cff68edba49dfbc8b8c224d90b18b18bfea4335dddda0f9cf23ad"
+   },
+   "relations.csv": {
+    "rows": 71496,
+    "sha256": "623fd58b9aeeb272c47e6efd27687e25d876a06bcaf09c98c2df8068ccb5379b"
+   },
+   "terms.csv": {
+    "rows": 48340,
+    "sha256": "8302c28f9b1f77410e5a173fd2b8e358dc652d1a9ec3aa3a4b1ccef99a62e5d5"
+   }
+  },
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 71496,
+    "child": "relations.child_id",
+    "orphans": 0,
+    "parent": "terms.id",
+    "share": 0.0
+   },
+   {
+    "checked": 71496,
+    "child": "relations.parent_id",
+    "orphans": 0,
+    "parent": "terms.id",
+    "share": 0.0
+   },
+   {
+    "checked": 906445,
+    "child": "annotations.go_id",
+    "orphans": 0,
+    "parent": "terms.id",
+    "share": 0.0
+   }
+  ],
+  "sampling": {
+   "duplicate_annotation_rows": 23,
+   "gaf_go_version": "http://purl.obolibrary.org/obo/go/releases/2026-04-27/extensions/go-plus.ofn",
+   "method": "complete go-basic ontology and the UniProt human GAF annotation file",
+   "ontology_release": "releases/2026-07-26"
+  },
+  "source_snapshot": "gene_ontology_annotations/2026-11-23"
+ },
  "gfz_kp_index": {
   "dropped": [
    "half_hour_midpoint",
@@ -2429,6 +2805,35 @@
    "missing_kp_rows": 0
   },
   "source_snapshot": "gfz_kp_index/2026-11-22"
+ },
+ "github_reviewed_advisories": {
+  "dropped": [
+   "credits"
+  ],
+  "files": {
+   "records.jsonl": {
+    "rows": 1000,
+    "sha256": "1e2d3087c22f8556fa50c8c42f1de34220f5a9dc7bcf65c16605885f558869c5"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "reviewed advisories of 2017 to 2026, the first 100 of each year",
+   "pages": [
+    "advisories_0.json",
+    "advisories_1.json",
+    "advisories_2.json",
+    "advisories_3.json",
+    "advisories_4.json",
+    "advisories_5.json",
+    "advisories_6.json",
+    "advisories_7.json",
+    "advisories_8.json",
+    "advisories_9.json"
+   ],
+   "repeated_ids": 0
+  },
+  "source_snapshot": "github_reviewed_advisories/2026-11-23"
  },
  "google_cluster_2019a": {
   "dropped": [
@@ -3577,6 +3982,35 @@
   },
   "source_snapshot": "montgomery_dlc_sales/2026-11-23"
  },
+ "nasa_cmr_collections": {
+  "dropped": [
+   "ContactGroups",
+   "ContactPersons"
+  ],
+  "files": {
+   "records.jsonl": {
+    "rows": 900,
+    "sha256": "1d0dcdfc613839c5efe16fdb331f340c6e48315e74cb47d049914ca99d9a57f4"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "collection records of nine providers, the first 100 of each",
+   "pages": [
+    "collections_0.json",
+    "collections_1.json",
+    "collections_2.json",
+    "collections_3.json",
+    "collections_4.json",
+    "collections_5.json",
+    "collections_6.json",
+    "collections_7.json",
+    "collections_8.json"
+   ],
+   "repeated_ids": 0
+  },
+  "source_snapshot": "nasa_cmr_collections/2026-11-23"
+ },
  "nasa_omni_solar_wind": {
   "dropped": [
    "bartels_rotation",
@@ -3653,6 +4087,101 @@
   },
   "source_snapshot": "ncei_storm_events_2024/2026-11-22"
  },
+ "nces_ipeds_2023": {
+  "dropped": [
+   "hd.INSTNM",
+   "hd.IALIAS",
+   "hd.ADDR",
+   "hd.CITY",
+   "hd.ZIP",
+   "hd.CHFNM",
+   "hd.CHFTITLE",
+   "hd.GENTELE",
+   "hd.EIN",
+   "hd.UEIS",
+   "hd.WEBADDR",
+   "hd.ADMINURL",
+   "hd.FAIDURL",
+   "hd.APPLURL",
+   "hd.NPRICURL",
+   "hd.VETURL",
+   "hd.ATHURL",
+   "hd.DISAURL",
+   "hd.F1SYSNAM",
+   "hd.LONGITUD",
+   "hd.LATITUDE"
+  ],
+  "files": {
+   "adm.csv": {
+    "rows": 1972,
+    "sha256": "0aa0a974d86b5b6753bd9b482a1687600c633ae9227f8e8f58cd503fbd2c89d4"
+   },
+   "c.csv": {
+    "rows": 303460,
+    "sha256": "5a7220965e07b45e7546e56a62c8cdaae402dd2b2bc6e39989b1dee9b9688512"
+   },
+   "effy.csv": {
+    "rows": 116437,
+    "sha256": "f25c47c6f1a673306803256211a176b5363c1c259128226abb0b6837059b6dc6"
+   },
+   "hd.csv": {
+    "rows": 6163,
+    "sha256": "c6a54cabadb69b7e194c2609257bc599f9ce697e0bca27642e2b6605a2366dc0"
+   },
+   "ic.csv": {
+    "rows": 6049,
+    "sha256": "e3787fd3bb24ebd3426c5a89e13df31be447db1814e13bafa15688199549af30"
+   }
+  },
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 6049,
+    "child": "ic.UNITID",
+    "orphans": 0,
+    "parent": "hd.UNITID",
+    "share": 0.0
+   },
+   {
+    "checked": 1972,
+    "child": "adm.UNITID",
+    "orphans": 0,
+    "parent": "hd.UNITID",
+    "share": 0.0
+   },
+   {
+    "checked": 116437,
+    "child": "effy.UNITID",
+    "orphans": 0,
+    "parent": "hd.UNITID",
+    "share": 0.0
+   },
+   {
+    "checked": 303460,
+    "child": "c.UNITID",
+    "orphans": 0,
+    "parent": "hd.UNITID",
+    "share": 0.0
+   }
+  ],
+  "sampling": {
+   "duplicate_keys": {
+    "adm": 0,
+    "c": 0,
+    "effy": 0,
+    "hd": 0,
+    "ic": 0
+   },
+   "institutions_without_child": {
+    "adm": 4191,
+    "c": 203,
+    "effy": 204,
+    "ic": 114
+   },
+   "method": "complete 2023 IPEDS institutional characteristics, admissions, enrolment and completions tables (revised files where published)"
+  },
+  "source_snapshot": "nces_ipeds_2023/2026-11-23"
+ },
  "ndbc_buoys_2023": {
   "dropped": [
    "VIS",
@@ -3670,6 +4199,23 @@
    "stations": 7
   },
   "source_snapshot": "ndbc_buoys_2023/2026-11-22"
+ },
+ "nhc_hurdat2_atlantic": {
+  "dropped": [],
+  "files": {
+   "events.csv": {
+    "rows": 55524,
+    "sha256": "f952540d69082fa8e73b84c697dc87cbe2388ba18ac0b3593678f8061d4e6e29"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "first_timestamp": "1851-06-25 00:00:00",
+   "last_timestamp": "2025-11-01 06:00:00",
+   "method": "complete HURDAT2 Atlantic best-track file, every storm and record",
+   "storms": 1988
+  },
+  "source_snapshot": "nhc_hurdat2_atlantic/2026-11-23"
  },
  "nih_reporter_projects_fy2024": {
   "dropped": [
@@ -3716,6 +4262,24 @@
    "stations": 6
   },
   "source_snapshot": "noaa_coops_tides/2026-11-22"
+ },
+ "noaa_cpc_daily_ao_index": {
+  "dropped": [],
+  "files": {
+   "ao_index.csv": {
+    "rows": 28083,
+    "sha256": "b376804730ff5224ae531f7228d925e1961d52b4954604f909121dec99950c4a"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "first_timestamp": "1950-01-01 00:00:00",
+   "impossible_dates_dropped": 0,
+   "last_timestamp": "2026-11-20 00:00:00",
+   "method": "complete daily Arctic Oscillation index file, impossible dates removed",
+   "missing_values": 1
+  },
+  "source_snapshot": "noaa_cpc_daily_ao_index/2026-11-23"
  },
  "noaa_gml_co2_weekly": {
   "dropped": [],
@@ -4430,6 +4994,33 @@
   "salt_label": "etl-benchmark-views-v1",
   "source_snapshot": "physionet_mimic_iv_demo/2026-11-21"
  },
+ "pubchem_compounds": {
+  "dropped": [],
+  "files": {
+   "records.jsonl": {
+    "rows": 1000,
+    "sha256": "3b29a975f7021243f4815612e2eaadfb88a8adc96908cfabaa7f2713de9acd16"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "compound records of CID 1 to 1000, ten requests of 100 identifiers",
+   "pages": [
+    "compounds_0.json",
+    "compounds_1.json",
+    "compounds_2.json",
+    "compounds_3.json",
+    "compounds_4.json",
+    "compounds_5.json",
+    "compounds_6.json",
+    "compounds_7.json",
+    "compounds_8.json",
+    "compounds_9.json"
+   ],
+   "repeated_ids": 0
+  },
+  "source_snapshot": "pubchem_compounds/2026-11-23"
+ },
  "rcsb_pdb_entries": {
   "dropped": [
    "audit_author (omitted in GraphQL query)",
@@ -4469,6 +5060,73 @@
    "method": "earliest released structures per calendar year ordered by initial_release_date and rcsb_id (2024:350, 2025:350, 2026:300)"
   },
   "source_snapshot": "rcsb_pdb_entries/2026-11-22"
+ },
+ "reactome_pathway_knowledgebase": {
+  "dropped": [
+   "uniprot.url",
+   "chebi.url"
+  ],
+  "files": {
+   "chebi.csv": {
+    "rows": 113522,
+    "sha256": "690ed2bd79402a9f2f173dd9d49a621452fccd7eee6dde15940b06b89bcd9cc0"
+   },
+   "pathways.csv": {
+    "rows": 23652,
+    "sha256": "e1808b4142c78b3482bf13b7ac14acad1001027271b01f5fd1a3bdb0f92f2abf"
+   },
+   "relations.csv": {
+    "rows": 23762,
+    "sha256": "d69e1086fa58a0c9e0d009ed15b1af4d5cddd408cfc066d7342e5539785fcb57"
+   },
+   "uniprot.csv": {
+    "rows": 325971,
+    "sha256": "3d0a79f8bf9c9455c66bbc0dfa6f95b7b09a6bca908dd7d502fd038c8b533924"
+   }
+  },
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 23762,
+    "child": "relations.parent_id",
+    "orphans": 0,
+    "parent": "pathways.pathway_id",
+    "share": 0.0
+   },
+   {
+    "checked": 23762,
+    "child": "relations.child_id",
+    "orphans": 0,
+    "parent": "pathways.pathway_id",
+    "share": 0.0
+   },
+   {
+    "checked": 325971,
+    "child": "uniprot.pathway_id",
+    "orphans": 13,
+    "parent": "pathways.pathway_id",
+    "share": 3.988084829632084e-05
+   },
+   {
+    "checked": 113522,
+    "child": "chebi.pathway_id",
+    "orphans": 3,
+    "parent": "pathways.pathway_id",
+    "share": 2.6426595725938585e-05
+   }
+  ],
+  "sampling": {
+   "duplicate_keys": {
+    "chebi": 1115,
+    "pathways": 0,
+    "relations": 0,
+    "uniprot": 4606
+   },
+   "method": "complete Reactome current release files: pathways, pathway hierarchy, UniProt and ChEBI mappings",
+   "pathways_without_relation": 0,
+   "release": "98"
+  },
+  "source_snapshot": "reactome_pathway_knowledgebase/2026-11-23"
  },
  "ror_organizations": {
   "dropped": [],
@@ -6663,5 +7321,361 @@
    "method": "complete 5-table Wind Fragility Database v2026.10 relational release (no row sampling)"
   },
   "source_snapshot": "zen_wind_fragility/2026-11-22"
+ },
+ "zenodo_dataset_records_2023_03": {
+  "dropped": [
+   "contributors",
+   "creators",
+   "description",
+   "links",
+   "owners",
+   "swh"
+  ],
+  "files": {
+   "records.jsonl": {
+    "rows": 4105,
+    "sha256": "b10196f020c85161783dd763d37f66571d5ad82cf7861ffd6b45b353d4e1cafc"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "dataset records published in March 2023, sorted by recency, paged by 25",
+   "pages": [
+    "records_0.json",
+    "records_1.json",
+    "records_2.json",
+    "records_3.json",
+    "records_4.json",
+    "records_5.json",
+    "records_6.json",
+    "records_7.json",
+    "records_8.json",
+    "records_9.json",
+    "records_10.json",
+    "records_11.json",
+    "records_12.json",
+    "records_13.json",
+    "records_14.json",
+    "records_15.json",
+    "records_16.json",
+    "records_17.json",
+    "records_18.json",
+    "records_19.json",
+    "records_20.json",
+    "records_21.json",
+    "records_22.json",
+    "records_23.json",
+    "records_24.json",
+    "records_25.json",
+    "records_26.json",
+    "records_27.json",
+    "records_28.json",
+    "records_29.json",
+    "records_30.json",
+    "records_31.json",
+    "records_32.json",
+    "records_33.json",
+    "records_34.json",
+    "records_35.json",
+    "records_36.json",
+    "records_37.json",
+    "records_38.json",
+    "records_39.json",
+    "records_40.json",
+    "records_41.json",
+    "records_42.json",
+    "records_43.json",
+    "records_44.json",
+    "records_45.json",
+    "records_46.json",
+    "records_47.json",
+    "records_48.json",
+    "records_49.json",
+    "records_50.json",
+    "records_51.json",
+    "records_52.json",
+    "records_53.json",
+    "records_54.json",
+    "records_55.json",
+    "records_56.json",
+    "records_57.json",
+    "records_58.json",
+    "records_59.json",
+    "records_60.json",
+    "records_61.json",
+    "records_62.json",
+    "records_63.json",
+    "records_64.json",
+    "records_65.json",
+    "records_66.json",
+    "records_67.json",
+    "records_68.json",
+    "records_69.json",
+    "records_70.json",
+    "records_71.json",
+    "records_72.json",
+    "records_73.json",
+    "records_74.json",
+    "records_75.json",
+    "records_76.json",
+    "records_77.json",
+    "records_78.json",
+    "records_79.json",
+    "records_80.json",
+    "records_81.json",
+    "records_82.json",
+    "records_83.json",
+    "records_84.json",
+    "records_85.json",
+    "records_86.json",
+    "records_87.json",
+    "records_88.json",
+    "records_89.json",
+    "records_90.json",
+    "records_91.json",
+    "records_92.json",
+    "records_93.json",
+    "records_94.json",
+    "records_95.json",
+    "records_96.json",
+    "records_97.json",
+    "records_98.json",
+    "records_99.json",
+    "records_100.json",
+    "records_101.json",
+    "records_102.json",
+    "records_103.json",
+    "records_104.json",
+    "records_105.json",
+    "records_106.json",
+    "records_107.json",
+    "records_108.json",
+    "records_109.json",
+    "records_110.json",
+    "records_111.json",
+    "records_112.json",
+    "records_113.json",
+    "records_114.json",
+    "records_115.json",
+    "records_116.json",
+    "records_117.json",
+    "records_118.json",
+    "records_119.json",
+    "records_120.json",
+    "records_121.json",
+    "records_122.json",
+    "records_123.json",
+    "records_124.json",
+    "records_125.json",
+    "records_126.json",
+    "records_127.json",
+    "records_128.json",
+    "records_129.json",
+    "records_130.json",
+    "records_131.json",
+    "records_132.json",
+    "records_133.json",
+    "records_134.json",
+    "records_135.json",
+    "records_136.json",
+    "records_137.json",
+    "records_138.json",
+    "records_139.json",
+    "records_140.json",
+    "records_141.json",
+    "records_142.json",
+    "records_143.json",
+    "records_144.json",
+    "records_145.json",
+    "records_146.json",
+    "records_147.json",
+    "records_148.json",
+    "records_149.json",
+    "records_150.json",
+    "records_151.json",
+    "records_152.json",
+    "records_153.json",
+    "records_154.json",
+    "records_155.json",
+    "records_156.json",
+    "records_157.json",
+    "records_158.json",
+    "records_159.json",
+    "records_160.json",
+    "records_161.json",
+    "records_162.json",
+    "records_163.json",
+    "records_164.json"
+   ],
+   "repeated_ids": 0,
+   "total_results": [
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105,
+    4105
+   ]
+  },
+  "source_snapshot": "zenodo_dataset_records_2023_03/2026-11-23"
  }
 }

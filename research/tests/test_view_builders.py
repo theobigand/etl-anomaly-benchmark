@@ -550,6 +550,56 @@ def _attack(root, tmp):
     tev._attack_snapshot(root)
 
 
+def _eia(root, tmp):
+    tev._eia_snapshot(root)
+
+
+def _hurdat(root, tmp):
+    tev._hurdat_snapshot(root)
+
+
+def _ipeds(root, tmp):
+    tev._ipeds_snapshot(root)
+
+
+def _apis_guru(root, tmp):
+    tev._apis_guru_snapshot(root)
+
+
+def _zenodo_records(root, tmp):
+    tev._zenodo_snapshot(root)
+
+
+def _lifecycle(view):
+    def make(root, tmp):
+        tev._lifecycle_snapshot_one(root, view)
+
+    return make
+
+
+def _fec(root, tmp):
+    tev._fec_snapshot(root)
+
+
+def _reactome(root, tmp):
+    tev._reactome_snapshot(root)
+
+
+def _nested(view):
+    def make(root, tmp):
+        tev._nested_snapshot_one(root, view)
+
+    return make
+
+
+def _go(root, tmp):
+    tev._go_snapshot(root)
+
+
+def _cpc_ao(root, tmp):
+    tev._cpc_ao_snapshot(root)
+
+
 def _socrata(view):
     def make(root, tmp):
         tev._socrata_snapshots_one(root, view)
@@ -656,6 +706,29 @@ CASES = {
 CASES["seattle_fire"] = (_seattle_fire, ev._build_seattle_fire_911, ["seattle_fire_911_calls"], {})
 CASES["baac"] = (_baac, ev._build_baac, ["france_baac_road_accidents"], {})
 CASES["attack"] = (_attack, ev._build_attack_stix, ["mitre_attack_enterprise_stix"], {})
+CASES["eia"] = (_eia, ev._build_eia_spot, ["eia_petroleum_spot_prices"], {})
+CASES["cpc_ao"] = (_cpc_ao, ev._build_cpc_ao, ["noaa_cpc_daily_ao_index"], {})
+CASES["hurdat"] = (_hurdat, ev._build_hurdat2, ["nhc_hurdat2_atlantic"], {})
+CASES["ipeds"] = (_ipeds, ev._build_ipeds, ["nces_ipeds_2023"], {})
+CASES["apis_guru"] = (_apis_guru, ev._build_apis_guru, ["apis_guru_openapi_directory"], {})
+CASES["zenodo_records"] = (
+    _zenodo_records, ev._build_zenodo_records, ["zenodo_dataset_records_2023_03"], {},
+)  # fmt: skip
+CASES["fec"] = (_fec, ev._build_fec, ["fec_federal_campaign_finance_2024"], {})
+CASES["reactome"] = (_reactome, ev._build_reactome, ["reactome_pathway_knowledgebase"], {})
+CASES.update(
+    {
+        f"nested_{view}": (_nested(view), step, [view], {})
+        for view, step in zip(ev.NESTED_SOURCES, ev.NESTED_STEPS, strict=True)
+    }
+)
+CASES["go"] = (_go, ev._build_go, ["gene_ontology_annotations"], {})
+CASES.update(
+    {
+        f"lifecycle_{view}": (_lifecycle(view), step, [view], {})
+        for view, step in zip(ev.LIFECYCLE_STREAMS, ev.LIFECYCLE_STEPS, strict=True)
+    }
+)
 CASES.update(
     {
         f"socrata_{view}": (_socrata(view), step, [view], {})

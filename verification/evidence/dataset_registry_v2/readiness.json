@@ -2647,6 +2647,132 @@
   },
   {
    "failed": null,
+   "group": "bts_umd_daily_mobility_statistics",
+   "id": "bts_daily_mobility_national",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "eia_petroleum_spot_prices",
+   "id": "eia_petroleum_spot_prices",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "noaa_nhc_hurdat2_best_track",
+   "id": "nhc_hurdat2_atlantic",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "nces_ipeds_postsecondary_surveys",
+   "id": "nces_ipeds_2023",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "apis_guru_openapi_directory",
+   "id": "apis_guru_openapi_directory",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "zenodo_repository_records",
+   "id": "zenodo_dataset_records_2023_03",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "cincinnati_fire_dispatch",
+   "id": "cincinnati_fire_cad",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "austin_police_dispatch",
+   "id": "austin_apd_cad",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "fec_federal_campaign_finance_filings",
+   "id": "fec_federal_campaign_finance_2024",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "reactome_curated_pathway_database",
+   "id": "reactome_pathway_knowledgebase",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "github_advisory_database",
+   "id": "github_reviewed_advisories",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "ncbi_pubchem_compound_records",
+   "id": "pubchem_compounds",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "nasa_common_metadata_repository",
+   "id": "nasa_cmr_collections",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "doaj_directory_of_open_access_journals",
+   "id": "doaj_journals",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "gene_ontology_consortium_annotations",
+   "id": "gene_ontology_annotations",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "cincinnati_emergency_communications_calls",
+   "id": "cincinnati_ecc_calls",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "cdc_covid_vaccination_reporting",
+   "id": "cdc_covid_vaccination_trends_us",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "noaa_cpc_arctic_oscillation_index",
+   "id": "noaa_cpc_daily_ao_index",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2882,7 +3008,9 @@
    "backblaze",
    "bloomington_locus_solar_monitoring",
    "bloomington_utilities_water_plant",
+   "bts_umd_daily_mobility_statistics",
    "candanedo_umons",
+   "cdc_covid_vaccination_reporting",
    "cnc_five_axis_milling",
    "cubico_kelmarsh",
    "danish_district_heating",
@@ -2891,6 +3019,7 @@
    "ea_hydrology",
    "ecb_euro_fx_reference_rates",
    "edp_wind_farm_portugal",
+   "eia_petroleum_spot_prices",
    "elder_home",
    "epa_aqs",
    "fraunhofer_iee_care_wind_b",
@@ -2901,6 +3030,7 @@
    "nasa_omni_near_earth_solar_wind",
    "ndbc_moored_buoys",
    "noaa_coops",
+   "noaa_cpc_arctic_oscillation_index",
    "noaa_gml_co2",
    "nsidc_sea_ice_index",
    "pnnl_epri_bess",
@@ -2918,7 +3048,10 @@
   "C4": [
    "a_day_in_daylight",
    "aoe_gameplay",
+   "austin_police_dispatch",
    "ccin2p3_slurm",
+   "cincinnati_emergency_communications_calls",
+   "cincinnati_fire_dispatch",
    "coatings_multinational",
    "dutch_municipalities",
    "fermi_blazar_flares",
@@ -2933,6 +3066,7 @@
    "microsoft_azure_compute",
    "moodle_lms_events",
    "naoj_norp_solar_bursts",
+   "noaa_nhc_hurdat2_best_track",
    "rabobank_ict",
    "seattle_fire_911_dispatch",
    "surf_lisa_slurm",
@@ -2945,7 +3079,9 @@
    "3pfl",
    "cordis_horizon_europe",
    "eicu_philips",
+   "fec_federal_campaign_finance_filings",
    "france_baac_road_accidents",
+   "gene_ontology_consortium_annotations",
    "georgia_procurement",
    "grouplens",
    "gtfs_fr_alterneo",
@@ -2963,10 +3099,12 @@
    "japan_reconstructed_buildings",
    "jolpica_f1",
    "mimic_iv_bidmc",
+   "nces_ipeds_postsecondary_surveys",
    "noaa_ncei_storm_events",
    "openalex",
    "ourairports_db",
    "paleobiology_database",
+   "reactome_curated_pathway_database",
    "stackexchange",
    "terralore_chronicle_db",
    "uk_charity_commission",
@@ -2976,18 +3114,23 @@
    "zambia_procurement"
   ],
   "C6": [
+   "apis_guru_openapi_directory",
    "chembl_molecules",
    "clinicaltrials_gov",
    "cpsc_recall_notices",
    "crossref",
    "datacite_dois",
+   "doaj_directory_of_open_access_journals",
    "fda_maude",
    "federal_register",
    "gbif_occurrences",
    "georgia_procurement",
+   "github_advisory_database",
    "met_museum",
    "mitre_attack_knowledge_base",
    "montreal_contracts",
+   "nasa_common_metadata_repository",
+   "ncbi_pubchem_compound_records",
    "nist_nvd",
    "nws_alerts",
    "openalex",
@@ -2999,7 +3142,8 @@
    "ror",
    "uniprot_kb",
    "wikimedia_wikidata",
-   "zambia_procurement"
+   "zambia_procurement",
+   "zenodo_repository_records"
   ]
  },
  "summary": {
@@ -3031,40 +3175,40 @@
    "structurally_valid": 31
   },
   "C3": {
-   "acquired": 41,
-   "discovered": 62,
-   "experiment_ready": 38,
-   "protocol_ready": 38,
-   "rights_verified": 41,
-   "scientifically_eligible": 38,
-   "structurally_valid": 39
+   "acquired": 45,
+   "discovered": 66,
+   "experiment_ready": 42,
+   "protocol_ready": 42,
+   "rights_verified": 45,
+   "scientifically_eligible": 42,
+   "structurally_valid": 43
   },
   "C4": {
-   "acquired": 41,
-   "discovered": 42,
-   "experiment_ready": 40,
-   "protocol_ready": 40,
-   "rights_verified": 41,
-   "scientifically_eligible": 40,
-   "structurally_valid": 40
+   "acquired": 45,
+   "discovered": 46,
+   "experiment_ready": 44,
+   "protocol_ready": 44,
+   "rights_verified": 45,
+   "scientifically_eligible": 44,
+   "structurally_valid": 44
   },
   "C5": {
-   "acquired": 41,
-   "discovered": 41,
-   "experiment_ready": 41,
-   "protocol_ready": 41,
-   "rights_verified": 41,
-   "scientifically_eligible": 41,
-   "structurally_valid": 41
+   "acquired": 45,
+   "discovered": 45,
+   "experiment_ready": 45,
+   "protocol_ready": 45,
+   "rights_verified": 45,
+   "scientifically_eligible": 45,
+   "structurally_valid": 45
   },
   "C6": {
-   "acquired": 24,
-   "discovered": 27,
-   "experiment_ready": 24,
-   "protocol_ready": 24,
-   "rights_verified": 24,
-   "scientifically_eligible": 24,
-   "structurally_valid": 24
+   "acquired": 30,
+   "discovered": 33,
+   "experiment_ready": 30,
+   "protocol_ready": 30,
+   "rights_verified": 30,
+   "scientifically_eligible": 30,
+   "structurally_valid": 30
   }
  }
 }
