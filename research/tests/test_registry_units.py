@@ -196,7 +196,7 @@ def test_an_authorized_run_writes_one_result_per_group_with_both_arms(tmp_path, 
     base = ["--evidence", str(evidence), "--views", str(views), "--audit", str(audit)]
     seen = []
 
-    def fake(table, contaminated=False, learned=pb.LEARNED, **_):
+    def fake(table, seeds=None, contaminated=False, learned=pb.LEARNED, **_):
         seen.append((len(table), contaminated, learned))
         return {"contaminated": contaminated}
 
@@ -233,6 +233,7 @@ def test_the_parser_defaults_choices_and_description():
         "authorization": None,
         "output": None,
         "compact": False,
+        "seeds": [42, 1, 2, 3, 4],
     }
     assert ru.EVIDENCE / "batch_eligibility.json" == bp.EVIDENCE / "batch_eligibility.json"
     assert parser.parse_args(["run", "--groups", "a", "b", "--compact"]).groups == ["a", "b"]
@@ -260,7 +261,7 @@ def test_a_run_creates_nested_output_announces_each_group_and_may_repeat(
 ):
     evidence, views, audit = _setup(tmp_path)
     base = ["--evidence", str(evidence), "--views", str(views), "--audit", str(audit)]
-    monkeypatch.setattr(pb, "run_source", lambda table, **k: {"rows": len(table)})
+    monkeypatch.setattr(pb, "run_source", lambda table, *a, **k: {"rows": len(table)})
     record = tmp_path / "auth.json"
     record.write_text(json.dumps({"step": "s", "groups": ["g1"]}))
     out = tmp_path / "a" / "b"
@@ -307,9 +308,39 @@ def test_the_full_profile_is_the_default_learned_arm(tmp_path, monkeypatch):
     evidence, views, audit = _setup(tmp_path)
     base = ["--evidence", str(evidence), "--views", str(views), "--audit", str(audit)]
     seen = []
-    monkeypatch.setattr(pb, "run_source", lambda t, learned=None, **k: seen.append(learned))
+    monkeypatch.setattr(pb, "run_source", lambda t, s=None, learned=None, **k: seen.append(learned))
     record = tmp_path / "auth.json"
     record.write_text(json.dumps({"step": "s", "groups": ["g1"]}))
     argv = ["run", *base, "--step", "s", "--authorization", str(record), "--output", str(tmp_path)]
     ru.main(argv)
     assert seen == [pb.LEARNED, pb.LEARNED]
+
+
+def test_seeds_are_passed_to_both_arms(tmp_path, monkeypatch):
+    evidence, views, audit = _setup(tmp_path)
+    base = ["--evidence", str(evidence), "--views", str(views), "--audit", str(audit)]
+    seen = []
+    monkeypatch.setattr(pb, "run_source", lambda t, seeds=None, **k: seen.append(seeds))
+    record = tmp_path / "auth.json"
+    record.write_text(json.dumps({"step": "s", "groups": ["g1"]}))
+    argv = ["run", *base, "--step", "s", "--authorization", str(record), "--output", str(tmp_path)]
+    ru.main([*argv, "--seeds", "7", "8"])
+    assert seen == [(7, 8), (7, 8)]
+
+
+def test_a_synthetic_group_runs_end_to_end_through_the_real_harness(tmp_path):
+    pytest.importorskip("pyod")
+    evidence, views, audit = _setup(tmp_path)
+    base = ["--evidence", str(evidence), "--views", str(views), "--audit", str(audit)]
+    record = tmp_path / "auth.json"
+    record.write_text(json.dumps({"step": "synthetic", "groups": ["g1"]}))
+    out = tmp_path / "out"
+    argv = ["run", *base, "--step", "synthetic", "--authorization", str(record)]
+    assert ru.main([*argv, "--output", str(out), "--compact", "--seeds", "1"]) == 0
+    result = json.loads((out / "g1.json").read_text())
+    clean, dirty = result["arms"]["clean_reference"], result["arms"]["contaminated_reference"]
+    assert clean["protocol"] == pb.PROTOCOL and clean["seeds"] == [1]
+    assert not clean["contaminated_reference"] and dirty["contaminated_reference"]
+    assert set(clean["results"]["constraint_rules"]) == set(pb.MECHANISMS)
+    assert "isolation_forest_compact" in clean["results"]
+    assert clean["results"]["constraint_rules"]["partial_load"]["2"]["recall"] > 0.5

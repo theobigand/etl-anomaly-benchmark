@@ -512,6 +512,14 @@
       "level": "L3",
       "reason": "The audit applies the batch-unit definition to the registry and states how many independent groups the preregistered pipeline-level study can use, which constrains its sample size and panel; it selects no panel and reads no detector output."
     },
+    "research/relational_units.py": {
+      "level": "L3",
+      "reason": "It verifies the declared foreign keys of the relational sources against the data and defines the provisional relational-load detection rule, so a defect changes which references count as natural orphans and the recall reported for that unit."
+    },
+    "research/study_coverage.py": {
+      "level": "L2",
+      "reason": "It joins existing evidence into the per-group coverage that states which population supports which claim; it reads no detector output and selects no panel."
+    },
     "research/registry_units.py": {
       "level": "L3",
       "reason": "It resolves registry groups to the registered batch unit and gates detector runs behind an authorization record, so it decides which groups the pipeline-level study can run; it reads no detector output."

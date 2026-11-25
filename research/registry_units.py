@@ -163,6 +163,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--authorization", type=Path)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--compact", action="store_true")
+    parser.add_argument("--seeds", nargs="+", type=int, default=list(pb.SEEDS))
     return parser
 
 
@@ -175,11 +176,14 @@ def run_groups(args: argparse.Namespace, audit: dict[str, Any], chosen: list[str
         raise SystemExit("--output is required to run")
     args.output.mkdir(parents=True, exist_ok=True)
     learned = pb.COMPACT if args.compact else pb.LEARNED
+    seeds = tuple(args.seeds)
     for group in chosen:
         table, info = load_group(group, audit[group], args.views)
         arms = {
-            "clean_reference": pb.run_source(table, learned=learned),
-            "contaminated_reference": pb.run_source(table, contaminated=True, learned=learned),
+            "clean_reference": pb.run_source(table, seeds, learned=learned),
+            "contaminated_reference": pb.run_source(
+                table, seeds, contaminated=True, learned=learned
+            ),
         }
         with atomic_path(args.output / f"{group}.json") as partial:
             partial.write_text(
