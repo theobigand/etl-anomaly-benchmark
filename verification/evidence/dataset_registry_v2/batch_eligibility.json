@@ -1,0 +1,2945 @@
+{
+ "groups": {
+  "3pfl": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 379,
+    "batches": 100,
+    "columns": 7,
+    "eligible": true,
+    "file": "08_patent_information.csv",
+    "reasons": [],
+    "rows": 37910,
+    "time_column": "filing_date"
+   },
+   "view": "zen_3pfl",
+   "views": [
+    "zen_3pfl"
+   ]
+  },
+  "a_day_in_daylight": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_daylight_events"
+   ]
+  },
+  "ademe_dpe": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 202,
+    "batches": 100,
+    "columns": 5,
+    "eligible": true,
+    "file": "dpe.csv",
+    "reasons": [],
+    "rows": 20200,
+    "time_column": "date_etablissement_dpe"
+   },
+   "view": "ademe_dpe_existant",
+   "views": [
+    "ademe_dpe_existant"
+   ]
+  },
+  "airquality_italy": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 93,
+    "batches": 100,
+    "columns": 13,
+    "eligible": true,
+    "file": "uci_360.csv",
+    "reasons": [],
+    "rows": 9326,
+    "time_column": "timestamp"
+   },
+   "view": "series",
+   "views": [
+    "series"
+   ]
+  },
+  "ait_clue": {
+   "eligible": false,
+   "reasons": [
+    "only 0 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_clue_lds"
+   ]
+  },
+  "aoe_gameplay": {
+   "eligible": false,
+   "reasons": [
+    "only 2 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_aoe_interactions"
+   ]
+  },
+  "apis_guru_openapi_directory": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "apis_guru_openapi_directory"
+   ]
+  },
+  "austin_police_dispatch": {
+   "eligible": false,
+   "reasons": [
+    "only 0 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "austin_apd_cad"
+   ]
+  },
+  "austin_surface_water_quality": {
+   "eligible": false,
+   "reasons": [
+    "view austin_water_quality is not built locally"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "austin_water_quality"
+   ]
+  },
+  "backblaze": {
+   "eligible": false,
+   "reasons": [
+    "only 0 rows after cleaning"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "backblaze_drive_stats"
+   ]
+  },
+  "bloomington_locus_solar_monitoring": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 101,
+    "batches": 100,
+    "columns": 5,
+    "eligible": true,
+    "file": "daily.csv",
+    "reasons": [],
+    "rows": 10113,
+    "time_column": "date"
+   },
+   "view": "bloomington_solar_sites",
+   "views": [
+    "bloomington_solar_sites"
+   ]
+  },
+  "bloomington_utilities_water_plant": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 60,
+    "batches": 101,
+    "columns": 9,
+    "eligible": true,
+    "file": "daily.csv",
+    "reasons": [],
+    "rows": 6069,
+    "time_column": "date"
+   },
+   "view": "bloomington_water_plant_energy",
+   "views": [
+    "bloomington_water_plant_energy"
+   ]
+  },
+  "bts_umd_daily_mobility_statistics": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 24,
+    "batches": 80,
+    "columns": 15,
+    "eligible": true,
+    "file": "daily.csv",
+    "reasons": [],
+    "rows": 1923,
+    "time_column": "date"
+   },
+   "view": "bts_daily_mobility_national",
+   "views": [
+    "bts_daily_mobility_national"
+   ]
+  },
+  "candanedo_umons": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 205,
+    "batches": 100,
+    "columns": 6,
+    "eligible": true,
+    "file": "uci_357.csv",
+    "reasons": [],
+    "rows": 20560,
+    "time_column": "timestamp"
+   },
+   "view": "series",
+   "views": [
+    "series"
+   ]
+  },
+  "ccin2p3_slurm": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "slurm_ccin2p3"
+   ]
+  },
+  "cdc_covid_vaccination_reporting": {
+   "eligible": false,
+   "reasons": [
+    "only 1107 rows after cleaning"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "cdc_covid_vaccination_trends_us"
+   ]
+  },
+  "cftc_cot_disaggregated": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 257,
+    "batches": 100,
+    "columns": 14,
+    "eligible": true,
+    "file": "cot_positions.csv",
+    "reasons": [],
+    "rows": 25773,
+    "time_column": "report_date_as_yyyy_mm_dd"
+   },
+   "view": "cftc_cot_disaggregated",
+   "views": [
+    "cftc_cot_disaggregated"
+   ]
+  },
+  "chembl_molecules": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "chembl_molecules"
+   ]
+  },
+  "cincinnati_emergency_communications_calls": {
+   "eligible": false,
+   "reasons": [
+    "only 0 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "cincinnati_ecc_calls"
+   ]
+  },
+  "cincinnati_fire_dispatch": {
+   "eligible": false,
+   "reasons": [
+    "only 0 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "cincinnati_fire_cad"
+   ]
+  },
+  "city_of_austin_campaign_finance": {
+   "eligible": false,
+   "reasons": [
+    "only 1 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "austin_campaign_finance"
+   ]
+  },
+  "clinicaltrials_gov": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "clinicaltrials_v2"
+   ]
+  },
+  "cnc_five_axis_milling": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 224,
+    "batches": 100,
+    "columns": 6,
+    "eligible": true,
+    "file": "cnc_milling.csv",
+    "reasons": [],
+    "rows": 22488,
+    "time_column": "timestamp"
+   },
+   "view": "zen_cnc_milling",
+   "views": [
+    "zen_cnc_milling"
+   ]
+  },
+  "coatings_multinational": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout",
+    "only 2 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "4tu_bpic19"
+   ]
+  },
+  "colorado_dam_safety_registry": {
+   "eligible": false,
+   "reasons": [
+    "view colorado_dam_safety is not built locally"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "colorado_dam_safety"
+   ]
+  },
+  "colorado_regulated_storage_tanks": {
+   "eligible": false,
+   "reasons": [
+    "view colorado_storage_tanks is not built locally"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "colorado_storage_tanks"
+   ]
+  },
+  "cordis_horizon_europe": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 1259,
+    "batches": 100,
+    "columns": 5,
+    "eligible": true,
+    "file": "organization.csv",
+    "reasons": [],
+    "rows": 125926,
+    "time_column": "contentUpdateDate"
+   },
+   "view": "cordis_horizon_europe",
+   "views": [
+    "cordis_horizon_europe"
+   ]
+  },
+  "cpsc_recall_notices": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "cpsc_recalls"
+   ]
+  },
+  "crossref": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "crossref_works"
+   ]
+  },
+  "cubico_kelmarsh": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 2051,
+    "batches": 100,
+    "columns": 16,
+    "eligible": true,
+    "file": "series.csv",
+    "reasons": [],
+    "rows": 205141,
+    "time_column": "timestamp"
+   },
+   "view": "zen_kelmarsh",
+   "views": [
+    "zen_kelmarsh"
+   ]
+  },
+  "danish_district_heating": {
+   "eligible": false,
+   "reasons": [
+    "only 2 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_dk_district_heating"
+   ]
+  },
+  "datacite_dois": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "datacite_dois"
+   ]
+  },
+  "delaware_dnrec_well_permits": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 139,
+    "batches": 100,
+    "columns": 20,
+    "eligible": true,
+    "file": "permits.csv",
+    "reasons": [],
+    "rows": 13940,
+    "time_column": "apprecdate"
+   },
+   "view": "delaware_well_permits",
+   "views": [
+    "delaware_well_permits"
+   ]
+  },
+  "delaware_state_purchasing_cards": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "delaware_state_credit_cards"
+   ]
+  },
+  "dft_stats19": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 1042,
+    "batches": 100,
+    "columns": 15,
+    "eligible": true,
+    "file": "collision.csv",
+    "reasons": [],
+    "rows": 104218,
+    "time_column": "time"
+   },
+   "view": "dft_stats19_2023",
+   "views": [
+    "dft_stats19_2023"
+   ]
+  },
+  "dgal_alimconfiance": {
+   "eligible": false,
+   "reasons": [
+    "only 1 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "dgal_alimconfiance"
+   ]
+  },
+  "dgccrf_fuel_prices": {
+   "eligible": false,
+   "reasons": [
+    "only 2 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "dgccrf_fuel_prices"
+   ]
+  },
+  "dgfip_dvf": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 87,
+    "batches": 100,
+    "columns": 5,
+    "eligible": true,
+    "file": "sales.csv",
+    "reasons": [],
+    "rows": 8753,
+    "time_column": "date"
+   },
+   "view": "dgfip_dvf",
+   "views": [
+    "dgfip_dvf"
+   ]
+  },
+  "dmsp_ssj_auroral": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 680,
+    "batches": 100,
+    "columns": 18,
+    "eligible": true,
+    "file": "dmsp_auroral.csv",
+    "reasons": [],
+    "rows": 68034,
+    "time_column": "timestamp"
+   },
+   "view": "zen_dmsp_auroral",
+   "views": [
+    "zen_dmsp_auroral"
+   ]
+  },
+  "doaj_directory_of_open_access_journals": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "doaj_journals"
+   ]
+  },
+  "dutch_municipalities": {
+   "eligible": false,
+   "reasons": [
+    "only 2 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "4tu_bpic15_m5"
+   ]
+  },
+  "dwd_germany": {
+   "eligible": false,
+   "reasons": [
+    "only 3 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "dwd_hourly_climate"
+   ]
+  },
+  "ea_hydrology": {
+   "eligible": false,
+   "reasons": [
+    "only 1 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "ea_hydrology_flow"
+   ]
+  },
+  "ecb_euro_fx_reference_rates": {
+   "eligible": false,
+   "reasons": [
+    "only 0 rows after cleaning"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "ecb_fx_reference_rates"
+   ]
+  },
+  "edp_wind_farm_portugal": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 4377,
+    "batches": 100,
+    "columns": 45,
+    "eligible": true,
+    "file": "series.csv",
+    "reasons": [],
+    "rows": 437744,
+    "time_column": "time_stamp"
+   },
+   "view": "zen_care_wind_a",
+   "views": [
+    "zen_care_wind_a"
+   ]
+  },
+  "eia_petroleum_spot_prices": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 50,
+    "batches": 101,
+    "columns": 11,
+    "eligible": true,
+    "file": "spot_prices.csv",
+    "reasons": [],
+    "rows": 5059,
+    "time_column": "timestamp"
+   },
+   "view": "eia_petroleum_spot_prices",
+   "views": [
+    "eia_petroleum_spot_prices"
+   ]
+  },
+  "eicu_philips": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "physionet_eicu_demo"
+   ]
+  },
+  "elder_home": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 3711,
+    "batches": 100,
+    "columns": 9,
+    "eligible": true,
+    "file": "uci_799.csv",
+    "reasons": [],
+    "rows": 371122,
+    "time_column": "timestamp"
+   },
+   "view": "series",
+   "views": [
+    "series"
+   ]
+  },
+  "epa_aqs": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column",
+    "only 1 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "epa_aqs_ozone_hourly"
+   ]
+  },
+  "fda_maude": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "openfda_device_event"
+   ]
+  },
+  "fdic_bank_financials": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "fdic_bank_financials"
+   ]
+  },
+  "fec_federal_campaign_finance_filings": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "fec_federal_campaign_finance_2024"
+   ]
+  },
+  "federal_register": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "us_federal_register"
+   ]
+  },
+  "fermi_blazar_flares": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_blazar_flares"
+   ]
+  },
+  "fin_institute_nl": {
+   "eligible": false,
+   "reasons": [
+    "only 2 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "4tu_bpic12"
+   ]
+  },
+  "florida_bridge_inspections": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_florida_bridges"
+   ]
+  },
+  "france_baac_road_accidents": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "france_baac_road_accidents"
+   ]
+  },
+  "fraunhofer_iee_care_wind_b": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 2797,
+    "batches": 100,
+    "columns": 64,
+    "eligible": true,
+    "file": "series.csv",
+    "reasons": [],
+    "rows": 279733,
+    "time_column": "time_stamp"
+   },
+   "view": "zen_care_wind_b",
+   "views": [
+    "zen_care_wind_b"
+   ]
+  },
+  "fta_national_transit_database": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 734,
+    "batches": 100,
+    "columns": 7,
+    "eligible": true,
+    "file": "ridership.csv",
+    "reasons": [],
+    "rows": 73420,
+    "time_column": "date"
+   },
+   "view": "fta_ntd_monthly_ridership",
+   "views": [
+    "fta_ntd_monthly_ridership"
+   ]
+  },
+  "fugaku_riken": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_fdata_fugaku"
+   ]
+  },
+  "gbif_occurrences": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "gbif_cc0_occurrences"
+   ]
+  },
+  "gene_ontology_consortium_annotations": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "gene_ontology_annotations"
+   ]
+  },
+  "georgia_procurement": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout",
+    "no parseable time column",
+    "only 0 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "ocds_georgia"
+   ]
+  },
+  "german_paying_agency": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout",
+    "only 3 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "4tu_bpic18"
+   ]
+  },
+  "german_water_demand": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 449,
+    "batches": 100,
+    "columns": 4,
+    "eligible": true,
+    "file": "water_demand.csv",
+    "reasons": [],
+    "rows": 44950,
+    "time_column": "timestamp"
+   },
+   "view": "zen_water_demand",
+   "views": [
+    "zen_water_demand"
+   ]
+  },
+  "gfz_potsdam_kp": {
+   "eligible": false,
+   "reasons": [
+    "only 2 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "gfz_kp_index"
+   ]
+  },
+  "github_actions_workflows": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_gha_workflows"
+   ]
+  },
+  "github_advisory_database": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "github_reviewed_advisories"
+   ]
+  },
+  "grouplens": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "grouplens_movielens"
+   ]
+  },
+  "gtfs_fr_alterneo": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "gtfs_fr_alterneo"
+   ]
+  },
+  "gtfs_fr_aravis": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "gtfs_fr_aravis"
+   ]
+  },
+  "gtfs_fr_citea": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "gtfs_fr_citea"
+   ]
+  },
+  "gtfs_fr_diviamobilites": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "gtfs_fr_diviamobilites"
+   ]
+  },
+  "gtfs_fr_filibus": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "gtfs_fr_filibus"
+   ]
+  },
+  "gtfs_fr_kiceo": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "gtfs_fr_kiceo"
+   ]
+  },
+  "gtfs_fr_optymo": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "gtfs_fr_optymo"
+   ]
+  },
+  "gtfs_fr_palmbus": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "gtfs_fr_palmbus"
+   ]
+  },
+  "gtfs_fr_sankeo": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "gtfs_fr_sankeo"
+   ]
+  },
+  "gtfs_fr_sibra": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "gtfs_fr_sibra"
+   ]
+  },
+  "gtfs_fr_tango": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "gtfs_fr_tango"
+   ]
+  },
+  "gtfs_fr_transvilles": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "gtfs_fr_transvilles"
+   ]
+  },
+  "hm_land_registry": {
+   "eligible": false,
+   "reasons": [
+    "only 1 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "hmlr_price_paid"
+   ]
+  },
+  "hospital_sepsis_nl": {
+   "eligible": false,
+   "reasons": [
+    "only 1 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "4tu_sepsis"
+   ]
+  },
+  "ingv_seismic": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 177,
+    "batches": 100,
+    "columns": 4,
+    "eligible": true,
+    "file": "events.csv",
+    "reasons": [],
+    "rows": 17755,
+    "time_column": "time"
+   },
+   "view": "ingv_seismic_events",
+   "views": [
+    "ingv_seismic_events"
+   ]
+  },
+  "inpi_bce_ratios": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 205,
+    "batches": 100,
+    "columns": 19,
+    "eligible": true,
+    "file": "ratios.csv",
+    "reasons": [],
+    "rows": 20578,
+    "time_column": "date_cloture_exercice"
+   },
+   "view": "inpi_bce_ratios",
+   "views": [
+    "inpi_bce_ratios"
+   ]
+  },
+  "italian_road_fines": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout",
+    "only 0 rows after cleaning"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "4tu_road_fines"
+   ]
+  },
+  "japan_reconstructed_buildings": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_japan_buildings"
+   ]
+  },
+  "jolpica_f1": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 82,
+    "batches": 100,
+    "columns": 5,
+    "eligible": true,
+    "file": "formula_one_lap.csv",
+    "reasons": [],
+    "rows": 8236,
+    "time_column": "time"
+   },
+   "view": "jolpica_f1",
+   "views": [
+    "jolpica_f1"
+   ]
+  },
+  "kanto_landslides": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_kanto_landslides"
+   ]
+  },
+  "loghub_collection": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column",
+    "only 0 continuous columns",
+    "only 1 continuous columns",
+    "only 2 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "loghub"
+   ]
+  },
+  "lyft_bikeshare": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "bikeshare_capital",
+    "bikeshare_jc"
+   ]
+  },
+  "melbourne_pedestrian": {
+   "eligible": false,
+   "reasons": [
+    "only 0 rows after cleaning"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "monash_pedestrian"
+   ]
+  },
+  "met_museum": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "met_museum_objects"
+   ]
+  },
+  "metropt_porto": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 3674,
+    "batches": 100,
+    "columns": 7,
+    "eligible": true,
+    "file": "series.csv",
+    "reasons": [],
+    "rows": 367459,
+    "time_column": "timestamp"
+   },
+   "view": "zen_metropt2",
+   "views": [
+    "zen_metropt2"
+   ]
+  },
+  "microsoft_azure_compute": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "azure_packing_2020"
+   ]
+  },
+  "mimic_iv_bidmc": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 719,
+    "batches": 100,
+    "columns": 4,
+    "eligible": true,
+    "file": "hosp_labevents.csv",
+    "reasons": [],
+    "rows": 71906,
+    "time_column": "charttime"
+   },
+   "view": "physionet_mimic_iv_demo",
+   "views": [
+    "physionet_mimic_iv_demo"
+   ]
+  },
+  "mitre_attack_knowledge_base": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "mitre_attack_enterprise_stix"
+   ]
+  },
+  "montgomery_county_liquor_control_sales": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "montgomery_dlc_sales"
+   ]
+  },
+  "montreal_contracts": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout",
+    "no parseable time column",
+    "only 1 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "ocds_montreal"
+   ]
+  },
+  "moodle_lms_events": {
+   "eligible": false,
+   "reasons": [
+    "only 0 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_moodle_events"
+   ]
+  },
+  "naoj_norp_solar_bursts": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 42,
+    "batches": 100,
+    "columns": 7,
+    "eligible": true,
+    "file": "solar_bursts.csv",
+    "reasons": [],
+    "rows": 4239,
+    "time_column": "start_time"
+   },
+   "view": "zen_norp_solar_bursts",
+   "views": [
+    "zen_norp_solar_bursts"
+   ]
+  },
+  "nasa_common_metadata_repository": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "nasa_cmr_collections"
+   ]
+  },
+  "nasa_omni_near_earth_solar_wind": {
+   "eligible": false,
+   "reasons": [
+    "view nasa_omni_solar_wind is not built locally"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "nasa_omni_solar_wind"
+   ]
+  },
+  "ncbi_pubchem_compound_records": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "pubchem_compounds"
+   ]
+  },
+  "nces_ipeds_postsecondary_surveys": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "nces_ipeds_2023"
+   ]
+  },
+  "ndbc_moored_buoys": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 718,
+    "batches": 100,
+    "columns": 11,
+    "eligible": true,
+    "file": "buoy_observations.csv",
+    "reasons": [],
+    "rows": 71889,
+    "time_column": "timestamp"
+   },
+   "view": "ndbc_buoys_2023",
+   "views": [
+    "ndbc_buoys_2023"
+   ]
+  },
+  "nhif_hospital_cases": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_nhif_hospital_cases"
+   ]
+  },
+  "nih_research_grants": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "nih_reporter_projects_fy2024"
+   ]
+  },
+  "nist_nvd": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "nvd_cve"
+   ]
+  },
+  "noaa_coops": {
+   "eligible": false,
+   "reasons": [
+    "only 2 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "noaa_coops_tides"
+   ]
+  },
+  "noaa_cpc_arctic_oscillation_index": {
+   "eligible": false,
+   "reasons": [
+    "only 1 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "noaa_cpc_daily_ao_index"
+   ]
+  },
+  "noaa_gml_co2": {
+   "eligible": false,
+   "reasons": [
+    "only 0 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "noaa_gml_co2_weekly"
+   ]
+  },
+  "noaa_ncei_storm_events": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "ncei_storm_events_2024"
+   ]
+  },
+  "noaa_nhc_hurdat2_best_track": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 117,
+    "batches": 100,
+    "columns": 16,
+    "eligible": true,
+    "file": "events.csv",
+    "reasons": [],
+    "rows": 11794,
+    "time_column": "timestamp"
+   },
+   "view": "nhc_hurdat2_atlantic",
+   "views": [
+    "nhc_hurdat2_atlantic"
+   ]
+  },
+  "nsidc_sea_ice_index": {
+   "eligible": false,
+   "reasons": [
+    "only 2 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "nsidc_sea_ice_index"
+   ]
+  },
+  "ntnu_ev_charging": {
+   "eligible": false,
+   "reasons": [
+    "only 2 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_ev_charging"
+   ]
+  },
+  "nws_alerts": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "nws_weather_alerts"
+   ]
+  },
+  "nyc_tlc": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 3119,
+    "batches": 100,
+    "columns": 8,
+    "eligible": true,
+    "file": "trips.csv",
+    "reasons": [],
+    "rows": 311968,
+    "time_column": "tpep_pickup_datetime"
+   },
+   "view": "nyc_tlc_yellow",
+   "views": [
+    "nyc_tlc_yellow"
+   ]
+  },
+  "openalex": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "openalex"
+   ]
+  },
+  "openfda_faers": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "openfda_drug_event"
+   ]
+  },
+  "openfoodfacts": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "openfoodfacts"
+   ]
+  },
+  "openlibrary": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "openlibrary_dump"
+   ]
+  },
+  "osv_go": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "osv_go_advisories"
+   ]
+  },
+  "ourairports_db": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "ourairports_db"
+   ]
+  },
+  "paleobiology_database": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_pbdb",
+    "zen_pbdb_relational"
+   ]
+  },
+  "paris_urban_trees": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "paris_urban_trees"
+   ]
+  },
+  "pnnl_epri_bess": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_bess"
+   ]
+  },
+  "port_noumea_stopovers": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_port_noumea"
+   ]
+  },
+  "queensland_petroleum_production": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_queensland_petrol"
+   ]
+  },
+  "rabobank_ict": {
+   "eligible": false,
+   "reasons": [
+    "only 1 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "4tu_bpic14"
+   ]
+  },
+  "rcsb_pdb": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "rcsb_pdb_entries"
+   ]
+  },
+  "reactome_curated_pathway_database": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "reactome_pathway_knowledgebase"
+   ]
+  },
+  "rki_surveillance": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 1919,
+    "batches": 100,
+    "columns": 6,
+    "eligible": true,
+    "file": "rki_notaufnahme.csv",
+    "reasons": [],
+    "rows": 191965,
+    "time_column": "timestamp"
+   },
+   "view": "panels",
+   "views": [
+    "panels"
+   ]
+  },
+  "ror": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "ror_organizations"
+   ]
+  },
+  "rte_france_grid": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 701,
+    "batches": 100,
+    "columns": 32,
+    "eligible": true,
+    "file": "eco2mix.csv",
+    "reasons": [],
+    "rows": 70119,
+    "time_column": "timestamp"
+   },
+   "view": "rte_eco2mix_national",
+   "views": [
+    "rte_eco2mix_national"
+   ]
+  },
+  "seattle_fire_911_dispatch": {
+   "eligible": false,
+   "reasons": [
+    "only 0 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "seattle_fire_911_calls"
+   ]
+  },
+  "seattle_fremont_bridge_counter": {
+   "eligible": false,
+   "reasons": [
+    "only 3 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "seattle_fremont_bridge"
+   ]
+  },
+  "seattle_sdci_building_permits": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 28,
+    "batches": 100,
+    "columns": 10,
+    "eligible": true,
+    "file": "permits.csv",
+    "reasons": [],
+    "rows": 2822,
+    "time_column": "applieddate"
+   },
+   "view": "seattle_building_permits",
+   "views": [
+    "seattle_building_permits"
+   ]
+  },
+  "seoul_bike": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 87,
+    "batches": 100,
+    "columns": 9,
+    "eligible": true,
+    "file": "uci_560.csv",
+    "reasons": [],
+    "rows": 8760,
+    "time_column": "timestamp"
+   },
+   "view": "series",
+   "views": [
+    "series"
+   ]
+  },
+  "sffd_fire_incidents": {
+   "eligible": false,
+   "reasons": [
+    "view sffd_fire_incidents is not built locally"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "sffd_fire_incidents"
+   ]
+  },
+  "sfo_passenger_statistics": {
+   "eligible": false,
+   "reasons": [
+    "view sfo_air_traffic is not built locally"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "sfo_air_traffic"
+   ]
+  },
+  "sncf_tgv_regularite": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 128,
+    "batches": 100,
+    "columns": 19,
+    "eligible": true,
+    "file": "tgv_regularity.csv",
+    "reasons": [],
+    "rows": 12851,
+    "time_column": "date"
+   },
+   "view": "sncf_tgv_regularite",
+   "views": [
+    "sncf_tgv_regularite"
+   ]
+  },
+  "stackexchange": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "stackexchange"
+   ]
+  },
+  "steel_korea": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 344,
+    "batches": 100,
+    "columns": 6,
+    "eligible": true,
+    "file": "uci_851.csv",
+    "reasons": [],
+    "rows": 34449,
+    "time_column": "timestamp"
+   },
+   "view": "series",
+   "views": [
+    "series"
+   ]
+  },
+  "surf_lisa_slurm": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_surf_lisa_slurm"
+   ]
+  },
+  "telecom_operator_kpis": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_telecom_kpis"
+   ]
+  },
+  "terralore_chronicle_db": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column",
+    "only 2 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_terralore_chronicle"
+   ]
+  },
+  "tetouan_power": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 524,
+    "batches": 100,
+    "columns": 8,
+    "eligible": true,
+    "file": "uci_849.csv",
+    "reasons": [],
+    "rows": 52416,
+    "time_column": "timestamp"
+   },
+   "view": "series",
+   "views": [
+    "series"
+   ]
+  },
+  "tue_travel_claims": {
+   "eligible": false,
+   "reasons": [
+    "only 1 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "4tu_bpic20_domestic",
+    "4tu_bpic20_international"
+   ]
+  },
+  "tx_hhsc_child_care_operations": {
+   "eligible": false,
+   "reasons": [
+    "view tx_hhsc_child_care is not built locally"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "tx_hhsc_child_care"
+   ]
+  },
+  "tx_hotel_occupancy_tax_revenue": {
+   "eligible": false,
+   "reasons": [
+    "view tx_hotel_occupancy_tax is not built locally"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "tx_hotel_occupancy_tax"
+   ]
+  },
+  "uci:101": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_101_C2a"
+   ]
+  },
+  "uci:110": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_110_C1"
+   ]
+  },
+  "uci:143": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_143_C1"
+   ]
+  },
+  "uci:146": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_146_C1"
+   ]
+  },
+  "uci:148": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_148_C1"
+   ]
+  },
+  "uci:149": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_149_C1"
+   ]
+  },
+  "uci:15": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_15_C1"
+   ]
+  },
+  "uci:159": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_159_C1"
+   ]
+  },
+  "uci:162": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_162_C1"
+   ]
+  },
+  "uci:165": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_165_C1"
+   ]
+  },
+  "uci:189": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_189_C1"
+   ]
+  },
+  "uci:19": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_19_C2a"
+   ]
+  },
+  "uci:193": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_193_C1"
+   ]
+  },
+  "uci:198": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_198_C1"
+   ]
+  },
+  "uci:212": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_212_C1"
+   ]
+  },
+  "uci:22": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_22_C2a"
+   ]
+  },
+  "uci:247": {
+   "eligible": false,
+   "reasons": [
+    "only 536 rows after cleaning"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_247_C1"
+   ]
+  },
+  "uci:257": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_257_C1"
+   ]
+  },
+  "uci:26": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_26_C2a"
+   ]
+  },
+  "uci:264": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_264_C1"
+   ]
+  },
+  "uci:267": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_267_C1"
+   ]
+  },
+  "uci:27": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_27_C2a"
+   ]
+  },
+  "uci:270": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_270_C1"
+   ]
+  },
+  "uci:291": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_291_C1"
+   ]
+  },
+  "uci:292": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_292_C1"
+   ]
+  },
+  "uci:294": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_294_C1"
+   ]
+  },
+  "uci:296": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_296_C1"
+   ]
+  },
+  "uci:31": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_31_C1"
+   ]
+  },
+  "uci:312": {
+   "eligible": false,
+   "reasons": [
+    "only 720 rows after cleaning"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_312_C1"
+   ]
+  },
+  "uci:32": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_32_C2a"
+   ]
+  },
+  "uci:327": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_327_C1"
+   ]
+  },
+  "uci:329": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_329_C1"
+   ]
+  },
+  "uci:352": {
+   "eligible": false,
+   "reasons": [
+    "only 3 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "uci_online_retail"
+   ]
+  },
+  "uci:365": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_365_C1"
+   ]
+  },
+  "uci:368": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_368_C1"
+   ]
+  },
+  "uci:372": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_372_C1"
+   ]
+  },
+  "uci:379": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_379_C1"
+   ]
+  },
+  "uci:381": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_381_C1"
+   ]
+  },
+  "uci:396": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_396_C1"
+   ]
+  },
+  "uci:464": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_464_C1"
+   ]
+  },
+  "uci:52": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_52_C1"
+   ]
+  },
+  "uci:536": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_536_C1"
+   ]
+  },
+  "uci:545": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_545_C1"
+   ]
+  },
+  "uci:551": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_551_C1"
+   ]
+  },
+  "uci:555": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_555_C2a"
+   ]
+  },
+  "uci:572": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_572_C1"
+   ]
+  },
+  "uci:59": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_59_C1"
+   ]
+  },
+  "uci:597": {
+   "eligible": false,
+   "reasons": [
+    "only 690 rows after cleaning"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_597_C1"
+   ]
+  },
+  "uci:601": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_601_C1"
+   ]
+  },
+  "uci:602": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_602_C1"
+   ]
+  },
+  "uci:69": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_69_C2a"
+   ]
+  },
+  "uci:73": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_73_C2a"
+   ]
+  },
+  "uci:75": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_75_C1"
+   ]
+  },
+  "uci:755": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_755_C1"
+   ]
+  },
+  "uci:76": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_76_C2a"
+   ]
+  },
+  "uci:760": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_760_C1"
+   ]
+  },
+  "uci:78": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_78_C1"
+   ]
+  },
+  "uci:80": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_80_C1"
+   ]
+  },
+  "uci:848": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_848_C1"
+   ]
+  },
+  "uci:850": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_850_C1"
+   ]
+  },
+  "uci:864": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 88,
+    "batches": 100,
+    "columns": 14,
+    "eligible": true,
+    "file": "flat_uci_864_C1.csv",
+    "reasons": [],
+    "rows": 8827,
+    "time_column": "Date"
+   },
+   "view": "flat_uci_864_C1",
+   "views": [
+    "flat_uci_864_C1"
+   ]
+  },
+  "uci:911": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_911_C2a"
+   ]
+  },
+  "uci:94": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_94_C1"
+   ]
+  },
+  "uci:942": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_942_C1"
+   ]
+  },
+  "uci:967": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "flat_uci_967_C2a"
+   ]
+  },
+  "uk_charity_commission": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 476,
+    "batches": 100,
+    "columns": 4,
+    "eligible": true,
+    "file": "annual_return_history.csv",
+    "reasons": [],
+    "rows": 47645,
+    "time_column": "fin_period_start_date"
+   },
+   "view": "uk_charity_register",
+   "views": [
+    "uk_charity_register"
+   ]
+  },
+  "uk_ledger_mhra": {
+   "eligible": false,
+   "reasons": [
+    "only 1 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "ukspend"
+   ]
+  },
+  "uk_ledger_nhsbsa": {
+   "eligible": false,
+   "reasons": [
+    "only 2 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "ukspend"
+   ]
+  },
+  "uniprot_kb": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "uniprot_kb_reviewed"
+   ]
+  },
+  "unisg_smart_factory": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout",
+    "only 0 rows after cleaning",
+    "only 1 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_unisg_factory"
+   ]
+  },
+  "us_treasury_dts": {
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 798,
+    "batches": 100,
+    "columns": 4,
+    "eligible": true,
+    "file": "dts_operating_cash.csv",
+    "reasons": [],
+    "rows": 79852,
+    "time_column": "record_date"
+   },
+   "view": "us_treasury_dts",
+   "views": [
+    "us_treasury_dts"
+   ]
+  },
+  "usda_fdc": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "usda_fdc_sr_legacy"
+   ]
+  },
+  "usgs_water": {
+   "eligible": false,
+   "reasons": [
+    "only 1 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "usgs_continuous_discharge"
+   ]
+  },
+  "vif_aegis": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_aegis_vehicle"
+   ]
+  },
+  "volvo_it": {
+   "eligible": false,
+   "reasons": [
+    "only 1 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "4tu_bpic13_incidents"
+   ]
+  },
+  "wa_ecology_ghg_reports": {
+   "eligible": false,
+   "reasons": [
+    "view wa_ghg_reporting is not built locally"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "wa_ghg_reporting"
+   ]
+  },
+  "wa_ev_population": {
+   "eligible": false,
+   "reasons": [
+    "view wa_ev_population is not built locally"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "wa_ev_population"
+   ]
+  },
+  "wals_cldf": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "wals_cldf"
+   ]
+  },
+  "wikimedia_simplewiki": {
+   "eligible": false,
+   "reasons": [
+    "only 3 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "wikimedia_simplewiki_edits"
+   ]
+  },
+  "wikimedia_wikidata": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "wikidata_entities"
+   ]
+  },
+  "wind_fragility_power_db": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zen_wind_fragility"
+   ]
+  },
+  "world_bank_projects": {
+   "eligible": false,
+   "reasons": [
+    "only 718 rows after cleaning"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "wb_lending_projects"
+   ]
+  },
+  "wri_global_power_plants": {
+   "eligible": false,
+   "reasons": [
+    "no parseable time column"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "wri_power_plants"
+   ]
+  },
+  "zambia_procurement": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout",
+    "only 1 continuous columns"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "ocds_zambia"
+   ]
+  },
+  "zenodo_repository_records": {
+   "eligible": false,
+   "reasons": [
+    "no CSV table: the batch unit is not defined for this layout"
+   ],
+   "table": null,
+   "view": null,
+   "views": [
+    "zenodo_dataset_records_2023_03"
+   ]
+  }
+ },
+ "protocol": "pipeline-batch-v1",
+ "rule": {
+  "min_continuous_columns": 4,
+  "min_parsed_share": 0.99,
+  "min_rows": 1500,
+  "time_hints": [
+   "time",
+   "date",
+   "stamp"
+  ]
+ },
+ "summary": {
+  "groups": {
+   "audited": 235,
+   "eligible": 40
+  },
+  "per_category": {
+   "C1": {
+    "eligible": 1,
+    "ready": 52
+   },
+   "C2a": {
+    "eligible": 4,
+    "ready": 30
+   },
+   "C2b": {
+    "eligible": 7,
+    "ready": 30
+   },
+   "C3": {
+    "eligible": 20,
+    "ready": 40
+   },
+   "C4": {
+    "eligible": 3,
+    "ready": 28
+   },
+   "C5": {
+    "eligible": 5,
+    "ready": 36
+   },
+   "C6": {
+    "eligible": 0,
+    "ready": 30
+   }
+  }
+ }
+}

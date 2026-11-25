@@ -508,6 +508,10 @@
       "level": "L4",
       "reason": "Source-level aggregation and the decisions on hypotheses B1 to B4 govern the reported pipeline-level findings."
     },
+    "research/batch_panel.py": {
+      "level": "L3",
+      "reason": "The audit applies the batch-unit definition to the registry and states how many independent groups the preregistered pipeline-level study can use, which constrains its sample size and panel; it selects no panel and reads no detector output."
+    },
     "research/uci_wave2.py": {
       "level": "L3",
       "reason": "Licence verification, exclusion of already-pooled tables and checksum pinning define which sources enter the corpus."
