@@ -512,6 +512,18 @@
       "level": "L3",
       "reason": "The audit applies the batch-unit definition to the registry and states how many independent groups the preregistered pipeline-level study can use, which constrains its sample size and panel; it selects no panel and reads no detector output."
     },
+    "research/registry_units.py": {
+      "level": "L3",
+      "reason": "It resolves registry groups to the registered batch unit and gates detector runs behind an authorization record, so it decides which groups the pipeline-level study can run; it reads no detector output."
+    },
+    "research/relational_faults.py": {
+      "level": "L4",
+      "reason": "It defines the referential-integrity fault of T425 and its labels like the other pipeline-level fault operators, so a defect changes the injected population and the recall that is reported."
+    },
+    "research/batch_statistics.py": {
+      "level": "L3",
+      "reason": "Linked-group clustering, the clustered pilot draw, the cluster bootstrap and the variance components fix the pilot and confirmatory partitions and the sample size of the pipeline-level study."
+    },
     "research/uci_wave2.py": {
       "level": "L3",
       "reason": "Licence verification, exclusion of already-pooled tables and checksum pinning define which sources enter the corpus."

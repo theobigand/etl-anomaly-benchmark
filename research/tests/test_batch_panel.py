@@ -54,11 +54,10 @@ def test_continuous_columns_are_numeric_with_at_least_ten_distinct_values():
     assert bp.continuous_columns(frame) == ["ten"]
 
 
-def test_time_column_needs_a_name_hint_and_a_parseable_non_numeric_column():
+def test_time_column_is_found_by_content_whatever_its_name():
     assert bp.time_column(_frame()) == "timestamp"
-    assert bp.time_column(_frame(stamp="event_date")) == "event_date"
+    assert bp.time_column(_frame(stamp="label")) == "label"  # the name is not consulted
     assert bp.time_column(_frame(stamp="Time_of_day")) == "Time_of_day"
-    assert bp.time_column(_frame(stamp="label")) is None  # parses, but the name says nothing
     numeric = _frame().assign(timestamp=np.arange(2000))
     assert bp.time_column(numeric) is None  # epochs and counters are ambiguous
     broken = _frame()
@@ -68,10 +67,23 @@ def test_time_column_needs_a_name_hint_and_a_parseable_non_numeric_column():
 
 def test_time_column_skips_columns_that_do_not_qualify_and_keeps_looking():
     frame = _frame()
-    frame.insert(0, "alpha", "x")  # no hint
-    frame.insert(0, "date_num", np.arange(2000))  # hint, numeric
-    frame.insert(0, "date_bad", "nope")  # hint, unparseable
+    frame.insert(0, "alpha", "x")  # text that is not a date
+    frame.insert(0, "date_num", np.arange(2000))  # numeric, whatever its name
+    frame.insert(0, "date_bad", "nope")  # unparseable
     assert bp.time_column(frame) == "timestamp"
+
+
+def test_a_prefix_probe_rejects_a_column_before_the_full_parse(monkeypatch):
+    late = _frame()
+    late.loc[300:, "timestamp"] = "not a date"  # the first 200 rows are all dates
+    assert bp.time_column(late) is None  # the full parse still decides
+    early = _frame()
+    early.loc[:100, "timestamp"] = "not a date"
+    calls = []
+    real = bp.parse_time
+    monkeypatch.setattr(bp, "parse_time", lambda c: calls.append(len(c)) or real(c))
+    assert bp.time_column(early) is None
+    assert calls == [bp.PROBE]  # rejected by the probe: no full-length parse
 
 
 def test_time_column_thresholds_are_inclusive_and_mixed_offsets_are_read(monkeypatch):
@@ -114,7 +126,7 @@ def test_ineligible_tables_report_their_reason_and_what_was_found():
         "columns": 3,
         "rows": 0,
     }
-    assert bp.assess_table(_frame(stamp="label")) == {
+    assert bp.assess_table(_frame().assign(timestamp="no date")) == {
         "eligible": False,
         "reasons": ["no parseable time column"],
         "time_column": None,
@@ -328,7 +340,7 @@ def test_main_writes_a_deterministic_report_and_defaults_to_the_evidence_directo
     assert report["rule"] == {
         "min_rows": 1500,
         "min_continuous_columns": 4,
-        "time_hints": ["time", "date", "stamp"],
+        "probe_rows": 200,
         "min_parsed_share": 0.99,
     }
     assert list(report) == ["groups", "protocol", "rule", "summary"]

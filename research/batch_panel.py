@@ -21,8 +21,8 @@ import pipeline_batch as pb
 ROOT = Path(__file__).resolve().parent.parent
 EVIDENCE = ROOT / "verification/evidence/dataset_registry_v2"
 VIEWS = ROOT / "data/experimental"
-TIME_HINTS = ("time", "date", "stamp")
 MIN_PARSED = 0.99
+PROBE = 200
 # The eligibility constants of the plumbing pilot (chrono_injected.MIN_ROWS, MIN_COLUMNS, TREND and
 # injection.MIN_DISTINCT). They are restated so that the audit does not import the detector stack;
 # a test asserts that they stay equal to the originals.
@@ -56,15 +56,19 @@ def parse_time(column: pd.Series) -> pd.Series:
 
 
 def time_column(frame: pd.DataFrame) -> str | None:
-    """First non-numeric column named like a time that parses (99 percent) to varying instants."""
+    """First non-numeric column that parses (99 percent) to varying instants, whatever its name.
+
+    A prefix of the column is probed first, so that text columns are rejected without a full parse.
+    """
     for name in frame.columns:
         column = frame[name]
-        if any(hint in str(name).lower() for hint in TIME_HINTS) and not (
-            pd.api.types.is_numeric_dtype(column)
-        ):
-            parsed = parse_time(column)
-            if parsed.notna().mean() >= MIN_PARSED and parsed.nunique() > 1:
-                return str(name)
+        if pd.api.types.is_numeric_dtype(column):
+            continue
+        if parse_time(column.dropna().head(PROBE)).notna().mean() < MIN_PARSED:
+            continue
+        parsed = parse_time(column)
+        if parsed.notna().mean() >= MIN_PARSED and parsed.nunique() > 1:
+            return str(name)
     return None
 
 
@@ -201,7 +205,7 @@ def main(argv: list[str] | None = None) -> int:
         "rule": {
             "min_rows": MIN_ROWS,
             "min_continuous_columns": MIN_COLUMNS,
-            "time_hints": list(TIME_HINTS),
+            "probe_rows": PROBE,
             "min_parsed_share": MIN_PARSED,
         },
         "summary": summarise(audit, members),
