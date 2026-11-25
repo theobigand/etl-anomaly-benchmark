@@ -30,12 +30,12 @@ recommendation below is a proposal, not an owner decision.
 | T422 | contaminated-reference arm | implemented | none |
 | T423 | plumbing pilot on eight real series | partial: results for UCI 275, 360, 374, 560, 849, 851; 247 is excluded (536 rows, below the 1,500-row unit rule, recorded); 799 is eligible (371,122 rows) and not run: execution on a benchmark source is blocked by the freeze (recorded here) | running 799 needs the freeze lifted; nothing else is open |
 | T424 | variance pilot, then dated sample-size addendum | not run; batch-level design addendum proposed (`batch_pilot_addendum_proposal.md`), not approved | owner approves the addendum, then authorizes the pilot |
-| T425 | relational sources and referential operator | partial: operator implemented and tested (`research/relational_faults.py`: composite, nullable, polymorphic and junction keys, natural orphans measured and never labelled, seeded); no relational source declares its keys yet and the batch harness has no relational profile | key declarations per source and the `relational_load` unit need the owner's decision (addendum section 8) |
+| T425 | relational sources and referential operator | partial: operator (`relational_faults.py`) and key declarations done: 139 plain foreign keys of 32 relational views were recomputed on the local tables and equal the counts recorded by the builders (`relational_keys.json`); a provisional `relational_load` rule runs on synthetic tables (`relational_units.py`); FEC `OTHER_ID` (polymorphic) and two `zen_3pfl` conditional references are listed as not modelled | the `relational_load` unit is not approved (addendum 10.6); running it on a source is a detector run |
 | T426 | search for real ETL incident data | searched 2026-11-25 (two public web queries): no labelled public corpus of pipeline incidents with a stated licence; only practitioner write-ups and postmortem summaries. Outcome: none found, no download made | partner outreach is an owner action |
 | T427 | claim wording follows the evidence tier | wording rule fixed in `DESIGN_DECISION_2026-11-21.md`; manuscript and slides not rechecked in this pass (no new claim) | final wording after results |
 | T428 | realism check on natural labels | not started | needs results |
 | T429 | manuscript, slides, coverage, evidence index | no-change now (no result exists); mapping in section 7 | after results |
-| T430 | source families in the coverage matrix | started: eligible groups per category (`batch_eligibility.json`), linked clusters (`linked_sets.json`, `batch_structure.json`) | link to families in the final matrix after the panel is approved |
+| T430 | source families in the coverage matrix | done for generation: `research/study_coverage.py` writes `study_coverage.json` (per group: categories, protocol, local view, unit-level compatibility, approved and provisional batch units, labels, cluster, exposure; 235 groups, 231 clusters); the manuscript matrix is updated with the results (T429) | none before results |
 | T381 to T387 | semi-realistic ETL data, collective, conditional, cross-table, schema evolution, seasonal | not implemented as defined; `schema_drop`, `silent_corruption` and `stale_batch` cover parts of T386, T384 and T383 | scope decision with T425 |
 | T431 to T437 | acquisition | done and re-verified (section 1) | none |
 
@@ -54,9 +54,7 @@ tests, dated protocol, pilot files); T423 to T430, T381 to T387 and the acceptan
   itself is unchanged and still iterates the eight UCI series. The unit is defined for a timestamped
   table with at least four continuous columns and 1,500 clean rows; the time column is found by
   content. Over the registry: **47 of 235 groups are eligible** (before the audit change and the view
-  restoration: 40): C1 1, C2a 6, C2b 8, C3 21, C4 5, C6 0, C5 6. Exclusions: no parseable time
-  column 111, fewer than four continuous columns 50, nested layout 35, fewer than 1,500 clean rows
-  11 (Update 33). All 234 view files now match their registered digests.
+  restoration: 40): C1 1, C2a 6, C2b 8, C3 21, C4 5, C6 0, C5 6. Exclusions of the other 188 groups, each counted once by its first recorded reason: no parseable time column 109, fewer than four continuous columns 35, nested layout 35, fewer than 1,500 clean rows 9; counting every recorded reason gives 111, 46, 35 and 11, which overlap. All 234 view files now match their registered digests (Update 33).
 - Five of the 47 (`airquality_italy`, `candanedo_umons`, `seoul_bike`, `steel_korea`,
   `tetouan_power`) were seen by the plumbing pilot, whose full-profile outcome informed Amendment 1.
   They cannot be confirmatory evidence (variance pilot design section 7); the addendum proposes to
@@ -142,7 +140,7 @@ the named authorization.
    missing view is rebuilt by its own builder step into a scratch directory and compared before it
    is copied (never run `experimental_views.py` itself: its `main` rewrites the manifest).
 2. Eligible frame: `python batch_panel.py` (about 3 minutes; writes `batch_eligibility.json`).
-3. Compatibility and scale: `python registry_units.py compatibility --output FILE` and `python
+3. Coverage and compatibility: `python study_coverage.py --output FILE` (both studies, per group); `python relational_units.py --output FILE` (recomputes the declared foreign keys); `python registry_units.py compatibility --output FILE` and `python
    registry_units.py plan [--groups ...] [--compact] --output FILE` (batches per split and
    detector evaluations per group; 47 groups, 124,080 evaluations in the full profile).
 4. Dependence: `python batch_statistics.py structure --output FILE` (clusters, exposure, levels of
@@ -151,7 +149,7 @@ the named authorization.
    --minimum M --seed S [--reuse-exposed] --output FILE`; commit the file before any run.
 6. Variance pilot (authorization record `{"step": "T424-pilot", "groups": [...]}`): `python
    registry_units.py run --step T424-pilot --authorization FILE --groups ... --output DIR [--compact]`
-   (clean and contaminated arms, seeds 42, 1, 2, 3, 4). Existing historical entry point, UCI series
+   (clean and contaminated arms; default seeds 42, 1, 2, 3, 4, `--seeds` for fixtures). Existing historical entry point, UCI series
    only: `python pipeline_batch.py --output DIR [--only IDS] [--compact]`.
 7. Summary: `python pipeline_batch_summary.py --results DIR [--compact-results DIR2]`; its file
    naming is by UCI identifier, so registry results need the same summary keyed by group (not yet
@@ -186,31 +184,42 @@ result and no new claim exist).
 ## 8. Verification performed
 
 - Views: every file listed in `experimental_views.json` hashed against its digest (234 views; 0
-  missing, 0 mismatched after the restoration of Update 33). Reports of the acquisition counts were
-  regenerated earlier in this phase and matched byte for byte.
-- New code with tests (`etl-benchmark`, synthetic fixtures only): `registry_units.py` (22 tests),
-  `relational_faults.py` (17), `batch_statistics.py` (36), `batch_panel.py` (26, time detection by
-  content). Risk entries in `verification/mutation_risk_policy.json` (L3, L4, L3) and weights in
-  `mutation_shard_weights.json`.
+  missing, 0 mismatched after the restoration of Update 33). The 139 foreign keys of 32 relational
+  views were recomputed on the local tables and equal the recorded counts.
+- New code with tests (`etl-benchmark`; synthetic fixtures only, no registry source run through a
+  detector): `registry_units.py`, `relational_faults.py`, `relational_units.py`,
+  `batch_statistics.py`, `study_coverage.py`, `batch_panel.py` (time detection by content), plus a
+  test of the finite-sample alert budget. A synthetic group runs end to end through the real
+  `pipeline_batch.run_source` in `test_registry_units.py`.
+- `research/tests`: **2,270 passed**, exit status 0. Ruff check and format pass on `research` and
+  `verification`.
 - Focused mutation on the final sources (case-sensitive volume, narrowed mutmut,
   `OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES` for that process only; no equivalent approved):
-  `relational_faults` (L4, threshold 98) 183 of 183 killed; `registry_units` (L3, 95) 397 of 401
-  killed, 4 survived; `batch_panel` (L3, 95) 418 of 418 killed; `batch_statistics` (L3, 95) 564 of
-  570 killed, 5 survived and 1 timed out. Survivors are disclosed: argument-default and `dtype=None`
-  mutants that pandas and numpy treat identically, flush flags on `print`, a default-argument value
-  that the mutation trampoline hides from a signature test, and a loop mutant that does not
-  terminate. Earlier scores of 93.8 percent (`relational_faults`), 87.7 and 88.8 percent
-  (`registry_units`, `batch_statistics`) led to restructuring and stronger tests, not to approvals.
-- `research/tests`: 2,197 passed, exit status 0 (no failure, no skip). Ruff check and format pass on
-  `research` and `verification`.
-- Governance tests of `tests/` selected by name (mutation, risk, policy, shard): 1,046 passed, 1 failed.
-  The failure predates this work: `tests/test_mutation_shards.py::test_the_committed_weights_cover_exactly_the_mutating_modules`
-  fails because 21 older research modules (for example `pipeline_batch.py`, `readiness.py`,
-  `experimental_views.py`) have a risk entry but no weight in `mutation_shard_weights.json`. The
-  four modules of this phase were added; the 21 were not, because their mutant counts are not
-  measured here and weights are estimates for shard balancing only.
-- Not checked: the type gate (`mypy` is not installed in any local environment), manuscript and
-  slide builds, the Linux deep campaign, any detector behaviour, runtime on any registry group.
+  `relational_faults` (L4, 98) 183 of 183; `batch_panel` (L3, 95) 418 of 418; `registry_units` (L3)
+  415 of 419; `batch_statistics` (L3) 564 of 570 (5 survived, 1 timed out); `relational_units` (L3)
+  306 of 314; `study_coverage` (L2, 90) 364 of 368. Survivors are disclosed: argument-default mutants
+  that pandas, numpy and argparse treat identically, `flush` flags, and a loop mutant that does not
+  terminate. Earlier scores below the thresholds led to restructuring and stronger tests, not to
+  approvals.
+- Mutation governance: `test_the_committed_weights_cover_exactly_the_mutating_modules` now passes.
+  The 21 older research modules that had no shard weight were given the mutant count that mutmut
+  recorded for them (`exit_code_by_key` of the generated mutants); the new modules were given the
+  counts measured in this pass. Weights balance shards only; no score depends on them.
+- Hosted CI on PR #132 failed at `test` because `pyarrow` (a declared dependency since the SURF
+  Lisa view) was missing from the Linux hash lock; it was added with the hash of the
+  `manylinux_2_28_x86_64` cp311 wheel of the pinned version (25.0.0, the version in the local
+  environment). Not fixed: `tests/test_environment_lock.py::test_the_lock_pins_every_direct_dependency_and_python`
+  fails because the macOS conda explicit lock also lacks `pyarrow`; regenerating that lock is a
+  dependency decision for the owner.
+- Governance tests of `tests/` selected by name (mutation, risk, policy, shard, environment, lock):
+  1,178 passed, 1 failed (the macOS lock above).
+- Type gate: `mypy==2.4.0` and `pandas-stubs==3.0.5.260914` (the CI pins) were installed in a scratch
+  environment. The gate covers `src`, `experiments` and `verification`, none of which changed in
+  code; it could not be reproduced locally (baseline entries differ under a non-CI environment, and the
+  untracked `cardio-env-audit` directory is walked by mypy), so it is not claimed to pass. The hosted
+  job is the reference.
+- Not checked: manuscript and slide builds (no claim changed), the Linux deep campaign, any detector
+  behaviour on a registry source, runtime on any registry group.
 
 ## 9. Decisions that need the owner (in order)
 

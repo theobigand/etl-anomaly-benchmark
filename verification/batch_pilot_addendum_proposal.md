@@ -94,9 +94,11 @@ Reading: the frame can meet a single-contrast confirmatory need only if sigma is
 and the pilot is about 12 clusters; three contrasts (45) are out of reach at any pilot size, and so
 is delta 0.03. A pilot of 24 to 48, as T424 reads, would leave 22 or fewer clusters. The pilot size
 is **not fixed here**: it is a trade between a sharper sigma and the clusters left, and the sizing
-rule below applies to the actual eligible frame. (The 87 sources for sigma 0.10 and delta 0.03 quoted
-in `dataset_target_methodology.md` is 90 from the committed function; the quoted figure should be
-checked before it is cited again.)
+rule below applies to the actual eligible frame. (The 87 sources for sigma 0.10 and delta 0.03 in `DESIGN_DECISION_2026-11-21.md` is the normal
+approximation 7.85 (sigma/delta)^2 = 87.2, truncated instead of rounded up; the small-sample
+paired-t search of `paired_sources`, which also gives the 34 for delta 0.05 that the design uses, gives
+90, and 71 becomes 73 for sigma 0.15. Both are correct for their method; this proposal uses the
+function. The dated decision record is left unchanged.)
 
 **Options for the owner when the frame is too small** (a scientific decision, not taken here):
 (a) amend the protocol with further units (event window, relational load, document batch;
@@ -173,3 +175,95 @@ single-column series (`ea_hydrology`, `usgs_water`) fall below the four-column p
 
 Authorizing the pilot is a separate gate from approving this addendum, and approving the confirmatory
 sample size is a later gate that needs the pilot result.
+
+
+## 10. Revision 2 (2026-11-25, after the execution path and the relational keys were completed)
+
+Still a proposal; nothing here is approved and nothing was run on a registry source.
+
+### 10.1 Finite-sample alert budget (verified, `test_alert_budget_resolution.py`)
+
+The registered threshold is `np.quantile(validation scores, 0.95)` with linear interpolation, and a
+batch alerts when its score is strictly above it. On its own validation scores that flags exactly
+one batch for 16 to 21 validation batches (6.25, 5.9, 5.6, 5.3, 5.0, 4.8 percent) and two for 22 to
+40 (9.1 percent at 22), because the interpolated quantile lies between the two largest scores and
+the largest is the only one above it. Tied top scores flag nothing (a rules detector whose clean
+scores are constant has threshold 0 and alerts on any positive score). For a new clean batch the
+chance of exceeding the maximum of n validation scores is 1/(n+1) on average, but the realised
+false-alert rate of one source is Beta(1, n) distributed, with a standard deviation near 1/n, about
+4 to 5 points at n = 20. So "5 percent" is a target, not an achieved rate. Proposed clarification:
+report the achieved false-alert rate on the clean test batches beside every recall, compare
+detectors only inside a source at their own achieved rate, and do not describe the budget as exact.
+The threshold rule itself is not changed.
+
+### 10.2 Statistical model
+
+For the unit-level corpus (235 groups) the factor structure is domain 150 levels (127 with one
+group), schema family 138 (125) and curator 88 (65); for the 47 batch-eligible groups it is 44 (42),
+41 (39) and 27 (23). Domain and schema-family effects cannot be separated from the residual of a
+group, so the registered mixed model with those effects is not estimable as specified; only curator
+(large levels such as `uci`, `zenodo`) carries information. No dependency was added.
+Proposed amendment: primary analysis is the mean of per-cluster paired differences with a cluster
+bootstrap interval (`batch_statistics.cluster_bootstrap`); sensitivity analyses are
+category-balanced weights, leave-one-category-out and leave-one-curator-out, plus
+`variance_components` for the pilot. A mixed model with a curator random effect could be added later
+if the owner wants one (it needs a dependency decision). The registered Holm procedure is kept for
+the confirmatory family.
+
+### 10.3 Contrasts and multiplicity
+
+One primary contrast (paired difference in recall at the 5 percent budget between `constraint_rules`
+and one learned detector fixed before the pilot) and secondary contrasts (against `volume_freshness`
+and `distribution_distance`) reported with Holm inside the secondary family. The batch protocol
+registers hypotheses B1 to B5 as exploratory, so no registered confirmatory hypothesis is removed by
+this choice; the owner decides whether any of B1 to B5 becomes confirmatory.
+
+### 10.4 Exposed groups
+
+The five plumbing-pilot groups are all C3 series from the UCI pool, a single regularly sampled family,
+and were chosen by eligibility, not by detector result. Including them in the pilot makes the pilot
+sigma estimate cover that family more heavily than the frame (5 of 10 to 12 pilot clusters against
+about 11 percent of the frame). Proposed: include them and report the pilot variance with and without
+them; the confirmatory panel excludes them in any case.
+
+### 10.5 Populations by design option
+
+| Option | Population (independent clusters) | Pilot | Confirmatory capacity | Claim it can support |
+|---|---|---|---|---|
+| A. Registered numeric batch unit | 46 (41 fresh, 5 exposed) | 10 to 12 (exposed plus 5 to 7 fresh) | 34 to 36 | one primary contrast, only if the pilot sigma is at most about 0.10; scope limited to timestamped numeric loads, mostly C3 |
+| B. A plus proposed units | event window 25, relational load 33, document batch 30 groups, each a separate estimand | per unit | below 34 each before any pilot | none confirmatory; exploratory per unit; pooling across units is not justified |
+| C. Unit-level study as the confirmatory study | 235 groups, 231 clusters | 16 groups (registered) | about 215 | the registered protocol contrasts over seven structures; batch study stays exploratory |
+
+Planning with the SD interval of a pilot of n clusters: n = 10 gives 0.69 to 1.83 times the estimate,
+n = 12 gives 0.71 to 1.70. If the pilot estimate is sigma-hat = 0.06, 0.07, 0.08, the upper bound with
+n = 10 needs 40, 54 or 69 confirmatory clusters for delta 0.05 (one contrast), against 36 available;
+the point estimates need 34 or fewer only for sigma-hat up to about 0.10. So whether option A can be
+confirmatory is decided by the pilot, and the design must accept "not supported" as an outcome.
+
+**Recommendation.** Option C as the confirmatory study (it has the capacity), and option A as the
+mandatory batch-level study run through the pilot with 10 clusters (5 exposed, 5 fresh) and a stated
+decision rule: confirmatory if the required size from the pilot sigma is at most the clusters left,
+otherwise exploratory with intervals. Option B's units are implemented only as provisional components
+(section 10.6) and are not part of the recommendation until approved.
+
+### 10.6 Provisional units, implemented but not registered
+
+| Unit | Code | Observation | Truth | Detector input | Metric | Limit | Approval needed |
+|---|---|---|---|---|---|---|---|
+| `relational_load` | `relational_units.relational_cells` | consecutive child rows of one declared key (file order) | rows with an injected unresolved reference | orphan share of the load | recall, false-alert rate at the 5 percent rule | file order is not a load time; natural orphans raise the threshold | load definition, severity grid, detector set |
+| `event_window` | none (definition only) | window of events of one log | per window | activity counts and inter-event times | as batch | window length undefined | window definition, profile |
+| `document_batch` | none (definition only) | batch of nested documents | per batch | path-level null and type shares | as batch | flattening rule undefined | flattening rule, fault meaning |
+
+The relational keys of 32 relational views (139 keys) were recomputed on the local tables and equal the
+counts recorded by the builders (`relational_keys.json`). Not modelled as plain keys: FEC
+`pas2.OTHER_ID` (polymorphic, no declared type column) and two conditional references of
+`zen_3pfl`. Event windows and document batches have no code because their definitions are exactly
+the open decisions; writing them would fix those decisions.
+
+### 10.7 Execution path
+
+`registry_units.py run` is the general execution path: any registry group, the real `run_source`,
+per-group atomic result file, `--seeds` and `--compact`, authorization record required. A synthetic
+group runs end to end through the real harness in `test_registry_units.py`. `pipeline_batch.main`
+(L4) is kept unchanged for the historical UCI series; those series are registry groups too and run
+through `registry_units.py` when eligible.
