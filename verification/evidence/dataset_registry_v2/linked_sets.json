@@ -1,0 +1,31 @@
+{
+ "basis": "verification/dataset_acquisition_report.md, Update 32",
+ "exposed_groups": {
+  "airquality_italy": "plumbing pilot, UCI 360",
+  "candanedo_umons": "plumbing pilot, UCI 357 and 374",
+  "seoul_bike": "plumbing pilot, UCI 560",
+  "steel_korea": "plumbing pilot, UCI 851",
+  "tetouan_power": "plumbing pilot, UCI 849"
+ },
+ "linked_sets": [
+  {
+   "groups": ["bloomington_locus_solar_monitoring", "bloomington_utilities_water_plant"],
+   "id": "bloomington_solar",
+   "status": "found",
+   "why": "solar_kwh of the plant view repeats one Locus site on 99.0 percent of 1,723 days"
+  },
+  {
+   "groups": ["github_advisory_database", "nist_nvd", "osv_go"],
+   "id": "vulnerability_advisories",
+   "status": "found",
+   "why": "shared GHSA and CVE identifiers across the three views"
+  },
+  {
+   "groups": ["cincinnati_emergency_communications_calls", "cincinnati_fire_dispatch"],
+   "id": "cincinnati_emergency",
+   "status": "candidate",
+   "why": "a call can create an incident; keys are salted hashes of different upstream keys, so overlap is not observable (owner decision)"
+  }
+ ],
+ "not_registry_groups": "UCI 275 (bike sharing), 247 and 799 are not groups of the 235-group registry"
+}

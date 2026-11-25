@@ -1,0 +1,431 @@
+{
+ "groups": {
+  "3pfl": {
+   "batch_rows": 379,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "ademe_dpe": {
+   "batch_rows": 202,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "airquality_italy": {
+   "batch_rows": 93,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "austin_surface_water_quality": {
+   "batch_rows": 51,
+   "batches": {
+    "reference": 40,
+    "test": 41,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "bloomington_locus_solar_monitoring": {
+   "batch_rows": 101,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "bloomington_utilities_water_plant": {
+   "batch_rows": 60,
+   "batches": {
+    "reference": 40,
+    "test": 41,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "bts_umd_daily_mobility_statistics": {
+   "batch_rows": 24,
+   "batches": {
+    "reference": 32,
+    "test": 32,
+    "validation": 16
+   },
+   "evaluations": 2640
+  },
+  "candanedo_umons": {
+   "batch_rows": 205,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "cftc_cot_disaggregated": {
+   "batch_rows": 257,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "cnc_five_axis_milling": {
+   "batch_rows": 224,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "cordis_horizon_europe": {
+   "batch_rows": 1259,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "cubico_kelmarsh": {
+   "batch_rows": 2051,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "delaware_dnrec_well_permits": {
+   "batch_rows": 139,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "dft_stats19": {
+   "batch_rows": 1042,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "dgfip_dvf": {
+   "batch_rows": 87,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "dmsp_ssj_auroral": {
+   "batch_rows": 680,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "edp_wind_farm_portugal": {
+   "batch_rows": 4377,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "eia_petroleum_spot_prices": {
+   "batch_rows": 50,
+   "batches": {
+    "reference": 40,
+    "test": 41,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "elder_home": {
+   "batch_rows": 3711,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "fraunhofer_iee_care_wind_b": {
+   "batch_rows": 2797,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "fta_national_transit_database": {
+   "batch_rows": 734,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "fugaku_riken": {
+   "batch_rows": 1169,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "german_water_demand": {
+   "batch_rows": 449,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "ingv_seismic": {
+   "batch_rows": 177,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "inpi_bce_ratios": {
+   "batch_rows": 205,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "jolpica_f1": {
+   "batch_rows": 82,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "metropt_porto": {
+   "batch_rows": 3674,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "mimic_iv_bidmc": {
+   "batch_rows": 719,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "naoj_norp_solar_bursts": {
+   "batch_rows": 42,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "nasa_omni_near_earth_solar_wind": {
+   "batch_rows": 1229,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "ndbc_moored_buoys": {
+   "batch_rows": 718,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "nhif_hospital_cases": {
+   "batch_rows": 52,
+   "batches": {
+    "reference": 40,
+    "test": 41,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "noaa_ncei_storm_events": {
+   "batch_rows": 311,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "noaa_nhc_hurdat2_best_track": {
+   "batch_rows": 117,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "nyc_tlc": {
+   "batch_rows": 3119,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "rki_surveillance": {
+   "batch_rows": 1919,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "rte_france_grid": {
+   "batch_rows": 701,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "seattle_sdci_building_permits": {
+   "batch_rows": 28,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "seoul_bike": {
+   "batch_rows": 87,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "sffd_fire_incidents": {
+   "batch_rows": 34,
+   "batches": {
+    "reference": 40,
+    "test": 41,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "sncf_tgv_regularite": {
+   "batch_rows": 128,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "steel_korea": {
+   "batch_rows": 344,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "surf_lisa_slurm": {
+   "batch_rows": 1344,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "tetouan_power": {
+   "batch_rows": 524,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "uci:864": {
+   "batch_rows": 88,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "uk_charity_commission": {
+   "batch_rows": 476,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  },
+  "us_treasury_dts": {
+   "batch_rows": 798,
+   "batches": {
+    "reference": 40,
+    "test": 40,
+    "validation": 20
+   },
+   "evaluations": 2640
+  }
+ },
+ "totals": {
+  "evaluations": 124080,
+  "groups": 47
+ }
+}

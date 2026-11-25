@@ -28,14 +28,14 @@ recommendation below is a proposal, not an owner decision.
 | T420 | learned detectors, not-applicable recorded | implemented; neural arms recorded as not run (fewer than 200 reference batches) | none |
 | T421 | label-free alert budget, false alerts per clean batch | implemented | none |
 | T422 | contaminated-reference arm | implemented | none |
-| T423 | plumbing pilot on eight real series | partial: results for UCI 275, 360, 374, 560, 849, 851; 247 is not eligible (536 rows); 799 is eligible (371,122 rows) but has no result and no recorded reason | running 799 is a detector run on a benchmark source: needs the freeze lifted |
-| T424 | variance pilot, then dated sample-size addendum | not run; design drafted | see section 4; needs authorization and a batch-level design addendum |
-| T425 | relational sources and referential operator | not implemented; harness reads timestamped numeric tables only | implementation after the owner decides the unit for relational data (section 3) |
+| T423 | plumbing pilot on eight real series | partial: results for UCI 275, 360, 374, 560, 849, 851; 247 is excluded (536 rows, below the 1,500-row unit rule, recorded); 799 is eligible (371,122 rows) and not run: execution on a benchmark source is blocked by the freeze (recorded here) | running 799 needs the freeze lifted; nothing else is open |
+| T424 | variance pilot, then dated sample-size addendum | not run; batch-level design addendum proposed (`batch_pilot_addendum_proposal.md`), not approved | owner approves the addendum, then authorizes the pilot |
+| T425 | relational sources and referential operator | partial: operator implemented and tested (`research/relational_faults.py`: composite, nullable, polymorphic and junction keys, natural orphans measured and never labelled, seeded); no relational source declares its keys yet and the batch harness has no relational profile | key declarations per source and the `relational_load` unit need the owner's decision (addendum section 8) |
 | T426 | search for real ETL incident data | searched 2026-11-25 (two public web queries): no labelled public corpus of pipeline incidents with a stated licence; only practitioner write-ups and postmortem summaries. Outcome: none found, no download made | partner outreach is an owner action |
 | T427 | claim wording follows the evidence tier | wording rule fixed in `DESIGN_DECISION_2026-11-21.md`; manuscript and slides not rechecked in this pass (no new claim) | final wording after results |
 | T428 | realism check on natural labels | not started | needs results |
 | T429 | manuscript, slides, coverage, evidence index | no-change now (no result exists); mapping in section 7 | after results |
-| T430 | source families in the coverage matrix | started: `research/batch_panel.py` and `evidence/dataset_registry_v2/batch_eligibility.json` count eligible groups per category | link to families in the final matrix after the panel is approved |
+| T430 | source families in the coverage matrix | started: eligible groups per category (`batch_eligibility.json`), linked clusters (`linked_sets.json`, `batch_structure.json`) | link to families in the final matrix after the panel is approved |
 | T381 to T387 | semi-realistic ETL data, collective, conditional, cross-table, schema evolution, seasonal | not implemented as defined; `schema_drop`, `silent_corruption` and `stale_batch` cover parts of T386, T384 and T383 | scope decision with T425 |
 | T431 to T437 | acquisition | done and re-verified (section 1) | none |
 
@@ -46,29 +46,30 @@ tests, dated protocol, pilot files); T423 to T430, T381 to T387 and the acceptan
 
 - Pipeline, operators, detectors, alert budget, contaminated arm, per-source result files and the
   summary script exist and their tests pass (`research/tests/test_pipeline_batch*.py`).
-- **Dataset selection is the blocking gap.** `pipeline_batch.main` iterates only the eight
-  `chrono_injected.TIME_SPECS` identifiers; no CLI runs a registry group. The unit is defined for a
-  timestamped table with at least four continuous columns and 1,500 clean rows. Applied to the
-  registry by `research/batch_panel.py` (no detector; time column found by name and parse, so a
-  lower bound): **40 of 235 groups are eligible** (C1 1, C2a 4, C2b 7, C3 20, C4 3, C5 5, C6 0).
-  Others fail for: no parseable time column 114, too few continuous columns 35, nested or non-CSV
-  layout 27, too few rows 9, view not built locally 10. Ten views (for example `sffd_fire_incidents`,
-  `wa_ev_population`, `nasa_omni_solar_wind`) have registry digests but no local file and must be
-  materialised and digest-checked before the audit is final.
-- Five of the 40 (`airquality_italy`, `candanedo_umons`, `seoul_bike`, `steel_korea`,
+- **The eight-series limit is removed for planning and loading.** `research/registry_units.py`
+  resolves registry groups to the registered unit through the one rule of `batch_panel.py`, loads an
+  eligible group's table with the cleaning of `pipeline_batch.load_table`, plans batches and
+  evaluations (`plan`), states per group which units apply (`compatibility`) and runs the harness
+  only with an authorization record naming the step and every group (`run`). `pipeline_batch.main`
+  itself is unchanged and still iterates the eight UCI series. The unit is defined for a timestamped
+  table with at least four continuous columns and 1,500 clean rows; the time column is found by
+  content. Over the registry: **47 of 235 groups are eligible** (before the audit change and the view
+  restoration: 40): C1 1, C2a 6, C2b 8, C3 21, C4 5, C6 0, C5 6. Exclusions: no parseable time
+  column 111, fewer than four continuous columns 50, nested layout 35, fewer than 1,500 clean rows
+  11 (Update 33). All 234 view files now match their registered digests.
+- Five of the 47 (`airquality_italy`, `candanedo_umons`, `seoul_bike`, `steel_korea`,
   `tetouan_power`) were seen by the plumbing pilot, whose full-profile outcome informed Amendment 1.
-  They should stay out of any confirmatory panel (pilot sources are not reusable, variance pilot
-  design section 7).
+  They cannot be confirmatory evidence (variance pilot design section 7); the addendum proposes to
+  use them in the pilot. Linked sets are in `linked_sets.json`; 47 groups form 46 clusters.
 - No special treatment exists for any dataset; the audit applies one rule to every view.
-- Statistical analysis for the batch study: `pipeline_batch_summary.py` is descriptive (hypotheses
-  B1 to B5). Holm and `paired_sources` exist in `research/target_framework.py`; no code yet fits the
-  random-effects model of the pilot design or the cluster bootstrap. That is implementation still to
-  do, and only testable on synthetic data until the freeze is lifted.
-- Technical blockers: (1) the registry loader for the batch harness; (2) the unit for event logs,
-  relational and nested sources (T425); (3) the statistical model code; (4) the ten unbuilt views and
-  five local view files whose bytes differ from the committed digests (`sncf_tgv_regularite`,
-  `wri_power_plants`, `zen_blazar_flares`, `zen_dk_district_heating`, `zen_queensland_petrol`; local
-  rebuilds of 2026-11-22, git-ignored, committed digests untouched).
+- Statistics (`research/batch_statistics.py`, synthetic-tested): linked-cluster assignment, clustered
+  seeded pilot draw that keeps linked groups and exposed groups apart, cluster bootstrap,
+  one-way ICC, two-way variance components, paired-difference SD, factor-structure counts. Holm and
+  `paired_sources` stay in `target_framework.py`. Not implemented: a REML mixed model (no
+  `statsmodels` in the lock; over the eligible frame domain and schema family have 42 and 39
+  singleton levels out of 44 and 41, so those effects are not estimable anyway).
+- Remaining technical blockers: units for event logs, relational and nested sources (protocol
+  amendment); key declarations for relational sources; a measured runtime.
 
 ## 4. T424 and the sample size
 
@@ -83,20 +84,21 @@ waives the pilot. Authorization to run it and approval of its result are separat
 Inconsistencies the owner must resolve in a dated design addendum before the pilot:
 
 1. Size and estimand: T424 says 24 to 48 sources at batch level; `variance_pilot_design.md` 12.5
-   fixes 16 provenance groups for the unit-level families F1 to F5 (1 percent budget) and defers 24;
-   `pipeline_batch_faults.md` uses a 5 percent budget. The batch study needs its own contrasts.
-2. Population: with 40 eligible groups (lower bound, 35 after removing the five exposed ones), a
-   pilot of 24 to 48 consumes most or all of them, so pilot and confirmatory sets cannot be disjoint,
-   and the one-comparison need (34 sources at sigma 0.10, delta 0.05; 45 for three comparisons; 87
-   for delta 0.03) is not met by a holdout of about 20. Options: extend the unit to other layouts
-   (protocol amendment), narrow the batch claim to the stratum it supports, or treat it as
-   exploratory. Choosing among them is a scientific decision, not made here.
-3. `pilot_plan_dry_run.json` predates Wave 28 (119 groups, seed 20261121). It must be redrawn on the
-   batch-eligible frame with a seed the owner freezes. Not redrawn here, because the frame itself is
-   undecided.
+   fixes 16 provenance groups for the unit-level families F1 to F5 (1 percent budget); the batch
+   protocol uses a 5 percent budget. These are different studies (unit level and batch level), not
+   one requirement; the 1 percent budget is not attainable with 16 to 20 clean validation batches.
+   `batch_pilot_addendum_proposal.md` section 1 reconciles them.
+2. Population: 47 eligible groups form 46 clusters; with five exposed ones in the pilot, a pilot of P
+   clusters leaves 46 - P. A single contrast needs 34 sources at sigma 0.10 and delta 0.05 (45 for
+   three, 90 for delta 0.03), so the frame meets it only for a pilot of about 12 and sigma at most
+   0.10. Options (protocol amendment to further units, a narrower claim, or exploratory status) are a
+   scientific decision for the owner (addendum section 5).
+3. `pilot_plan_dry_run.json` predates Wave 28 (119 groups, seed 20261121) and belongs to the
+   unit-level study. The batch pilot panel is drawn by `batch_statistics.py pilot-plan` once P, the
+   per-category minimum and the seed are fixed. Not drawn here.
 
-Prepared for the pilot: selection by `draw_pilot` or `plan_pilot` (seeded, provenance only, no
-detector output); estimators and intervals per design sections 6 and 10.6; recalibration by
+Prepared for the pilot: selection by `batch_statistics.draw_clustered_pilot` (seeded, provenance
+only, linked groups together); estimators and intervals per design sections 6 and 10.6; recalibration by
 `paired_sources` with Holm level alpha over family size (section 8); outputs are variance
 components with intervals and a dated addendum; no new thresholds were introduced.
 
@@ -132,59 +134,91 @@ is a policy change with a replay cost, not a silent waiver.
 ## 7. Runbook for the next authorized phase (commands exist; run in `etl-benchmark`)
 
 Environment: `export PATH=/Users/theo/miniconda3/envs/etl-benchmark/bin:$PATH` (Python 3.11.17,
-pandas 3.0.6). Do not use `.venv` for scientific runs.
+pandas 3.0.6). Do not use `.venv` for scientific runs. Run from `research/` for the scripts below.
+Steps 1 to 5 read tables and provenance only and may be run during the freeze; steps 6 onward need
+the named authorization.
 
-0. Preconditions: owner lifts the freeze for the named step; digest-check views; build the ten
-   missing views one builder at a time into a scratch directory and compare with the manifest.
-1. Eligible frame: `python research/batch_panel.py` (about 3 minutes, reads views, no detector).
-2. Panel: draw with `target_framework.plan_pilot` on the batch-eligible frame (to be wrapped in a
-   dated, committed script once the seed and size are approved; no CLI exists today).
-3. Pilot and confirmatory runs: today only `python research/pipeline_batch.py --output DIR [--only
-   IDS] [--compact]` (UCI TIME_SPECS only). Registry support is the missing loader of section 3.
-4. Summary: `python research/pipeline_batch_summary.py --results DIR [--compact-results DIR2]`.
-5. Statistics: `research/target_framework.py` (`paired_sources`, `holm_adjust`); the mixed-model and
-   cluster-bootstrap code is still to be written and tested on synthetic data.
-6. Verification and sealing: `make verify-fast verify-tools verify-types verify-faults verify-real
-   verify-deep verify-reproduce verify-release`, then `python -m verification.claims archive --id
-   <id> --platform "<machine>"`; slides with `make slides` and `make verify-slides`.
-7. Governed mutation (`make verify-deep`, L1 80, L2 90, L3 95, L4 98 percent) only on the final
-   release HEAD.
+1. View integrity (no detector): hash every file of `experimental_views.json` against its digest. A
+   missing view is rebuilt by its own builder step into a scratch directory and compared before it
+   is copied (never run `experimental_views.py` itself: its `main` rewrites the manifest).
+2. Eligible frame: `python batch_panel.py` (about 3 minutes; writes `batch_eligibility.json`).
+3. Compatibility and scale: `python registry_units.py compatibility --output FILE` and `python
+   registry_units.py plan [--groups ...] [--compact] --output FILE` (batches per split and
+   detector evaluations per group; 47 groups, 124,080 evaluations in the full profile).
+4. Dependence: `python batch_statistics.py structure --output FILE` (clusters, exposure, levels of
+   domain, schema family and curator).
+5. Pilot panel (after the owner fixes P, M and S): `python batch_statistics.py pilot-plan --total P
+   --minimum M --seed S [--reuse-exposed] --output FILE`; commit the file before any run.
+6. Variance pilot (authorization record `{"step": "T424-pilot", "groups": [...]}`): `python
+   registry_units.py run --step T424-pilot --authorization FILE --groups ... --output DIR [--compact]`
+   (clean and contaminated arms, seeds 42, 1, 2, 3, 4). Existing historical entry point, UCI series
+   only: `python pipeline_batch.py --output DIR [--only IDS] [--compact]`.
+7. Summary: `python pipeline_batch_summary.py --results DIR [--compact-results DIR2]`; its file
+   naming is by UCI identifier, so registry results need the same summary keyed by group (not yet
+   adapted: results of `registry_units.py run` are one JSON per group with the same `arms` layout).
+8. Sample size: `batch_statistics.variance_components`, `icc_oneway`, `paired_difference_sd`,
+   `cluster_bootstrap` on the per-group results, then `target_framework.paired_sources` with Holm.
+   No CLI exists for this step; it is library code, tested on synthetic data.
+9. Confirmatory panel and run: the holdout of step 5, same `run` command with the step name of the
+   confirmatory authorization.
+10. Verification and sealing: `make verify-fast verify-tools verify-types verify-faults verify-real
+    verify-deep verify-reproduce verify-release`, then `python -m verification.claims archive --id
+    <id> --platform "<machine>"`; slides with `make slides` and `make verify-slides`.
+11. Governed mutation (`make verify-deep`, L1 80, L2 90, L3 95, L4 98 percent) only on the final
+    release HEAD.
 
-Size, as arithmetic: per source 8 mechanisms x 3 severities x 5 seeds x 2 arms = 240 evaluations,
-each scoring up to 16 detectors on about 40 test batches. Result files are about 70 KB per source
-(pilot: 432 KB for six). Runtime is not measured in the repository (pilot logs have no timings);
-measure on one small source after authorization before planning the M4 Air (16 GB) budget. Sources
-are independent, so they parallelize by source; `main` writes one atomic file per source but does
-not skip existing ones, so resume is a rerun with `--only` for the missing identifiers. Stop
-conditions: any digest mismatch, any change to a frozen partition or seed, a result file for a
-source outside the approved panel.
+Scale, as arithmetic from the audit: per group 2 arms x 5 seeds x 8 mechanisms x 3 severities x 11
+detectors (full profile) = 2,640 evaluations; 47 eligible groups give 124,080. The largest table has
+437,744 rows and 45 columns (about 158 MB as float64); the 47 tables total 3.7 million rows, so one
+group at a time fits in 16 GB. Result files are about 70 KB per source. Runtime is not measured in the
+repository (pilot logs carry no timings), so no estimate is given; measure one small group after
+authorization and plan the M4 Air budget from that. Groups are independent and parallelize by group;
+`run` writes one atomic file per group but does not skip existing ones, so a resume is a rerun with
+`--groups` for the missing ones. Stop conditions: any digest mismatch, any change to a frozen
+partition or seed, a result file for a group outside the approved panel.
 
-Manuscript and slides after results: benchmark description and coverage (235 groups, 40 batch
+Manuscript and slides after results: benchmark description and coverage (235 groups, 47 batch
 eligible), provenance and diversity (linked sets), methodology and operators, statistical analysis,
 results, threats (eligible population, exposed pilot sources, controlled faults), reproducibility
-(view provenance), conclusions, claim and evidence hashes. No edit was made now (`no-change`).
+(view provenance), conclusions, claim and evidence hashes. No edit was made now (`no-change`: no
+result and no new claim exist).
 
-## 8. Verification performed in this pass
+## 8. Verification performed
 
-- Reports regenerated and compared: `readiness.json`, `readiness_facts.json`, `source_attributes.json`
-  and `target_framework.json` identical.
-- 460 view files hashed against the manifest: 5 local mismatches, 10 views not built locally.
-- Record-level checks listed in `dataset_acquisition_report.md` Update 32.
-- New `research/batch_panel.py` with `research/tests/test_batch_panel.py` (25 tests), L3 entry in
-  `verification/mutation_risk_policy.json`. Focused mutation (case-sensitive volume, narrowed
-  mutmut, `OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES` for that process only): 420 of 420 mutants
-  killed, no equivalent approved (a first run scored 80.4 percent and led to simplifying the module
-  and strengthening the tests, not to approvals).
-- Full `research/tests` run in `etl-benchmark`: exit status 0 (the per-test count was not printed).
-  `ruff check` and `ruff format --check` pass on `research` and `verification`; the mutation
-  governance tests in `tests/` pass.
-- Not checked: manuscript and slide builds, the type gate, the Linux deep campaign, any detector
-  behaviour, the ten unbuilt views.
+- Views: every file listed in `experimental_views.json` hashed against its digest (234 views; 0
+  missing, 0 mismatched after the restoration of Update 33). Reports of the acquisition counts were
+  regenerated earlier in this phase and matched byte for byte.
+- New code with tests (`etl-benchmark`, synthetic fixtures only): `registry_units.py` (22 tests),
+  `relational_faults.py` (17), `batch_statistics.py` (36), `batch_panel.py` (26, time detection by
+  content). Risk entries in `verification/mutation_risk_policy.json` (L3, L4, L3) and weights in
+  `mutation_shard_weights.json`.
+- Focused mutation on the final sources (case-sensitive volume, narrowed mutmut,
+  `OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES` for that process only; no equivalent approved):
+  `relational_faults` (L4, threshold 98) 183 of 183 killed; `registry_units` (L3, 95) 397 of 401
+  killed, 4 survived; `batch_panel` (L3, 95) 418 of 418 killed; `batch_statistics` (L3, 95) 564 of
+  570 killed, 5 survived and 1 timed out. Survivors are disclosed: argument-default and `dtype=None`
+  mutants that pandas and numpy treat identically, flush flags on `print`, a default-argument value
+  that the mutation trampoline hides from a signature test, and a loop mutant that does not
+  terminate. Earlier scores of 93.8 percent (`relational_faults`), 87.7 and 88.8 percent
+  (`registry_units`, `batch_statistics`) led to restructuring and stronger tests, not to approvals.
+- `research/tests`: 2,197 passed, exit status 0 (no failure, no skip). Ruff check and format pass on
+  `research` and `verification`.
+- Governance tests of `tests/` selected by name (mutation, risk, policy, shard): 1,046 passed, 1 failed.
+  The failure predates this work: `tests/test_mutation_shards.py::test_the_committed_weights_cover_exactly_the_mutating_modules`
+  fails because 21 older research modules (for example `pipeline_batch.py`, `readiness.py`,
+  `experimental_views.py`) have a risk entry but no weight in `mutation_shard_weights.json`. The
+  four modules of this phase were added; the 21 were not, because their mutant counts are not
+  measured here and weights are estimates for shard balancing only.
+- Not checked: the type gate (`mypy` is not installed in any local environment), manuscript and
+  slide builds, the Linux deep campaign, any detector behaviour, runtime on any registry group.
 
-## 9. Decisions that need the owner
+## 9. Decisions that need the owner (in order)
 
-1. Authorize the variance pilot (and its date), after approving the batch-level design addendum
-   (size, estimand, population option from section 4).
+1. Approve or amend the batch-level pilot design addendum (`batch_pilot_addendum_proposal.md`
+   section 9: contrasts, pilot size, per-category minimum, seed, exposed groups in the pilot, the
+   population option, whether other units and the referential operator enter by amendment,
+   mixed-model dependency, the Cincinnati link). Then authorize the variance pilot, naming step and
+   groups.
 2. Approve the sample size and the panel (C1 treatment, linked sets, exclusion of exposed pilot
    sources) only after the pilot result exists.
 3. Lift the experiment freeze, scoped to named steps.

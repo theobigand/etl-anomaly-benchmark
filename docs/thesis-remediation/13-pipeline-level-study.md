@@ -27,14 +27,14 @@ are tracked here as mandatory instead of in the optional list of `12-extensions-
 - [x] T420 Run learned detectors on batch profiles; record not-applicable cases (too few reference batches) as such.
 - [x] T421 Use a label-free alert-budget operating point; report false alerts per clean batch; no oracle thresholds.
 - [x] T422 Add the contaminated-reference sensitivity arm.
-- [ ] T423 Run the plumbing pilot on the eight real series (descriptive, no ranking claim).
-- [ ] T424 Run a variance pilot of 24 to 48 sources at batch level; estimate the between-source SD, the source-by-detector variance and the within-source ICC; then fix the sample size in a dated addendum before the confirmatory run.
-- [ ] T425 Add relational sources (two or more tables with keys) and the referential-integrity operator.
+- [ ] T423 Run the plumbing pilot on the eight real series (descriptive, no ranking claim). Status 2026-11-25: six series have results; UCI 247 is excluded (536 rows, recorded); UCI 799 is eligible and not run (the experiment freeze).
+- [ ] T424 Run a variance pilot of 24 to 48 sources at batch level; estimate the between-source SD, the source-by-detector variance and the within-source ICC; then fix the sample size in a dated addendum before the confirmatory run. Status 2026-11-25: design addendum proposed in `verification/batch_pilot_addendum_proposal.md` (not approved); estimators implemented and tested on synthetic data; pilot not run.
+- [ ] T425 Add relational sources (two or more tables with keys) and the referential-integrity operator. Status 2026-11-25: the operator is implemented and tested (`research/relational_faults.py`); relational sources do not yet declare their keys and the batch harness has no relational unit (owner decision).
 - [ ] T426 Search for real ETL incident data or a partner; check the licence before any download; record the outcome even if none exists.
 - [ ] T427 Tie the title, abstract and conclusion to the evidence tier: "ETL pipelines" without qualification only with real incident evidence; otherwise "controlled batch-level data-quality faults in ETL-style loads".
 - [ ] T428 Check realism where natural labels exist: natural chronological series aggregated to batches against injected faults of the same mechanism; report agreement and the families it cannot cover.
 - [ ] T429 Update the manuscript, slides, coverage generator and evidence index together once results exist.
-- [ ] T430 Account for source families (lineage) in the coverage matrix for the batch study; never count batches, seeds or injected variants as sources.
+- [ ] T430 Account for source families (lineage) in the coverage matrix for the batch study; never count batches, seeds or injected variants as sources. Status 2026-11-25: eligible groups, linked clusters and exposure are generated (`batch_eligibility.json`, `linked_sets.json`, `batch_structure.json`); the coverage matrix itself is not yet linked.
 
 ## Acceptance criteria
 

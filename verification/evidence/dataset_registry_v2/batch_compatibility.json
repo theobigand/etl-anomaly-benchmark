@@ -1,0 +1,5191 @@
+{
+ "3pfl": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "a_day_in_daylight": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 1 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "ademe_dpe": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "airquality_italy": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "ait_clue": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 0 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "aoe_gameplay": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 2 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "apis_guru_openapi_directory": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "austin_police_dispatch": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 0 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "austin_surface_water_quality": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "backblaze": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 0 rows after cleaning",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "bloomington_locus_solar_monitoring": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "bloomington_utilities_water_plant": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "bts_umd_daily_mobility_statistics": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "candanedo_umons": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "ccin2p3_slurm": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "cdc_covid_vaccination_reporting": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 1107 rows after cleaning",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "cftc_cot_disaggregated": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "chembl_molecules": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "cincinnati_emergency_communications_calls": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 0 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "cincinnati_fire_dispatch": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 0 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "city_of_austin_campaign_finance": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 1 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "clinicaltrials_gov": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "cnc_five_axis_milling": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "coatings_multinational": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no CSV table: the batch unit is not defined for this layout; only 2 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "colorado_dam_safety_registry": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "colorado_regulated_storage_tanks": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "cordis_horizon_europe": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "cpsc_recall_notices": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "crossref": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "cubico_kelmarsh": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "danish_district_heating": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 2 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "datacite_dois": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "delaware_dnrec_well_permits": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "delaware_state_purchasing_cards": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 1 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "dft_stats19": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "dgal_alimconfiance": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 1 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "dgccrf_fuel_prices": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 2 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "dgfip_dvf": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "dmsp_ssj_auroral": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "doaj_directory_of_open_access_journals": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "dutch_municipalities": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 2 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "dwd_germany": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 3 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "ea_hydrology": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 1 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "ecb_euro_fx_reference_rates": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 0 rows after cleaning",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "edp_wind_farm_portugal": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "eia_petroleum_spot_prices": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "eicu_philips": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "elder_home": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "epa_aqs": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column; only 1 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "fda_maude": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "fdic_bank_financials": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "fec_federal_campaign_finance_filings": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "federal_register": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "fermi_blazar_flares": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "fin_institute_nl": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 2 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "florida_bridge_inspections": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "france_baac_road_accidents": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column; only 3 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "fraunhofer_iee_care_wind_b": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "fta_national_transit_database": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "fugaku_riken": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "gbif_occurrences": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "gene_ontology_consortium_annotations": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "georgia_procurement": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no CSV table: the batch unit is not defined for this layout; no parseable time column; only 0 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "german_paying_agency": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no CSV table: the batch unit is not defined for this layout; only 3 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "german_water_demand": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "gfz_potsdam_kp": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 2 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "github_actions_workflows": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "github_advisory_database": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "grouplens": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "gtfs_fr_alterneo": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "gtfs_fr_aravis": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "gtfs_fr_citea": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "gtfs_fr_diviamobilites": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "gtfs_fr_filibus": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "gtfs_fr_kiceo": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "gtfs_fr_optymo": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "gtfs_fr_palmbus": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "gtfs_fr_sankeo": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "gtfs_fr_sibra": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "gtfs_fr_tango": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "gtfs_fr_transvilles": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "hm_land_registry": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 1 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "hospital_sepsis_nl": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 1 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "ingv_seismic": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "inpi_bce_ratios": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "italian_road_fines": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no CSV table: the batch unit is not defined for this layout; only 0 rows after cleaning",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "japan_reconstructed_buildings": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column; only 2 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "jolpica_f1": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "kanto_landslides": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "loghub_collection": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column; only 0 continuous columns; only 1 continuous columns; only 2 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "lyft_bikeshare": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 1 continuous columns; only 3 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "melbourne_pedestrian": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 0 rows after cleaning",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "met_museum": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "metropt_porto": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "microsoft_azure_compute": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "mimic_iv_bidmc": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "mitre_attack_knowledge_base": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "montgomery_county_liquor_control_sales": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "montreal_contracts": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no CSV table: the batch unit is not defined for this layout; no parseable time column; only 1 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "moodle_lms_events": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 0 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "naoj_norp_solar_bursts": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "nasa_common_metadata_repository": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "nasa_omni_near_earth_solar_wind": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "ncbi_pubchem_compound_records": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "nces_ipeds_postsecondary_surveys": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "ndbc_moored_buoys": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "nhif_hospital_cases": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "nih_research_grants": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "nist_nvd": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "noaa_coops": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 2 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "noaa_cpc_arctic_oscillation_index": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 1 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "noaa_gml_co2": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 0 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "noaa_ncei_storm_events": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "noaa_nhc_hurdat2_best_track": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "nsidc_sea_ice_index": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 2 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "ntnu_ev_charging": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 2 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "nws_alerts": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "nyc_tlc": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "openalex": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "openfda_faers": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "openfoodfacts": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "openlibrary": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "osv_go": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "ourairports_db": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "paleobiology_database": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "paris_urban_trees": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "pnnl_epri_bess": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "port_noumea_stopovers": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "queensland_petroleum_production": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 717 rows after cleaning",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "rabobank_ict": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 1 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "rcsb_pdb": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "reactome_curated_pathway_database": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "rki_surveillance": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "ror": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "rte_france_grid": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "seattle_fire_911_dispatch": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 0 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "seattle_fremont_bridge_counter": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 3 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "seattle_sdci_building_permits": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "seoul_bike": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "sffd_fire_incidents": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "sfo_passenger_statistics": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 1 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "sncf_tgv_regularite": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "stackexchange": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no CSV table: the batch unit is not defined for this layout",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "steel_korea": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "surf_lisa_slurm": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "telecom_operator_kpis": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "terralore_chronicle_db": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column; only 2 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "tetouan_power": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "tue_travel_claims": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 1 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "tx_hhsc_child_care_operations": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "tx_hotel_occupancy_tax_revenue": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:101": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:110": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:143": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:146": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:148": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:149": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:15": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:159": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:162": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:165": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:189": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:19": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:193": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:198": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:212": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:22": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:247": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 536 rows after cleaning",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:257": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:26": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:264": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:267": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:27": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:270": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:291": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:292": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:294": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:296": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:31": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:312": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 720 rows after cleaning",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:32": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:327": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:329": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:352": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 3 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:365": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:368": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:372": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:379": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:381": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:396": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:464": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:52": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:536": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:545": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:551": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:555": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:572": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:59": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:597": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 690 rows after cleaning",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:601": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:602": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:69": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:73": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:75": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:755": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:76": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:760": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:78": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:80": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:848": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:850": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:864": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:911": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:94": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:942": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uci:967": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uk_charity_commission": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "uk_ledger_mhra": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 1 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uk_ledger_nhsbsa": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 2 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "uniprot_kb": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "unisg_smart_factory": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no CSV table: the batch unit is not defined for this layout; only 0 rows after cleaning; only 1 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "us_treasury_dts": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "",
+   "runnable": true,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "usda_fdc": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "usgs_water": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 1 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "vif_aegis": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "volvo_it": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 1 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "wa_ecology_ghg_reports": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "wa_ev_population": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "wals_cldf": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "wikimedia_simplewiki": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 3 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "event_window"
+  }
+ ],
+ "wikimedia_wikidata": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ],
+ "wind_fragility_power_db": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  },
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "referential_integrity"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "relational_load"
+  }
+ ],
+ "world_bank_projects": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "only 718 rows after cleaning",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "wri_global_power_plants": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no parseable time column",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "zambia_procurement": [
+  {
+   "detectors": true,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop",
+    "unit_change",
+    "distribution_shift",
+    "silent_corruption"
+   ],
+   "reason": "no CSV table: the batch unit is not defined for this layout; only 1 continuous columns",
+   "runnable": false,
+   "status": "registered",
+   "unit": "temporal_batch"
+  }
+ ],
+ "zenodo_repository_records": [
+  {
+   "detectors": false,
+   "mechanisms": [
+    "partial_load",
+    "duplicate_load",
+    "stale_batch",
+    "null_spike",
+    "schema_drop"
+   ],
+   "reason": "unsupported: the unit has no approved definition",
+   "runnable": false,
+   "status": "proposed",
+   "unit": "document_batch"
+  }
+ ]
+}

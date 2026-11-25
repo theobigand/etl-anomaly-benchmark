@@ -21,7 +21,7 @@
   "a_day_in_daylight": {
    "eligible": false,
    "reasons": [
-    "no parseable time column"
+    "only 1 continuous columns"
    ],
    "table": null,
    "view": null,
@@ -110,12 +110,19 @@
    ]
   },
   "austin_surface_water_quality": {
-   "eligible": false,
-   "reasons": [
-    "view austin_water_quality is not built locally"
-   ],
-   "table": null,
-   "view": null,
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 51,
+    "batches": 101,
+    "columns": 6,
+    "eligible": true,
+    "file": "results.csv",
+    "reasons": [],
+    "rows": 5157,
+    "time_column": "sample_date"
+   },
+   "view": "austin_water_quality",
    "views": [
     "austin_water_quality"
    ]
@@ -331,7 +338,7 @@
   "colorado_dam_safety_registry": {
    "eligible": false,
    "reasons": [
-    "view colorado_dam_safety is not built locally"
+    "no parseable time column"
    ],
    "table": null,
    "view": null,
@@ -342,7 +349,7 @@
   "colorado_regulated_storage_tanks": {
    "eligible": false,
    "reasons": [
-    "view colorado_storage_tanks is not built locally"
+    "no parseable time column"
    ],
    "table": null,
    "view": null,
@@ -451,7 +458,7 @@
   "delaware_state_purchasing_cards": {
    "eligible": false,
    "reasons": [
-    "no parseable time column"
+    "only 1 continuous columns"
    ],
    "table": null,
    "view": null,
@@ -747,7 +754,8 @@
   "france_baac_road_accidents": {
    "eligible": false,
    "reasons": [
-    "no parseable time column"
+    "no parseable time column",
+    "only 3 continuous columns"
    ],
    "table": null,
    "view": null,
@@ -792,12 +800,19 @@
    ]
   },
   "fugaku_riken": {
-   "eligible": false,
-   "reasons": [
-    "no parseable time column"
-   ],
-   "table": null,
-   "view": null,
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 1169,
+    "batches": 100,
+    "columns": 12,
+    "eligible": true,
+    "file": "jobs.csv",
+    "reasons": [],
+    "rows": 116977,
+    "time_column": "submit_ts"
+   },
+   "view": "zen_fdata_fugaku",
    "views": [
     "zen_fdata_fugaku"
    ]
@@ -1116,7 +1131,8 @@
   "japan_reconstructed_buildings": {
    "eligible": false,
    "reasons": [
-    "no parseable time column"
+    "no parseable time column",
+    "only 2 continuous columns"
    ],
    "table": null,
    "view": null,
@@ -1170,7 +1186,8 @@
   "lyft_bikeshare": {
    "eligible": false,
    "reasons": [
-    "no parseable time column"
+    "only 1 continuous columns",
+    "only 3 continuous columns"
    ],
    "table": null,
    "view": null,
@@ -1305,7 +1322,7 @@
     "file": "solar_bursts.csv",
     "reasons": [],
     "rows": 4239,
-    "time_column": "start_time"
+    "time_column": "year_month"
    },
    "view": "zen_norp_solar_bursts",
    "views": [
@@ -1324,12 +1341,19 @@
    ]
   },
   "nasa_omni_near_earth_solar_wind": {
-   "eligible": false,
-   "reasons": [
-    "view nasa_omni_solar_wind is not built locally"
-   ],
-   "table": null,
-   "view": null,
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 1229,
+    "batches": 100,
+    "columns": 24,
+    "eligible": true,
+    "file": "solar_wind.csv",
+    "reasons": [],
+    "rows": 122961,
+    "time_column": "timestamp"
+   },
+   "view": "nasa_omni_solar_wind",
    "views": [
     "nasa_omni_solar_wind"
    ]
@@ -1375,12 +1399,19 @@
    ]
   },
   "nhif_hospital_cases": {
-   "eligible": false,
-   "reasons": [
-    "no parseable time column"
-   ],
-   "table": null,
-   "view": null,
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 52,
+    "batches": 101,
+    "columns": 4,
+    "eligible": true,
+    "file": "hospital_cases.csv",
+    "reasons": [],
+    "rows": 5298,
+    "time_column": "period"
+   },
+   "view": "zen_nhif_hospital_cases",
    "views": [
     "zen_nhif_hospital_cases"
    ]
@@ -1441,12 +1472,19 @@
    ]
   },
   "noaa_ncei_storm_events": {
-   "eligible": false,
-   "reasons": [
-    "no parseable time column"
-   ],
-   "table": null,
-   "view": null,
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 311,
+    "batches": 100,
+    "columns": 17,
+    "eligible": true,
+    "file": "details.csv",
+    "reasons": [],
+    "rows": 31162,
+    "time_column": "MONTH_NAME"
+   },
+   "view": "ncei_storm_events_2024",
    "views": [
     "ncei_storm_events_2024"
    ]
@@ -1634,7 +1672,7 @@
   "queensland_petroleum_production": {
    "eligible": false,
    "reasons": [
-    "no parseable time column"
+    "only 717 rows after cleaning"
    ],
    "table": null,
    "view": null,
@@ -1781,12 +1819,19 @@
    ]
   },
   "sffd_fire_incidents": {
-   "eligible": false,
-   "reasons": [
-    "view sffd_fire_incidents is not built locally"
-   ],
-   "table": null,
-   "view": null,
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 34,
+    "batches": 101,
+    "columns": 7,
+    "eligible": true,
+    "file": "incidents.csv",
+    "reasons": [],
+    "rows": 3467,
+    "time_column": "incident_date"
+   },
+   "view": "sffd_fire_incidents",
    "views": [
     "sffd_fire_incidents"
    ]
@@ -1794,7 +1839,7 @@
   "sfo_passenger_statistics": {
    "eligible": false,
    "reasons": [
-    "view sfo_air_traffic is not built locally"
+    "only 1 continuous columns"
    ],
    "table": null,
    "view": null,
@@ -1850,12 +1895,19 @@
    ]
   },
   "surf_lisa_slurm": {
-   "eligible": false,
-   "reasons": [
-    "no parseable time column"
-   ],
-   "table": null,
-   "view": null,
+   "eligible": true,
+   "reasons": [],
+   "table": {
+    "batch_rows": 1344,
+    "batches": 100,
+    "columns": 4,
+    "eligible": true,
+    "file": "jobs.csv",
+    "reasons": [],
+    "rows": 134460,
+    "time_column": "submit_ts"
+   },
+   "view": "zen_surf_lisa_slurm",
    "views": [
     "zen_surf_lisa_slurm"
    ]
@@ -1916,7 +1968,7 @@
   "tx_hhsc_child_care_operations": {
    "eligible": false,
    "reasons": [
-    "view tx_hhsc_child_care is not built locally"
+    "no parseable time column"
    ],
    "table": null,
    "view": null,
@@ -1927,7 +1979,7 @@
   "tx_hotel_occupancy_tax_revenue": {
    "eligible": false,
    "reasons": [
-    "view tx_hotel_occupancy_tax is not built locally"
+    "no parseable time column"
    ],
    "table": null,
    "view": null,
@@ -2786,7 +2838,7 @@
   "wa_ecology_ghg_reports": {
    "eligible": false,
    "reasons": [
-    "view wa_ghg_reporting is not built locally"
+    "no parseable time column"
    ],
    "table": null,
    "view": null,
@@ -2797,7 +2849,7 @@
   "wa_ev_population": {
    "eligible": false,
    "reasons": [
-    "view wa_ev_population is not built locally"
+    "no parseable time column"
    ],
    "table": null,
    "view": null,
@@ -2900,16 +2952,12 @@
   "min_continuous_columns": 4,
   "min_parsed_share": 0.99,
   "min_rows": 1500,
-  "time_hints": [
-   "time",
-   "date",
-   "stamp"
-  ]
+  "probe_rows": 200
  },
  "summary": {
   "groups": {
    "audited": 235,
-   "eligible": 40
+   "eligible": 47
   },
   "per_category": {
    "C1": {
@@ -2917,23 +2965,23 @@
     "ready": 52
    },
    "C2a": {
-    "eligible": 4,
+    "eligible": 6,
     "ready": 30
    },
    "C2b": {
-    "eligible": 7,
+    "eligible": 8,
     "ready": 30
    },
    "C3": {
-    "eligible": 20,
+    "eligible": 21,
     "ready": 40
    },
    "C4": {
-    "eligible": 3,
+    "eligible": 5,
     "ready": 28
    },
    "C5": {
-    "eligible": 5,
+    "eligible": 6,
     "ready": 36
    },
    "C6": {
