@@ -20,13 +20,13 @@ are tracked here as mandatory instead of in the optional list of `12-extensions-
 
 ## New tasks
 
-- [ ] T416 Preregister the batch-level protocol before any result (`verification/pipeline_batch_faults.md`).
-- [ ] T417 Define the batch as the unit of detection and its profile features; keep row-level and batch-level estimands separate.
-- [ ] T418 Implement the eight batch fault operators with per-batch ground truth and three severities.
-- [ ] T419 Provide a competent constraint-based batch rule baseline (schema, volume, freshness, null, duplicate) built without labels.
-- [ ] T420 Run learned detectors on batch profiles; record not-applicable cases (too few reference batches) as such.
-- [ ] T421 Use a label-free alert-budget operating point; report false alerts per clean batch; no oracle thresholds.
-- [ ] T422 Add the contaminated-reference sensitivity arm.
+- [x] T416 Preregister the batch-level protocol before any result (`verification/pipeline_batch_faults.md`).
+- [x] T417 Define the batch as the unit of detection and its profile features; keep row-level and batch-level estimands separate.
+- [x] T418 Implement the eight batch fault operators with per-batch ground truth and three severities.
+- [x] T419 Provide a competent constraint-based batch rule baseline (schema, volume, freshness, null, duplicate) built without labels.
+- [x] T420 Run learned detectors on batch profiles; record not-applicable cases (too few reference batches) as such.
+- [x] T421 Use a label-free alert-budget operating point; report false alerts per clean batch; no oracle thresholds.
+- [x] T422 Add the contaminated-reference sensitivity arm.
 - [ ] T423 Run the plumbing pilot on the eight real series (descriptive, no ranking claim).
 - [ ] T424 Run a variance pilot of 24 to 48 sources at batch level; estimate the between-source SD, the source-by-detector variance and the within-source ICC; then fix the sample size in a dated addendum before the confirmatory run.
 - [ ] T425 Add relational sources (two or more tables with keys) and the referential-integrity operator.
