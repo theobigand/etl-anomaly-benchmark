@@ -9300,7 +9300,7 @@ HURDAT_COLUMNS = (
 
 def _hurdat_coordinate(text: str) -> float:
     value = float(text[:-1])
-    return -value if text[-1] in "SW" else value
+    return -value if text[-1] in ("S", "W") else value
 
 
 def hurdat2_view(text: str) -> pd.DataFrame:
@@ -9594,7 +9594,7 @@ def lifecycle_events_view(
     case identifier is hashed. Ties in time keep the order of the activities in the spec.
     """
     times = {
-        activity: pd.to_datetime(raw[column].mask(raw[column] == ""), errors="coerce")
+        activity: pd.to_datetime(raw[column], errors="coerce")
         for column, activity in spec["activities"].items()
     }
     events = pd.concat(
@@ -9609,12 +9609,9 @@ def lifecycle_events_view(
                 }
             )
             for order, (activity, stamp) in enumerate(times.items())
-        ],
-        ignore_index=True,
+        ]
     )
-    events = events.dropna(subset=["timestamp"]).sort_values(
-        ["source_case", "timestamp", "order"], kind="stable"
-    )
+    events = events.dropna(subset=["timestamp"]).sort_values(["source_case", "timestamp", "order"])
     view = pd.DataFrame(
         {
             "case": events["source_case"].map(pseudonym),
@@ -10006,9 +10003,9 @@ def _obo_terms(text: str) -> tuple[list[list[str]], list[list[str]]]:
             key, _, value = line.partition(": ")
             fields.setdefault(key, value)
             if key == "is_a":
-                edges.append([fields["id"], value.split(" ")[0], "is_a"])
+                edges.append([fields["id"], value.split()[0], "is_a"])
             elif key == "relationship":
-                relation, parent = value.split(" ")[:2]
+                relation, parent = value.split()[:2]
                 edges.append([fields["id"], parent, relation])
         terms.append(
             [fields["id"], fields.get("name", ""), fields.get("namespace", ""),
@@ -10039,7 +10036,7 @@ def go_view(
     }
     views, relations = tables_view(tables, GO_SPEC)
     versions = [
-        line.split(": ", 1)[1] for line in gaf_text.splitlines() if line.startswith("!go-version")
+        line.partition(": ")[2] for line in gaf_text.splitlines() if line.startswith("!go-version")
     ]
     release = re.search(r"^data-version: (.*)$", obo_text, re.MULTILINE)
     facts = {

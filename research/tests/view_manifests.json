@@ -1513,7 +1513,7 @@
      "rows": 3
     },
     "terms.csv": {
-     "rows": 3
+     "rows": 4
     }
    },
    "heads": {
@@ -2167,16 +2167,16 @@
     }
    },
    "heads": {
-    "records.jsonl": "{\"id\": 1}"
+    "records.jsonl": "{\"alpha\": [{\"a\": 2, \"b\": 1}], \"id\": 1, \"zeta\": 1}"
    },
    "pseudonymised": [],
    "sampling": {
     "method": "journal records in creation order, the first 20 pages of 50",
     "pages": [
-     "journals_0.json",
-     "journals_1.json"
+     "journals_2.json",
+     "journals_10.json"
     ],
-    "repeated_ids": 1
+    "repeated_ids": 2
    },
    "source_snapshot": "doaj_journals/2026-11-23"
   }
@@ -2192,16 +2192,16 @@
     }
    },
    "heads": {
-    "records.jsonl": "{\"ghsa_id\": 1}"
+    "records.jsonl": "{\"alpha\": [{\"a\": 2, \"b\": 1}], \"ghsa_id\": 1, \"zeta\": 1}"
    },
    "pseudonymised": [],
    "sampling": {
     "method": "reviewed advisories of 2017 to 2026, the first 100 of each year",
     "pages": [
-     "advisories_0.json",
-     "advisories_1.json"
+     "advisories_2.json",
+     "advisories_10.json"
     ],
-    "repeated_ids": 1
+    "repeated_ids": 2
    },
    "source_snapshot": "github_reviewed_advisories/2026-11-23"
   }
@@ -2218,16 +2218,16 @@
     }
    },
    "heads": {
-    "records.jsonl": "{\"meta\": {\"concept-id\": 1}}"
+    "records.jsonl": "{\"alpha\": [{\"a\": 2, \"b\": 1}], \"meta\": {\"concept-id\": 1}, \"zeta\": 1}"
    },
    "pseudonymised": [],
    "sampling": {
     "method": "collection records of nine providers, the first 100 of each",
     "pages": [
-     "collections_0.json",
-     "collections_1.json"
+     "collections_2.json",
+     "collections_10.json"
     ],
-    "repeated_ids": 1
+    "repeated_ids": 2
    },
    "source_snapshot": "nasa_cmr_collections/2026-11-23"
   }
@@ -2241,16 +2241,16 @@
     }
    },
    "heads": {
-    "records.jsonl": "{\"id\": {\"id\": {\"cid\": 1}}}"
+    "records.jsonl": "{\"alpha\": [{\"a\": 2, \"b\": 1}], \"id\": {\"id\": {\"cid\": 1}}, \"zeta\": 1}"
    },
    "pseudonymised": [],
    "sampling": {
     "method": "compound records of CID 1 to 1000, ten requests of 100 identifiers",
     "pages": [
-     "compounds_0.json",
-     "compounds_1.json"
+     "compounds_2.json",
+     "compounds_10.json"
     ],
-    "repeated_ids": 1
+    "repeated_ids": 2
    },
    "source_snapshot": "pubchem_compounds/2026-11-23"
   }
@@ -2793,7 +2793,7 @@
      "rows": 3
     },
     "uniprot.csv": {
-     "rows": 2
+     "rows": 4
     }
    },
    "heads": {
@@ -2819,11 +2819,11 @@
      "share": 0.3333333333333333
     },
     {
-     "checked": 2,
+     "checked": 4,
      "child": "uniprot.pathway_id",
      "orphans": 1,
      "parent": "pathways.pathway_id",
-     "share": 0.5
+     "share": 0.25
     },
     {
      "checked": 1,
@@ -2838,7 +2838,7 @@
      "chebi": 0,
      "pathways": 0,
      "relations": 1,
-     "uniprot": 0
+     "uniprot": 1
     },
     "method": "complete Reactome current release files: pathways, pathway hierarchy, UniProt and ChEBI mappings",
     "pathways_without_relation": 0,
@@ -4274,10 +4274,10 @@
    "sampling": {
     "method": "dataset records published in March 2023, sorted by recency, paged by 25",
     "pages": [
-     "records_0.json",
-     "records_1.json"
+     "records_2.json",
+     "records_10.json"
     ],
-    "repeated_ids": 1,
+    "repeated_ids": 2,
     "total_results": [
      3,
      3

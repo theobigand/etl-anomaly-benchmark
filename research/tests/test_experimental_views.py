@@ -1,3 +1,4 @@
+import csv
 import io
 import json
 import sys
@@ -10670,8 +10671,10 @@ def _ipeds_snapshot(root):
     }
     for name, frame in _ipeds_tables().items():
         archive, member = members[name]
+        body = ("\ufeff" + frame.to_csv(index=False)).encode("utf-8")
+        body = body.replace(b"Name A", b"Name \xe9")  # a latin-1 byte in a dropped name column
         with zipfile.ZipFile(raw / archive, "w") as z:
-            z.writestr(member, "\ufeff" + frame.to_csv(index=False))
+            z.writestr(member, body)
             z.writestr(member.replace(".csv", "_other.csv"), "UNITID\nignored\n")
 
 
@@ -10688,8 +10691,14 @@ def test_ipeds_builder_reads_the_revised_member_of_each_zip(tmp_path):
     assert {n: f["rows"] for n, f in entry["files"].items()} == {
         "hd.csv": 2, "ic.csv": 3, "adm.csv": 1, "effy.csv": 5, "c.csv": 3,
     }  # fmt: skip
-    written = pd.read_csv(out / "nces_ipeds_2023" / "hd.csv", dtype=str, keep_default_na=False)
-    assert written["STABBR"].tolist() == ["NA", "CA"]
+    for name, frame in _ipeds_tables().items():
+        kept = [c for c in frame.columns if c not in ev.IPEDS_DROP.get(name, [])]
+        written = pd.read_csv(
+            out / "nces_ipeds_2023" / f"{name}.csv", dtype=str, keep_default_na=False
+        )
+        pd.testing.assert_frame_equal(written, frame[kept])  # text, blanks and NA stay as they were
+    header = (out / "nces_ipeds_2023" / "hd.csv").read_bytes()
+    assert header.startswith(b"UNITID,")  # the byte order mark of the source is not a column name
     assert entry["dropped"] == ev.IPEDS_DROPPED and entry["pseudonymised"] == []
     assert len(entry["relations"]) == 4
     assert entry["sampling"]["method"] == (
@@ -10788,14 +10797,14 @@ def _zenodo_hit(record_id, **extra):
 def _zenodo_pages():
     return [
         {"hits": {"total": 3, "hits": [_zenodo_hit(5), _zenodo_hit(2, swh={"x": 1})]}},
-        {"hits": {"total": 3, "hits": [_zenodo_hit(5), _zenodo_hit(9)]}},
+        {"hits": {"total": 3, "hits": [_zenodo_hit(5), _zenodo_hit(9), _zenodo_hit(9)]}},
     ]
 
 
 def test_zenodo_records_view_dedupes_orders_and_drops_people_text_and_links():
     view, repeated = ev.zenodo_records_view(_zenodo_pages())
     assert [r["id"] for r in view] == [2, 5, 9]
-    assert repeated == 1
+    assert repeated == 2
     assert view[0] == {
         "id": 2,
         "created": "2023-03-01",
@@ -10813,7 +10822,7 @@ def test_zenodo_records_view_dedupes_orders_and_drops_people_text_and_links():
 def _zenodo_snapshot(root):
     raw = root / "zenodo_dataset_records_2023_03" / ev.WAVE28_SNAPSHOT / "raw"
     raw.mkdir(parents=True)
-    for n, page in enumerate(_zenodo_pages()):
+    for n, page in zip((2, 10), _zenodo_pages(), strict=True):  # 10 sorts after 2 only numerically
         (raw / f"records_{n}.json").write_text(json.dumps(page))
 
 
@@ -10833,9 +10842,9 @@ def test_zenodo_builder_writes_jsonl_and_manifest(tmp_path):
     assert entry["dropped"] == sorted(ev.ZENODO_DROP) and entry["pseudonymised"] == []
     assert entry["sampling"] == {
         "method": "dataset records published in March 2023, sorted by recency, paged by 25",
-        "pages": ["records_0.json", "records_1.json"],
+        "pages": ["records_2.json", "records_10.json"],
         "total_results": [3, 3],
-        "repeated_ids": 1,
+        "repeated_ids": 2,
     }
     assert entry["source_snapshot"] == f"zenodo_dataset_records_2023_03/{ev.WAVE28_SNAPSHOT}"
 
@@ -10887,8 +10896,8 @@ def _lifecycle_snapshot_one(root, view):
     raw.mkdir(parents=True)
     columns = [spec["case"], spec["type"], *spec["activities"]]
     rows = [
-        ["K1", "kind", *["2023-01-01T00:00:00.000"] * len(spec["activities"])],
-        ["K2", "", *["2023-01-02T00:00:00.000"] * len(spec["activities"])],
+        ["007", "NA", *["2023-01-01T00:00:00.000"] * len(spec["activities"])],
+        ["008", "", *["2023-01-02T00:00:00.000"] * len(spec["activities"])],
     ]
     (raw / spec["file"]).write_text(pd.DataFrame(rows, columns=columns).to_csv(index=False))
 
@@ -10915,6 +10924,8 @@ def test_lifecycle_builder_writes_the_event_view_and_manifest(view, tmp_path):
     assert len(df) == 2 * n and df["activity"].iloc[:n].tolist() == list(
         spec["activities"].values()
     )
+    assert df["case"].iloc[0] == ev.pseudonym("007")  # the identifier keeps its leading zeros
+    assert df["type"].iloc[0] == "NA" and df["type"].iloc[n] == ""  # NA is a value
     entry = manifest[view]
     assert entry["files"]["events.csv"]["rows"] == 2 * n
     assert entry["dropped"] == spec["dropped"] and entry["pseudonymised"] == [spec["case"]]
@@ -10928,7 +10939,9 @@ def test_lifecycle_builder_writes_the_event_view_and_manifest(view, tmp_path):
 
 def _fec_tables():
     def table(text):
-        return pd.read_csv(io.StringIO(text), sep="|", dtype=str, keep_default_na=False)
+        return pd.read_csv(
+            io.StringIO(text), sep="|", dtype=str, keep_default_na=False, quoting=csv.QUOTE_NONE
+        )
 
     return {
         "cn": table(
@@ -10937,7 +10950,7 @@ def _fec_tables():
         ),
         "cm": table(
             "CMTE_ID|CMTE_NM|TRES_NM|CMTE_ST1|CMTE_CITY|CMTE_ZIP|CMTE_TP|CAND_ID\n"
-            "C1|PAC ONE|TREAS, A|3 Rd|Town|1|Q|\nC2|PAC TWO|TREAS, B|4 Rd|Town|2|H|H1\n"
+            'C1|"PAC ONE|TREAS, A|3 Rd|Town|1|Q|\nC2|PAC TWO|TREAS, B|4 Rd|Town|2|H|H1\n'
             "C3|PAC THREE|TREAS, C|5 Rd|Town|3|H|X9\n"
         ),
         "ccl": table(
@@ -10948,7 +10961,7 @@ def _fec_tables():
             "CMTE_ID|TRANSACTION_TP|NAME|CITY|STATE|ZIP_CODE|EMPLOYER|OCCUPATION|MEMO_TEXT|"
             "TRANSACTION_DT|TRANSACTION_AMT|OTHER_ID|CAND_ID|SUB_ID\n"
             "C1|24K|X PAC|Town|TX|1|||note|01012024|500|C2|H1|7\n"
-            "C1|24K|Y|Town|TX|1|||note|01022024|250||S2|8\n"
+            "C1|24K|Y|Town|TX|1|||note|01022024|||S2|8\n"
             "C7|24K|Z|Town|TX|1|||note|01032024|100|C8|H5|8\n"
         ),
     }
@@ -10985,7 +10998,8 @@ def _fec_snapshot(root):
     members = {"cn": "cn.txt", "cm": "cm.txt", "ccl": "ccl.txt", "pas2": "itpas2.txt"}
     for name, frame in _fec_tables().items():
         with zipfile.ZipFile(raw / ev.FEC_ARCHIVES[name], "w") as z:
-            z.writestr(members[name], frame.to_csv(sep="|", index=False, header=False))
+            body = frame.to_csv(sep="|", index=False, header=False, quoting=csv.QUOTE_NONE)
+            z.writestr(members[name], body)
         (raw / f"{name}_header_file.csv").write_text(",".join(frame.columns) + "\n")
 
 
@@ -11002,10 +11016,14 @@ def test_fec_builder_applies_the_published_headers_to_the_headerless_files(tmp_p
     assert {n: f["rows"] for n, f in entry["files"].items()} == {
         "cn.csv": 2, "cm.csv": 3, "ccl.csv": 3, "pas2.csv": 3,
     }  # fmt: skip
-    written = pd.read_csv(
-        out / "fec_federal_campaign_finance_2024" / "cn.csv", dtype=str, keep_default_na=False
-    )
-    assert written["CAND_PTY_AFFILIATION"].tolist() == ["NA", "REP"]
+    for name, frame in _fec_tables().items():
+        kept = [c for c in frame.columns if c not in ev.FEC_DROP.get(name, [])]
+        written = pd.read_csv(
+            out / "fec_federal_campaign_finance_2024" / f"{name}.csv",
+            dtype=str,
+            keep_default_na=False,
+        )
+        pd.testing.assert_frame_equal(written, frame[kept])  # text, blanks and NA stay as they were
     assert entry["dropped"] == ev.FEC_DROPPED and entry["pseudonymised"] == []
     assert len(entry["relations"]) == 6
     assert entry["sampling"]["method"] == (
@@ -11019,12 +11037,18 @@ def test_fec_builder_applies_the_published_headers_to_the_headerless_files(tmp_p
 def _reactome_tables():
     def table(text, names):
         return pd.read_csv(
-            io.StringIO(text), sep="\t", header=None, names=names, dtype=str, keep_default_na=False
+            io.StringIO(text),
+            sep="\t",
+            header=None,
+            names=names,
+            dtype=str,
+            keep_default_na=False,
+            quoting=csv.QUOTE_NONE,
         )
 
     return {
         "pathways": table(
-            "R-A-1\tPathway one\tHomo sapiens\nR-A-2\tPathway two\tHomo sapiens\n",
+            'R-A-1\tPathway "one", first; part\tHomo sapiens\nR-A-2\tPathway two\tNA\n',
             ["pathway_id", "pathway_name", "species"],
         ),
         "relations": table(
@@ -11033,11 +11057,13 @@ def _reactome_tables():
         ),
         "uniprot": table(
             "P1\tR-A-1\thttps://x/R-A-1\tPathway one\tIEA\tHomo sapiens\n"
-            "P1\tR-A-7\thttps://x/R-A-7\tGone\tTAS\tHomo sapiens\n",
+            "P1\tR-A-7\thttps://x/R-A-7\tGone\tTAS\tHomo sapiens\n"
+            "P1\tR-A-1\thttps://x/R-A-1\tPathway one\tTAS\tHomo sapiens\n"
+            "007\tR-A-2\thttps://x/R-A-2\tPathway two\tTAS\tNA\n",
             ["uniprot_id", "pathway_id", "url", "pathway_name", "evidence", "species"],
         ),
         "chebi": table(
-            "1\tR-A-2\thttps://x/R-A-2\tPathway two\tTAS\tHomo sapiens\n",
+            "01\tR-A-2\thttps://x/R-A-2\tPathway two\tTAS\tNA\n",
             ["chebi_id", "pathway_id", "url", "pathway_name", "evidence", "species"],
         ),
     }
@@ -11057,11 +11083,11 @@ def test_reactome_view_drops_links_and_reports_hierarchy_and_mapping_keys():
     assert got == {
         ("relations.parent_id", "pathways.pathway_id"): (3, 0),
         ("relations.child_id", "pathways.pathway_id"): (3, 1),
-        ("uniprot.pathway_id", "pathways.pathway_id"): (2, 1),
+        ("uniprot.pathway_id", "pathways.pathway_id"): (4, 1),
         ("chebi.pathway_id", "pathways.pathway_id"): (1, 0),
     }
     assert facts == {
-        "duplicate_keys": {"pathways": 0, "relations": 1, "uniprot": 0, "chebi": 0},
+        "duplicate_keys": {"pathways": 0, "relations": 1, "uniprot": 1, "chebi": 0},
         "pathways_without_relation": 0,
     }
 
@@ -11071,7 +11097,7 @@ def _reactome_snapshot(root):
     raw.mkdir(parents=True)
     for name, frame in _reactome_tables().items():
         (raw / ev.REACTOME_FILES[name]).write_text(
-            frame.to_csv(sep="\t", index=False, header=False)
+            frame.to_csv(sep="\t", index=False, header=False, quoting=csv.QUOTE_NONE)
         )
     (raw / "reactome_version.txt").write_text("98\n")
 
@@ -11087,8 +11113,16 @@ def test_reactome_builder_reads_headerless_files_and_records_the_release(tmp_pat
     ev._build_reactome(root, out, manifest)
     entry = manifest["reactome_pathway_knowledgebase"]
     assert {n: f["rows"] for n, f in entry["files"].items()} == {
-        "pathways.csv": 2, "relations.csv": 3, "uniprot.csv": 2, "chebi.csv": 1,
+        "pathways.csv": 2, "relations.csv": 3, "uniprot.csv": 4, "chebi.csv": 1,
     }  # fmt: skip
+    for name, frame in _reactome_tables().items():
+        kept = [c for c in frame.columns if c != "url"]
+        written = pd.read_csv(
+            out / "reactome_pathway_knowledgebase" / f"{name}.csv",
+            dtype=str,
+            keep_default_na=False,
+        )
+        pd.testing.assert_frame_equal(written, frame[kept])  # text, NA and quotes stay as they were
     assert entry["dropped"] == ["uniprot.url", "chebi.url"] and entry["pseudonymised"] == []
     assert len(entry["relations"]) == 4
     assert entry["sampling"]["method"] == (
@@ -11118,9 +11152,9 @@ def _nested_page(*uids, secret="s"):
 
 
 def test_nested_pages_view_follows_the_path_dedupes_orders_and_drops_keys_at_every_depth():
-    view, repeated = ev.nested_pages_view([_nested_page(5, 2), _nested_page(2, 9)], NESTED_SPEC)
+    view, repeated = ev.nested_pages_view([_nested_page(5, 2, 2), _nested_page(2, 9)], NESTED_SPEC)
     assert [r["meta"]["uid"] for r in view] == [2, 5, 9]
-    assert repeated == 1
+    assert repeated == 2
     assert view[0] == {"meta": {"uid": 2}, "tags": [{"k": 2}]}
     top = ev.nested_pages_view([[{"id": 1}, {"id": 0}]], {"path": [], "id": ["id"], "drop": []})
     assert top == ([{"id": 0}, {"id": 1}], 0)
@@ -11135,6 +11169,7 @@ def _nested_record(spec, uid):
         cursor[key] = {}
         cursor = cursor[key]
     cursor[spec["id"][-1]] = uid
+    record.update({"zeta": 1, "alpha": [{"b": 1, "a": 2}]})  # keys out of order on purpose
     record.update({key: "drop me" for key in spec["drop"]})
     return record
 
@@ -11150,7 +11185,7 @@ def _nested_snapshot_one(root, view):
     spec = ev.NESTED_SOURCES[view]
     raw = root / view / ev.WAVE28_SNAPSHOT / "raw"
     raw.mkdir(parents=True)
-    for n, uids in enumerate([(3, 1), (1, 2)]):
+    for n, uids in ((2, (3, 1, 1)), (10, (1, 2))):  # page 10 sorts after 2 only numerically
         name = spec["glob"].replace("*", str(n))
         (raw / name).write_text(json.dumps(_nested_page_for(spec, *uids)))
 
@@ -11175,13 +11210,24 @@ def test_nested_builder_writes_jsonl_and_manifest(view, tmp_path):
     lines = (out / view / "records.jsonl").read_text().splitlines()
     assert len(lines) == 3
     assert "drop me" not in "".join(lines)
+    parsed = [json.loads(line) for line in lines]
+    assert [ev._path_get(r, spec["id"]) for r in parsed] == [1, 2, 3]
+    for key in spec["drop"]:
+        assert all(key not in r for r in parsed)
+    assert lines[0].index('"alpha": [{"a": 2, "b": 1}]') < lines[0].index('"zeta"')  # sorted keys
+    expected = [ev._path_get(_nested_record(spec, uid), spec["id"]) for uid in (1, 2, 3)]
+    parsed = [json.loads(line) for line in lines]
+    assert [ev._path_get(r, spec["id"]) for r in parsed] == expected
+    for key in spec["drop"]:
+        assert all(key not in r for r in parsed)
+    assert lines[0].index('"alpha": [{"a": 2, "b": 1}]') < lines[0].index('"zeta"')  # sorted keys
     entry = manifest[view]
     assert entry["files"]["records.jsonl"]["rows"] == 3
     assert entry["dropped"] == sorted(spec["drop"]) and entry["pseudonymised"] == []
     assert entry["sampling"] == {
         "method": spec["method"],
-        "pages": [spec["glob"].replace("*", "0"), spec["glob"].replace("*", "1")],
-        "repeated_ids": 1,
+        "pages": [spec["glob"].replace("*", "2"), spec["glob"].replace("*", "10")],
+        "repeated_ids": 2,
     }
     assert entry["source_snapshot"] == f"{view}/{ev.WAVE28_SNAPSHOT}"
 
@@ -11192,7 +11238,7 @@ ontology: go
 
 [Term]
 id: GO:0000001
-name: root process
+name: root process: the first
 namespace: biological_process
 
 [Term]
@@ -11209,6 +11255,9 @@ id: GO:0000003
 name: old thing
 namespace: cellular_component
 is_obsolete: true
+
+[Term]
+id: GO:0000004
 
 [Typedef]
 id: part_of
@@ -11230,10 +11279,10 @@ def test_go_view_parses_terms_relations_and_annotations_and_reports_keys():
     views, relations, facts = ev.go_view(GO_OBO, GO_GAF)
     assert list(views) == ["terms", "relations", "annotations"]
     assert views["terms"].to_dict("list") == {
-        "id": ["GO:0000001", "GO:0000002", "GO:0000003"],
-        "name": ["root process", "child process", "old thing"],
-        "namespace": ["biological_process", "biological_process", "cellular_component"],
-        "is_obsolete": ["false", "false", "true"],
+        "id": ["GO:0000001", "GO:0000002", "GO:0000003", "GO:0000004"],
+        "name": ["root process: the first", "child process", "old thing", ""],
+        "namespace": ["biological_process", "biological_process", "cellular_component", ""],
+        "is_obsolete": ["false", "false", "true", "false"],
     }
     assert views["relations"].to_dict("list") == {
         "child_id": ["GO:0000002", "GO:0000002", "GO:0000002"],
@@ -11257,6 +11306,14 @@ def test_go_view_parses_terms_relations_and_annotations_and_reports_keys():
         "ontology_release": "releases/2026-07-26",
         "duplicate_annotation_rows": 1,
     }
+    bare_gaf = "\t".join(["x"] * 17) + "\n"
+    _, _, bare = ev.go_view("[Term]\nid: GO:1\n", bare_gaf)
+    assert bare == {"ontology_release": "", "gaf_go_version": "", "duplicate_annotation_rows": 0}
+    colon = GO_GAF.replace("go.owl", "go.owl: tail")
+    assert (
+        ev.go_view(GO_OBO, colon)[2]["gaf_go_version"]
+        == "http://x/releases/2026-07-26/go.owl: tail"
+    )
     with pytest.raises(ev.ViewError, match=r"^no GO term in the ontology file$"):
         ev.go_view("format-version: 1.2\n", GO_GAF)
     with pytest.raises(ev.ViewError, match=r"^no annotation in the GAF file$"):
@@ -11285,8 +11342,26 @@ def test_go_builder_writes_three_tables_and_records_both_releases(tmp_path):
     ev._build_go(root, out, manifest)
     entry = manifest["gene_ontology_annotations"]
     assert {n: f["rows"] for n, f in entry["files"].items()} == {
-        "terms.csv": 3, "relations.csv": 3, "annotations.csv": 3,
+        "terms.csv": 4, "relations.csv": 3, "annotations.csv": 3,
     }  # fmt: skip
+    folder = out / "gene_ontology_annotations"
+    for name, columns in {
+        "terms": ["id", "name", "namespace", "is_obsolete"],
+        "relations": ["child_id", "parent_id", "relation"],
+    }.items():
+        written = pd.read_csv(folder / f"{name}.csv", dtype=str, keep_default_na=False)
+        assert written.columns.tolist() == columns
+    annotations = pd.read_csv(folder / "annotations.csv", dtype=str, keep_default_na=False)
+    assert annotations.columns.tolist() == ev.GO_SPEC["tables"]["annotations"]["keep"]
+    assert annotations["with_from"].tolist() == ["", "X", ""]
+    for hidden in ("obo", "gaf"):  # one file alone is not enough
+        gone = root / "gene_ontology_annotations" / ev.WAVE28_SNAPSHOT / "raw"
+        gone = gone / ("go-basic.obo" if hidden == "obo" else "goa_human.gaf.gz")
+        keep = gone.read_bytes()
+        gone.unlink()
+        with pytest.raises(ev.ViewError, match=r"^missing Gene Ontology files in the snapshot$"):
+            ev._build_go(root, tmp_path / "err", {})
+        gone.write_bytes(keep)
     assert entry["dropped"] == ["annotations.object_name", "annotations.synonym"]
     assert entry["pseudonymised"] == [] and len(entry["relations"]) == 3
     assert entry["sampling"]["method"] == (
@@ -11350,3 +11425,43 @@ def test_cpc_ao_builder_writes_the_series_and_manifest(tmp_path):
         "missing_values": 1,
     }
     assert entry["source_snapshot"] == f"noaa_cpc_daily_ao_index/{ev.WAVE28_SNAPSHOT}"
+
+
+def _zip_with(names):
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w") as z:
+        for name in names:
+            z.writestr(name, "UNITID\n1\n")
+    return zipfile.ZipFile(buffer)
+
+
+def test_ipeds_member_prefers_the_first_revised_file_and_otherwise_the_shortest_csv():
+    assert ev._ipeds_member(_zip_with(["IC2023.csv", "IC2023_RV.csv"])) == "IC2023_RV.csv"
+    assert ev._ipeds_member(_zip_with(["a_rv.CSV", "b_rv.csv", "a.csv"])) == "a_rv.CSV"  # first
+    assert ev._ipeds_member(_zip_with(["README.txt", "Longer_name.csv", "A.CSV"])) == "A.CSV"
+    assert ev._ipeds_member(_zip_with(["notes_rv.txt", "x.csv", "x.csv.bak"])) == "x.csv"
+    assert (
+        ev._ipeds_member(_zip_with(["A_long_name.csv", "Z.csv"])) == "Z.csv"
+    )  # shortest, not first
+
+
+def test_hurdat_coordinate_signs_follow_the_hemisphere_letter():
+    assert ev._hurdat_coordinate("28.5N") == 28.5
+    assert ev._hurdat_coordinate("28.5S") == -28.5
+    assert ev._hurdat_coordinate("94.8W") == -94.8
+    assert ev._hurdat_coordinate("94.8E") == 94.8
+    assert ev._hurdat_coordinate("0.1W") == -0.1 and ev._hurdat_coordinate("10.0E") == 10.0
+
+
+def test_hurdat2_view_treats_minus_99_and_minus_999_as_missing_and_keeps_zero():
+    text = (
+        "AL011851,            UNNAMED,      2,\n"
+        "18510625, 0000,  , HU, 28.0N,  94.8W,  -99, -98,    0, -999, -999, -999, -999, -999, "
+        "-999, -999, -999, -999, -999, -999,\n"
+        "18510625, 0600,  , HU, 28.0N,  95.4W,  80, 990, -100, -999, -999, -999, -999, -999, "
+        "-999, -999, -999, -999, -999, -999,\n"
+    )
+    view = ev.hurdat2_view(text)
+    assert pd.isna(view["max_wind_kt"].iloc[0]) and view["min_pressure_mb"].iloc[0] == -98.0
+    assert view["r34_ne_nmi"].iloc[0] == 0.0 and pd.isna(view["r34_se_nmi"].iloc[0])
+    assert view["max_wind_kt"].iloc[1] == 80.0 and pd.isna(view["r34_ne_nmi"].iloc[1])
