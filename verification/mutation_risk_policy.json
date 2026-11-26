@@ -604,6 +604,10 @@
       "level": "L2",
       "reason": "It classifies failures and decides which calls are retried and how often: a defect could retry a non-idempotent call, hide a failure or label an error as a data anomaly in operational telemetry, never change a scientific result; the scientific code does not import it (ADR-0001)."
     },
+    "research/obs_lifecycle.py": {
+      "level": "L3",
+      "reason": "It deletes log backups by age and size and exports sanitized logs: a defect could delete scientific evidence or an export, or publish an unsanitized line; it refuses protected evidence paths, and the scientific code does not import it (ADR-0001)."
+    },
     "research/obs_logging.py": {
       "level": "L2",
       "reason": "It is the single logging configuration of the platform tooling: a defect changes the format, level or destination of operational logs, never a scientific result; the scientific code does not import it (ADR-0001)."

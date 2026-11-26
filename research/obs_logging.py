@@ -10,6 +10,8 @@ Variables (all optional):
 * ``ETL_LOG_LEVEL``: DEBUG, INFO, WARNING, ERROR or CRITICAL (default INFO);
 * ``ETL_LOG_FORMAT``: ``console`` (default) or ``json``, one JSON object per line;
 * ``ETL_LOG_DEST``: ``stderr`` (default), ``stdout`` or ``file``; ``file`` needs ``ETL_LOG_FILE``;
+* ``ETL_LOG_MAX_BYTES``, ``ETL_LOG_BACKUPS``: a file log rotates at that size (default 10 MiB) and
+  keeps that many numbered backups (default 5); retention and the budget are in ``obs_lifecycle``;
 * ``ETL_LOG_THIRD_PARTY_LEVEL``: level of noisy libraries (default WARNING);
 * ``ETL_LOG_CAPTURE_WARNINGS``: ``1`` (default) sends ``warnings.warn`` to the ``py.warnings`` log.
 
@@ -30,6 +32,7 @@ import sys
 import time
 from collections.abc import Mapping
 from datetime import UTC, datetime
+from logging.handlers import RotatingFileHandler
 from pathlib import Path
 from typing import Any
 
@@ -84,6 +87,13 @@ def _choice(
     return value
 
 
+def _integer(env: Mapping[str, str], name: str, default: int, minimum: int) -> int:
+    text = env.get(name, str(default)).strip()
+    if not text.isdecimal() or int(text) < minimum:
+        raise ValueError(f"{name} must be an integer of at least {minimum}; got {text!r}")
+    return int(text)
+
+
 def settings(env: Mapping[str, str]) -> dict[str, Any]:
     """Validated settings from the environment; an invalid value is refused, never ignored."""
     destination = _choice(env, "ETL_LOG_DEST", DESTINATIONS, "stderr")
@@ -98,6 +108,8 @@ def settings(env: Mapping[str, str]) -> dict[str, Any]:
         "format": _choice(env, "ETL_LOG_FORMAT", FORMATS, "console"),
         "destination": destination,
         "file": path or None,
+        "max_bytes": _integer(env, "ETL_LOG_MAX_BYTES", 10 * 1024 * 1024, 1),
+        "backups": _integer(env, "ETL_LOG_BACKUPS", 5, 0),
         "third_party": _choice(env, "ETL_LOG_THIRD_PARTY_LEVEL", LEVELS, "WARNING", upper=True),
         "capture_warnings": capture == "1",
     }
@@ -107,7 +119,9 @@ def _handler(chosen: Mapping[str, Any], stream: Any) -> logging.Handler:
     if chosen["destination"] == "file":
         path = Path(chosen["file"])
         path.parent.mkdir(parents=True, exist_ok=True)
-        handler: logging.Handler = logging.FileHandler(path, encoding="utf-8")
+        handler: logging.Handler = RotatingFileHandler(
+            path, maxBytes=chosen["max_bytes"], backupCount=chosen["backups"], encoding="utf-8"
+        )
     else:
         target = stream or (sys.stdout if chosen["destination"] == "stdout" else sys.stderr)
         handler = logging.StreamHandler(target)
