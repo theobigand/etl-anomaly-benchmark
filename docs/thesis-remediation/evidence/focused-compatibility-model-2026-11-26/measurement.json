@@ -1,0 +1,30 @@
+{
+ "base_head": "a3e2766d26d1bd81ca64d8fd2ce802c95a7afb65",
+ "command": "python -m mutmut run \"research.compatibility_model.*\" with research/tests/test_compatibility_model.py only, in a scratch copy holding research/, src/etl_benchmark, the registry evidence and a narrowed pyproject",
+ "date": "2026-11-26",
+ "environment": {
+  "mutmut": "3.8.x (etl-mutation-venv)",
+  "platform": "macOS-27.2-arm64",
+  "python": "3.13"
+ },
+ "kind": "local focused development measurement of the unit classified for issue #134; not the controller campaign, not attested",
+ "modules": {
+  "research/compatibility_model.py": {
+   "eligible": 200,
+   "killed": 197,
+   "level": "L2",
+   "raw_score": 98.5,
+   "source_sha256": "10c69e8a136a10161b0e1bbfbbec288eda45d7d505c324f2064505a75ffeb335",
+   "status": "PASS_RAW",
+   "survived": 3,
+   "threshold": 90
+  }
+ },
+ "note": "No survivor was marked equivalent. The 3 survivors are the argparse description and two file-name case mutants that survive only on a case-insensitive volume.",
+ "survivors": {
+  "research/compatibility_model.py": [
+   "3 survived; classified in the note, not individually owner-reviewed"
+  ]
+ },
+ "working_tree": "clean apart from the measured module and its tests"
+}
