@@ -91,18 +91,20 @@ jobs:
                 milestones.set(milestone.title, response.data.number);
               }
             }
+            const closedActive = [];
             for (const item of active) {
               const milestone = milestones.get(item.milestone);
               if (!milestone) throw new Error('Unknown milestone: ' + item.milestone);
               const current = await github.rest.issues.get({
                 owner, repo, issue_number: item.number
               });
-              if (current.data.state !== 'open') {
-                throw new Error('Tracked active issue is not open: #' + item.number);
-              }
               await github.rest.issues.addLabels({
                 owner, repo, issue_number: item.number, labels: item.labels
               });
+              if (current.data.state !== 'open') {
+                closedActive.push(item.number);
+                continue;
+              }
               if (current.data.milestone?.number !== milestone) {
                 await github.rest.issues.update({
                   owner, repo, issue_number: item.number, milestone
@@ -120,6 +122,7 @@ jobs:
                 owner, repo, issue_number: item.number, labels: item.labels
               });
             }
+            core.info(closedActive.length + ' tracked issues are already closed; labels kept, milestone left as is.');
             core.info('${{ steps.tasks.outputs.summary }} and synchronized ' +
               active.length + ' open issues, ' +
               historicalClosed.length + ' archived issues, ' +
