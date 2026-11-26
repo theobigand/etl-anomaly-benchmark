@@ -94,7 +94,7 @@ Outputs: [architecture decisions](../architecture/README.md) (#141).
 
 Experiment tracking, structured logging, centralized logs, tracing, metrics, alerting and data observability (engineering extension).
 
-Outputs: [logging audit](LOGGING_AUDIT.md) (#155).
+Outputs: [logging audit](LOGGING_AUDIT.md) (#155) and [logging configuration](LOGGING.md) (#156).
 
 | Issue | Title | Scope | Authorization | Blocked by |
 | --- | --- | --- | --- | --- |
