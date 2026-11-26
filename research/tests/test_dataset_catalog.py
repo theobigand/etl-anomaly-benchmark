@@ -68,6 +68,7 @@ def test_file_checks_distinguish_ok_missing_and_changed(tmp_path):
     assert dc.check_files(tmp_path, catalog) == {"legacy:x": "missing"}
 
 
+@pytest.mark.real
 @pytest.mark.skipif(not (dc.ROOT / "data" / "cardio.csv").exists(), reason="local data not present")
 def test_the_local_historical_files_match_their_recorded_checksums():
     assert set(dc.check_files().values()) == {"ok"}
