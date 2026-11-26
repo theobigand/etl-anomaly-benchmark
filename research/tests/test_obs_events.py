@@ -257,6 +257,7 @@ def test_the_module_imports_without_structlog_and_configuring_it_says_how_to_ins
         oe.configure_structlog()
 
 
+@pytest.mark.real
 def test_structlog_events_reach_the_json_log_through_the_same_schema():
     structlog = pytest.importorskip("structlog")
     _, stream = _json_logger()
@@ -277,6 +278,7 @@ def test_a_field_named_like_a_log_record_attribute_is_refused_not_a_logging_erro
         oe.build("run.started", {"name": "x"})
 
 
+@pytest.mark.real
 def test_a_structlog_failure_event_carries_the_structured_exception():
     structlog = pytest.importorskip("structlog")
     _, stream = _json_logger()
