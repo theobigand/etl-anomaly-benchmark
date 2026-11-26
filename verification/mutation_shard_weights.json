@@ -19,6 +19,7 @@
   "research/chrono_injected.py": 445,
   "research/chrono_injected_summary.py": 286,
   "research/chrono_train_only.py": 556,
+  "research/compatibility_model.py": 200,
   "research/cost_study.py": 825,
   "research/coverage_matrix.py": 1653,
   "research/coverage_paper.py": 510,

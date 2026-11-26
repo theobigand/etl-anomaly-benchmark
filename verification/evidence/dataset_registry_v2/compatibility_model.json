@@ -1,0 +1,5652 @@
+{
+ "groups": {
+  "3pfl": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "a_day_in_daylight": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "ademe_dpe": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "airquality_italy": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "aoe_gameplay": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "only 2 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "apis_guru_openapi_directory": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "austin_police_dispatch": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "only 0 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "austin_surface_water_quality": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "backblaze": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "only 0 rows after cleaning",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "bloomington_locus_solar_monitoring": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "bloomington_utilities_water_plant": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "bts_umd_daily_mobility_statistics": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "candanedo_umons": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "ccin2p3_slurm": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "cdc_covid_vaccination_reporting": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "only 1107 rows after cleaning",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "cftc_cot_disaggregated": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "chembl_molecules": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "cincinnati_emergency_communications_calls": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "only 0 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "cincinnati_fire_dispatch": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "only 0 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "city_of_austin_campaign_finance": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "clinicaltrials_gov": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "cnc_five_axis_milling": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "coatings_multinational": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no CSV table: the batch unit is not defined for this layout; only 2 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    },
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "no CSV table: the batch unit is not defined for this layout; only 2 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "colorado_dam_safety_registry": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "colorado_regulated_storage_tanks": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "cordis_horizon_europe": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "cpsc_recall_notices": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "crossref": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "cubico_kelmarsh": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "danish_district_heating": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "only 2 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "datacite_dois": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "delaware_dnrec_well_permits": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "delaware_state_purchasing_cards": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "dft_stats19": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "dgal_alimconfiance": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "dgccrf_fuel_prices": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "only 2 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "dgfip_dvf": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "dmsp_ssj_auroral": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "doaj_directory_of_open_access_journals": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "dutch_municipalities": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "only 2 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "dwd_germany": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "only 3 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "ea_hydrology": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "ecb_euro_fx_reference_rates": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "only 0 rows after cleaning",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "edp_wind_farm_portugal": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "eia_petroleum_spot_prices": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "eicu_philips": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "elder_home": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "epa_aqs": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "no parseable time column; only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "fda_maude": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "fdic_bank_financials": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "fec_federal_campaign_finance_filings": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "federal_register": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "fermi_blazar_flares": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "fin_institute_nl": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "only 2 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "florida_bridge_inspections": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "france_baac_road_accidents": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column; only 3 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "fraunhofer_iee_care_wind_b": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "fta_national_transit_database": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "fugaku_riken": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "gbif_occurrences": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "gene_ontology_consortium_annotations": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "georgia_procurement": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no CSV table: the batch unit is not defined for this layout; no parseable time column; only 0 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    },
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no CSV table: the batch unit is not defined for this layout; no parseable time column; only 0 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    },
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "german_paying_agency": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no CSV table: the batch unit is not defined for this layout; only 3 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    },
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "no CSV table: the batch unit is not defined for this layout; only 3 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "german_water_demand": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "gfz_potsdam_kp": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "only 2 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "github_actions_workflows": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "github_advisory_database": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "grouplens": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "gtfs_fr_alterneo": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "gtfs_fr_aravis": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "gtfs_fr_citea": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "gtfs_fr_diviamobilites": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "gtfs_fr_filibus": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "gtfs_fr_kiceo": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "gtfs_fr_optymo": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "gtfs_fr_palmbus": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "gtfs_fr_sankeo": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "gtfs_fr_sibra": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "gtfs_fr_tango": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "gtfs_fr_transvilles": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "hm_land_registry": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "hospital_sepsis_nl": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "ingv_seismic": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "inpi_bce_ratios": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "italian_road_fines": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no CSV table: the batch unit is not defined for this layout; only 0 rows after cleaning",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    },
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "no CSV table: the batch unit is not defined for this layout; only 0 rows after cleaning",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "japan_reconstructed_buildings": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column; only 2 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "jolpica_f1": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "kanto_landslides": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "loghub_collection": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "no parseable time column; only 0 continuous columns; only 1 continuous columns; only 2 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "lyft_bikeshare": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "only 1 continuous columns; only 3 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "melbourne_pedestrian": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "only 0 rows after cleaning",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "met_museum": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "metropt_porto": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "microsoft_azure_compute": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "mimic_iv_bidmc": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "mitre_attack_knowledge_base": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "montgomery_county_liquor_control_sales": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "montreal_contracts": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no CSV table: the batch unit is not defined for this layout; no parseable time column; only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    },
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "moodle_lms_events": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "only 0 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "naoj_norp_solar_bursts": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "nasa_common_metadata_repository": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "nasa_omni_near_earth_solar_wind": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "ncbi_pubchem_compound_records": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "nces_ipeds_postsecondary_surveys": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "ndbc_moored_buoys": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "nhif_hospital_cases": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "nih_research_grants": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "nist_nvd": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "noaa_coops": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "only 2 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "noaa_cpc_arctic_oscillation_index": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "noaa_gml_co2": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "only 0 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "noaa_ncei_storm_events": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "noaa_nhc_hurdat2_best_track": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "nsidc_sea_ice_index": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "only 2 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "ntnu_ev_charging": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "only 2 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "nws_alerts": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "nyc_tlc": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "openalex": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no CSV table: the batch unit is not defined for this layout",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    },
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "openfda_faers": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "openfoodfacts": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "openlibrary": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "osv_go": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "ourairports_db": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "paleobiology_database": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    },
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "paris_urban_trees": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "pnnl_epri_bess": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "port_noumea_stopovers": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "queensland_petroleum_production": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "only 717 rows after cleaning",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "rabobank_ict": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "rcsb_pdb": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "reactome_curated_pathway_database": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "rki_surveillance": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "ror": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "rte_france_grid": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "seattle_fire_911_dispatch": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "only 0 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "seattle_fremont_bridge_counter": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "only 3 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "seattle_sdci_building_permits": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "seoul_bike": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "sffd_fire_incidents": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "sfo_passenger_statistics": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "sncf_tgv_regularite": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "stackexchange": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no CSV table: the batch unit is not defined for this layout",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "steel_korea": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "surf_lisa_slurm": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "telecom_operator_kpis": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "terralore_chronicle_db": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column; only 2 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "tetouan_power": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "tue_travel_claims": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "tx_hhsc_child_care_operations": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "tx_hotel_occupancy_tax_revenue": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:101": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:110": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:143": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:146": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:148": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:149": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:15": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:159": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:162": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:165": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:189": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:19": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:193": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:198": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:212": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:22": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:247": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "only 536 rows after cleaning",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:257": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:26": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:264": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:267": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:27": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:270": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:291": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:292": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:294": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:296": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:31": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:312": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "only 720 rows after cleaning",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:32": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:327": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:329": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:352": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "only 3 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:365": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:368": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:372": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:379": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:381": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:396": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:464": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:52": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:536": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:545": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:551": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:555": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:572": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:59": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:597": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "only 690 rows after cleaning",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:601": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:602": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:69": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:73": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:75": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:755": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:76": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:760": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:78": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:80": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:848": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:850": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:864": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:911": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:94": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:942": {
+   "participations": [
+    {
+     "category": "C1",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uci:967": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uk_charity_commission": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "uk_ledger_mhra": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uk_ledger_nhsbsa": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "only 2 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "uniprot_kb": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "unisg_smart_factory": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "no CSV table: the batch unit is not defined for this layout; only 0 rows after cleaning; only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    },
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "no CSV table: the batch unit is not defined for this layout; only 0 rows after cleaning; only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "us_treasury_dts": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "",
+       "runnable": true,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "usda_fdc": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "usgs_water": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "vif_aegis": {
+   "participations": [
+    {
+     "category": "C3",
+     "protocol": "P-TS",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "time_window"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "volvo_it": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "wa_ecology_ghg_reports": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "wa_ev_population": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "wals_cldf": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "wikimedia_simplewiki": {
+   "participations": [
+    {
+     "category": "C4",
+     "protocol": "P-SEQ",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "event_sequence"
+      },
+      {
+       "reason": "only 3 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "event_window"
+      }
+     ]
+    }
+   ]
+  },
+  "wikimedia_wikidata": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "wind_fragility_power_db": {
+   "participations": [
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    }
+   ]
+  },
+  "world_bank_projects": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "only 718 rows after cleaning",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "wri_global_power_plants": {
+   "participations": [
+    {
+     "category": "C2a",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no parseable time column",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "zambia_procurement": {
+   "participations": [
+    {
+     "category": "C2b",
+     "protocol": "P-TAB",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "row"
+      },
+      {
+       "reason": "no CSV table: the batch unit is not defined for this layout; only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      }
+     ]
+    },
+    {
+     "category": "C5",
+     "protocol": "P-REL",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "relationship"
+      },
+      {
+       "reason": "no CSV table: the batch unit is not defined for this layout; only 1 continuous columns",
+       "runnable": false,
+       "unit": "temporal_batch"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "relational_load"
+      }
+     ]
+    },
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  },
+  "zenodo_repository_records": {
+   "participations": [
+    {
+     "category": "C6",
+     "protocol": "P-NEST",
+     "units": [
+      {
+       "reason": "no registry-driven runner",
+       "runnable": false,
+       "unit": "nested_path"
+      },
+      {
+       "reason": "unsupported: the unit has no approved definition",
+       "runnable": false,
+       "unit": "document_batch"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "matrix": {
+  "C1": {
+   "P-TAB": {
+    "row": {
+     "groups": 52,
+     "runnable": 0
+    },
+    "temporal_batch": {
+     "groups": 52,
+     "runnable": 1
+    }
+   }
+  },
+  "C2a": {
+   "P-TAB": {
+    "row": {
+     "groups": 30,
+     "runnable": 0
+    },
+    "temporal_batch": {
+     "groups": 30,
+     "runnable": 6
+    }
+   }
+  },
+  "C2b": {
+   "P-TAB": {
+    "row": {
+     "groups": 30,
+     "runnable": 0
+    },
+    "temporal_batch": {
+     "groups": 30,
+     "runnable": 8
+    }
+   }
+  },
+  "C3": {
+   "P-TS": {
+    "temporal_batch": {
+     "groups": 40,
+     "runnable": 21
+    },
+    "time_window": {
+     "groups": 40,
+     "runnable": 0
+    }
+   }
+  },
+  "C4": {
+   "P-SEQ": {
+    "event_sequence": {
+     "groups": 25,
+     "runnable": 0
+    },
+    "event_window": {
+     "groups": 25,
+     "runnable": 0
+    },
+    "temporal_batch": {
+     "groups": 25,
+     "runnable": 3
+    }
+   },
+   "P-TAB": {
+    "row": {
+     "groups": 3,
+     "runnable": 0
+    },
+    "temporal_batch": {
+     "groups": 3,
+     "runnable": 2
+    }
+   }
+  },
+  "C5": {
+   "P-REL": {
+    "relational_load": {
+     "groups": 36,
+     "runnable": 0
+    },
+    "relationship": {
+     "groups": 36,
+     "runnable": 0
+    },
+    "temporal_batch": {
+     "groups": 36,
+     "runnable": 6
+    }
+   }
+  },
+  "C6": {
+   "P-NEST": {
+    "document_batch": {
+     "groups": 30,
+     "runnable": 0
+    },
+    "nested_path": {
+     "groups": 30,
+     "runnable": 0
+    }
+   }
+  }
+ },
+ "protocols": {
+  "P-NEST": [
+   {
+    "detectors": [],
+    "executable": false,
+    "metrics": [
+     "tp",
+     "fp",
+     "fn"
+    ],
+    "operators": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "unit": "nested_path"
+   },
+   {
+    "detectors": [],
+    "executable": false,
+    "metrics": [
+     "recall",
+     "false_alert_rate",
+     "roc_auc",
+     "ap"
+    ],
+    "operators": [
+     "partial_load",
+     "duplicate_load",
+     "stale_batch",
+     "null_spike",
+     "schema_drop"
+    ],
+    "unit": "document_batch"
+   }
+  ],
+  "P-REL": [
+   {
+    "detectors": [],
+    "executable": false,
+    "metrics": [
+     "tp",
+     "fp",
+     "fn"
+    ],
+    "operators": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "unit": "relationship"
+   },
+   {
+    "detectors": [
+     "constraint_rules",
+     "volume_freshness",
+     "distribution_distance",
+     "isolation_forest",
+     "ecod",
+     "copod",
+     "hbos",
+     "pca",
+     "knn",
+     "lof",
+     "isolation_forest_compact",
+     "ecod_compact",
+     "pca_compact",
+     "knn_compact",
+     "lof_compact",
+     "random"
+    ],
+    "executable": true,
+    "metrics": [
+     "recall",
+     "false_alert_rate",
+     "roc_auc",
+     "ap"
+    ],
+    "operators": [
+     "partial_load",
+     "duplicate_load",
+     "stale_batch",
+     "null_spike",
+     "schema_drop",
+     "unit_change",
+     "distribution_shift",
+     "silent_corruption"
+    ],
+    "unit": "temporal_batch"
+   },
+   {
+    "detectors": [],
+    "executable": false,
+    "metrics": [
+     "recall",
+     "false_alert_rate",
+     "roc_auc",
+     "ap"
+    ],
+    "operators": [
+     "partial_load",
+     "duplicate_load",
+     "stale_batch",
+     "null_spike",
+     "referential_integrity"
+    ],
+    "unit": "relational_load"
+   }
+  ],
+  "P-SEQ": [
+   {
+    "detectors": [],
+    "executable": false,
+    "metrics": [
+     "tp",
+     "fp",
+     "fn"
+    ],
+    "operators": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "unit": "event_sequence"
+   },
+   {
+    "detectors": [
+     "constraint_rules",
+     "volume_freshness",
+     "distribution_distance",
+     "isolation_forest",
+     "ecod",
+     "copod",
+     "hbos",
+     "pca",
+     "knn",
+     "lof",
+     "isolation_forest_compact",
+     "ecod_compact",
+     "pca_compact",
+     "knn_compact",
+     "lof_compact",
+     "random"
+    ],
+    "executable": true,
+    "metrics": [
+     "recall",
+     "false_alert_rate",
+     "roc_auc",
+     "ap"
+    ],
+    "operators": [
+     "partial_load",
+     "duplicate_load",
+     "stale_batch",
+     "null_spike",
+     "schema_drop",
+     "unit_change",
+     "distribution_shift",
+     "silent_corruption"
+    ],
+    "unit": "temporal_batch"
+   },
+   {
+    "detectors": [],
+    "executable": false,
+    "metrics": [
+     "recall",
+     "false_alert_rate",
+     "roc_auc",
+     "ap"
+    ],
+    "operators": [
+     "partial_load",
+     "duplicate_load",
+     "stale_batch",
+     "schema_drop"
+    ],
+    "unit": "event_window"
+   }
+  ],
+  "P-TAB": [
+   {
+    "detectors": [],
+    "executable": false,
+    "metrics": [
+     "tp",
+     "fp",
+     "fn"
+    ],
+    "operators": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "unit": "row"
+   },
+   {
+    "detectors": [
+     "constraint_rules",
+     "volume_freshness",
+     "distribution_distance",
+     "isolation_forest",
+     "ecod",
+     "copod",
+     "hbos",
+     "pca",
+     "knn",
+     "lof",
+     "isolation_forest_compact",
+     "ecod_compact",
+     "pca_compact",
+     "knn_compact",
+     "lof_compact",
+     "random"
+    ],
+    "executable": true,
+    "metrics": [
+     "recall",
+     "false_alert_rate",
+     "roc_auc",
+     "ap"
+    ],
+    "operators": [
+     "partial_load",
+     "duplicate_load",
+     "stale_batch",
+     "null_spike",
+     "schema_drop",
+     "unit_change",
+     "distribution_shift",
+     "silent_corruption"
+    ],
+    "unit": "temporal_batch"
+   }
+  ],
+  "P-TS": [
+   {
+    "detectors": [],
+    "executable": false,
+    "metrics": [
+     "tp",
+     "fp",
+     "fn"
+    ],
+    "operators": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "unit": "time_window"
+   },
+   {
+    "detectors": [
+     "constraint_rules",
+     "volume_freshness",
+     "distribution_distance",
+     "isolation_forest",
+     "ecod",
+     "copod",
+     "hbos",
+     "pca",
+     "knn",
+     "lof",
+     "isolation_forest_compact",
+     "ecod_compact",
+     "pca_compact",
+     "knn_compact",
+     "lof_compact",
+     "random"
+    ],
+    "executable": true,
+    "metrics": [
+     "recall",
+     "false_alert_rate",
+     "roc_auc",
+     "ap"
+    ],
+    "operators": [
+     "partial_load",
+     "duplicate_load",
+     "stale_batch",
+     "null_spike",
+     "schema_drop",
+     "unit_change",
+     "distribution_shift",
+     "silent_corruption"
+    ],
+    "unit": "temporal_batch"
+   }
+  ]
+ },
+ "units": {
+  "document_batch": {
+   "basis": "consecutive documents in source order",
+   "kind": "logical",
+   "status": "provisional"
+  },
+  "event_sequence": {
+   "basis": "a case or trace of an event log",
+   "kind": "natural",
+   "status": "protocol_defined"
+  },
+  "event_window": {
+   "basis": "consecutive events of a log cut into windows",
+   "kind": "logical",
+   "status": "provisional"
+  },
+  "nested_path": {
+   "basis": "a (record, path) pair of a nested document",
+   "kind": "natural",
+   "status": "protocol_defined"
+  },
+  "observed_load": {
+   "basis": "a load delivered with its own identifier and time",
+   "kind": "natural",
+   "status": "provisional"
+  },
+  "relational_load": {
+   "basis": "consecutive child rows in file order",
+   "kind": "logical",
+   "status": "provisional"
+  },
+  "relationship": {
+   "basis": "a declared foreign-key relation",
+   "kind": "natural",
+   "status": "protocol_defined"
+  },
+  "row": {
+   "basis": "a row of a source table",
+   "kind": "natural",
+   "status": "protocol_defined"
+  },
+  "temporal_batch": {
+   "basis": "timestamped records replayed in time order as loads",
+   "kind": "replayed",
+   "status": "registered"
+  },
+  "time_window": {
+   "basis": "a window cut from an ordered series",
+   "kind": "logical",
+   "status": "protocol_defined"
+  }
+ }
+}
