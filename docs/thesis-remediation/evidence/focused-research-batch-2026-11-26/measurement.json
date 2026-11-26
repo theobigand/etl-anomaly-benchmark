@@ -1,0 +1,366 @@
+{
+ "base_head": "fba2d70ad85dd41a37a1589f7b8ccdcb0f9add5e",
+ "command": "python -m mutmut run \"research.<module>.*\" (one run per module, the tests of the module only; experimental_views with test_experimental_views.py, test_view_builders.py and test_view_contracts_extra.py); a timed-out mutant is counted as unresolved",
+ "date": "2026-11-26",
+ "environment": {
+  "faker": "40.43.0",
+  "great-expectations": "1.24.0",
+  "mutmut": "3.8.0",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "pyod": "3.6.7",
+  "python": "3.11",
+  "torch": "2.14.1"
+ },
+ "kind": "local focused development measurement of the units classified after the 2026-11-20 records (the research modules of the pipeline-level and acquisition work); not the controller campaign, not attested",
+ "modules": {
+  "research/acquisition.py": {
+   "eligible": 862,
+   "killed": 839,
+   "level": "L3",
+   "raw_score": 97.3,
+   "source_sha256": "a01271c9a81c39fae660688dd50535e5d8ff67563ba68198954ffbc973cab1c3",
+   "status": "PASS_RAW",
+   "survived": 23,
+   "threshold": 95
+  },
+  "research/acquisition_validate.py": {
+   "eligible": 668,
+   "killed": 657,
+   "level": "L3",
+   "raw_score": 98.4,
+   "source_sha256": "ba79cbc910265b42f4315b977cb8cfe3759211cacb05d9025b1f0defc776c7df",
+   "status": "PASS_RAW",
+   "survived": 11,
+   "threshold": 95
+  },
+  "research/batch_panel.py": {
+   "eligible": 418,
+   "killed": 416,
+   "level": "L3",
+   "raw_score": 99.5,
+   "source_sha256": "6803aa6f37f756d5fedcdedcaf9f26bc58776b0f142b4ac177480e67bbbfa14a",
+   "status": "PASS_RAW",
+   "survived": 2,
+   "threshold": 95
+  },
+  "research/batch_statistics.py": {
+   "eligible": 570,
+   "killed": 564,
+   "level": "L3",
+   "raw_score": 98.9,
+   "source_sha256": "d9cc9caed346c1acff59cd299cdb929c8ce2a0efee11a2f36f06e9f0d6ddda4e",
+   "status": "PASS_RAW",
+   "survived": 6,
+   "threshold": 95
+  },
+  "research/dataset_catalog.py": {
+   "eligible": 782,
+   "killed": 774,
+   "level": "L3",
+   "raw_score": 99.0,
+   "source_sha256": "6a10e61cc7b1451dea9e8f98024e025679034e72ffe20e2549bdc78bec9d1bef",
+   "status": "PASS_RAW",
+   "survived": 8,
+   "threshold": 95
+  },
+  "research/experimental_views.py": {
+   "eligible": 18236,
+   "killed": 17788,
+   "level": "L3",
+   "raw_score": 97.5,
+   "source_sha256": "db7541bd6d14291a90266c33892e1d3f14aede34214fa91c4455cff7a3c087b9",
+   "status": "PASS_RAW",
+   "survived": 448,
+   "threshold": 95
+  },
+  "research/fault_protocols.py": {
+   "eligible": 870,
+   "killed": 851,
+   "level": "L3",
+   "raw_score": 97.8,
+   "source_sha256": "0f3d7b504c31dd862e498ecdb138270c08a00b348e89e37c4dcc386a67755e11",
+   "status": "PASS_RAW",
+   "survived": 19,
+   "threshold": 95
+  },
+  "research/flat_readiness.py": {
+   "eligible": 708,
+   "killed": 699,
+   "level": "L3",
+   "raw_score": 98.7,
+   "source_sha256": "078542b56192676a1cfa9717706154834efd9b301232734abb392424e721b192",
+   "status": "PASS_RAW",
+   "survived": 9,
+   "threshold": 95
+  },
+  "research/label_sensitivity.py": {
+   "eligible": 431,
+   "killed": 426,
+   "level": "L4",
+   "raw_score": 98.8,
+   "source_sha256": "6d4795fbc5331b2761017f791edf4bef72889b355b9802e59fe68653b75165ad",
+   "status": "PASS_RAW",
+   "survived": 5,
+   "threshold": 98
+  },
+  "research/natural_temporal.py": {
+   "eligible": 559,
+   "killed": 556,
+   "level": "L4",
+   "raw_score": 99.5,
+   "source_sha256": "97b923906f49e9f231d4c47226e9b2b5b0641d8bfbdd9a6dca907b1d7894a52b",
+   "status": "PASS_RAW",
+   "survived": 3,
+   "threshold": 98
+  },
+  "research/natural_temporal_summary.py": {
+   "eligible": 578,
+   "killed": 571,
+   "level": "L4",
+   "raw_score": 98.8,
+   "source_sha256": "01f5d1a8173e96c633df1a604d4a547c6fa23f7821df548aa562f8f3c75c0802",
+   "status": "PASS_RAW",
+   "survived": 7,
+   "threshold": 98
+  },
+  "research/paired_inference.py": {
+   "eligible": 223,
+   "killed": 221,
+   "level": "L4",
+   "raw_score": 99.1,
+   "source_sha256": "3d51ff8534ad053fb4ea1238bfe148e7dd29ac7579c6b0de502658300e81d328",
+   "status": "PASS_RAW",
+   "survived": 2,
+   "threshold": 98
+  },
+  "research/parquet_reader.py": {
+   "eligible": 154,
+   "killed": 152,
+   "level": "L3",
+   "raw_score": 98.7,
+   "source_sha256": "17940298cbec188b45cfe0ca9b88e2e136ec9a9cda001a8cf63ee54edb08ad1c",
+   "status": "PASS_RAW",
+   "survived": 2,
+   "threshold": 95
+  },
+  "research/pipeline_batch.py": {
+   "eligible": 1040,
+   "killed": 1031,
+   "level": "L4",
+   "raw_score": 99.1,
+   "source_sha256": "f16864cf2b55d9be972905504ff7c2f80d952bade52ff6cea25abdd97d0c1eab",
+   "status": "PASS_RAW",
+   "survived": 9,
+   "threshold": 98
+  },
+  "research/pipeline_batch_summary.py": {
+   "eligible": 546,
+   "killed": 541,
+   "level": "L4",
+   "raw_score": 99.1,
+   "source_sha256": "61475c2682c0ede1ae7371a6c62a17bda1dbf081a4f4a40e429e586a6e561488",
+   "status": "PASS_RAW",
+   "survived": 5,
+   "threshold": 98
+  },
+  "research/provenance_audit.py": {
+   "eligible": 402,
+   "killed": 389,
+   "level": "L3",
+   "raw_score": 96.8,
+   "source_sha256": "3f43fa89c8cb3b13cc243be54fa7b94035add218c0556f9cab405c96f1fde9c2",
+   "status": "PASS_RAW",
+   "survived": 13,
+   "threshold": 95
+  },
+  "research/readiness.py": {
+   "eligible": 450,
+   "killed": 450,
+   "level": "L3",
+   "raw_score": 100.0,
+   "source_sha256": "85d1bc0bf6691e69d56196e4d4357f2dca36c9b1f10089f3168e73e2c68f7b47",
+   "status": "PASS_RAW",
+   "survived": 0,
+   "threshold": 95
+  },
+  "research/registry_units.py": {
+   "eligible": 419,
+   "killed": 415,
+   "level": "L3",
+   "raw_score": 99.0,
+   "source_sha256": "42e5374d84ed5c40233b274a7011d2e6e41fd3dbb3194a4f313f3fda5d37ef4d",
+   "status": "PASS_RAW",
+   "survived": 4,
+   "threshold": 95
+  },
+  "research/relational_faults.py": {
+   "eligible": 183,
+   "killed": 183,
+   "level": "L4",
+   "raw_score": 100.0,
+   "source_sha256": "88c96baf2482ee06341d4762b80993d9e39a574f9ddfe4aed9539ed9b456ab34",
+   "status": "PASS_RAW",
+   "survived": 0,
+   "threshold": 98
+  },
+  "research/relational_units.py": {
+   "eligible": 314,
+   "killed": 306,
+   "level": "L3",
+   "raw_score": 97.5,
+   "source_sha256": "393065ee47baf389a116e74a86d264d83d87b97452f52250a11ac533c98616c4",
+   "status": "PASS_RAW",
+   "survived": 8,
+   "threshold": 95
+  },
+  "research/schema_rules.py": {
+   "eligible": 388,
+   "killed": 385,
+   "level": "L4",
+   "raw_score": 99.2,
+   "source_sha256": "3d34aac868d21f0d48b35aff9c9212ada0824bbc1098cb9e219f77199e558e86",
+   "status": "PASS_RAW",
+   "survived": 3,
+   "threshold": 98
+  },
+  "research/schema_rules_summary.py": {
+   "eligible": 246,
+   "killed": 243,
+   "level": "L3",
+   "raw_score": 98.8,
+   "source_sha256": "cd01205ddb193080e7974842d84588e1ad12329b77a409c8356321e2becce649",
+   "status": "PASS_RAW",
+   "survived": 3,
+   "threshold": 95
+  },
+  "research/study_coverage.py": {
+   "eligible": 368,
+   "killed": 364,
+   "level": "L2",
+   "raw_score": 98.9,
+   "source_sha256": "9b3b9b361fd78202887a638e3193432a12b7389ae92769a7c6e645b94247304b",
+   "status": "PASS_RAW",
+   "survived": 4,
+   "threshold": 90
+  },
+  "research/target_framework.py": {
+   "eligible": 983,
+   "killed": 939,
+   "level": "L3",
+   "raw_score": 95.5,
+   "source_sha256": "f8b54ffd04f9548c323df5c53eb07cc20e151366fbc5b89a319c493a9bcbd65f",
+   "status": "PASS_RAW",
+   "survived": 44,
+   "threshold": 95
+  },
+  "research/uci_wave2.py": {
+   "eligible": 456,
+   "killed": 455,
+   "level": "L3",
+   "raw_score": 99.8,
+   "source_sha256": "d281797cf44242ce08def02bc41874c271f1d0dd001290c454a4e26b29393c7c",
+   "status": "PASS_RAW",
+   "survived": 1,
+   "threshold": 95
+  },
+  "research/validity_summary.py": {
+   "eligible": 541,
+   "killed": 538,
+   "level": "L4",
+   "raw_score": 99.4,
+   "source_sha256": "74ed27e7ff26f204a2a320ed46644d4c3365678c3188b6023fb9ee5b8aa6cf7d",
+   "status": "PASS_RAW",
+   "survived": 3,
+   "threshold": 98
+  },
+  "research/xes_stream.py": {
+   "eligible": 281,
+   "killed": 268,
+   "level": "L3",
+   "raw_score": 95.4,
+   "source_sha256": "2c121ef4e0c9c5d8a537c9ae5047a19ce7f934f9532ac80f74c6935ef578549d",
+   "status": "PASS_RAW",
+   "survived": 13,
+   "threshold": 95
+  }
+ },
+ "note": "No survivor was marked equivalent. Timed-out mutants are counted as unresolved (listed under survived). While the tests were hardened, several survivor classes were found to be equivalent in effect (zip(strict=...) between lists of equal length, print(flush=...), rng.choice(replace=None) which numpy reads as False, float('NAN') against float('nan'), None against np.nan in a float column, an argument equal to the default of the called function, a comparison whose boundary is unreachable in floating point); they are not removed from the counts, and where a construct produced several of them it was rewritten (index loops, a shared sampling helper, defaults dropped) so that fewer remain. The argument parsers of eight modules were moved into build_parser() functions, without a change of behaviour, so that their defaults are tested. The survivors of the final runs were not individually triaged.",
+ "survivors": {
+  "research/acquisition.py": [
+   "23 unresolved (22 survived, 1 timed out); not individually triaged"
+  ],
+  "research/acquisition_validate.py": [
+   "11 unresolved (11 survived, 0 timed out); not individually triaged"
+  ],
+  "research/batch_panel.py": [
+   "2 unresolved (0 survived, 2 timed out); not individually triaged"
+  ],
+  "research/batch_statistics.py": [
+   "6 unresolved (5 survived, 1 timed out); not individually triaged"
+  ],
+  "research/dataset_catalog.py": [
+   "8 unresolved (5 survived, 3 timed out); not individually triaged"
+  ],
+  "research/experimental_views.py": [
+   "448 unresolved (443 survived, 5 timed out); not individually triaged"
+  ],
+  "research/fault_protocols.py": [
+   "19 unresolved (19 survived, 0 timed out); not individually triaged"
+  ],
+  "research/flat_readiness.py": [
+   "9 unresolved (9 survived, 0 timed out); not individually triaged"
+  ],
+  "research/label_sensitivity.py": [
+   "5 unresolved (5 survived, 0 timed out); not individually triaged"
+  ],
+  "research/natural_temporal.py": [
+   "3 unresolved (3 survived, 0 timed out); not individually triaged"
+  ],
+  "research/natural_temporal_summary.py": [
+   "7 unresolved (7 survived, 0 timed out); not individually triaged"
+  ],
+  "research/paired_inference.py": [
+   "2 unresolved (2 survived, 0 timed out); not individually triaged"
+  ],
+  "research/parquet_reader.py": [
+   "2 unresolved (2 survived, 0 timed out); not individually triaged"
+  ],
+  "research/pipeline_batch.py": [
+   "9 unresolved (9 survived, 0 timed out); not individually triaged"
+  ],
+  "research/pipeline_batch_summary.py": [
+   "5 unresolved (5 survived, 0 timed out); not individually triaged"
+  ],
+  "research/provenance_audit.py": [
+   "13 unresolved (12 survived, 1 timed out); not individually triaged"
+  ],
+  "research/registry_units.py": [
+   "4 unresolved (4 survived, 0 timed out); not individually triaged"
+  ],
+  "research/relational_units.py": [
+   "8 unresolved (8 survived, 0 timed out); not individually triaged"
+  ],
+  "research/schema_rules.py": [
+   "3 unresolved (3 survived, 0 timed out); not individually triaged"
+  ],
+  "research/schema_rules_summary.py": [
+   "3 unresolved (3 survived, 0 timed out); not individually triaged"
+  ],
+  "research/study_coverage.py": [
+   "4 unresolved (4 survived, 0 timed out); not individually triaged"
+  ],
+  "research/target_framework.py": [
+   "44 unresolved (33 survived, 11 timed out); not individually triaged"
+  ],
+  "research/uci_wave2.py": [
+   "1 unresolved (1 survived, 0 timed out); not individually triaged"
+  ],
+  "research/validity_summary.py": [
+   "3 unresolved (3 survived, 0 timed out); not individually triaged"
+  ],
+  "research/xes_stream.py": [
+   "13 unresolved (12 survived, 1 timed out); not individually triaged"
+  ]
+ },
+ "working_tree": "clean at the base head"
+}
