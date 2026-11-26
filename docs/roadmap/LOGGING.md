@@ -8,7 +8,8 @@ the scope of #157 and builds on this module.
 
 ```python
 import obs_logging
-obs_logging.configure()          # reads ETL_LOG_*; replaces only its own handler
+
+obs_logging.configure()  # reads ETL_LOG_*; replaces only its own handler
 ```
 
 | Variable | Values | Default |
