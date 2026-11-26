@@ -74,6 +74,8 @@ Outputs: [utilization ledger](../../verification/utilization_ledger.md) (#133) a
 
 Production-oriented ingestion, transformation, orchestration, storage, data modeling and controlled pipeline fault injection (engineering extension).
 
+Outputs: [architecture decisions](../architecture/README.md) (#141).
+
 | Issue | Title | Scope | Authorization | Blocked by |
 | --- | --- | --- | --- | --- |
 | [#141](https://github.com/theobigand/etl-anomaly-benchmark/issues/141) | Architecture decisions, technology selection and dependency isolation | engineering | none | - |
@@ -149,7 +151,7 @@ Analytical data products, interactive dashboard, architecture documentation, ope
 
 ### Scientific preparation inside the Thesis milestones
 
-Outputs: [unit-level pilot panel and authorization draft](../../verification/variance_pilot_design.md) (section 13, #152).
+Outputs: [unit-level pilot panel and authorization draft](../../verification/variance_pilot_design.md) (section 13, #152) and [statistical design of both pilots](../../verification/pilot_statistical_design.md) (#153).
 
 | Issue | Title | Scope | Authorization | Blocked by |
 | --- | --- | --- | --- | --- |
