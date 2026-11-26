@@ -579,6 +579,10 @@
     "research/utilization_ledger.py": {
       "level": "L2",
       "reason": "It extends the per-group coverage with the seven utilization stages and a dry run of the registered batch adapter, so it states which groups can contribute to an evaluation; it fits no detector, injects no fault and reads no detector output."
+    },
+    "research/unit_pilot_plan.py": {
+      "level": "L3",
+      "reason": "It proposes the seeded split of the 235 groups into the unit-level pilot and the confirmatory holdout and states which holdout groups meet the eligibility floor, so a defect changes which groups can confirm; it fits no detector and reads no detector output."
     }
   }
 }

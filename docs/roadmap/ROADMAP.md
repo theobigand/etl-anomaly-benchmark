@@ -149,6 +149,8 @@ Analytical data products, interactive dashboard, architecture documentation, ope
 
 ### Scientific preparation inside the Thesis milestones
 
+Outputs: [unit-level pilot panel and authorization draft](../../verification/variance_pilot_design.md) (section 13, #152).
+
 | Issue | Title | Scope | Authorization | Blocked by |
 | --- | --- | --- | --- | --- |
 | [#152](https://github.com/theobigand/etl-anomaly-benchmark/issues/152) | Unit-level variance pilot: reconcile the 16-group design with the 235-group corpus | thesis | approval | - |
