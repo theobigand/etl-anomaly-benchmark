@@ -45,6 +45,7 @@
   "research/natural_temporal_summary.py": 610,
   "research/neural_budget_probe.py": 150,
   "research/normalise.py": 193,
+  "research/obs_events.py": 181,
   "research/obs_logging.py": 247,
   "research/paired_bootstrap.py": 100,
   "research/paired_inference.py": 252,

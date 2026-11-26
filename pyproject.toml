@@ -118,3 +118,6 @@ cache_invalidation_files = [
 # part of the recipe-2 scientific fingerprint and no archived result depends on pyarrow.
 [dependency-groups]
 research = ["pyarrow>=21,<27"]
+# Structured-log layer of the platform tooling (research/obs_events.py, #157; ADR-0017). Optional:
+# the module works without it. Outside [project], so the scientific fingerprint is unchanged.
+observability = ["structlog>=26.1,<27"]
