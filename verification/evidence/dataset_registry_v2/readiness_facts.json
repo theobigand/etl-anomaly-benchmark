@@ -1,0 +1,4630 @@
+{
+ "facts": {
+  "4tu_bpic12": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "file times and resources pseudonymised by the publisher",
+    "case-level requested amount not kept"
+   ],
+   "first_party": false,
+   "independent_group": "fin_institute_nl",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 13087,
+   "view": "4tu_bpic12"
+  },
+  "4tu_bpic13_incidents": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "support-ticket process with reassignments and loops (natural rework)"
+   ],
+   "first_party": false,
+   "independent_group": "volvo_it",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 7554,
+   "view": "4tu_bpic13_incidents"
+  },
+  "4tu_bpic14": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "incident handling with reassignments (natural rework)",
+    "events are not in time order in the file and are sorted by time then activity number"
+   ],
+   "first_party": false,
+   "independent_group": "rabobank_ict",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 46616,
+   "view": "4tu_bpic14"
+  },
+  "4tu_bpic15_m5": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "permit process with long case durations",
+    "one of five municipalities"
+   ],
+   "first_party": false,
+   "independent_group": "dutch_municipalities",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 1156,
+   "view": "4tu_bpic15_m5"
+  },
+  "4tu_bpic18": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "prefix of the log, not random",
+    "trace-level amounts: applied and actual payment"
+   ],
+   "first_party": false,
+   "independent_group": "german_paying_agency",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 8000,
+   "view": "4tu_bpic18"
+  },
+  "4tu_bpic18:transactions": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "prefix of the log, not random",
+    "trace-level amounts: applied and actual payment"
+   ],
+   "first_party": false,
+   "independent_group": "german_paying_agency",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 487270,
+   "view": "4tu_bpic18"
+  },
+  "4tu_bpic19": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "XES prefix, not random",
+    "some event timestamps are impossible (earliest 1948), a natural data-entry irregularity kept as baseline",
+    "item-level traces up to 923 events"
+   ],
+   "first_party": false,
+   "independent_group": "coatings_multinational",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 19484,
+   "view": "4tu_bpic19"
+  },
+  "4tu_bpic19:transactions": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "XES prefix, not random",
+    "some event timestamps are impossible (earliest 1948), a natural data-entry irregularity kept as baseline",
+    "item-level traces up to 923 events"
+   ],
+   "first_party": false,
+   "independent_group": "coatings_multinational",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 144920,
+   "view": "4tu_bpic19"
+  },
+  "4tu_bpic20_domestic": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "claim approval workflow with rejections (natural rework)",
+    "claim amount is a case attribute and is not kept"
+   ],
+   "first_party": false,
+   "independent_group": "tue_travel_claims",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 10500,
+   "view": "4tu_bpic20_domestic"
+  },
+  "4tu_bpic20_international": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "same producer as the domestic log"
+   ],
+   "first_party": false,
+   "independent_group": "tue_travel_claims",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 6449,
+   "view": "4tu_bpic20_international"
+  },
+  "4tu_road_fines": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "event times from 1999-12-31 to 2013-06-17",
+    "payments and penalties are natural events"
+   ],
+   "first_party": false,
+   "independent_group": "italian_road_fines",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 150370,
+   "view": "4tu_road_fines"
+  },
+  "4tu_road_fines:transactions": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "event times from 1999-12-31 to 2013-06-17",
+    "payments and penalties are natural events"
+   ],
+   "first_party": false,
+   "independent_group": "italian_road_fines",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 561470,
+   "view": "4tu_road_fines"
+  },
+  "4tu_sepsis": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1050 cases, 15214 events; small",
+    "clinical pathway data of patients, pseudonymised by the publisher; only activity, time and resource are kept"
+   ],
+   "first_party": false,
+   "independent_group": "hospital_sepsis_nl",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 1050,
+   "view": "4tu_sepsis"
+  },
+  "ademe_dpe_existant": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "date-restricted deterministic query across five fixed non-holiday 2024 dates (10,000 certificates per date, 50,000 total), 21 mixed categorical and numeric columns; not random",
+    "missing year of construction (42.2 percent) and heating installation type (27.1 percent) are published registry states",
+    "BAN/RNB/address fields omitted at fetch and numero_dpe replaced by a salted hash"
+   ],
+   "first_party": true,
+   "independent_group": "ademe_dpe",
+   "min_units": 500,
+   "partitions": "hash of numero_dpe 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 50000,
+   "view": "ademe_dpe_existant"
+  },
+  "apis_guru_openapi_directory": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete directory list at the snapshot date: 2,529 API entries with optional and vendor-specific fields (x- extensions) varying by entry",
+    "contact objects dropped at every depth; no per-API specification content"
+   ],
+   "first_party": true,
+   "independent_group": "apis_guru_openapi_directory",
+   "min_units": 1000,
+   "natural_labels": "none",
+   "partitions": "hash of the api name 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 2529,
+   "view": "apis_guru_openapi_directory"
+  },
+  "austin_apd_cad": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "first quarter 2023 slice of the Austin APD CAD table (4,233,902 rows over all years): a contiguous response-time window, not a random sample; 88,817 incident rows",
+    "lifecycle events are the three published timestamps of each incident; a repeated incident number (one) is kept",
+    "officer-initiated incidents and 911 calls are both included as the publisher states"
+   ],
+   "first_party": true,
+   "independent_group": "austin_police_dispatch",
+   "min_units": 1000,
+   "natural_labels": "none; dispositions are operational outcomes, not ETL faults",
+   "partitions": "hash of the incident number 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 88816,
+   "view": "austin_apd_cad"
+  },
+  "austin_campaign_finance": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "calendar year 2022 slice of the Austin campaign finance table (145,683 rows over all years): a contiguous transaction-date window, not a random sample; 3,654 transaction rows",
+    "filer, transactor and guarantor names and addresses, employers, occupations, lender and free text dropped; transaction and report ids pseudonymised"
+   ],
+   "first_party": true,
+   "independent_group": "city_of_austin_campaign_finance",
+   "min_units": 500,
+   "partitions": "hash of report_id so the transactions of one report stay together 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 3654,
+   "view": "austin_campaign_finance"
+  },
+  "austin_water_quality": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "calendar year 2023 slice of the Austin water quality table (1,522,960 rows in all): a contiguous sampling-date window, 22,887 result rows over about 250 sites and 1,049 parameters",
+    "results are laboratory measurements with units and censoring qualifiers kept as published; the row id and empty flag columns are dropped; the sampling sites are public monitoring locations"
+   ],
+   "first_party": true,
+   "independent_group": "austin_surface_water_quality",
+   "min_units": 500,
+   "partitions": "hash of sample_ref_no so the parameters of one sample stay together 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 22887,
+   "view": "austin_water_quality"
+  },
+  "azure_packing_2020": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "deterministic 1-in-100 tenant slice (tenantId % 100 == 0) limited to multi-VM tenants (6,086 tenants, 38,995 requests)",
+    "fractional relative starttime/endtime (NULL endtime indicates active or post-horizon VMs; negative starttime indicates pre-window VMs)",
+    "publisher anonymised all tenant and VM identifiers"
+   ],
+   "first_party": true,
+   "independent_group": "microsoft_azure_compute",
+   "min_units": 1000,
+   "partitions": "hash of tenant_id 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-SEQ",
+   "units": 6086,
+   "view": "azure_packing_2020"
+  },
+  "backblaze_drive_stats": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "sixty consecutive daily snapshots of 2014 (January to March), one drive in eight by hash, whole series kept",
+    "drives that fail stop reporting after the failure day; drives appear and leave the fleet",
+    "SMART attributes differ by model so many columns are missing by design",
+    "31 failures in 3,749 drives: a low natural failure prevalence"
+   ],
+   "first_party": true,
+   "independent_group": "backblaze",
+   "min_units": 1000,
+   "natural_labels": "the publisher's failure flag marks the day a drive was recorded as failed: a real equipment failure, not an ETL or source-data fault; kept in the failure column, separate from injections",
+   "partitions": "chronological 70/15/15 on the date",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and collective anomalies",
+    "level shift and drift over weeks",
+    "missing interval and delayed arrival",
+    "prevalence change within the window"
+   ],
+   "temporal_span": "60 days at daily spacing",
+   "units": 206941,
+   "unsupported_fault_mechanisms": [
+    "seasonal deviation",
+    "multi-month or yearly degradation",
+    "contextual faults that need long history"
+   ],
+   "view": "backblaze_drive_stats"
+  },
+  "bikeshare_capital": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "negative and multi-day durations occur in the source",
+    "three monthly files only",
+    "23 percent of trips without start station",
+    "no monetary amount: rental events, not payments"
+   ],
+   "first_party": true,
+   "independent_group": "lyft_bikeshare",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on start time",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1947784,
+   "view": "bikeshare_capital"
+  },
+  "bikeshare_jc": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "negative and multi-day durations occur in the source",
+    "three monthly files only",
+    "all trips with stations",
+    "no monetary amount: rental events, not payments"
+   ],
+   "first_party": true,
+   "independent_group": "lyft_bikeshare",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on start time",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 319159,
+   "view": "bikeshare_jc"
+  },
+  "bloomington_solar_sites": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete daily export: 91,437 site-day rows from 2017-01-01 over the municipal solar installations; leading and outage days are blank and kept as missing",
+    "weather, season, soiling and inverter outages are baseline dynamics, not injected faults"
+   ],
+   "first_party": true,
+   "independent_group": "bloomington_locus_solar_monitoring",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on date",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies against the seasonal generation curve",
+    "level shift, inverter outage, stuck value and missing intervals"
+   ],
+   "temporal_span": "about 9 years of daily generation per site (2017 onward)",
+   "units": 91437,
+   "unsupported_fault_mechanisms": [
+    "sub-daily irradiance and inverter-level behaviour"
+   ],
+   "view": "bloomington_solar_sites"
+  },
+  "bloomington_water_plant_energy": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete daily export of the plant table: 6,109 daily rows from 2010-01-01; publisher blanks kept as missing",
+    "weekly operations, seasonal demand, solar installation start and maintenance outages are baseline dynamics, not injected faults"
+   ],
+   "first_party": true,
+   "independent_group": "bloomington_utilities_water_plant",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on date",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies against seasonal demand",
+    "level shift, meter outage, stuck value and missing intervals"
+   ],
+   "temporal_span": "about 16 years of daily plant readings (2010 onward)",
+   "units": 6109,
+   "unsupported_fault_mechanisms": [
+    "sub-daily process dynamics"
+   ],
+   "view": "bloomington_water_plant_energy"
+  },
+  "bts_daily_mobility_national": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "national level of the daily mobility panel: 1,923 daily rows from 2019-01-01 to 2024-04-06, no missing days expected",
+    "weekly cycle, holidays, the 2020 pandemic regime change and panel changes are baseline dynamics, not injected faults"
+   ],
+   "first_party": true,
+   "independent_group": "bts_umd_daily_mobility_statistics",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on date",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies against weekly and holiday profiles",
+    "level shift, regime change, stuck value and missing intervals"
+   ],
+   "temporal_span": "5 years of daily national indicators (2019-01-01 to 2024-04-06)",
+   "units": 1923,
+   "unsupported_fault_mechanisms": [
+    "regional and individual-level mobility"
+   ],
+   "view": "bts_daily_mobility_national"
+  },
+  "cdc_covid_vaccination_trends_us": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "national (US) rows of the vaccination trends table: 1,476 rows over 2020-12-13 to 2023-05-10, a closed reporting period; the Admin and Report date types are two views of the same flows and stay in one table",
+    "rolling averages and cumulative counts are derived columns published by the CDC; late reports revise earlier counts, so the report-date view is not the administration-date view",
+    "bivalent booster columns are published as text and are empty before the bivalent rollout"
+   ],
+   "first_party": true,
+   "independent_group": "cdc_covid_vaccination_reporting",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on date within each date type",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies against campaign-driven daily profiles",
+    "level shift, reporting backlog, stuck value and missing intervals"
+   ],
+   "temporal_span": "about 2.4 years of daily national counts (2020-12-13 to 2023-05-10)",
+   "units": 1476,
+   "unsupported_fault_mechanisms": [
+    "jurisdiction-level and individual-level reporting"
+   ],
+   "view": "cdc_covid_vaccination_trends_us"
+  },
+  "cftc_cot_disaggregated": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 2024-01-02 to 2025-12-30 weekly Disaggregated Futures Only release: 27,231 contract-week rows over 346 contracts, 21 of 194 columns (all-period positions only)",
+    "positions of reportable trader classes are aggregates per contract, not individual traders; publisher-reported zero and missing values preserved"
+   ],
+   "first_party": true,
+   "independent_group": "cftc_cot_disaggregated",
+   "min_units": 500,
+   "partitions": "hash of cftc_contract_market_code 70/15/15 so the weekly reports of one contract stay together",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 27231,
+   "view": "cftc_cot_disaggregated"
+  },
+  "chembl_molecules": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "identifier-ordered prefix sample (1000 molecules ordered by molecule_chembl_id from ChEMBL_37); bias toward early curated CHEMBL identifiers",
+    "depth 5 with 71 distinct paths and 26 optional paths (biotherapeutic subunits, calculated properties, structures, synonyms)",
+    "0 emails in raw extract; redact_emails applied recursively; kept local under CC BY-SA 3.0"
+   ],
+   "first_party": true,
+   "independent_group": "chembl_molecules",
+   "min_units": 500,
+   "partitions": "hash of molecule_chembl_id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 1000,
+   "view": "chembl_molecules"
+  },
+  "cincinnati_ecc_calls": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "January and February 2023 slice of the Cincinnati ECC call table (7,996,500 rows over all years): a contiguous seizure-time window, not a random sample; 164,525 call rows",
+    "telephony events are the four published timestamps of each call; blank timestamps are natural missing steps; the location query can precede the seizure timestamp, and events are ordered by time",
+    "caller locations, queues, agents, line numbers and durations never downloaded; call record ids pseudonymised"
+   ],
+   "first_party": true,
+   "independent_group": "cincinnati_emergency_communications_calls",
+   "min_units": 1000,
+   "natural_labels": "none; call types are operational categories, not ETL faults",
+   "partitions": "hash of the call record id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 164525,
+   "view": "cincinnati_ecc_calls"
+  },
+  "cincinnati_fire_cad": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "calendar year 2023 slice of the Cincinnati fire CAD table (1,068,376 rows over all years): a contiguous creation-time window, not a random sample; 96,072 incident rows",
+    "lifecycle events are the four published timestamps of each incident; blank timestamps are natural missing steps and a repeated event number (one) is kept",
+    "published timestamps are not guaranteed to be ordered the way the lifecycle suggests; events are ordered by time"
+   ],
+   "first_party": true,
+   "independent_group": "cincinnati_fire_dispatch",
+   "min_units": 1000,
+   "natural_labels": "none; dispositions are operational outcomes, not ETL faults",
+   "partitions": "hash of the event number 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 96071,
+   "view": "cincinnati_fire_cad"
+  },
+  "clinicaltrials_v2": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "about 90 percent of paths are optional",
+    "registrations by sponsors with sponsor-specific completeness",
+    "start dates of 2023 only",
+    "third-party copyright may apply to some text"
+   ],
+   "first_party": false,
+   "independent_group": "clinicaltrials_gov",
+   "min_units": 1000,
+   "partitions": "hash of nctId 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 12000,
+   "view": "clinicaltrials_v2"
+  },
+  "colorado_dam_safety": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete export of the state dam safety inventory, 2,737 dams; publisher blanks preserved (for example 33 percent without an inspection date)",
+    "dam names, identifiers of other systems, coordinates, inspector and staff names, stream and town names dropped, damid pseudonymised; columns more than 50 percent missing dropped"
+   ],
+   "first_party": true,
+   "independent_group": "colorado_dam_safety_registry",
+   "min_units": 500,
+   "partitions": "hash of damid 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 2737,
+   "view": "colorado_dam_safety"
+  },
+  "colorado_storage_tanks": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete registry export (52,111 tank rows over 16,979 facilities); installation and closure dates kept as published, 52,111 rows",
+    "facility names, street addresses, tank names and tags dropped, facility_id pseudonymised; columns more than 50 percent missing dropped; 16.5 percent of rows duplicate another row because identical tanks of one facility are listed separately"
+   ],
+   "first_party": true,
+   "independent_group": "colorado_regulated_storage_tanks",
+   "min_units": 500,
+   "partitions": "hash of facility_id so the tanks of one facility stay together 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 52111,
+   "view": "colorado_storage_tanks"
+  },
+  "cordis_horizon_europe": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 6 core Horizon Europe tables across 2021-2026 (24,419 projects reconstructed across multiline quotes, 151,382 organization participations, 53,445 EuroSciVoc tags, 24,419 topics, 31,403 legal bases, 118,956 policy priority rows)",
+    "0 foreign-key orphans across all 5 child tables totaling 379,605 rows",
+    "project title/objective/keywords and organization name/shortName/vatNumber/street/postCode/city/geolocation/organizationURL/contactForm dropped; organisationID pseudonymised with salted SHA-256"
+   ],
+   "first_party": true,
+   "independent_group": "cordis_horizon_europe",
+   "min_units": 1000,
+   "partitions": "hash of project.id 70/15/15 keeping organizations, vocabularies, topics and priorities linked to their project",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 24419,
+   "view": "cordis_horizon_europe"
+  },
+  "cpsc_recalls": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 2024-01-01 to 2025-12-31 recall release: 725 notices, depth 4, 47 paths of which 12 optional, 13 object-array fields",
+    "consumer contact line, image captions and page links dropped; e-mail addresses redacted at all depths; company names kept as publisher-stated parties"
+   ],
+   "first_party": true,
+   "independent_group": "cpsc_recall_notices",
+   "min_units": 500,
+   "partitions": "hash of RecallID 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 725,
+   "view": "cpsc_recalls"
+  },
+  "crossref_works": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "random sample of one DOI per record",
+    "depth 6 with 71 optional paths",
+    "references leave the sample"
+   ],
+   "first_party": false,
+   "independent_group": "crossref",
+   "min_units": 1000,
+   "partitions": "hash of DOI 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 2000,
+   "view": "crossref_works"
+  },
+  "datacite_dois": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "created-ordered 2025 dataset DOI prefix sample (1000 records sorted by created timestamp); non-random early-2025 prefix",
+    "depth 8 with 91 distinct paths and 45 optional paths (funding references, related identifiers, geoLocations, subjects)",
+    "creators, contributors and free-text descriptions stripped; redact_emails applied recursively (0 emails)"
+   ],
+   "first_party": true,
+   "independent_group": "datacite_dois",
+   "min_units": 500,
+   "partitions": "hash of id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 1000,
+   "view": "datacite_dois"
+  },
+  "delaware_state_credit_cards": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "fiscal year 2023 slice of the Delaware credit card table (2,268,380 rows over all years): a contiguous fiscal-year window, not a random sample; 188,670 transaction rows",
+    "merchant names pseudonymised; no cardholder identity is published"
+   ],
+   "first_party": true,
+   "independent_group": "delaware_state_purchasing_cards",
+   "min_units": 500,
+   "partitions": "hash of the merchant 70/15/15 so the transactions of one merchant stay together",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 188670,
+   "view": "delaware_state_credit_cards"
+  },
+  "delaware_well_permits": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2018 to 2022 application window of the Delaware well permit table (187,992 rows in all): a contiguous window, not a random sample; 20,123 permit rows",
+    "owner, address, tax id, comment, contractor, license and coordinate columns dropped, permit number pseudonymised; columns more than 50 percent missing dropped"
+   ],
+   "first_party": true,
+   "independent_group": "delaware_dnrec_well_permits",
+   "min_units": 500,
+   "partitions": "hash of permitnumber 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 20123,
+   "view": "delaware_well_permits"
+  },
+  "dft_stats19_2023": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete official 2023 release, no sampling; contributory factors are withheld by the publisher",
+    "official -1 codes (data missing or out of range) are published states and cover 6.1 percent of collision, 8.7 percent of vehicle and 7.4 percent of casualty cells",
+    "severity adjustment variables are model-derived by the publisher and are part of the baseline",
+    "collisions, vehicles and casualties are one generating system and count once",
+    "experimental view drops collision_ref_no, lsoa_of_driver and lsoa_of_casualty while retaining published accident coordinates/OSGR/LSOA and integer driver/casualty ages verbatim without pseudonymisation"
+   ],
+   "first_party": true,
+   "independent_group": "dft_stats19",
+   "min_units": 500,
+   "partitions": "hash of the collision index 70/15/15 so a collision and its vehicles and casualties stay together",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 104258,
+   "view": "dft_stats19_2023"
+  },
+  "dgal_alimconfiance": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete published Alim'Confiance export of 71,228 sanitary inspections across 16 coded/numeric columns",
+    "missing follow-up action type_suite (29.4 percent) reflects inspections without enforcement follow-up",
+    "establishment names, SIRET, approval numbers, addresses and coordinates dropped; numero_inspection pseudonymised"
+   ],
+   "first_party": true,
+   "independent_group": "dgal_alimconfiance",
+   "min_units": 500,
+   "partitions": "hash of numero_inspection 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 71228,
+   "view": "dgal_alimconfiance"
+  },
+  "dgccrf_fuel_prices": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "point-in-time national convenience snapshot (2026-11-22) melted across six fuel grades into 32,699 active price postings over 9,593 stations; single-timestamp cross-section cannot evaluate long-term drift",
+    "station identifiers pseudonymised via salted SHA-256; addresses, municipalities and GPS coordinates dropped"
+   ],
+   "first_party": true,
+   "independent_group": "dgccrf_fuel_prices",
+   "min_units": 500,
+   "partitions": "hash of station_id 70/15/15 so fuel postings from the same station stay together",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 32699,
+   "view": "dgccrf_fuel_prices"
+  },
+  "dgfip_dvf": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "one department and one year",
+    "a sale can have several rows (lots, land)",
+    "282 rows without a value (exchanges)"
+   ],
+   "first_party": true,
+   "independent_group": "dgfip_dvf",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the date",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 75985,
+   "view": "dgfip_dvf"
+  },
+  "doaj_journals": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "creation-ordered prefix of 999 of about 23,800 journal records (the oldest records): not a random sample",
+    "optional sub-objects vary by journal"
+   ],
+   "first_party": true,
+   "independent_group": "doaj_directory_of_open_access_journals",
+   "min_units": 500,
+   "natural_labels": "none",
+   "partitions": "hash of the journal id 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-NEST",
+   "units": 999,
+   "view": "doaj_journals"
+  },
+  "dwd_hourly_climate": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "twelve strided active German synoptic stations ending 2025-12-31 filtered to eight years (2018-2025)",
+    "-999 missing sentinels replaced by NaN (1,679 temperature and 1,978 relative humidity readings); quality codes kept",
+    "synoptic diurnal and annual temperature cycles are baseline dynamics"
+   ],
+   "first_party": true,
+   "independent_group": "dwd_germany",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 per station",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective anomalies",
+    "level shift, sensor drift and trend over weeks to years",
+    "missing interval and delayed arrival",
+    "seasonal deviation and inter-annual shift across eight annual cycles"
+   ],
+   "temporal_span": "eight years hourly (2018-01-01 to 2025-12-31)",
+   "units": 838605,
+   "unsupported_fault_mechanisms": [
+    "sub-hourly high-frequency oscillations"
+   ],
+   "view": "dwd_hourly_climate"
+  },
+  "ea_hydrology_flow": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "12 stations of one network",
+    "2 percent missing values",
+    "daily means, 2010 to 2025"
+   ],
+   "first_party": true,
+   "independent_group": "ea_hydrology",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 per station",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "units": 70128,
+   "view": "ea_hydrology_flow"
+  },
+  "ecb_fx_reference_rates": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete daily history of the ECB euro foreign exchange reference rates: 7,141 TARGET business days, 41 currency columns, 1999-01-04 to 2026-11-20",
+    "publisher N/A (currency introduced after 1999, withdrawn at euro adoption or suspended) kept as NaN: 70,644 of 292,781 cells; business-day calendar gaps (weekends, TARGET holidays) preserved",
+    "market jumps, regime changes and currency discontinuities are baseline dynamics, not injected faults"
+   ],
+   "first_party": true,
+   "independent_group": "ecb_euro_fx_reference_rates",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on date",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies on rate levels and day-to-day returns",
+    "level shift, volatility change, stale values and missing intervals"
+   ],
+   "temporal_span": "27 years of daily business-day fixings (1999-01-04 to 2026-11-20)",
+   "units": 7141,
+   "unsupported_fault_mechanisms": [
+    "intraday quotation behaviour"
+   ],
+   "view": "ecb_fx_reference_rates"
+  },
+  "eia_petroleum_spot_prices": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "daily spot price series of the PET bulk file joined on the date: business days from 1986-01-02 (series start at different dates, so earlier cells are missing)",
+    "market shocks (the 2008 and 2020 collapses), regime changes and holidays are baseline dynamics, not injected faults"
+   ],
+   "first_party": true,
+   "independent_group": "eia_petroleum_spot_prices",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on date",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies on price levels and returns",
+    "level shift, volatility change, stale values and missing intervals"
+   ],
+   "temporal_span": "about 40 years of business-day prices (1986-01-02 to 2026-11-17)",
+   "units": 10473,
+   "unsupported_fault_mechanisms": [
+    "intraday quotation behaviour"
+   ],
+   "view": "eia_petroleum_spot_prices"
+  },
+  "epa_aqs_ozone_hourly": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "12 monitors chosen by a fixed stride over sorted ids, not by value; one pollutant (ozone) and two calendar years",
+    "six monitors report all year, six only seven to nine months (March to November in most): the off-season gap is a published state, not a fault",
+    "10.4 percent of values carry a qualifier code (for example 1, 2, IT, 6, RF, IF) and two instrument methods occur; both are kept",
+    "values are instrument readings, not model output; 20 values are below zero as published"
+   ],
+   "first_party": true,
+   "independent_group": "epa_aqs",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 per monitor",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective anomalies",
+    "level shift and drift over weeks to months",
+    "missing interval and delayed arrival",
+    "prevalence change",
+    "seasonal deviation limited to two annual cycles"
+   ],
+   "temporal_span": "two calendar years of hourly values (2022 to 2023), 12 monitors",
+   "units": 162829,
+   "unsupported_fault_mechanisms": [
+    "multi-year trend or degradation",
+    "statements about the stability of seasonality over years"
+   ],
+   "view": "epa_aqs_ozone_hourly"
+  },
+  "fdic_bank_financials": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "four complete year-end cross-sections (REPDTE 20221231, 20231231, 20241231, 20251231; 18,402 filings across 4,798 banks); year-end snapshot boundary excludes intra-year failed/merged banks outside Q4",
+    "CERT identifier pseudonymised via salted SHA-256 so multi-year bank balance sheets join across snapshots"
+   ],
+   "first_party": true,
+   "independent_group": "fdic_bank_financials",
+   "min_units": 500,
+   "partitions": "hash of cert_id 70/15/15 so multi-year regulatory filings stay together",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 18402,
+   "view": "fdic_bank_financials"
+  },
+  "fec_federal_campaign_finance_2024": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 2023-2024 cycle files of four tables (9,796 candidates, 20,937 committees, 8,619 linkages, 703,181 committee contributions); the natural orphans are published states and nothing is repaired: 23 of 8,218 committee candidate ids, 154 of 8,619 linkage candidate ids, 160 of 8,619 linkage committee ids, 84,215 of 703,181 recipient committee ids and 8,903 of 701,557 contribution candidate ids are absent from the master files of the cycle (earlier-cycle candidates and committees)",
+    "candidate and committee names, treasurers, addresses, payee names and memo text dropped; the party code NA is kept as a value",
+    "blank committee or candidate ids are missing keys, not dangling ones; 35 repeated candidate-committee-year linkage keys are kept"
+   ],
+   "first_party": true,
+   "independent_group": "fec_federal_campaign_finance_filings",
+   "min_units": 1000,
+   "partitions": "hash of CMTE_ID 70/15/15 so a committee and its contribution rows stay together",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 742533,
+   "view": "fec_federal_campaign_finance_2024"
+  },
+  "flat:uci:101:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "958 rows and 10 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:101",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 958,
+   "view": "flat_uci_101_C2a"
+  },
+  "flat:uci:110:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1484 rows and 10 informative columns in the representative table",
+    "0.0 share of missing values",
+    "2 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:110",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1484,
+   "view": "flat_uci_110_C1"
+  },
+  "flat:uci:143:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "690 rows and 15 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:143",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 690,
+   "view": "flat_uci_143_C1"
+  },
+  "flat:uci:146:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "6435 rows and 37 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:146",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 6435,
+   "view": "flat_uci_146_C1"
+  },
+  "flat:uci:148:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "58000 rows and 8 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:148",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 58000,
+   "view": "flat_uci_148_C1"
+  },
+  "flat:uci:149:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "846 rows and 19 informative columns in the representative table",
+    "0.0001 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:149",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 846,
+   "view": "flat_uci_149_C1"
+  },
+  "flat:uci:159:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "19020 rows and 11 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:159",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 19020,
+   "view": "flat_uci_159_C1"
+  },
+  "flat:uci:15:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "699 rows and 11 informative columns in the representative table",
+    "0.0021 share of missing values",
+    "2 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:15",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 699,
+   "view": "flat_uci_15_C1"
+  },
+  "flat:uci:162:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "39644 rows and 61 informative columns in the representative table",
+    "0.0 share of missing values",
+    "5 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:162",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 39644,
+   "view": "flat_uci_162_C1"
+  },
+  "flat:uci:165:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1030 rows and 9 informative columns in the representative table",
+    "0.0 share of missing values",
+    "5 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:165",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1030,
+   "view": "flat_uci_165_C1"
+  },
+  "flat:uci:189:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "768 rows and 10 informative columns in the representative table",
+    "0.0 share of missing values",
+    "2 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:189",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 768,
+   "view": "flat_uci_189_C1"
+  },
+  "flat:uci:193:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2126 rows and 23 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:193",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 2126,
+   "view": "flat_uci_193_C1"
+  },
+  "flat:uci:198:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1941 rows and 34 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:198",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1941,
+   "view": "flat_uci_198_C1"
+  },
+  "flat:uci:19:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1728 rows and 7 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:19",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1728,
+   "view": "flat_uci_19_C2a"
+  },
+  "flat:uci:212:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "310 rows and 7 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:212",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 310,
+   "view": "flat_uci_212_C1"
+  },
+  "flat:uci:22:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "3196 rows and 36 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:22",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 3196,
+   "view": "flat_uci_22_C2a"
+  },
+  "flat:uci:247:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "536 rows and 10 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:247",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 536,
+   "view": "flat_uci_247_C1"
+  },
+  "flat:uci:257:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "403 rows and 6 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:257",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 403,
+   "view": "flat_uci_257_C1"
+  },
+  "flat:uci:264:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "14980 rows and 15 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:264",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 14980,
+   "view": "flat_uci_264_C1"
+  },
+  "flat:uci:267:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1372 rows and 5 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:267",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1372,
+   "view": "flat_uci_267_C1"
+  },
+  "flat:uci:26:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "67557 rows and 43 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:26",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 67557,
+   "view": "flat_uci_26_C2a"
+  },
+  "flat:uci:270:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "13910 rows and 128 informative columns in the representative table",
+    "0.0078 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:270",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 13910,
+   "view": "flat_uci_270_C1"
+  },
+  "flat:uci:27:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "690 rows and 16 informative columns in the representative table",
+    "0.0061 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:27",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 690,
+   "view": "flat_uci_27_C2a"
+  },
+  "flat:uci:291:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1503 rows and 6 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:291",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1503,
+   "view": "flat_uci_291_C1"
+  },
+  "flat:uci:292:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "440 rows and 8 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:292",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 440,
+   "view": "flat_uci_292_C1"
+  },
+  "flat:uci:294:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "9568 rows and 5 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:294",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 9568,
+   "view": "flat_uci_294_C1"
+  },
+  "flat:uci:296:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1080 rows and 82 informative columns in the representative table",
+    "0.0158 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:296",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1080,
+   "view": "flat_uci_296_C1"
+  },
+  "flat:uci:312:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "750 rows and 16 informative columns in the representative table",
+    "0.005 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:312",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 750,
+   "view": "flat_uci_312_C1"
+  },
+  "flat:uci:31:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "581012 rows and 55 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:31",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 581012,
+   "view": "flat_uci_31_C1"
+  },
+  "flat:uci:327:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "11055 rows and 31 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:327",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 11055,
+   "view": "flat_uci_327_C1"
+  },
+  "flat:uci:329:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1151 rows and 20 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:329",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1151,
+   "view": "flat_uci_329_C1"
+  },
+  "flat:uci:32:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "541 rows and 40 informative columns in the representative table",
+    "0.0481 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:32",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 541,
+   "view": "flat_uci_32_C2a"
+  },
+  "flat:uci:365:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "43405 rows and 66 informative columns in the representative table",
+    "0.0144 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:365",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 43405,
+   "view": "flat_uci_365_C1"
+  },
+  "flat:uci:368:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "500 rows and 19 informative columns in the representative table",
+    "0.0006 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:368",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 500,
+   "view": "flat_uci_368_C1"
+  },
+  "flat:uci:372:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "17898 rows and 9 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:372",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 17898,
+   "view": "flat_uci_372_C1"
+  },
+  "flat:uci:379:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1353 rows and 10 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:379",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1353,
+   "view": "flat_uci_379_C1"
+  },
+  "flat:uci:381:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "43824 rows and 13 informative columns in the representative table",
+    "0.0036 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:381",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 43824,
+   "view": "flat_uci_381_C1"
+  },
+  "flat:uci:396:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "811 rows and 107 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:396",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 811,
+   "view": "flat_uci_396_C1"
+  },
+  "flat:uci:464:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "21263 rows and 82 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:464",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 21263,
+   "view": "flat_uci_464_C1"
+  },
+  "flat:uci:52:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "351 rows and 34 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:52",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 351,
+   "view": "flat_uci_52_C1"
+  },
+  "flat:uci:536:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "4759 rows and 14 informative columns in the representative table",
+    "0.243 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:536",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 4759,
+   "view": "flat_uci_536_C1"
+  },
+  "flat:uci:545:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "3810 rows and 8 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:545",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 3810,
+   "view": "flat_uci_545_C1"
+  },
+  "flat:uci:551:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "36733 rows and 12 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:551",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 36733,
+   "view": "flat_uci_551_C1"
+  },
+  "flat:uci:555:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "99826 rows and 22 informative columns in the representative table",
+    "0.0772 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:555",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 99826,
+   "view": "flat_uci_555_C2a"
+  },
+  "flat:uci:572:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "6819 rows and 95 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:572",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 6819,
+   "view": "flat_uci_572_C1"
+  },
+  "flat:uci:597:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1197 rows and 15 informative columns in the representative table",
+    "0.0282 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:597",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1197,
+   "view": "flat_uci_597_C1"
+  },
+  "flat:uci:59:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "20000 rows and 17 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:59",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 20000,
+   "view": "flat_uci_59_C1"
+  },
+  "flat:uci:601:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "10000 rows and 14 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:601",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 10000,
+   "view": "flat_uci_601_C1"
+  },
+  "flat:uci:602:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "13611 rows and 17 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:602",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 13611,
+   "view": "flat_uci_602_C1"
+  },
+  "flat:uci:69:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "3190 rows and 62 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:69",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 3190,
+   "view": "flat_uci_69_C2a"
+  },
+  "flat:uci:73:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "8124 rows and 22 informative columns in the representative table",
+    "0.0133 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:73",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 8124,
+   "view": "flat_uci_73_C2a"
+  },
+  "flat:uci:755:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "31991 rows and 8 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:755",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 31991,
+   "view": "flat_uci_755_C1"
+  },
+  "flat:uci:75:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "6598 rows and 169 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:75",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 6598,
+   "view": "flat_uci_75_C1"
+  },
+  "flat:uci:760:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "181800 rows and 7 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:760",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 181800,
+   "view": "flat_uci_760_C1"
+  },
+  "flat:uci:76:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "12960 rows and 9 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:76",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 12960,
+   "view": "flat_uci_76_C2a"
+  },
+  "flat:uci:78:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "5473 rows and 11 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:78",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 5473,
+   "view": "flat_uci_78_C1"
+  },
+  "flat:uci:80:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "10992 rows and 17 informative columns in the representative table",
+    "0.0 share of missing values",
+    "2 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:80",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 10992,
+   "view": "flat_uci_80_C1"
+  },
+  "flat:uci:848:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "61069 rows and 20 informative columns in the representative table",
+    "0.2397 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:848",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 61069,
+   "view": "flat_uci_848_C1"
+  },
+  "flat:uci:850:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "900 rows and 8 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:850",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 900,
+   "view": "flat_uci_850_C1"
+  },
+  "flat:uci:864:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "10129 rows and 19 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:864",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 10129,
+   "view": "flat_uci_864_C1"
+  },
+  "flat:uci:911:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "18182 rows and 15 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:911",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 18182,
+   "view": "flat_uci_911_C2a"
+  },
+  "flat:uci:942:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "123117 rows and 84 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:942",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 123117,
+   "view": "flat_uci_942_C1"
+  },
+  "flat:uci:94:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "4601 rows and 58 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:94",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 4601,
+   "view": "flat_uci_94_C1"
+  },
+  "flat:uci:967:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "235795 rows and 56 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:967",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 235795,
+   "view": "flat_uci_967_C2a"
+  },
+  "france_baac_road_accidents": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 2024 annual release, no sampling: 54,402 accidents, 70,248 place rows, 92,678 vehicles, 125,187 road users; natural key facts are recorded in the view manifest",
+    "address, coordinate, street name, kilometre marker and birth-year columns dropped; coded missing values and the 'N/A' road letter kept as published",
+    "police-reported road-injury mechanism shared with STATS19 (separate national system); not a new scientific domain"
+   ],
+   "first_party": true,
+   "independent_group": "france_baac_road_accidents",
+   "min_units": 1000,
+   "natural_labels": "none; the injury severity grade is a published outcome, not an ETL fault",
+   "partitions": "hash of Num_Acc 70/15/15 so an accident and its places, vehicles and users stay together",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 342515,
+   "view": "france_baac_road_accidents"
+  },
+  "fta_ntd_monthly_ridership": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "months from January 2022 of the NTD monthly module (374,103 rows over all years): a contiguous window, not a random sample; 74,173 agency-mode-month rows",
+    "agency estimates and adjustments are published as reported; blanks are kept"
+   ],
+   "first_party": true,
+   "independent_group": "fta_national_transit_database",
+   "min_units": 500,
+   "partitions": "hash of ntd_id so the months of one agency stay together 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 74173,
+   "view": "fta_ntd_monthly_ridership"
+  },
+  "gbif_cc0_occurrences": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "filtered offset prefix sample (year=2024, hasCoordinate=true, license=CC0_1_0; 1500 occurrences across 5 pages); non-random API-order and licence-filtered slice",
+    "depth 6 with 189 distinct paths and 85 optional paths (gadm administrative hierarchy, extensions, classifications, media)",
+    "collector, identifier, remark, verbatim locality, rightsHolder and media creator fields stripped at all depths; 0 emails"
+   ],
+   "first_party": true,
+   "independent_group": "gbif_occurrences",
+   "min_units": 500,
+   "partitions": "hash of key 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 1500,
+   "view": "gbif_cc0_occurrences"
+  },
+  "gene_ontology_annotations": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete go-basic release 2026-07-26 (48,340 terms, 71,496 hierarchy edges) with the human UniProt-GOA annotation file (906,445 annotation rows, built on the ontology release of 2026-04-27 as its header states): every edge and annotation resolves to a term (0 orphans in 71,496 edges on both ends and 906,445 annotations), and 23 annotation rows are exact repeats, kept as published",
+    "annotation object names and synonyms dropped"
+   ],
+   "first_party": true,
+   "independent_group": "gene_ontology_consortium_annotations",
+   "min_units": 1000,
+   "partitions": "hash of the GO term id 70/15/15 so a term and its edges stay together",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "units": 1026281,
+   "view": "gene_ontology_annotations"
+  },
+  "gfz_kp_index": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete published three-hourly geomagnetic Kp and ap series (1932-01-01 to 2026-11-21), strictly monotonic 3-hour steps",
+    "geomagnetic storms and 11-year solar-cycle extremes are physical baseline dynamics, not injected faults",
+    "recent tail contains 168 preliminary rows (D=0) alongside 277,104 definitive rows (D=1)"
+   ],
+   "first_party": true,
+   "independent_group": "gfz_potsdam_kp",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on UTC timestamp",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective anomalies",
+    "level shift, secular drift and multi-decade regime shift",
+    "missing interval and timestamp permutation",
+    "solar-cycle seasonality and variance change"
+   ],
+   "temporal_span": "94 years three-hourly (1932-01-01 to 2026-11-21)",
+   "units": 277272,
+   "unsupported_fault_mechanisms": [
+    "sub-three-hour transient glitches"
+   ],
+   "view": "gfz_kp_index"
+  },
+  "github_reviewed_advisories": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "the first 100 reviewed advisories of each publication year 2017 to 2026 in publication order (1,000 records at most): not a random sample",
+    "optional parts (CVE id, withdrawal, patched versions, scoring versions) vary by advisory; credits dropped"
+   ],
+   "first_party": true,
+   "independent_group": "github_advisory_database",
+   "min_units": 500,
+   "natural_labels": "none",
+   "partitions": "hash of the GHSA id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 1000,
+   "view": "github_reviewed_advisories"
+  },
+  "grouplens_movielens": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the release (0 orphans)",
+    "users selected at random with at least 20 ratings",
+    "development snapshot of 2018, not a stable benchmark release"
+   ],
+   "first_party": true,
+   "independent_group": "grouplens",
+   "min_units": 1000,
+   "partitions": "hash of the user id 70/15/15, tables follow",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 100836,
+   "view": "grouplens_movielens"
+  },
+  "gtfs_fr_alterneo": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_alterneo",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 367750,
+   "view": "gtfs_fr_alterneo"
+  },
+  "gtfs_fr_aravis": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_aravis",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 396301,
+   "view": "gtfs_fr_aravis"
+  },
+  "gtfs_fr_citea": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_citea",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 497486,
+   "view": "gtfs_fr_citea"
+  },
+  "gtfs_fr_diviamobilites": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_diviamobilites",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 712352,
+   "view": "gtfs_fr_diviamobilites"
+  },
+  "gtfs_fr_filibus": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_filibus",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 255903,
+   "view": "gtfs_fr_filibus"
+  },
+  "gtfs_fr_kiceo": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_kiceo",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 65019,
+   "view": "gtfs_fr_kiceo"
+  },
+  "gtfs_fr_optymo": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_optymo",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 165089,
+   "view": "gtfs_fr_optymo"
+  },
+  "gtfs_fr_palmbus": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_palmbus",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 836508,
+   "view": "gtfs_fr_palmbus"
+  },
+  "gtfs_fr_sankeo": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_sankeo",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 377481,
+   "view": "gtfs_fr_sankeo"
+  },
+  "gtfs_fr_sibra": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_sibra",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 269669,
+   "view": "gtfs_fr_sibra"
+  },
+  "gtfs_fr_tango": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_tango",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 387117,
+   "view": "gtfs_fr_tango"
+  },
+  "gtfs_fr_transvilles": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_transvilles",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 325127,
+   "view": "gtfs_fr_transvilles"
+  },
+  "hmlr_price_paid": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "fragment of one year in file order",
+    "sales with prices and property attributes",
+    "addresses dropped by the view"
+   ],
+   "first_party": true,
+   "independent_group": "hm_land_registry",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the date",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 180229,
+   "view": "hmlr_price_paid"
+  },
+  "ingv_seismic_events": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "date-restricted and magnitude-filtered extract (17,755 INGV ISIDe seismic events across 1,096 UTC days, 2022-2024, minmagnitude>=1.5); complete within filter, not random",
+    "non-BP physical event mechanism spanning earthquake, quarry blast, controlled explosion, explosion and landslide event types",
+    "Author, MagAuthor and free-text EventLocationName dropped"
+   ],
+   "first_party": true,
+   "independent_group": "ingv_seismic",
+   "min_units": 1000,
+   "natural_labels": "none; physical EventType distinguishes natural earthquakes from quarry blasts rather than ETL faults",
+   "partitions": "hash of event_date 70/15/15 so daily seismic sequences stay together",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 1096,
+   "view": "ingv_seismic_events"
+  },
+  "inpi_bce_ratios": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "identifier-ordered prefix (first 30,000 INPI filings sorted ascending by SIREN, filtered strictly to confidentiality=Public -> 23,012 rows; 6,988 partial/confidential dropped); non-random prefix and filter bias toward lower SIRENs",
+    "SIREN pseudonymised with salted SHA-256 so multi-year corporate filings join consistently"
+   ],
+   "first_party": true,
+   "independent_group": "inpi_bce_ratios",
+   "min_units": 500,
+   "partitions": "hash of siren_id 70/15/15 so multi-year corporate filings stay together",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 23012,
+   "view": "inpi_bce_ratios"
+  },
+  "jolpica_f1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete published extract, no sampling: every relation resolves (0 orphans of 13 checked)",
+    "laps exist only for sessions with time data, so lap tables cover recent seasons",
+    "some sessions have no entries or no laps by history, not by sampling",
+    "driver names and birth dates removed; identifiers kept"
+   ],
+   "first_party": true,
+   "independent_group": "jolpica_f1",
+   "min_units": 1000,
+   "partitions": "hash of the season identifier 70/15/15 so a season and its rounds, entries and laps stay together",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 52234,
+   "view": "jolpica_f1"
+  },
+  "loghub:Android": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:Apache": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:BGL": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:HDFS": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:HPC": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:Hadoop": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:HealthApp": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:Linux": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:Mac": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:OpenSSH": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:OpenStack": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:Proxifier": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:Spark": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:Thunderbird": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:Windows": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:Zookeeper": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "met_museum_objects": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "even stride over the id listing, not random",
+    "depth 4, 22 of 72 paths optional",
+    "half of the records flagged public domain"
+   ],
+   "first_party": true,
+   "independent_group": "met_museum",
+   "min_units": 1000,
+   "partitions": "hash of the object id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 1000,
+   "view": "met_museum_objects"
+  },
+  "mitre_attack_enterprise_stix": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "pinned ATT&CK Enterprise release v20.1, complete collection bundle; optional fields vary by STIX object type and by revision",
+    "revoked and deprecated objects are published states and kept; object types are heterogeneous by design",
+    "MITRE copyright designation and licence reproduced in the view NOTICE"
+   ],
+   "first_party": true,
+   "independent_group": "mitre_attack_knowledge_base",
+   "min_units": 1000,
+   "natural_labels": "none; revoked and deprecated flags are curation states, not ETL faults",
+   "partitions": "hash of the STIX object id 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-NEST",
+   "units": 26699,
+   "view": "mitre_attack_enterprise_stix"
+  },
+  "monash:4656626": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "sensor outages",
+    "hourly seasonality",
+    "series starting at different dates"
+   ],
+   "first_party": false,
+   "independent_group": "melbourne_pedestrian",
+   "min_units": 1000,
+   "notes": "counts of pedestrians, no individual data; upstream CC BY read on the City of Melbourne catalogue",
+   "partitions": "chronological 70/15/15 on the shared hourly index",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "units": 98723,
+   "view": "monash_pedestrian"
+  },
+  "montgomery_dlc_sales": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "calendar year 2019 slice of the Montgomery County sales table (352,419 rows; the portal publishes 2017 to 2020 and 2026 only): a contiguous calendar year, not a random sample; 138,638 item-month rows",
+    "negative and zero movements are published states and kept"
+   ],
+   "first_party": true,
+   "independent_group": "montgomery_county_liquor_control_sales",
+   "min_units": 500,
+   "partitions": "hash of item_code 70/15/15 so the months of one item stay together",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 138638,
+   "view": "montgomery_dlc_sales"
+  },
+  "nasa_cmr_collections": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "first 100 collections of each of nine providers by entry title (900 records): not a random sample",
+    "provider-specific optional sections vary; contact persons and groups dropped"
+   ],
+   "first_party": true,
+   "independent_group": "nasa_common_metadata_repository",
+   "min_units": 500,
+   "natural_labels": "none",
+   "partitions": "hash of the concept id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 900,
+   "view": "nasa_cmr_collections"
+  },
+  "nasa_omni_solar_wind": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "fifteen complete years of hourly OMNI2 rows: 131,496 contiguous hours, 2010-01-01 00:00 to 2024-12-31 23:00 UT, 26 measurement and metadata columns",
+    "publisher fill values (the character 9 in each field) masked as missing: 246 hours have no value in any field, the flow speed is missing in 0.5 percent of hours and the alpha-to-proton ratio in 6.4 percent",
+    "the 11-year solar cycle, coronal mass ejection and stream-interaction storms, spacecraft handovers (ACE 96 percent of hours, Wind 2 percent, 2 percent no plasma instrument) and averaging-point counts are baseline dynamics, not injected faults"
+   ],
+   "first_party": false,
+   "independent_group": "nasa_omni_near_earth_solar_wind",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on timestamp",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies on field strength, speed, density and temperature",
+    "level shift, variance change, drift and missing intervals"
+   ],
+   "temporal_span": "15 years of hourly averages (2010-01-01 to 2024-12-31)",
+   "units": 131496,
+   "unsupported_fault_mechanisms": [
+    "sub-hourly structure of the solar wind"
+   ],
+   "view": "nasa_omni_solar_wind"
+  },
+  "ncei_storm_events_2024": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 2024 annual NOAA NCEI Storm Events 3-table relational release (69,802 details, 40,258 locations, 1,142 fatalities; 111,202 total rows)",
+    "0 orphans across all 3 foreign keys (locations.EVENT_ID -> details.EVENT_ID, locations.EPISODE_ID -> details.EPISODE_ID, fatalities.EVENT_ID -> details.EVENT_ID)",
+    "episode/event free-text narratives and individual fatality age/sex attributes dropped"
+   ],
+   "first_party": true,
+   "independent_group": "noaa_ncei_storm_events",
+   "min_units": 1000,
+   "partitions": "hash of EPISODE_ID 70/15/15 keeping linked events, locations and fatalities together",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 111202,
+   "view": "ncei_storm_events_2024"
+  },
+  "nces_ipeds_2023": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 2023 collection of five IPEDS tables (revised files where published); key facts are recorded in the view manifest",
+    "institution names, addresses, contacts, links and coordinates dropped; the state code NA is kept as a value",
+    "child tables list institutions absent from the characteristics table only where the manifest reports orphans; none are repaired"
+   ],
+   "first_party": true,
+   "independent_group": "nces_ipeds_postsecondary_surveys",
+   "min_units": 1000,
+   "partitions": "hash of UNITID 70/15/15 so an institution and its child rows stay together",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 434081,
+   "view": "nces_ipeds_2023"
+  },
+  "ndbc_buoys_2023": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "fixed-station selection of 7 NDBC-operated moored buoys, calendar 2023, 360,156 ten-minute UTC rows (47,137 to 52,526 per station); not a random sample of the network",
+    "publisher missing codes (99, 999, 9999) mapped to NaN: wave columns are missing in about 68% of rows, VIS and TIDE in every row (dropped); real gaps and irregular reporting preserved",
+    "NDBC-specific licence page unreachable by automated clients; rights rest on the NWS public-domain disclaimer"
+   ],
+   "first_party": true,
+   "independent_group": "ndbc_moored_buoys",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 within each station_id",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "units": 360156,
+   "view": "ndbc_buoys_2023"
+  },
+  "nhc_hurdat2_atlantic": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete HURDAT2 Atlantic file, 1851 to 2025: storms with records every six hours; observation practice changes over the period (the satellite era from 1966 and aircraft reconnaissance), so early storms have fewer records and missing pressure and radii",
+    "missing codes -99 and -999 are kept as missing values"
+   ],
+   "first_party": true,
+   "independent_group": "noaa_nhc_hurdat2_best_track",
+   "min_units": 100,
+   "natural_labels": "none; status codes and intensity classes are analysis outputs, not ETL faults",
+   "partitions": "hash of storm_id 70/15/15 so a storm stays in one partition",
+   "privacy": "not_needed",
+   "protocol_id": "P-SEQ",
+   "units": 1988,
+   "view": "nhc_hurdat2_atlantic"
+  },
+  "nih_reporter_projects_fy2024": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete fiscal-year 2024 NIH ExPORTER projects file: 83,314 award records across 19 coded, date and cost columns",
+    "coded categoricals (activity code, administering institute, award type, funding mechanism, study section, institution type, state, country) with natural missingness in cost, institution type and state fields",
+    "investigator and programme officer names, organisation identity, titles, terms and public health relevance text dropped; application id pseudonymised"
+   ],
+   "first_party": true,
+   "independent_group": "nih_research_grants",
+   "min_units": 500,
+   "partitions": "hash of APPLICATION_ID 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 83314,
+   "view": "nih_reporter_projects_fy2024"
+  },
+  "noaa_coops_tides": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "six fixed US coastal tide-gauge stations (8518750, 9414290, 8724580, 9447130, 1612340, 8410140) sampled hourly in GMT from 2022-01-01 to 2024-12-31",
+    "astronomical tidal harmonics and storm-surge peaks are natural baseline dynamics, not injected faults",
+    "preserves 4,943 missing water-level observations and 5,417 publisher quality-flagged rows (0 duplicates)"
+   ],
+   "first_party": true,
+   "independent_group": "noaa_coops",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 per station series",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective anomalies",
+    "level shift, drift and missing intervals",
+    "tidal seasonality and variance shifts across three full annual cycles"
+   ],
+   "temporal_span": "3 years hourly across 6 coastal stations (2022-01-01 to 2024-12-31)",
+   "units": 157823,
+   "unsupported_fault_mechanisms": [
+    "sub-hourly coastal seiches"
+   ],
+   "view": "noaa_coops_tides"
+  },
+  "noaa_cpc_daily_ao_index": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete daily file: dates from 1950-01-01, derived from a reanalysis whose inputs changed over the decades",
+    "the index is a model-based projection, so level shifts across observing-system changes are baseline dynamics, not injected faults"
+   ],
+   "first_party": true,
+   "independent_group": "noaa_cpc_arctic_oscillation_index",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on date",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies against the seasonal variance",
+    "level shift, variance change, stuck value and missing intervals"
+   ],
+   "temporal_span": "about 76 years of daily values (1950 onward)",
+   "units": 28083,
+   "unsupported_fault_mechanisms": [
+    "sub-daily variation and regional detail"
+   ],
+   "view": "noaa_cpc_daily_ao_index"
+  },
+  "noaa_gml_co2_weekly": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete weekly Mauna Loa atmospheric CO2 series from 1974-05-19 to 2026-11-15 with -999.99 sentinels masked to NaN (20 missing weeks)",
+    "secular upward trend, annual seasonal biospheric cycle, and the 2022-2023 Mauna Loa eruption site relocation are baseline dynamics, not injected faults"
+   ],
+   "first_party": true,
+   "independent_group": "noaa_gml_co2",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on UTC date",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies",
+    "level shift, drift, seasonal amplitude checks and missing intervals"
+   ],
+   "temporal_span": "52 years weekly (1974-05-19 to 2026-11-15)",
+   "units": 2740,
+   "unsupported_fault_mechanisms": [
+    "daily or sub-daily atmospheric synoptic shifts"
+   ],
+   "view": "noaa_gml_co2_weekly"
+  },
+  "nsidc_sea_ice_index": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete Sea Ice Index v4 daily extent for the Arctic and the Antarctic: 15,908 dates, 1978-10-26 to 2026-11-21, every second day until 1987-08-20 and daily afterwards, one 42-day gap ending 1988-01-13",
+    "extent and missing-area columns for each hemisphere in 10^6 square kilometres; the source-data file path column is dropped",
+    "strong annual cycle, the long-term decline and sensor transitions (SMMR, SSM/I, SSMIS) are baseline dynamics, not injected faults"
+   ],
+   "first_party": true,
+   "independent_group": "nsidc_sea_ice_index",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on date",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies against the annual cycle",
+    "level shift, seasonal amplitude change, drift and missing intervals"
+   ],
+   "temporal_span": "48 years (1978-10-26 to 2026-11-21), irregular sampling before 1987-08-21",
+   "units": 15908,
+   "unsupported_fault_mechanisms": [
+    "sub-daily variation and regional ice extent"
+   ],
+   "view": "nsidc_sea_ice_index"
+  },
+  "nvd_cve": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "four fifteen-day publication windows, not random",
+    "records are revised after publication; the snapshot is dated 2026-11-22",
+    "rejected and deferred entries and records without enrichment are natural source states",
+    "optional parts: weaknesses, configurations, affected, CISA fields; metrics vary by scoring generation"
+   ],
+   "first_party": true,
+   "independent_group": "nist_nvd",
+   "min_units": 1000,
+   "partitions": "hash of the CVE identifier 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-NEST",
+   "units": 4194,
+   "view": "nvd_cve"
+  },
+  "nws_weather_alerts": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "recency-ordered convenience time-slice of 2,000 CAP alert features across 4 sequential 500-alert API cursor pages at snapshot time; weather-regime dependent, not random",
+    "depth 5 with 62 distinct paths and 25 optional paths (optional polygon geometry, hazard parameters, references, replacedAt)",
+    "CAP sender field dropped at every depth and description/headline/instruction strings redacted for emails"
+   ],
+   "first_party": true,
+   "independent_group": "nws_alerts",
+   "min_units": 1000,
+   "partitions": "hash of properties.id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 2000,
+   "view": "nws_weather_alerts"
+  },
+  "nyc_tlc_yellow": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "three complete pickup days, a Tuesday and a weekend, not random",
+    "zero, negative and disputed totals, zero-passenger trips and unusual payment codes are published states",
+    "trip records have no transaction id; one row is one trip",
+    "pickup and dropoff are coarse taxi zone ids"
+   ],
+   "first_party": true,
+   "independent_group": "nyc_tlc",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the pickup time",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 320320,
+   "view": "nyc_tlc_yellow"
+  },
+  "ocds_georgia": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "contract awards, not payments",
+    "records stop in 2019; 151 awards without amount; simplified procurements absent",
+    "hash sample of whole contracting processes"
+   ],
+   "first_party": false,
+   "independent_group": "georgia_procurement",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on award date",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 18299,
+   "view": "ocds_georgia"
+  },
+  "ocds_georgia:nested": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "optional fields and extensions differ by publisher",
+    "records stop in 2019; 151 awards without amount; simplified procurements absent"
+   ],
+   "first_party": false,
+   "independent_group": "georgia_procurement",
+   "min_units": 1000,
+   "partitions": "hash of ocid 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 18299,
+   "view": "ocds_georgia"
+  },
+  "ocds_georgia:relational": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "native OCDS links only",
+    "records stop in 2019; 151 awards without amount; simplified procurements absent"
+   ],
+   "first_party": false,
+   "independent_group": "georgia_procurement",
+   "min_units": 1000,
+   "partitions": "hash of ocid 70/15/15, tables follow their process",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 18299,
+   "view": "ocds_georgia"
+  },
+  "ocds_montreal": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "contract awards, not payments",
+    "correction awards (0.02 percent)",
+    "hash sample of whole contracts",
+    "registry compiled releases"
+   ],
+   "first_party": false,
+   "independent_group": "montreal_contracts",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on award date",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 30551,
+   "view": "ocds_montreal"
+  },
+  "ocds_montreal:nested": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "regular structure: 1 optional path"
+   ],
+   "first_party": false,
+   "independent_group": "montreal_contracts",
+   "min_units": 1000,
+   "partitions": "hash of ocid 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 30551,
+   "view": "ocds_montreal"
+  },
+  "ocds_zambia": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "contract awards, not payments",
+    "selective publication; 7 contracts reference an absent award",
+    "hash sample of whole contracting processes"
+   ],
+   "first_party": false,
+   "independent_group": "zambia_procurement",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on award date",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 2999,
+   "view": "ocds_zambia"
+  },
+  "ocds_zambia:nested": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "optional fields and extensions differ by publisher",
+    "selective publication; 7 contracts reference an absent award"
+   ],
+   "first_party": false,
+   "independent_group": "zambia_procurement",
+   "min_units": 1000,
+   "partitions": "hash of ocid 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 2999,
+   "view": "ocds_zambia"
+  },
+  "ocds_zambia:relational": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "native OCDS links only",
+    "selective publication; 7 contracts reference an absent award"
+   ],
+   "first_party": false,
+   "independent_group": "zambia_procurement",
+   "min_units": 1000,
+   "partitions": "hash of ocid 70/15/15, tables follow their process",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 1368,
+   "view": "ocds_zambia"
+  },
+  "openalex:nested": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "optional fields (46 paths)"
+   ],
+   "first_party": true,
+   "independent_group": "openalex",
+   "min_units": 1000,
+   "partitions": "as openalex:relational",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 1000,
+   "view": "openalex"
+  },
+  "openalex:relational": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "referenced_works leave the sample",
+    "author ids pseudonymised",
+    "one snapshot of one sample"
+   ],
+   "first_party": true,
+   "independent_group": "openalex",
+   "min_units": 1000,
+   "partitions": "works split by hash of work id, 70/15/15; tables follow their works",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 4477,
+   "view": "openalex"
+  },
+  "openfda_device_event": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "one complete day of receipt (2023-03-01), not random",
+    "event types Malfunction (62 percent), Injury (37 percent) and Death (61 reports); a few reports with an empty event type are published states",
+    "optional fields: 8 of 71 keys are missing in some reports",
+    "reports can be revised later; the snapshot is dated 2026-11-22"
+   ],
+   "first_party": true,
+   "independent_group": "fda_maude",
+   "min_units": 1000,
+   "partitions": "hash of the report number 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 7355,
+   "view": "openfda_device_event"
+  },
+  "openfda_drug_event": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "optional fields (64 paths)",
+    "type variation",
+    "sample covers 2 receipt dates only"
+   ],
+   "first_party": true,
+   "independent_group": "openfda_faers",
+   "min_units": 1000,
+   "partitions": "hash of safetyreportid 70/15/15 (only two receipt dates, so no chronological split)",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 4000,
+   "view": "openfda_drug_event"
+  },
+  "openfoodfacts_products": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "about 10000 distinct paths",
+    "866 multi-type paths",
+    "crowd-sourced variation"
+   ],
+   "first_party": true,
+   "independent_group": "openfoodfacts",
+   "min_units": 1000,
+   "notes": "contributor fields dropped at every depth; ODbL share-alike applies to a derived database; products are not persons",
+   "partitions": "hash of product code 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 9688,
+   "view": "openfoodfacts"
+  },
+  "openlibrary_dump": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "shallow nesting (depth 3) with heavy optionality (85 of 98 paths below 90 percent)",
+    "prefix of the dump in key-text order, then one record in 10 by key hash",
+    "works, authors and subjects are references to records outside the sample"
+   ],
+   "first_party": true,
+   "independent_group": "openlibrary",
+   "min_units": 1000,
+   "partitions": "hash of the edition key 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 19269,
+   "view": "openlibrary_dump"
+  },
+  "osv_go_advisories": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "all 4,820 GO-* entries in Go/all.zip (non-GO prefixes excluded for clear CC BY 4.0 provenance)",
+    "depth 9 with 37 paths and 23 optional paths (database_specific, severity, withdrawn, related, ecosystems)",
+    "credits field dropped and strings scanned to redact e-mail addresses"
+   ],
+   "first_party": true,
+   "independent_group": "osv_go",
+   "min_units": 1000,
+   "partitions": "hash of GO advisory id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 4820,
+   "view": "osv_go_advisories"
+  },
+  "ourairports_db": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 2026-11-22 OurAirports 6-table relational dump (86,377 airports, 48,437 runways, 30,400 frequencies, 11,008 navaids, 249 countries, 3,987 regions; 180,458 total rows)",
+    "0 orphans across all 9 foreign keys (airports to countries and regions, regions to countries, runways and frequencies to airports by id and ident, navaids to airports and countries); read with keep_default_na=False to preserve ISO-2 country code NA",
+    "crowd-sourced volunteer database: completeness and accuracy vary by country; link and keyword text dropped"
+   ],
+   "first_party": true,
+   "independent_group": "ourairports_db",
+   "min_units": 1000,
+   "partitions": "hash of airport ident 70/15/15 keeping runways, frequencies and navaids with their airport",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "units": 180458,
+   "view": "ourairports_db"
+  },
+  "paris_urban_trees": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "identifier-ordered prefix sample (first 25000 of 220,279 City of Paris municipal trees sorted ascending by idbase); non-random municipal zone ordering bias",
+    "addresses, placement ids, GPS coordinates, constant typeemplacement and >50%-missing columns dropped; raw and view stay local under ODbL"
+   ],
+   "first_party": true,
+   "independent_group": "paris_urban_trees",
+   "min_units": 500,
+   "partitions": "hash of idbase 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 25000,
+   "view": "paris_urban_trees"
+  },
+  "physionet_eicu_demo": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "demo subset: key relations complete (0 natural orphans)",
+    "de-identified by the publisher with shifted dates",
+    "small cohort (demo)"
+   ],
+   "first_party": true,
+   "independent_group": "eicu_philips",
+   "min_units": 1000,
+   "partitions": "hash of the patient or stay id 70/15/15, child tables follow",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 434660,
+   "view": "physionet_eicu_demo"
+  },
+  "physionet_mimic_iv_demo": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "demo subset: key relations complete (0 natural orphans)",
+    "de-identified by the publisher with shifted dates",
+    "small cohort (demo)"
+   ],
+   "first_party": true,
+   "independent_group": "mimic_iv_bidmc",
+   "min_units": 1000,
+   "partitions": "hash of the patient or stay id 70/15/15, child tables follow",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 107727,
+   "view": "physionet_mimic_iv_demo"
+  },
+  "pubchem_compounds": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "identifier-ordered prefix CID 1 to 1000: the oldest, best-curated compounds, not a random sample",
+    "property arrays mix value types per record; computed descriptors only"
+   ],
+   "first_party": true,
+   "independent_group": "ncbi_pubchem_compound_records",
+   "min_units": 500,
+   "natural_labels": "none",
+   "partitions": "hash of the CID 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-NEST",
+   "units": 1000,
+   "view": "pubchem_compounds"
+  },
+  "rcsb_pdb_entries": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "date-restricted earliest-released-per-year prefix (2024: 350, 2025: 350, 2026: 300 sorted by initial_release_date and rcsb_id); non-random intra-year prefix",
+    "depth 6 with 38 distinct paths and 15 optional paths (crystallographic cell, refine and symmetry subtrees absent in non-diffraction entries)",
+    "audit_author and citation author lists omitted in GraphQL query; redact_emails applied"
+   ],
+   "first_party": true,
+   "independent_group": "rcsb_pdb",
+   "min_units": 500,
+   "partitions": "hash of rcsb_id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 1000,
+   "view": "rcsb_pdb_entries"
+  },
+  "reactome_pathway_knowledgebase": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete release 98 files: 23,652 pathways, 23,762 hierarchy edges, 325,971 UniProt and 113,522 ChEBI mappings; the hierarchy resolves with 0 orphans on both ends, while 13 UniProt mapping rows and 3 ChEBI mapping rows name a pathway absent from the pathway file (natural, kept)",
+    "repeated mapping keys are published states and kept: 4,606 repeated UniProt-pathway pairs and 1,115 repeated ChEBI-pathway pairs (different evidence codes)",
+    "mapping URLs dropped; pathway names are repeated in the mapping files as published"
+   ],
+   "first_party": true,
+   "independent_group": "reactome_curated_pathway_database",
+   "min_units": 1000,
+   "partitions": "hash of the top-level species pathway 70/15/15 so a pathway and its mappings stay together",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "units": 486907,
+   "view": "reactome_pathway_knowledgebase"
+  },
+  "rki_hospitalisation": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "publisher revises the series; the snapshot is 2026-11-21",
+    "missing values marked NA are kept missing"
+   ],
+   "first_party": true,
+   "independent_group": "rki_surveillance",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp, per series",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "units": 292264,
+   "view": "panels"
+  },
+  "rki_notaufnahme": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "publisher revises the series; the snapshot is 2026-11-21",
+    "missing values marked NA are kept missing"
+   ],
+   "first_party": true,
+   "independent_group": "rki_surveillance",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp, per series",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "units": 343682,
+   "view": "panels"
+  },
+  "ror_organizations": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "deterministic stride-15 sample (10,154 of 152,297 ROR v2.16 records sorted canonically by ROR id); not random",
+    "depth 5 with 35 distinct paths and 8 optional paths (external_ids, links, relationships)",
+    "0 emails in raw dump; redact_emails applied in view"
+   ],
+   "first_party": true,
+   "independent_group": "ror",
+   "min_units": 1000,
+   "partitions": "hash of ROR id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 10154,
+   "view": "ror_organizations"
+  },
+  "rte_eco2mix_national": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "four complete calendar years (2020-2023) of French definitive half-hourly transmission grid telemetry",
+    "forecast-only quarter-hour rows without generation/consumption measurements dropped; eight spring-DST duplicate UTC pairs deduplicated",
+    "COVID-19 2020 lockdown demand dip and 2022 nuclear availability deficit are real historical baseline regimes"
+   ],
+   "first_party": true,
+   "independent_group": "rte_france_grid",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on UTC timestamp",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective anomalies across 32 correlated generation/load/exchange series",
+    "level shift, seasonal deviation across four annual cycles and missing interval",
+    "cross-channel physical inconsistency and unit/sign corruption"
+   ],
+   "temporal_span": "four years half-hourly (2020-01-01 to 2023-12-31)",
+   "units": 70120,
+   "unsupported_fault_mechanisms": [
+    "sub-half-hourly grid frequency transients"
+   ],
+   "view": "rte_eco2mix_national"
+  },
+  "seattle_building_permits": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "calendar year 2023 slice of the Seattle building permit table (194,432 rows over all years): a contiguous application-date window, not a random sample; 5,603 permit rows",
+    "project descriptions, street addresses, contractor names, links and coordinates dropped, permit numbers pseudonymised; columns more than 50 percent missing dropped"
+   ],
+   "first_party": true,
+   "independent_group": "seattle_sdci_building_permits",
+   "min_units": 500,
+   "partitions": "hash of permitnum so a permit and its dependent permits stay together 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 5603,
+   "view": "seattle_building_permits"
+  },
+  "seattle_fire_911_calls": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "calendar year 2023 window of the Seattle fire dispatch table (2,228,311 rows since 2003): contiguous, not a random sample; 125,678 dispatches over 365 local days",
+    "address, coordinate and region columns never downloaded, incident number pseudonymised; type is the dispatch type vocabulary of 133 values; one record per incident, so there is no per-incident lifecycle"
+   ],
+   "first_party": true,
+   "independent_group": "seattle_fire_911_dispatch",
+   "min_units": 100,
+   "natural_labels": "none; dispatch types are operational categories, not ETL faults",
+   "partitions": "hash of event_date 70/15/15 so daily dispatch sequences stay together",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 365,
+   "view": "seattle_fire_911_calls"
+  },
+  "seattle_fremont_bridge": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete hourly export of the Fremont Bridge counter: 122,675 hourly rows, 2012-10-02 13:00 to 2026-09-30 23:00 local time, no missing timestamps",
+    "30 hours with blank counts (all three count columns) kept as missing; the total column equals the sum of the two pathway columns",
+    "daily and weekly commuting cycles, seasonal weather dependence, event days and the 2020 pandemic level change are baseline dynamics, not injected faults"
+   ],
+   "first_party": true,
+   "independent_group": "seattle_fremont_bridge_counter",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on timestamp",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies against hourly and weekly profiles",
+    "level shift, seasonal amplitude change, counter outage and missing intervals"
+   ],
+   "temporal_span": "14 years hourly (2012-10-02 to 2026-09-30)",
+   "units": 122675,
+   "unsupported_fault_mechanisms": [
+    "sub-hourly crossing times and direction of travel"
+   ],
+   "view": "seattle_fremont_bridge"
+  },
+  "sffd_fire_incidents": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "calendar year 2023 slice of the DataSF fire incident table (733,061 rows since 2003): a contiguous time window, not a random sample; 37,906 incident-exposure rows",
+    "street addresses, call numbers, row ids and coordinates dropped, incident_number pseudonymised; columns more than 50 percent missing dropped; codes follow the national incident reporting scheme"
+   ],
+   "first_party": true,
+   "independent_group": "sffd_fire_incidents",
+   "min_units": 500,
+   "partitions": "hash of incident_number so the exposures of one incident stay together 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 37906,
+   "view": "sffd_fire_incidents"
+  },
+  "sfo_air_traffic": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete monthly series of airline activity counts, 40,803 rows over 326 months; aggregate counts only",
+    "the load-time columns of the portal are dropped; counts are airport-reported passenger movements"
+   ],
+   "first_party": true,
+   "independent_group": "sfo_passenger_statistics",
+   "min_units": 500,
+   "partitions": "hash of operating_airline so the months of one airline stay together 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 40803,
+   "view": "sfo_air_traffic"
+  },
+  "slurm_ccin2p3": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "20 percent of jobs end failed, cancelled, timed out or out of memory (natural scheduler outcomes)",
+    "3.2 percent of jobs never started (no wait time)",
+    "two months only, one centre",
+    "job id sample 1 in 20"
+   ],
+   "first_party": true,
+   "independent_group": "ccin2p3_slurm",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on submit time",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 233716,
+   "view": "slurm_ccin2p3"
+  },
+  "sncf_tgv_regularite": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete monthly SNCF TGV route punctuality ledger (2018-01 to 2026-09, 12,907 station-pair month rows); seasonal holiday surges and strikes shift baseline cancellation rates",
+    "commentaire* free-text columns dropped; six delay-cause percentage shares sum approximately to 100%"
+   ],
+   "first_party": true,
+   "independent_group": "sncf_tgv_regularite",
+   "min_units": 500,
+   "partitions": "chronological 70/15/15 on date",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 12907,
+   "view": "sncf_tgv_regularite"
+  },
+  "stackexchange:3dprinting": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 15283,
+   "view": "stackexchange"
+  },
+  "stackexchange:astronomy": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 35836,
+   "view": "stackexchange"
+  },
+  "stackexchange:beer": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 3924,
+   "view": "stackexchange"
+  },
+  "stackexchange:coffee": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 4525,
+   "view": "stackexchange"
+  },
+  "stackexchange:earthscience": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 16348,
+   "view": "stackexchange"
+  },
+  "stackexchange:economics": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 34771,
+   "view": "stackexchange"
+  },
+  "stackexchange:fitness": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 29704,
+   "view": "stackexchange"
+  },
+  "stackexchange:gardening": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 44155,
+   "view": "stackexchange"
+  },
+  "stackexchange:ham": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 14084,
+   "view": "stackexchange"
+  },
+  "stackexchange:health": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 15049,
+   "view": "stackexchange"
+  },
+  "tx_hhsc_child_care": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete export of the licensing register, 14,966 operations; deficiency counts and inspection totals are regulator-assigned",
+    "operation names and numbers, addresses, phones, websites, e-mails and administrator names dropped, operation_id pseudonymised; columns more than 50 percent missing dropped"
+   ],
+   "first_party": true,
+   "independent_group": "tx_hhsc_child_care_operations",
+   "min_units": 500,
+   "partitions": "hash of operation_id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 14966,
+   "view": "tx_hhsc_child_care"
+  },
+  "tx_hotel_occupancy_tax": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete export, 2,395 government-year rows over about 900 local governments and seven fiscal years; blank use categories kept missing (many governments do not spend on every category)",
+    "aggregate public revenue figures; the website column dropped"
+   ],
+   "first_party": true,
+   "independent_group": "tx_hotel_occupancy_tax_revenue",
+   "min_units": 500,
+   "partitions": "hash of muni_name so the years of one government stay together 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 2395,
+   "view": "tx_hotel_occupancy_tax"
+  },
+  "uci:357": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2015-02 (16 days), one-minute steps, 2 unreadable times dropped, 2 gaps"
+   ],
+   "first_party": false,
+   "independent_group": "candanedo_umons",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "units": 20560,
+   "view": "series"
+  },
+  "uci:360": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2004-03 to 2005-04, hourly, no gaps; the table uses -200 as a missing-value marker",
+    "natural sentinel for missing values: a baseline, not a fault"
+   ],
+   "first_party": false,
+   "independent_group": "airquality_italy",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "units": 9357,
+   "view": "series"
+  },
+  "uci:374": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2016-01 to 2016-05, 10-minute steps, no gaps",
+    "same research team as the occupancy table: grouped conservatively"
+   ],
+   "first_party": false,
+   "independent_group": "candanedo_umons",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "units": 19735,
+   "view": "series"
+  },
+  "uci:560": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2017-12 to 2018-11, hourly, no gaps",
+    "bike demand counts with weather; UCI 275 (Capital Bikeshare 2011-12) shares an operator with the Lyft bike-share trips and is left out"
+   ],
+   "first_party": false,
+   "independent_group": "seoul_bike",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "units": 8760,
+   "view": "series"
+  },
+  "uci:799": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2019-11 to 2020-02, about 20-second steps, 31 gaps",
+    "home sensor data of a person: privacy reviewed as non-identifying sensor values"
+   ],
+   "first_party": false,
+   "independent_group": "elder_home",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "units": 416153,
+   "view": "series"
+  },
+  "uci:849": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2017, 10-minute steps, no gaps"
+   ],
+   "first_party": false,
+   "independent_group": "tetouan_power",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "units": 52416,
+   "view": "series"
+  },
+  "uci:851": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2018, 15-minute steps, no gaps"
+   ],
+   "first_party": false,
+   "independent_group": "steel_korea",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "units": 35040,
+   "view": "series"
+  },
+  "uci_online_retail": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "full table in file order",
+    "negative quantities of cancelled invoices kept as published",
+    "about a quarter of the lines have no customer id",
+    "product description dropped"
+   ],
+   "first_party": false,
+   "independent_group": "uci:352",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the invoice date",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 541909,
+   "view": "uci_online_retail"
+  },
+  "uk_charity_register": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "deterministic 1-in-20 slice on organisation_number across five non-trustee tables (19,952 charities and 214,580 linked child rows)",
+    "read with QUOTE_NONE to avoid unescaped-quote line swallowing; 0 orphans across all 4 foreign keys",
+    "charity_trustee extract excluded; names, contacts, addresses, websites and free-text activities dropped"
+   ],
+   "first_party": true,
+   "independent_group": "uk_charity_commission",
+   "min_units": 1000,
+   "partitions": "hash of organisation_number 70/15/15 keeping linked annual returns, areas, classifications and events with their charity",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 19952,
+   "view": "uk_charity_register"
+  },
+  "ukspend_mhra": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "credit notes (negative amounts)",
+    "repeated transaction numbers across lines",
+    "non-contiguous returns"
+   ],
+   "first_party": true,
+   "independent_group": "uk_ledger_mhra",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on payment date",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1330,
+   "view": "ukspend"
+  },
+  "ukspend_nhsbsa": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "credit notes (negative amounts)",
+    "repeated transaction numbers across lines",
+    "multi-line payments"
+   ],
+   "first_party": true,
+   "independent_group": "uk_ledger_nhsbsa",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on payment date",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 3477,
+   "view": "ukspend"
+  },
+  "uniprot_kb_reviewed": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "taxon-filtered API prefix sample of 250 reviewed Swiss-Prot entries per organism across six model taxa (1,500 unique accessions); not random",
+    "depth 11 with 408 distinct paths and 370 optional paths (comments, features, geneLocations, cross-references)",
+    "literature references and raw sequence object dropped in the view"
+   ],
+   "first_party": true,
+   "independent_group": "uniprot_kb",
+   "min_units": 1000,
+   "partitions": "hash of primaryAccession 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 1500,
+   "view": "uniprot_kb_reviewed"
+  },
+  "us_federal_register": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "date-ordered 2025 prefix sample (oldest 20 pages x 100 = 2000 regulatory documents published from 2025-01-01 onward); non-random chronological prefix",
+    "depth 6 with 1145 distinct paths and 1120 optional paths (agency parent links, CFR references, dockets, RIN info)",
+    "redact_emails applied recursively across nested text fields; 0 emails remain"
+   ],
+   "first_party": true,
+   "independent_group": "federal_register",
+   "min_units": 500,
+   "partitions": "hash of document_number 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 2000,
+   "view": "us_federal_register"
+  },
+  "us_treasury_dts": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "date-restricted complete release (2024-01-01 to 2025-12-31, 91,119 Daily Treasury Statement Table II rows across 19 pages); fiscal-year-end settlement spikes and federal holiday zero-posting days are normal",
+    "daily, month-to-date and fiscal-year-to-date operating cash totals share accounting hierarchies across account_type and transaction_catg"
+   ],
+   "first_party": true,
+   "independent_group": "us_treasury_dts",
+   "min_units": 500,
+   "partitions": "chronological 70/15/15 on record_date",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 91119,
+   "view": "us_treasury_dts"
+  },
+  "usda_fdc_sr_legacy": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete frozen release (April 2018), no sampling: every relation resolves (0 orphans of 6)",
+    "some nutrient measurements have no min, max or median and some derivations are literature-based; these are published states",
+    "data_points and derivation codes document analytical provenance"
+   ],
+   "first_party": true,
+   "independent_group": "usda_fdc",
+   "min_units": 1000,
+   "partitions": "hash of the food identifier 70/15/15 so a food and its measurements and portions stay together",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "units": 644125,
+   "view": "usda_fdc_sr_legacy"
+  },
+  "usgs_continuous_discharge": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "four gauges chosen in advance for different regimes, not by value",
+    "two annual cycles only: yearly seasonality can be checked for presence but not for stability",
+    "regulated (Lees Ferry) and tidal (Sacramento at Freeport, negative discharge at times) gauges carry non-natural dynamics that are part of the baseline",
+    "gaps of up to 5 hours at the 15- and 30-minute spacing are published states; approval status is Approved for every value"
+   ],
+   "first_party": true,
+   "independent_group": "usgs_water",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 per gauge",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective anomalies",
+    "level shift and drift over weeks to months",
+    "missing interval and delayed arrival",
+    "prevalence change",
+    "seasonal deviation limited to two annual cycles"
+   ],
+   "temporal_span": "two years at 15 or 30 minute spacing (2022 to 2023)",
+   "units": 243474,
+   "unsupported_fault_mechanisms": [
+    "multi-year trend or degradation",
+    "statements about the stability of seasonality over years"
+   ],
+   "view": "usgs_continuous_discharge"
+  },
+  "wa_ev_population": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "first 30,000 of 304,258 registered vehicles ordered ascending by dol_vehicle_id: an identifier-ordered prefix with a possible registration-order bias",
+    "VIN prefix, city, zip code, census tract and coordinates dropped, dol_vehicle_id pseudonymised; the registry holds no owner data"
+   ],
+   "first_party": true,
+   "independent_group": "wa_ev_population",
+   "min_units": 500,
+   "partitions": "hash of dol_vehicle_id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 30000,
+   "view": "wa_ev_population"
+  },
+  "wa_ghg_reporting": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete export of the reporting programme publication, 2,521 facility-year reports over 315 facilities; per-gas blanks kept as published",
+    "facilities and parent companies are corporate entities kept as reported; location, geocode, free-text notes and point size dropped"
+   ],
+   "first_party": true,
+   "independent_group": "wa_ecology_ghg_reports",
+   "min_units": 500,
+   "partitions": "hash of facility so the years of one facility stay together 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 2521,
+   "view": "wa_ghg_reporting"
+  },
+  "wals_cldf": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 7 core CLDF linguistic typology tables (3,573 languages, 192 parameters, 1,143 codes, 76,475 values, 152 chapters, 11 areas, 192 countries including Namibia code NA preserved via keep_default_na=False) plus normalized language_countries junction table (3,023 pairs from CLDF space-separated Country_ID)",
+    "9 scalar foreign-key relations verified with 0 orphans across 162,796 checked references (values->languages/parameters/codes, codes->parameters, parameters->chapters->areas, languages.Parent_ID->languages, language_countries->languages/countries)",
+    "contributors.csv and Contributor_ID / With_Contributor_ID / Contributor / Citation / Source / Comment / Description excluded"
+   ],
+   "first_party": true,
+   "independent_group": "wals_cldf",
+   "min_units": 1000,
+   "partitions": "hash of languages.ID 70/15/15 preserving chapters, parameters, codes and areas",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 3573,
+   "view": "wals_cldf"
+  },
+  "wb_lending_projects": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "deterministic 5,000-project pagination prefix (offsets 0..4500 in API default descending order); not a random sample",
+    "teamleadname, project_name, projectdocs and url are dropped; zero personal data"
+   ],
+   "first_party": true,
+   "independent_group": "world_bank_projects",
+   "min_units": 500,
+   "partitions": "hash of project_id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 5000,
+   "view": "wb_lending_projects"
+  },
+  "wikidata_entities": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "identifier stride over the item range, not random",
+    "scholarly articles are about a third of the sampled items, as in the whole base",
+    "items about people excluded; about one in eight requested identifiers do not exist"
+   ],
+   "first_party": true,
+   "independent_group": "wikimedia_wikidata",
+   "min_units": 1000,
+   "partitions": "hash of the item identifier 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 1611,
+   "view": "wikidata_entities"
+  },
+  "wikimedia_simplewiki_edits": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "prefix of the page-id ordered dump: complete histories of the lowest page ids, dominated by main-namespace articles (80 percent) and project pages (18 percent), not a random sample of the wiki",
+    "event type is limited to page creation (no parent), minor and ordinary edit; edit summaries and titles are dropped",
+    "1.1 percent of pages contain a revision timestamp earlier than its predecessor (imported or migrated history): a natural order irregularity, not an injected fault",
+    "editor identifiers are salted hashes of user ids and IP addresses; 175 revisions have a hidden contributor"
+   ],
+   "first_party": true,
+   "independent_group": "wikimedia_simplewiki",
+   "min_units": 1000,
+   "natural_labels": "none; bot, revert and vandalism labels are not part of the stub file and were not derived",
+   "partitions": "hash of the page id 70/15/15 so a page history stays together",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 1416,
+   "view": "wikimedia_simplewiki_edits"
+  },
+  "wri_power_plants": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete Global Power Plant Database v1.3.0 release (34936 facilities across 167 countries)",
+    "plant name, owner, URL, wepp_id and columns exceeding 50% missingness dropped cleanly; missing share reduced to minimal non-sparse attributes"
+   ],
+   "first_party": true,
+   "independent_group": "wri_global_power_plants",
+   "min_units": 500,
+   "partitions": "hash of country and primary_fuel 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 34936,
+   "view": "wri_power_plants"
+  },
+  "zen_3pfl": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "natural orphans: 3 of 14282 contract links, 2 of 35989 grant links, 143 of 11457 grant-to-grantee keys, 3 of 87093 yearly rows",
+    "blank keys are missing, not dangling",
+    "patent information table excluded (PATSTAT-derived)"
+   ],
+   "first_party": false,
+   "independent_group": "3pfl",
+   "min_units": 1000,
+   "partitions": "hash of the contract id 70/15/15, tables follow",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 50271,
+   "view": "zen_3pfl"
+  },
+  "zen_aegis_vehicle": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "one driver, one vehicle, 33 trips of 1 to 71 minutes",
+    "ten OBD PIDs sampled about every 0.4 s, averaged per second",
+    "no dates or positions (privacy reduction)"
+   ],
+   "first_party": true,
+   "independent_group": "vif_aegis",
+   "min_units": 1000,
+   "partitions": "by trip id order 70/15/15 (trips are the chronological order)",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "units": 45141,
+   "view": "zen_aegis_vehicle"
+  },
+  "zen_aoe_interactions": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "4 MiB compressed zip prefix containing 2,881 complete gameplay action sequences (290,046 events)",
+    "case_id, player_id and match_id replaced by salted hashes in the view",
+    "online real-time strategy game interaction log (distinct from business-process execution)"
+   ],
+   "first_party": true,
+   "independent_group": "aoe_gameplay",
+   "min_units": 1000,
+   "partitions": "hash of case_id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2881,
+   "view": "zen_aoe_interactions"
+  },
+  "zen_bess": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "time is elapsed hours, not calendar dates",
+    "each meter reports only its own channels, most columns are missing by design",
+    "6 percent of readings carry the publisher's quality flag",
+    "two of twelve systems of one release are one provenance group"
+   ],
+   "first_party": true,
+   "independent_group": "pnnl_epri_bess",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the elapsed hours of each system",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "units": 1452814,
+   "view": "zen_bess"
+  },
+  "zen_blazar_flares": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete Fermi-LAT blazar flare catalog: 3598 gamma-ray flare events across 565 blazar sources; '-' sentinels parsed as NaN preserving Order-1 missing waiting times",
+    "astrophysical point-process event sequences ordered by (source_id, start_met); high-missingness auxiliary columns (>50% missing) omitted"
+   ],
+   "first_party": true,
+   "independent_group": "fermi_blazar_flares",
+   "min_units": 1000,
+   "partitions": "hash of source_id 70/15/15 so multi-flare histories of each blazar stay together",
+   "privacy": "not_needed",
+   "protocol_id": "P-SEQ",
+   "units": 3598,
+   "view": "zen_blazar_flares"
+  },
+  "zen_care_wind_a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "timestamps and asset ids anonymised by the CARE publication",
+    "each dataset is one turbine with a training and a prediction phase",
+    "status types 0, 3 and 4 as published; non-operational statuses are part of the baseline",
+    "eight of 22 datasets of one farm are one generating system"
+   ],
+   "first_party": true,
+   "independent_group": "edp_wind_farm_portugal",
+   "min_units": 1000,
+   "natural_labels": "equipment-fault events derived by the CARE authors from the operator's fault logbook (start timestamps of specified faults); real equipment faults, not ETL or source-data faults; kept in events.csv",
+   "partitions": "chronological 70/15/15 on the anonymised time stamp within each dataset",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "units": 437750,
+   "view": "zen_care_wind_a"
+  },
+  "zen_care_wind_b": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "timestamps and asset ids anonymised by the publisher",
+    "each dataset is one turbine with a training and a prediction phase",
+    "status types 0 to 5 as published; non-operational statuses are part of the baseline",
+    "five of fifteen datasets of one farm are one generating system"
+   ],
+   "first_party": true,
+   "independent_group": "fraunhofer_iee_care_wind_b",
+   "min_units": 1000,
+   "natural_labels": "publisher equipment-fault events (anomaly or normal) per dataset; real equipment faults and fault descriptions, not verified ETL or source-data faults; kept in events.csv, separate from injections",
+   "partitions": "chronological 70/15/15 on the anonymised time stamp within each dataset",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "units": 279733,
+   "view": "zen_care_wind_b"
+  },
+  "zen_clue_lds": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "first 19 days of a 5-year log",
+    "86 users, median 740 events",
+    "login attempts and failures are natural events"
+   ],
+   "first_party": false,
+   "independent_group": "ait_clue",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on event time",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 1000000,
+   "view": "zen_clue_lds"
+  },
+  "zen_cnc_milling": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "13 machine-control production runs spanning 2021-11-26 to 2022-04-08 at ~2s cadence across 20 common numeric controller signals",
+    "setup changeovers, tool changes, spindle warmup and idle phases are normal operational baseline regimes",
+    "957 exact-second duplicate polls removed during canonical timestamp normalization; partial Phase/PocketTable columns dropped"
+   ],
+   "first_party": true,
+   "independent_group": "cnc_five_axis_milling",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 within production series",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective faults",
+    "step/regime shifts, drift and variance changes across setups"
+   ],
+   "temporal_span": "13 production runs over 4.4 months (Nov 2021 - Apr 2022); no annual cycle coverage",
+   "units": 189089,
+   "unsupported_fault_mechanisms": [
+    "annual seasonality"
+   ],
+   "view": "zen_cnc_milling"
+  },
+  "zen_daylight_events": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete events.csv: 1,763 contextual event intervals of 47 participants in a single equinox-week campaign (wear state, setting, daylight and electric-light condition, screen use); participatory convenience sample",
+    "participant ids re-pseudonymised with the project salt; local timestamps dropped; age, sex, coordinates and light series not acquired"
+   ],
+   "first_party": true,
+   "independent_group": "a_day_in_daylight",
+   "min_units": 1000,
+   "partitions": "hash of participant_id 70/15/15 so individual event sequences do not split across partitions",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 1763,
+   "view": "zen_daylight_events"
+  },
+  "zen_dk_district_heating": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "105,192 hourly UTC readings across 3 Danish district heating DMAs (2016-01-01 to 2019-12-31)",
+    "heating-season thermal cycles and changes in contributing smart-meter counts are natural baseline dynamics"
+   ],
+   "first_party": true,
+   "independent_group": "danish_district_heating",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 within each dma_id",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective faults",
+    "level shift, drift and annual seasonality"
+   ],
+   "temporal_span": "4 full years hourly UTC (2016-2019)",
+   "units": 105192,
+   "unsupported_fault_mechanisms": [],
+   "view": "zen_dk_district_heating"
+  },
+  "zen_dmsp_auroral": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "68,034 polar-orbit pass records across DMSP F16, F17 and F18 (2010-2014 UTC)",
+    "geomagnetic storm equatorward expansions and polar orbital pass durations are natural space-environment baseline behavior"
+   ],
+   "first_party": true,
+   "independent_group": "dmsp_ssj_auroral",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 per spacecraft",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective faults",
+    "level shift, drift and regime changes"
+   ],
+   "temporal_span": "5 full years across 3 polar-orbiting spacecraft (2010-2014)",
+   "units": 68034,
+   "unsupported_fault_mechanisms": [
+    "sub-hourly regular sampling"
+   ],
+   "view": "zen_dmsp_auroral"
+  },
+  "zen_ev_charging": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete Dataset1_charging_reports log (35,377 sessions across 267 users at 12 residential sites)",
+    "38 open sessions without plugout_time or connection_hours are natural incomplete records",
+    "user_id and session_id replaced by salted hashes in the view"
+   ],
+   "first_party": true,
+   "independent_group": "ntnu_ev_charging",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on plugin_time",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 35377,
+   "view": "zen_ev_charging"
+  },
+  "zen_fdata_fugaku": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "April 2021 only, one of 37 monthly files",
+    "88 percent completed, 12 percent failed (natural)",
+    "one supercomputer"
+   ],
+   "first_party": true,
+   "independent_group": "fugaku_riken",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on submit time",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 116977,
+   "view": "zen_fdata_fugaku"
+  },
+  "zen_florida_bridges": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete v1.0 release of 12986 Florida NBI civil bridge structural inspections",
+    "preserves publisher-defined 'N' (Not Applicable) condition ratings on buried culverts alongside 0-9 structural ratings; bridge_id pseudonymised and objectid/location_009/>50%-missing columns dropped"
+   ],
+   "first_party": true,
+   "independent_group": "florida_bridge_inspections",
+   "min_units": 500,
+   "partitions": "hash of bridge_id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 12986,
+   "view": "zen_florida_bridges"
+  },
+  "zen_gha_workflows": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "prefix of repository-ordered workflows.csv.gz: 85,430 workflow edit events across 1,272 complete repositories after dropping 1 trailing partial repository (13 rows), not a random repository sample",
+    "non-BP CI/CD workflow mechanism recording git_change_type (A/M/D/R) and valid_yaml / valid_workflow state transitions",
+    "author/committer names, emails, commit_hash and uid dropped; repository pseudonymised with salted SHA-256 and 0 emails verified"
+   ],
+   "first_party": true,
+   "independent_group": "github_actions_workflows",
+   "min_units": 1000,
+   "partitions": "hash of repo_id 70/15/15 so repository workflow histories do not split across splits",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 1272,
+   "view": "zen_gha_workflows"
+  },
+  "zen_japan_buildings": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete seven-table archaeological building relational database (1,014 buildings, 346 sites, 279 designers, 708 sources)",
+    "0 orphans across all 6 foreign-key relations (optional archaeological_evidence_site_id has 88 populated references)",
+    "individual designer names/affiliations, source author strings, addresses and free-text notes dropped"
+   ],
+   "first_party": true,
+   "independent_group": "japan_reconstructed_buildings",
+   "min_units": 1000,
+   "partitions": "hash of building_id 70/15/15 preserving referenced sites, designers and sources",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 1014,
+   "view": "zen_japan_buildings"
+  },
+  "zen_kanto_landslides": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "21,814 mapped 1923 Kanto earthquake landslide records from Kanagawa Prefecture",
+    "5 categorical/id columns (7.0% Watershed missingness) and 3 continuous morphometric columns (Area, Inferred volume, Mean slope)",
+    "sparse free-text Note column dropped"
+   ],
+   "first_party": true,
+   "independent_group": "kanto_landslides",
+   "min_units": 1000,
+   "partitions": "hash of id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 21814,
+   "view": "zen_kanto_landslides"
+  },
+  "zen_kelmarsh": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2016 only: the first months of the farm, several signals absent in about a third of the rows",
+    "constant ten-minute spacing within each turbine",
+    "six turbines of one farm are one generating system, not six sources"
+   ],
+   "first_party": true,
+   "independent_group": "cubico_kelmarsh",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "units": 314496,
+   "view": "zen_kelmarsh"
+  },
+  "zen_metropt2": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "first 4.5 days of the series (range prefix)",
+    "6 gaps above one minute, longest 4.5 hours",
+    "COMP and digital signals are natural states"
+   ],
+   "first_party": true,
+   "independent_group": "metropt_porto",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "units": 373470,
+   "view": "zen_metropt2"
+  },
+  "zen_moodle_events": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete Moodle LMS anonymised clickstream log: 182114 interaction events across 8940 user-day sessions (147 users, 54 English-mapped activity classes); non-BP software clickstream",
+    "userid pseudonymised via salted SHA-256 and timecreated Unix epochs normalised to UTC"
+   ],
+   "first_party": true,
+   "independent_group": "moodle_lms_events",
+   "min_units": 1000,
+   "partitions": "hash of user_id 70/15/15 so individual student histories do not split across partitions",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 8940,
+   "view": "zen_moodle_events"
+  },
+  "zen_nhif_hospital_cases": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "deterministic stride-75 sample (43,503 of 3,262,662 sorted Bulgarian NHIF inpatient facility-month rows across 2024-2026); not random",
+    "9 categorical/ICD-10/period columns (22.5% natural diagnosis_secondary missingness) and 4 integer count/date columns",
+    "no patient identifiers in source; facility_name pseudonymised with salted SHA-256"
+   ],
+   "first_party": true,
+   "independent_group": "nhif_hospital_cases",
+   "min_units": 1000,
+   "partitions": "hash of facility_id 70/15/15 so facility coding practices stay grouped",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 43503,
+   "view": "zen_nhif_hospital_cases"
+  },
+  "zen_norp_solar_bursts": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 1988-2025 NAOJ Nobeyama Radio Polarimeters catalog: 4239 solar radio burst events across 326 active months; solar cycle activity variations drive natural rate shifts",
+    "124 midnight-crossing bursts adjusted +1 day on End time so duration_s stays non-negative; units header row skipped cleanly"
+   ],
+   "first_party": true,
+   "independent_group": "naoj_norp_solar_bursts",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on start_time",
+   "privacy": "not_needed",
+   "protocol_id": "P-SEQ",
+   "units": 4239,
+   "view": "zen_norp_solar_bursts"
+  },
+  "zen_pbdb": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "every tenth occurrence in entry order, not random",
+    "large shares of structurally missing geology and ecology fields",
+    "taxonomic names and numeric coordinates as published, including legacy and uncertain entries"
+   ],
+   "first_party": true,
+   "independent_group": "paleobiology_database",
+   "min_units": 500,
+   "partitions": "hash of the occurrence number 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 201107,
+   "view": "zen_pbdb"
+  },
+  "zen_pbdb_relational": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "occurrences are every tenth row in entry order, not random",
+    "the taxa are the referenced taxa plus all their ancestors, so no reference is missing because of sampling",
+    "5,241 occurrences without an accepted taxon and one ancestor id absent from the source are natural",
+    "a self-referencing parent hierarchy and a many-to-one occurrence-to-taxon relation"
+   ],
+   "first_party": true,
+   "independent_group": "paleobiology_database",
+   "min_units": 1000,
+   "partitions": "hash of the occurrence number 70/15/15 with the taxa referenced by the same occurrences kept together",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 201107,
+   "view": "zen_pbdb_relational"
+  },
+  "zen_port_noumea": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "7,335 Port of Noumea international vessel stopovers across 2005-2013",
+    "19 string/categorical fields (vessel codes with preserved leading zeroes, origin/destination countries) and 7 numeric tonnage/coordinate columns",
+    "shipping_agent, vessel_operator and vessel_name dropped; vessel_imo pseudonymised with salted SHA-256"
+   ],
+   "first_party": true,
+   "independent_group": "port_noumea_stopovers",
+   "min_units": 500,
+   "partitions": "hash of vessel_imo_id 70/15/15 so vessel visits do not split across partitions",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 7335,
+   "view": "zen_port_noumea"
+  },
+  "zen_queensland_petrol": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 2026-09-04 half-yearly Queensland petroleum and gas production ledger (1,028 field-permit-period records)",
+    "authorized_holder, remark, secondary_strat_unit_name and field_name_prod_corr dropped"
+   ],
+   "first_party": true,
+   "independent_group": "queensland_petroleum_production",
+   "min_units": 500,
+   "partitions": "hash of composite (permit_number, field_name) 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1028,
+   "view": "zen_queensland_petrol"
+  },
+  "zen_surf_lisa_slurm": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "one row in 8 of 1596963 jobs, file order (submit order)",
+    "75 percent completed, 15 percent failed, 6 percent cancelled (natural scheduler outcomes)",
+    "12 sampled jobs have negative run time",
+    "one cluster, ten months"
+   ],
+   "first_party": true,
+   "independent_group": "surf_lisa_slurm",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on submit time",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 199621,
+   "view": "zen_surf_lisa_slurm"
+  },
+  "zen_telecom_kpis": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "150,332 5-minute observations across 14 real telecom operator KPI traces (data_real/*.txt; 300s elapsed cadence)",
+    "synthetic data_series/ excluded; diurnal traffic swings and bursty operator loads are natural baseline behavior"
+   ],
+   "first_party": true,
+   "independent_group": "telecom_operator_kpis",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 within each series_id",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective faults",
+    "level shift, drift and variance changes"
+   ],
+   "temporal_span": ">1 month per trace at 300s elapsed cadence (no calendar dates published)",
+   "units": 150332,
+   "unsupported_fault_mechanisms": [
+    "annual seasonality",
+    "calendar-holiday effects"
+   ],
+   "view": "zen_telecom_kpis"
+  },
+  "zen_terralore_chronicle": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 3-table TerraLore v1.0.0 historical chronicle relational archive (4,564 events, 3,922 sources, 8,268 event_sources junction rows; 16,754 total rows)",
+    "0 orphans across both foreign keys (event_sources.claim_id -> events.claim_id, event_sources.source_key -> sources.source_key); read with keep_default_na=False to preserve ISO-2 country code NA",
+    "free-text summaries, titles, source labels and external URLs dropped"
+   ],
+   "first_party": true,
+   "independent_group": "terralore_chronicle_db",
+   "min_units": 1000,
+   "partitions": "hash of claim_id 70/15/15 keeping linked event_sources rows with their event",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "units": 16754,
+   "view": "zen_terralore_chronicle"
+  },
+  "zen_unisg_factory": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "instrumented research testbed, not an industrial production log",
+    "process instances still ACTIVE at the end of the export are unfinished, not anomalies",
+    "tutorial processes such as invoice and review invoice share the engine with the factory processes",
+    "no deliberately introduced faults are documented; activity names and states are not fault labels"
+   ],
+   "event_generation": "workflow-engine (Camunda) process execution on an instrumented testbed; the same mechanism family as business-process logs",
+   "evidence_class": "instrumented_research_testbed",
+   "first_party": true,
+   "independent_group": "unisg_smart_factory",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the activity start time",
+   "privacy": "not_needed",
+   "protocol_id": "P-SEQ",
+   "units": 1727,
+   "view": "zen_unisg_factory"
+  },
+  "zen_unisg_factory:C3": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "36 minutes of 10 Hz messages on one day",
+    "seven stations with disjoint sensor sets",
+    "state not ready is normal operation"
+   ],
+   "evidence_class": "instrumented_research_testbed",
+   "first_party": true,
+   "independent_group": "unisg_smart_factory",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and collective anomalies in a window",
+    "level shift",
+    "missing interval",
+    "delayed arrival and timestamp ordering",
+    "local drift and discontinuity within the window",
+    "prevalence change inside the window"
+   ],
+   "temporal_span": "36 minutes of ten-hertz messages on one day",
+   "units": 139901,
+   "unsupported_fault_mechanisms": [
+    "seasonal deviation",
+    "slow distribution shift over days or longer",
+    "long-duration degradation",
+    "contextual faults that need weeks of history"
+   ],
+   "view": "zen_unisg_factory"
+  },
+  "zen_water_demand": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "46,026 un-imputed raw hourly municipal water pumping and weather rows (2016-01-01 to 2021-04-01)",
+    "preserves 509 missing consumption rows and 25 missing rain rows; 5 autumn DST fallback duplicate hours dropped"
+   ],
+   "first_party": true,
+   "independent_group": "german_water_demand",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective faults",
+    "missing intervals, level shift, drift and annual seasonality"
+   ],
+   "temporal_span": "5.25 years hourly (2016-2021)",
+   "units": 46026,
+   "unsupported_fault_mechanisms": [],
+   "view": "zen_water_demand"
+  },
+  "zen_wind_fragility": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 5-table Wind Fragility Database v2026.10 relational release (507 curves, 507 discretized curves, 1,988 parameters, 45,608 points, 52 sources; 48,662 total rows)",
+    "0 orphans across all 5 foreign keys (curves.Source_ID -> sources.Source_ID, discretized.Curve_ID -> curves.Curve_ID, discretized.Source_ID -> sources.Source_ID, parameters.Curve_ID -> curves.Curve_ID, points.Curve_ID -> curves.Curve_ID)",
+    "bibliographic author names, titles and free-text notes dropped"
+   ],
+   "first_party": true,
+   "independent_group": "wind_fragility_power_db",
+   "min_units": 500,
+   "partitions": "hash of Curve_ID 70/15/15 keeping linked discretized, parameters and points rows with their curve",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 48662,
+   "view": "zen_wind_fragility"
+  },
+  "zenodo_dataset_records_2023_03": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "March 2023 dataset publications (4,105 records at the snapshot date): a contiguous publication-date window, records are revised after publication",
+    "people, descriptions and links dropped; optional metadata sections vary by record"
+   ],
+   "first_party": true,
+   "independent_group": "zenodo_repository_records",
+   "min_units": 1000,
+   "natural_labels": "none",
+   "partitions": "hash of the record id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 4105,
+   "view": "zenodo_dataset_records_2023_03"
+  }
+ }
+}

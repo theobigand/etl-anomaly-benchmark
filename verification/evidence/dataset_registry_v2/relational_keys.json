@@ -1,0 +1,1835 @@
+{
+ "_unmodelled": {
+  "fec_federal_campaign_finance_2024:pas2.OTHER_ID": "polymorphic: holds committee and candidate identifiers; its type column is not declared",
+  "zen_3pfl:01_patent_contract.piid where contract=1": "conditional or compound reference to 02_procurement_information.piid",
+  "zen_3pfl:01_patent_contract.piid where grant=1": "conditional or compound reference to 05_grant_information.piid"
+ },
+ "cordis_horizon_europe": {
+  "keys": [
+   {
+    "found": {
+     "checked": 151382,
+     "orphans": 0
+    },
+    "key": "organization.projectID -> project.id",
+    "match": true,
+    "recorded": {
+     "checked": 151382,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 53445,
+     "orphans": 0
+    },
+    "key": "euroSciVoc.projectID -> project.id",
+    "match": true,
+    "recorded": {
+     "checked": 53445,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 24419,
+     "orphans": 0
+    },
+    "key": "topics.projectID -> project.id",
+    "match": true,
+    "recorded": {
+     "checked": 24419,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 31403,
+     "orphans": 0
+    },
+    "key": "legalBasis.projectID -> project.id",
+    "match": true,
+    "recorded": {
+     "checked": 31403,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 118956,
+     "orphans": 0
+    },
+    "key": "policyPriorities.projectID -> project.id",
+    "match": true,
+    "recorded": {
+     "checked": 118956,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "dft_stats19_2023": {
+  "keys": [
+   {
+    "found": {
+     "checked": 189815,
+     "orphans": 0
+    },
+    "key": "vehicle.collision_index -> collision.collision_index",
+    "match": true,
+    "recorded": {
+     "checked": 189815,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 132977,
+     "orphans": 0
+    },
+    "key": "casualty.collision_index -> collision.collision_index",
+    "match": true,
+    "recorded": {
+     "checked": 132977,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "fec_federal_campaign_finance_2024": {
+  "keys": [
+   {
+    "found": {
+     "checked": 8218,
+     "orphans": 23
+    },
+    "key": "cm.CAND_ID -> cn.CAND_ID",
+    "match": true,
+    "recorded": {
+     "checked": 8218,
+     "orphans": 23
+    }
+   },
+   {
+    "found": {
+     "checked": 8619,
+     "orphans": 154
+    },
+    "key": "ccl.CAND_ID -> cn.CAND_ID",
+    "match": true,
+    "recorded": {
+     "checked": 8619,
+     "orphans": 154
+    }
+   },
+   {
+    "found": {
+     "checked": 8619,
+     "orphans": 160
+    },
+    "key": "ccl.CMTE_ID -> cm.CMTE_ID",
+    "match": true,
+    "recorded": {
+     "checked": 8619,
+     "orphans": 160
+    }
+   },
+   {
+    "found": {
+     "checked": 703181,
+     "orphans": 0
+    },
+    "key": "pas2.CMTE_ID -> cm.CMTE_ID",
+    "match": true,
+    "recorded": {
+     "checked": 703181,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 701557,
+     "orphans": 8903
+    },
+    "key": "pas2.CAND_ID -> cn.CAND_ID",
+    "match": true,
+    "recorded": {
+     "checked": 701557,
+     "orphans": 8903
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "france_baac_road_accidents": {
+  "keys": [
+   {
+    "found": {
+     "checked": 70248,
+     "orphans": 0
+    },
+    "key": "lieux.Num_Acc -> caracteristiques.Num_Acc",
+    "match": true,
+    "recorded": {
+     "checked": 70248,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 92678,
+     "orphans": 0
+    },
+    "key": "vehicules.Num_Acc -> caracteristiques.Num_Acc",
+    "match": true,
+    "recorded": {
+     "checked": 92678,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 125187,
+     "orphans": 0
+    },
+    "key": "usagers.Num_Acc -> caracteristiques.Num_Acc",
+    "match": true,
+    "recorded": {
+     "checked": 125187,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 125187,
+     "orphans": 0
+    },
+    "key": "usagers.id_vehicule -> vehicules.id_vehicule",
+    "match": true,
+    "recorded": {
+     "checked": 125187,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "gene_ontology_annotations": {
+  "keys": [
+   {
+    "found": {
+     "checked": 71496,
+     "orphans": 0
+    },
+    "key": "relations.child_id -> terms.id",
+    "match": true,
+    "recorded": {
+     "checked": 71496,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 71496,
+     "orphans": 0
+    },
+    "key": "relations.parent_id -> terms.id",
+    "match": true,
+    "recorded": {
+     "checked": 71496,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 906445,
+     "orphans": 0
+    },
+    "key": "annotations.go_id -> terms.id",
+    "match": true,
+    "recorded": {
+     "checked": 906445,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "grouplens_movielens": {
+  "keys": [
+   {
+    "found": {
+     "checked": 100836,
+     "orphans": 0
+    },
+    "key": "ratings.movieId -> movies.movieId",
+    "match": true,
+    "recorded": {
+     "checked": 100836,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 3683,
+     "orphans": 0
+    },
+    "key": "tags.movieId -> movies.movieId",
+    "match": true,
+    "recorded": {
+     "checked": 3683,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 9742,
+     "orphans": 0
+    },
+    "key": "links.movieId -> movies.movieId",
+    "match": true,
+    "recorded": {
+     "checked": 9742,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 3683,
+     "orphans": 0
+    },
+    "key": "tags.userId -> ratings.userId",
+    "match": true,
+    "recorded": {
+     "checked": 3683,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "gtfs_fr_alterneo": {
+  "keys": [
+   {
+    "found": {
+     "checked": 10483,
+     "orphans": 0
+    },
+    "key": "trips.route_id -> routes.route_id",
+    "match": true,
+    "recorded": {
+     "checked": 10483,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 367750,
+     "orphans": 0
+    },
+    "key": "stop_times.trip_id -> trips.trip_id",
+    "match": true,
+    "recorded": {
+     "checked": 367750,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 367750,
+     "orphans": 0
+    },
+    "key": "stop_times.stop_id -> stops.stop_id",
+    "match": true,
+    "recorded": {
+     "checked": 367750,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "gtfs_fr_aravis": {
+  "keys": [
+   {
+    "found": {
+     "checked": 20126,
+     "orphans": 0
+    },
+    "key": "trips.route_id -> routes.route_id",
+    "match": true,
+    "recorded": {
+     "checked": 20126,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 396301,
+     "orphans": 0
+    },
+    "key": "stop_times.trip_id -> trips.trip_id",
+    "match": true,
+    "recorded": {
+     "checked": 396301,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 396301,
+     "orphans": 0
+    },
+    "key": "stop_times.stop_id -> stops.stop_id",
+    "match": true,
+    "recorded": {
+     "checked": 396301,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "gtfs_fr_citea": {
+  "keys": [
+   {
+    "found": {
+     "checked": 17775,
+     "orphans": 0
+    },
+    "key": "trips.route_id -> routes.route_id",
+    "match": true,
+    "recorded": {
+     "checked": 17775,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 497486,
+     "orphans": 0
+    },
+    "key": "stop_times.trip_id -> trips.trip_id",
+    "match": true,
+    "recorded": {
+     "checked": 497486,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 497486,
+     "orphans": 0
+    },
+    "key": "stop_times.stop_id -> stops.stop_id",
+    "match": true,
+    "recorded": {
+     "checked": 497486,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "gtfs_fr_diviamobilites": {
+  "keys": [
+   {
+    "found": {
+     "checked": 30235,
+     "orphans": 0
+    },
+    "key": "trips.route_id -> routes.route_id",
+    "match": true,
+    "recorded": {
+     "checked": 30235,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 712352,
+     "orphans": 0
+    },
+    "key": "stop_times.trip_id -> trips.trip_id",
+    "match": true,
+    "recorded": {
+     "checked": 712352,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 712352,
+     "orphans": 0
+    },
+    "key": "stop_times.stop_id -> stops.stop_id",
+    "match": true,
+    "recorded": {
+     "checked": 712352,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "gtfs_fr_filibus": {
+  "keys": [
+   {
+    "found": {
+     "checked": 11015,
+     "orphans": 0
+    },
+    "key": "trips.route_id -> routes.route_id",
+    "match": true,
+    "recorded": {
+     "checked": 11015,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 255903,
+     "orphans": 0
+    },
+    "key": "stop_times.trip_id -> trips.trip_id",
+    "match": true,
+    "recorded": {
+     "checked": 255903,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 255903,
+     "orphans": 0
+    },
+    "key": "stop_times.stop_id -> stops.stop_id",
+    "match": true,
+    "recorded": {
+     "checked": 255903,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "gtfs_fr_kiceo": {
+  "keys": [
+   {
+    "found": {
+     "checked": 2579,
+     "orphans": 0
+    },
+    "key": "trips.route_id -> routes.route_id",
+    "match": true,
+    "recorded": {
+     "checked": 2579,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 65019,
+     "orphans": 0
+    },
+    "key": "stop_times.trip_id -> trips.trip_id",
+    "match": true,
+    "recorded": {
+     "checked": 65019,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 65019,
+     "orphans": 0
+    },
+    "key": "stop_times.stop_id -> stops.stop_id",
+    "match": true,
+    "recorded": {
+     "checked": 65019,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "gtfs_fr_optymo": {
+  "keys": [
+   {
+    "found": {
+     "checked": 6846,
+     "orphans": 0
+    },
+    "key": "trips.route_id -> routes.route_id",
+    "match": true,
+    "recorded": {
+     "checked": 6846,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 165089,
+     "orphans": 0
+    },
+    "key": "stop_times.trip_id -> trips.trip_id",
+    "match": true,
+    "recorded": {
+     "checked": 165089,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 165089,
+     "orphans": 0
+    },
+    "key": "stop_times.stop_id -> stops.stop_id",
+    "match": true,
+    "recorded": {
+     "checked": 165089,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "gtfs_fr_palmbus": {
+  "keys": [
+   {
+    "found": {
+     "checked": 28323,
+     "orphans": 0
+    },
+    "key": "trips.route_id -> routes.route_id",
+    "match": true,
+    "recorded": {
+     "checked": 28323,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 836508,
+     "orphans": 0
+    },
+    "key": "stop_times.trip_id -> trips.trip_id",
+    "match": true,
+    "recorded": {
+     "checked": 836508,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 836508,
+     "orphans": 0
+    },
+    "key": "stop_times.stop_id -> stops.stop_id",
+    "match": true,
+    "recorded": {
+     "checked": 836508,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "gtfs_fr_sankeo": {
+  "keys": [
+   {
+    "found": {
+     "checked": 13029,
+     "orphans": 0
+    },
+    "key": "trips.route_id -> routes.route_id",
+    "match": true,
+    "recorded": {
+     "checked": 13029,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 377481,
+     "orphans": 0
+    },
+    "key": "stop_times.trip_id -> trips.trip_id",
+    "match": true,
+    "recorded": {
+     "checked": 377481,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 377481,
+     "orphans": 0
+    },
+    "key": "stop_times.stop_id -> stops.stop_id",
+    "match": true,
+    "recorded": {
+     "checked": 377481,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "gtfs_fr_sibra": {
+  "keys": [
+   {
+    "found": {
+     "checked": 9204,
+     "orphans": 0
+    },
+    "key": "trips.route_id -> routes.route_id",
+    "match": true,
+    "recorded": {
+     "checked": 9204,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 269669,
+     "orphans": 0
+    },
+    "key": "stop_times.trip_id -> trips.trip_id",
+    "match": true,
+    "recorded": {
+     "checked": 269669,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 269669,
+     "orphans": 0
+    },
+    "key": "stop_times.stop_id -> stops.stop_id",
+    "match": true,
+    "recorded": {
+     "checked": 269669,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "gtfs_fr_tango": {
+  "keys": [
+   {
+    "found": {
+     "checked": 20487,
+     "orphans": 0
+    },
+    "key": "trips.route_id -> routes.route_id",
+    "match": true,
+    "recorded": {
+     "checked": 20487,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 387117,
+     "orphans": 0
+    },
+    "key": "stop_times.trip_id -> trips.trip_id",
+    "match": true,
+    "recorded": {
+     "checked": 387117,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 387117,
+     "orphans": 0
+    },
+    "key": "stop_times.stop_id -> stops.stop_id",
+    "match": true,
+    "recorded": {
+     "checked": 387117,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "gtfs_fr_transvilles": {
+  "keys": [
+   {
+    "found": {
+     "checked": 13416,
+     "orphans": 0
+    },
+    "key": "trips.route_id -> routes.route_id",
+    "match": true,
+    "recorded": {
+     "checked": 13416,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 325127,
+     "orphans": 0
+    },
+    "key": "stop_times.trip_id -> trips.trip_id",
+    "match": true,
+    "recorded": {
+     "checked": 325127,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 325127,
+     "orphans": 0
+    },
+    "key": "stop_times.stop_id -> stops.stop_id",
+    "match": true,
+    "recorded": {
+     "checked": 325127,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "jolpica_f1": {
+  "keys": [
+   {
+    "found": {
+     "checked": 1173,
+     "orphans": 0
+    },
+    "key": "formula_one_round.season_id -> formula_one_season.id",
+    "match": true,
+    "recorded": {
+     "checked": 1173,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 1173,
+     "orphans": 0
+    },
+    "key": "formula_one_round.circuit_id -> formula_one_circuit.id",
+    "match": true,
+    "recorded": {
+     "checked": 1173,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 5130,
+     "orphans": 0
+    },
+    "key": "formula_one_session.round_id -> formula_one_round.id",
+    "match": true,
+    "recorded": {
+     "checked": 5130,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 3634,
+     "orphans": 0
+    },
+    "key": "formula_one_teamdriver.driver_id -> formula_one_driver.id",
+    "match": true,
+    "recorded": {
+     "checked": 3634,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 3634,
+     "orphans": 0
+    },
+    "key": "formula_one_teamdriver.team_id -> formula_one_team.id",
+    "match": true,
+    "recorded": {
+     "checked": 3634,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 3634,
+     "orphans": 0
+    },
+    "key": "formula_one_teamdriver.season_id -> formula_one_season.id",
+    "match": true,
+    "recorded": {
+     "checked": 3634,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 27768,
+     "orphans": 0
+    },
+    "key": "formula_one_roundentry.round_id -> formula_one_round.id",
+    "match": true,
+    "recorded": {
+     "checked": 27768,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 27768,
+     "orphans": 0
+    },
+    "key": "formula_one_roundentry.team_driver_id -> formula_one_teamdriver.id",
+    "match": true,
+    "recorded": {
+     "checked": 27768,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 52234,
+     "orphans": 0
+    },
+    "key": "formula_one_sessionentry.session_id -> formula_one_session.id",
+    "match": true,
+    "recorded": {
+     "checked": 52234,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 52234,
+     "orphans": 0
+    },
+    "key": "formula_one_sessionentry.round_entry_id -> formula_one_roundentry.id",
+    "match": true,
+    "recorded": {
+     "checked": 52234,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 745127,
+     "orphans": 0
+    },
+    "key": "formula_one_lap.session_entry_id -> formula_one_sessionentry.id",
+    "match": true,
+    "recorded": {
+     "checked": 745127,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 13145,
+     "orphans": 0
+    },
+    "key": "formula_one_pitstop.session_entry_id -> formula_one_sessionentry.id",
+    "match": true,
+    "recorded": {
+     "checked": 13145,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 13145,
+     "orphans": 0
+    },
+    "key": "formula_one_pitstop.lap_id -> formula_one_lap.id",
+    "match": true,
+    "recorded": {
+     "checked": 13145,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "ncei_storm_events_2024": {
+  "keys": [
+   {
+    "found": {
+     "checked": 40258,
+     "orphans": 0
+    },
+    "key": "locations.EVENT_ID -> details.EVENT_ID",
+    "match": true,
+    "recorded": {
+     "checked": 40258,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 40258,
+     "orphans": 0
+    },
+    "key": "locations.EPISODE_ID -> details.EPISODE_ID",
+    "match": true,
+    "recorded": {
+     "checked": 40258,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 1142,
+     "orphans": 0
+    },
+    "key": "fatalities.EVENT_ID -> details.EVENT_ID",
+    "match": true,
+    "recorded": {
+     "checked": 1142,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "nces_ipeds_2023": {
+  "keys": [
+   {
+    "found": {
+     "checked": 6049,
+     "orphans": 0
+    },
+    "key": "ic.UNITID -> hd.UNITID",
+    "match": true,
+    "recorded": {
+     "checked": 6049,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 1972,
+     "orphans": 0
+    },
+    "key": "adm.UNITID -> hd.UNITID",
+    "match": true,
+    "recorded": {
+     "checked": 1972,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 116437,
+     "orphans": 0
+    },
+    "key": "effy.UNITID -> hd.UNITID",
+    "match": true,
+    "recorded": {
+     "checked": 116437,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 303460,
+     "orphans": 0
+    },
+    "key": "c.UNITID -> hd.UNITID",
+    "match": true,
+    "recorded": {
+     "checked": 303460,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "ourairports_db": {
+  "keys": [
+   {
+    "found": {
+     "checked": 86377,
+     "orphans": 0
+    },
+    "key": "airports.iso_country -> countries.code",
+    "match": true,
+    "recorded": {
+     "checked": 86377,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 86377,
+     "orphans": 0
+    },
+    "key": "airports.iso_region -> regions.code",
+    "match": true,
+    "recorded": {
+     "checked": 86377,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 3987,
+     "orphans": 0
+    },
+    "key": "regions.iso_country -> countries.code",
+    "match": true,
+    "recorded": {
+     "checked": 3987,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 48437,
+     "orphans": 0
+    },
+    "key": "runways.airport_ref -> airports.id",
+    "match": true,
+    "recorded": {
+     "checked": 48437,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 48437,
+     "orphans": 0
+    },
+    "key": "runways.airport_ident -> airports.ident",
+    "match": true,
+    "recorded": {
+     "checked": 48437,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 30400,
+     "orphans": 0
+    },
+    "key": "airport_frequencies.airport_ref -> airports.id",
+    "match": true,
+    "recorded": {
+     "checked": 30400,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 30400,
+     "orphans": 0
+    },
+    "key": "airport_frequencies.airport_ident -> airports.ident",
+    "match": true,
+    "recorded": {
+     "checked": 30400,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 7375,
+     "orphans": 0
+    },
+    "key": "navaids.associated_airport -> airports.ident",
+    "match": true,
+    "recorded": {
+     "checked": 7375,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 11008,
+     "orphans": 0
+    },
+    "key": "navaids.iso_country -> countries.code",
+    "match": true,
+    "recorded": {
+     "checked": 11008,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "physionet_eicu_demo": {
+  "keys": [
+   {
+    "found": {
+     "checked": 2520,
+     "orphans": 0
+    },
+    "key": "patient.hospitalid -> hospital.hospitalid",
+    "match": true,
+    "recorded": {
+     "checked": 2520,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 24978,
+     "orphans": 0
+    },
+    "key": "diagnosis.patientunitstayid -> patient.patientunitstayid",
+    "match": true,
+    "recorded": {
+     "checked": 24978,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 434660,
+     "orphans": 0
+    },
+    "key": "lab.patientunitstayid -> patient.patientunitstayid",
+    "match": true,
+    "recorded": {
+     "checked": 434660,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 75604,
+     "orphans": 0
+    },
+    "key": "medication.patientunitstayid -> patient.patientunitstayid",
+    "match": true,
+    "recorded": {
+     "checked": 75604,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 38290,
+     "orphans": 0
+    },
+    "key": "treatment.patientunitstayid -> patient.patientunitstayid",
+    "match": true,
+    "recorded": {
+     "checked": 38290,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "physionet_mimic_iv_demo": {
+  "keys": [
+   {
+    "found": {
+     "checked": 275,
+     "orphans": 0
+    },
+    "key": "hosp_admissions.subject_id -> hosp_patients.subject_id",
+    "match": true,
+    "recorded": {
+     "checked": 275,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 4506,
+     "orphans": 0
+    },
+    "key": "hosp_diagnoses_icd.hadm_id -> hosp_admissions.hadm_id",
+    "match": true,
+    "recorded": {
+     "checked": 4506,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 79307,
+     "orphans": 0
+    },
+    "key": "hosp_labevents.hadm_id -> hosp_admissions.hadm_id",
+    "match": true,
+    "recorded": {
+     "checked": 79307,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 107727,
+     "orphans": 0
+    },
+    "key": "hosp_labevents.itemid -> hosp_d_labitems.itemid",
+    "match": true,
+    "recorded": {
+     "checked": 107727,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 140,
+     "orphans": 0
+    },
+    "key": "icu_icustays.hadm_id -> hosp_admissions.hadm_id",
+    "match": true,
+    "recorded": {
+     "checked": 140,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 140,
+     "orphans": 0
+    },
+    "key": "icu_icustays.subject_id -> hosp_patients.subject_id",
+    "match": true,
+    "recorded": {
+     "checked": 140,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "reactome_pathway_knowledgebase": {
+  "keys": [
+   {
+    "found": {
+     "checked": 23762,
+     "orphans": 0
+    },
+    "key": "relations.parent_id -> pathways.pathway_id",
+    "match": true,
+    "recorded": {
+     "checked": 23762,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 23762,
+     "orphans": 0
+    },
+    "key": "relations.child_id -> pathways.pathway_id",
+    "match": true,
+    "recorded": {
+     "checked": 23762,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 325971,
+     "orphans": 13
+    },
+    "key": "uniprot.pathway_id -> pathways.pathway_id",
+    "match": true,
+    "recorded": {
+     "checked": 325971,
+     "orphans": 13
+    }
+   },
+   {
+    "found": {
+     "checked": 113522,
+     "orphans": 3
+    },
+    "key": "chebi.pathway_id -> pathways.pathway_id",
+    "match": true,
+    "recorded": {
+     "checked": 113522,
+     "orphans": 3
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "uk_charity_register": {
+  "keys": [
+   {
+    "found": {
+     "checked": 62876,
+     "orphans": 0
+    },
+    "key": "annual_return_history.organisation_number -> charity.organisation_number",
+    "match": true,
+    "recorded": {
+     "checked": 62876,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 28016,
+     "orphans": 0
+    },
+    "key": "area_of_operation.organisation_number -> charity.organisation_number",
+    "match": true,
+    "recorded": {
+     "checked": 28016,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 88446,
+     "orphans": 0
+    },
+    "key": "classification.organisation_number -> charity.organisation_number",
+    "match": true,
+    "recorded": {
+     "checked": 88446,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 35242,
+     "orphans": 0
+    },
+    "key": "event_history.organisation_number -> charity.organisation_number",
+    "match": true,
+    "recorded": {
+     "checked": 35242,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "usda_fdc_sr_legacy": {
+  "keys": [
+   {
+    "found": {
+     "checked": 7793,
+     "orphans": 0
+    },
+    "key": "food.food_category_id -> food_category.id",
+    "match": true,
+    "recorded": {
+     "checked": 7793,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 644125,
+     "orphans": 0
+    },
+    "key": "food_nutrient.fdc_id -> food.fdc_id",
+    "match": true,
+    "recorded": {
+     "checked": 644125,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 644125,
+     "orphans": 0
+    },
+    "key": "food_nutrient.nutrient_id -> nutrient.id",
+    "match": true,
+    "recorded": {
+     "checked": 644125,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 462382,
+     "orphans": 0
+    },
+    "key": "food_nutrient.derivation_id -> food_nutrient_derivation.id",
+    "match": true,
+    "recorded": {
+     "checked": 462382,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 14449,
+     "orphans": 0
+    },
+    "key": "food_portion.fdc_id -> food.fdc_id",
+    "match": true,
+    "recorded": {
+     "checked": 14449,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 14449,
+     "orphans": 0
+    },
+    "key": "food_portion.measure_unit_id -> measure_unit.id",
+    "match": true,
+    "recorded": {
+     "checked": 14449,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "wals_cldf": {
+  "keys": [
+   {
+    "found": {
+     "checked": 76475,
+     "orphans": 0
+    },
+    "key": "values.Language_ID -> languages.ID",
+    "match": true,
+    "recorded": {
+     "checked": 76475,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 76475,
+     "orphans": 0
+    },
+    "key": "values.Parameter_ID -> parameters.ID",
+    "match": true,
+    "recorded": {
+     "checked": 76475,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 76475,
+     "orphans": 0
+    },
+    "key": "values.Code_ID -> codes.ID",
+    "match": true,
+    "recorded": {
+     "checked": 76475,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 1143,
+     "orphans": 0
+    },
+    "key": "codes.Parameter_ID -> parameters.ID",
+    "match": true,
+    "recorded": {
+     "checked": 1143,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 192,
+     "orphans": 0
+    },
+    "key": "parameters.Chapter_ID -> chapters.ID",
+    "match": true,
+    "recorded": {
+     "checked": 192,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 144,
+     "orphans": 0
+    },
+    "key": "chapters.Area_ID -> areas.ID",
+    "match": true,
+    "recorded": {
+     "checked": 144,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 3319,
+     "orphans": 0
+    },
+    "key": "languages.Parent_ID -> languages.ID",
+    "match": true,
+    "recorded": {
+     "checked": 3319,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 3023,
+     "orphans": 0
+    },
+    "key": "language_countries.Language_ID -> languages.ID",
+    "match": true,
+    "recorded": {
+     "checked": 3023,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 3023,
+     "orphans": 0
+    },
+    "key": "language_countries.Country_ID -> countries.ID",
+    "match": true,
+    "recorded": {
+     "checked": 3023,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "zen_3pfl": {
+  "keys": [
+   {
+    "found": {
+     "checked": 3824,
+     "orphans": 0
+    },
+    "key": "02_procurement_information.dunsnumber -> 04_vendor_information.dunsnumber",
+    "match": true,
+    "recorded": {
+     "checked": 3824,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 11457,
+     "orphans": 143
+    },
+    "key": "05_grant_information.duns_no -> 07_grantee_information.dunsnumber",
+    "match": true,
+    "recorded": {
+     "checked": 11457,
+     "orphans": 143
+    }
+   },
+   {
+    "found": {
+     "checked": 73220,
+     "orphans": 2
+    },
+    "key": "06_grant_year.piid -> 05_grant_information.piid",
+    "match": true,
+    "recorded": {
+     "checked": 73220,
+     "orphans": 2
+    }
+   },
+   {
+    "found": {
+     "checked": 13873,
+     "orphans": 1
+    },
+    "key": "03_procurement_year.piid -> 02_procurement_information.piid",
+    "match": true,
+    "recorded": {
+     "checked": 13873,
+     "orphans": 1
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "zen_japan_buildings": {
+  "keys": [
+   {
+    "found": {
+     "checked": 1014,
+     "orphans": 0
+    },
+    "key": "buildings.site_id -> sites.site_id",
+    "match": true,
+    "recorded": {
+     "checked": 1014,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 88,
+     "orphans": 0
+    },
+    "key": "buildings.archaeological_evidence_site_id -> archaeological_evidence_sites.archaeological_evidence_site_id",
+    "match": true,
+    "recorded": {
+     "checked": 88,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 1151,
+     "orphans": 0
+    },
+    "key": "building_designers.building_id -> buildings.building_id",
+    "match": true,
+    "recorded": {
+     "checked": 1151,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 1151,
+     "orphans": 0
+    },
+    "key": "building_designers.designer_id -> designers.designer_id",
+    "match": true,
+    "recorded": {
+     "checked": 1151,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 814,
+     "orphans": 0
+    },
+    "key": "site_sources.site_id -> sites.site_id",
+    "match": true,
+    "recorded": {
+     "checked": 814,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 814,
+     "orphans": 0
+    },
+    "key": "site_sources.source_id -> sources.source_id",
+    "match": true,
+    "recorded": {
+     "checked": 814,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "zen_terralore_chronicle": {
+  "keys": [
+   {
+    "found": {
+     "checked": 8268,
+     "orphans": 0
+    },
+    "key": "event_sources.claim_id -> events.claim_id",
+    "match": true,
+    "recorded": {
+     "checked": 8268,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 8268,
+     "orphans": 0
+    },
+    "key": "event_sources.source_key -> sources.source_key",
+    "match": true,
+    "recorded": {
+     "checked": 8268,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ },
+ "zen_wind_fragility": {
+  "keys": [
+   {
+    "found": {
+     "checked": 507,
+     "orphans": 0
+    },
+    "key": "curves.Source_ID -> sources.Source_ID",
+    "match": true,
+    "recorded": {
+     "checked": 507,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 507,
+     "orphans": 0
+    },
+    "key": "discretized.Curve_ID -> curves.Curve_ID",
+    "match": true,
+    "recorded": {
+     "checked": 507,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 507,
+     "orphans": 0
+    },
+    "key": "discretized.Source_ID -> sources.Source_ID",
+    "match": true,
+    "recorded": {
+     "checked": 507,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 1988,
+     "orphans": 0
+    },
+    "key": "parameters.Curve_ID -> curves.Curve_ID",
+    "match": true,
+    "recorded": {
+     "checked": 1988,
+     "orphans": 0
+    }
+   },
+   {
+    "found": {
+     "checked": 45608,
+     "orphans": 0
+    },
+    "key": "points.Curve_ID -> curves.Curve_ID",
+    "match": true,
+    "recorded": {
+     "checked": 45608,
+     "orphans": 0
+    }
+   }
+  ],
+  "status": "ok"
+ }
+}

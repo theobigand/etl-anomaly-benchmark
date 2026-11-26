@@ -1,0 +1,2694 @@
+{
+ "3pfl": {
+  "curator": "zenodo",
+  "domain": "public procurement and research funding",
+  "generating_system": "US federal contracting and grant databases",
+  "note": "",
+  "producer": "US federal agencies (FPDS, grant systems) compiled by de Rassenfosse and Raiteri",
+  "schema_family": "federal procurement/grants tables",
+  "structure": {
+   "C5": "contract-grant-patent linkage"
+  }
+ },
+ "a_day_in_daylight": {
+  "curator": "zenodo",
+  "domain": "chronobiology and light exposure",
+  "generating_system": "A Day in Daylight 2025 participatory wearable and diary study",
+  "note": "1,763 event intervals of 47 participants, September 2025 equinox campaign",
+  "producer": "TUM and TUMCREATE A Day in Daylight 2025 organisers (Zenodo 24164071)",
+  "schema_family": "participant context-event diary log",
+  "structure": {
+   "C4": "participant-level contextual event interval sequences"
+  }
+ },
+ "ademe_dpe": {
+  "curator": "data.ademe.fr",
+  "domain": "building energy certification",
+  "generating_system": "French statutory DPE residential energy performance certificate registry",
+  "note": "non-UCI administrative coded/numeric register",
+  "producer": "ADEME and certified EPC diagnosticians",
+  "schema_family": "building energy certificate csv",
+  "structure": {
+   "C2a": "mixed categorical and numeric energy performance certificate table"
+  }
+ },
+ "airquality_italy": {
+  "curator": "uci",
+  "domain": "environmental monitoring",
+  "generating_system": "one multisensor device in one Italian town",
+  "note": "",
+  "producer": "UCI donors (Italian air quality sensors)",
+  "schema_family": "uci time series",
+  "structure": {
+   "C3": "environmental sensing"
+  }
+ },
+ "aoe_gameplay": {
+  "curator": "zenodo",
+  "descriptors": {
+   "event_generation": "real-time strategy gameplay action sequences, not business-process execution"
+  },
+  "domain": "Games",
+  "generating_system": "Age of Empires competitive online gameplay interaction log",
+  "note": "real-time game action log, distinct mechanism from business-process execution logs",
+  "producer": "Zenodo record 11060884 authors",
+  "schema_family": "xes gameplay interaction log",
+  "structure": {
+   "C4": "real-time strategy gameplay event sequences"
+  }
+ },
+ "apis_guru_openapi_directory": {
+  "curator": "github.com/APIs-guru",
+  "domain": "web API description registry",
+  "generating_system": "APIs.guru OpenAPI directory curation",
+  "note": "one directory list; versions are nested, not counted as separate systems",
+  "producer": "APIs.guru maintainers",
+  "schema_family": "openapi directory json",
+  "structure": {
+   "C6": "API entries with nested version objects, info metadata, categories and vendor extensions"
+  }
+ },
+ "austin_police_dispatch": {
+  "curator": "datahub.austintexas.gov",
+  "domain": "police dispatch",
+  "generating_system": "Austin Police Department computer-aided dispatch",
+  "note": "per-incident lifecycle events; the same broad emergency-dispatch mechanism as the Seattle Fire and Cincinnati Fire groups, from a police CAD system of a separate city department; shares the Austin portal with other City of Austin groups",
+  "producer": "City of Austin (Austin Police Department)",
+  "schema_family": "dispatch lifecycle timestamps",
+  "structure": {
+   "C4": "per-incident response, arrival and closure events with problem category"
+  }
+ },
+ "austin_surface_water_quality": {
+  "curator": "datahub.austintexas.gov",
+  "domain": "surface water quality sampling",
+  "generating_system": "city of austin water quality sampling",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "City of Austin Watershed Protection Department",
+  "schema_family": "long-format laboratory results",
+  "structure": {
+   "C2b": "water sample results with watershed, site type, medium, parameter, qualifier, numeric result and unit"
+  }
+ },
+ "backblaze": {
+  "curator": "backblaze",
+  "descriptors": {
+   "natural_labels": "drive failures (equipment)",
+   "temporal_span": "60 days, daily"
+  },
+  "domain": "data-centre storage hardware",
+  "generating_system": "Backblaze data-centre hard drive fleet (daily SMART collection)",
+  "note": "",
+  "producer": "Backblaze",
+  "schema_family": "drive smart snapshots",
+  "structure": {
+   "C3": "daily SMART series per drive with natural failure flag"
+  }
+ },
+ "bloomington_locus_solar_monitoring": {
+  "curator": "data.bloomington.in.gov",
+  "domain": "distributed photovoltaic generation monitoring",
+  "generating_system": "Locus Energy PV monitoring of Bloomington sites",
+  "note": "panel of the sites of one monitoring platform; shares the city portal with the Bloomington water plant group (separate system)",
+  "producer": "Locus Energy (for the City of Bloomington)",
+  "schema_family": "photovoltaic site daily panel",
+  "structure": {
+   "C3": "site-day rows with power statistics, energy and expected energy"
+  }
+ },
+ "bloomington_utilities_water_plant": {
+  "curator": "data.bloomington.in.gov",
+  "domain": "drinking water plant operations",
+  "generating_system": "Bloomington Utilities water plant daily meters",
+  "note": "one plant, one daily series; the second Bloomington group is a separate generating system (solar monitoring vendor)",
+  "producer": "City of Bloomington Utilities",
+  "schema_family": "utility plant daily meter series",
+  "structure": {
+   "C3": "daily electricity, solar generation and water volume columns of one plant"
+  }
+ },
+ "bts_umd_daily_mobility_statistics": {
+  "curator": "data.bts.gov",
+  "domain": "population mobility",
+  "generating_system": "University of Maryland mobile-device panel daily mobility statistics",
+  "note": "national daily series of one derived panel; state and county levels are not counted separately",
+  "producer": "U.S. Department of Transportation (BTS) with the University of Maryland",
+  "schema_family": "derived mobility indicator panel",
+  "structure": {
+   "C3": "daily national stay-at-home population and trip counts by distance band"
+  }
+ },
+ "candanedo_umons": {
+  "curator": "uci",
+  "domain": "building energy and occupancy",
+  "generating_system": "experimental building (two UCI tables, one team)",
+  "note": "",
+  "producer": "Candanedo (UMons)",
+  "schema_family": "uci time series",
+  "structure": {
+   "C3": "building energy and occupancy"
+  }
+ },
+ "ccin2p3_slurm": {
+  "curator": "zenodo",
+  "domain": "HPC operations",
+  "generating_system": "SLURM at CC-IN2P3",
+  "note": "",
+  "producer": "CC-IN2P3",
+  "schema_family": "slurm job accounting",
+  "structure": {
+   "C4": "operational job trace"
+  }
+ },
+ "cdc_covid_vaccination_reporting": {
+  "curator": "data.cdc.gov",
+  "domain": "public health immunization reporting",
+  "generating_system": "CDC COVID-19 vaccination reporting from immunization information systems",
+  "note": "national rows of one reporting table; the jurisdiction rows are not counted separately; the RKI emergency department group is a separate national surveillance system",
+  "producer": "U.S. Centers for Disease Control and Prevention",
+  "schema_family": "vaccination reporting counts",
+  "structure": {
+   "C3": "daily national dose counts with cumulative, rolling and percentage columns in administration-date and report-date views"
+  }
+ },
+ "cftc_cot_disaggregated": {
+  "curator": "publicreporting.cftc.gov",
+  "domain": "commodity derivatives positioning",
+  "generating_system": "CFTC Large Trader Reporting Program and Commitments of Traders reports",
+  "note": "27,231 weekly contract-level rows, 2024-2025, 346 contracts, 21 columns",
+  "producer": "U.S. Commodity Futures Trading Commission (CFTC)",
+  "schema_family": "futures trader position report ledger",
+  "structure": {
+   "C2b": "weekly trader-class long, short and spread positions per futures contract"
+  }
+ },
+ "chembl_molecules": {
+  "curator": "ebi.ac.uk",
+  "domain": "medicinal chemistry bioactivity",
+  "generating_system": "EMBL-EBI ChEMBL curated small-molecule bioactivity database",
+  "note": "Small-molecule chemical properties, SMILES/InChI structures and ATC classifications; distinct from rcsb_pdb macromolecular crystallography and uniprot_kb sequences; kept local under CC BY-SA 3.0",
+  "producer": "EMBL-EBI",
+  "schema_family": "small-molecule pharmacology json",
+  "structure": {
+   "C6": "medicinal chemistry molecule hierarchy json"
+  }
+ },
+ "cincinnati_emergency_communications_calls": {
+  "curator": "data.cincinnati-oh.gov",
+  "domain": "emergency call handling",
+  "generating_system": "Cincinnati ECC 911 telephony call records",
+  "note": "per-call telephony events; the call records are separate from the fire and police dispatch systems, which the publisher says carry the nature of the emergency; shares the city portal with the Cincinnati Fire group (separate department and system)",
+  "producer": "City of Cincinnati (Emergency Communications Center)",
+  "schema_family": "telephony call lifecycle timestamps",
+  "structure": {
+   "C4": "per-call seizure, location query, transfer and release events with call type"
+  }
+ },
+ "cincinnati_fire_dispatch": {
+  "curator": "data.cincinnati-oh.gov",
+  "domain": "emergency fire and medical dispatch",
+  "generating_system": "Cincinnati Fire Department computer-aided dispatch",
+  "note": "per-incident lifecycle events; same broad mechanism as the Seattle Fire group (emergency dispatch) from a separate department, city and CAD system",
+  "producer": "City of Cincinnati (Cincinnati Fire Department)",
+  "schema_family": "dispatch lifecycle timestamps",
+  "structure": {
+   "C4": "per-incident dispatch, arrival and closure events with incident type"
+  }
+ },
+ "city_of_austin_campaign_finance": {
+  "curator": "datahub.austintexas.gov",
+  "domain": "political campaign finance disclosure",
+  "generating_system": "City of Austin campaign finance filings",
+  "note": "one portal export; the other City of Austin group is a separate department and system; publisher blanks preserved",
+  "producer": "City of Austin (City Clerk)",
+  "schema_family": "campaign finance transaction ledger",
+  "structure": {
+   "C2b": "contribution, expenditure, loan and pledge rows with amount, entity type, dates and report fields"
+  }
+ },
+ "clinicaltrials_gov": {
+  "curator": "clinicaltrials.gov",
+  "domain": "clinical registry",
+  "generating_system": "ClinicalTrials.gov registration system",
+  "note": "",
+  "producer": "US National Library of Medicine",
+  "schema_family": "study records json",
+  "structure": {
+   "C6": "regulatory registry record"
+  }
+ },
+ "cnc_five_axis_milling": {
+  "curator": "zenodo",
+  "domain": "industrial manufacturing",
+  "generating_system": "Five-axis CNC milling machine controller across 13 production setups",
+  "note": "",
+  "producer": "Series production 5-axis CNC dataset authors (Zenodo 10853254)",
+  "schema_family": "cnc machine controller telemetry",
+  "structure": {
+   "C3": "industrial CNC controller high-frequency time series"
+  }
+ },
+ "coatings_multinational": {
+  "curator": "4tu",
+  "domain": "purchasing (ERP)",
+  "generating_system": "ERP purchase order process",
+  "note": "",
+  "producer": "multinational coatings company (BPI Challenge 2019)",
+  "schema_family": "xes event log",
+  "structure": {
+   "C2b": "purchase order process",
+   "C4": "business process execution"
+  }
+ },
+ "colorado_dam_safety_registry": {
+  "curator": "data.colorado.gov",
+  "domain": "dam safety regulation",
+  "generating_system": "colorado dwr dam safety inventory",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "Colorado Division of Water Resources (DNR)",
+  "schema_family": "regulatory structure inventory",
+  "structure": {
+   "C2a": "jurisdictional dam rows with status, type, purpose, hazard class, dimensions, capacities and inspection fields"
+  }
+ },
+ "colorado_regulated_storage_tanks": {
+  "curator": "data.colorado.gov",
+  "domain": "petroleum storage tank regulation",
+  "generating_system": "colorado oil public safety tank registry",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "Colorado Division of Oil and Public Safety (CDLE)",
+  "schema_family": "facility and tank registry",
+  "structure": {
+   "C2a": "regulated storage tank rows with facility category, tank type, status, product, capacity, materials and leak-detection methods"
+  }
+ },
+ "cordis_horizon_europe": {
+  "curator": "cordis eu",
+  "descriptors": {
+   "relational_topology": "six-table grant schema (project + organization, euroSciVoc, topics, legalBasis, policyPriorities), 5 foreign-key relations across 379,605 child rows, 0 orphans"
+  },
+  "domain": "public research funding grants",
+  "generating_system": "European Commission CORDIS Horizon Europe research project and beneficiary registry",
+  "note": "Non-timetable European research grant relational database; independent producer, curator, continent, domain and schema from public procurement datasets",
+  "producer": "European Commission (CORDIS)",
+  "schema_family": "research grant project tables",
+  "structure": {
+   "C5": "EU funded project, beneficiary organization, scientific vocabulary and policy priority tables"
+  }
+ },
+ "cpsc_recall_notices": {
+  "curator": "saferproducts.gov",
+  "domain": "consumer product safety regulation",
+  "generating_system": "U.S. CPSC recall program",
+  "note": "725 recall notices 2024-2025, depth 4, 12 optional paths",
+  "producer": "U.S. Consumer Product Safety Commission (CPSC)",
+  "schema_family": "product recall notice json",
+  "structure": {
+   "C6": "recall notice with array-of-object product, hazard, remedy and supply-chain party lists"
+  }
+ },
+ "crossref": {
+  "curator": "crossref",
+  "descriptors": {
+   "nesting": "depth 6, 71 optional paths, arrays of funders, links, licenses and references"
+  },
+  "domain": "scholarly metadata",
+  "generating_system": "Crossref member DOI registration and metadata deposit",
+  "note": "promotes crossref_works after literal REST API reuse text was verified and zero abstracts confirmed; shares domain with OpenAlex, independent curator, producer, schema and API",
+  "producer": "Crossref member publishers",
+  "schema_family": "crossref works json",
+  "structure": {
+   "C6": "scholarly work metadata with references, funders, licenses and links"
+  }
+ },
+ "cubico_kelmarsh": {
+  "curator": "zenodo",
+  "descriptors": {
+   "supported_temporal_scales": "ten-minute to seasonal within one year; no multi-year drift",
+   "temporal_span": "one year (2016), ten-minute spacing"
+  },
+  "domain": "wind energy generation",
+  "generating_system": "Kelmarsh onshore wind farm (six turbines, Greenbyte SCADA)",
+  "note": "",
+  "producer": "Cubico Sustainable Investments",
+  "schema_family": "wind turbine scada",
+  "structure": {
+   "C3": "wind turbine ten-minute SCADA"
+  }
+ },
+ "danish_district_heating": {
+  "curator": "zenodo",
+  "domain": "district heating infrastructure",
+  "generating_system": "Danish district heating three-DMA smart-meter aggregation telemetry (Zenodo 17398331)",
+  "note": "Thermal energy network metering distinct from electrical grid and gas production datasets",
+  "producer": "FAU Erlangen-Nuremberg / Danish district heating utility (Zenodo 17398331)",
+  "schema_family": "district thermal meter time series",
+  "structure": {
+   "C3": "hourly district heating thermal demand and active-meter time series"
+  }
+ },
+ "datacite_dois": {
+  "curator": "api.datacite.org",
+  "domain": "scholarly metadata",
+  "generating_system": "DataCite DOI metadata registration and dataset citation infrastructure",
+  "note": "Shares scholarly metadata domain with crossref and openalex; distinct DataCite JSON:API attributes schema and curator",
+  "producer": "DataCite",
+  "schema_family": "datacite metadata json",
+  "structure": {
+   "C6": "dataset doi registration metadata json"
+  }
+ },
+ "delaware_dnrec_well_permits": {
+  "curator": "data.delaware.gov",
+  "domain": "groundwater well regulation",
+  "generating_system": "Delaware DNREC water well permitting",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "State of Delaware (DNREC, Division of Water)",
+  "schema_family": "well permit records",
+  "structure": {
+   "C2a": "permit rows with well type, status, capacity, depths, materials and review flags"
+  }
+ },
+ "delaware_state_purchasing_cards": {
+  "curator": "data.delaware.gov",
+  "domain": "public purchasing-card spending",
+  "generating_system": "Delaware state purchasing card ledger",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "State of Delaware (Department of Finance, Division of Accounting)",
+  "schema_family": "card transaction ledger",
+  "structure": {
+   "C2b": "card transaction rows with department, merchant category, date and amount"
+  }
+ },
+ "dft_stats19": {
+  "curator": "gov.uk",
+  "domain": "road safety",
+  "generating_system": "STATS19 police collision reporting of Great Britain",
+  "note": "collision, vehicle and casualty extracts are one generating system, one group",
+  "producer": "UK Department for Transport (police forces of Great Britain)",
+  "schema_family": "road collision coded tables",
+  "structure": {
+   "C2a": "coded categorical collision, vehicle and casualty records"
+  }
+ },
+ "dgal_alimconfiance": {
+  "curator": "dgal.opendatasoft.com",
+  "domain": "food safety inspection",
+  "generating_system": "French official sanitary food-hygiene inspection registry",
+  "note": "non-UCI administrative coded inspection register",
+  "producer": "DGAL (Ministere de l'Agriculture, France)",
+  "schema_family": "food safety inspection register",
+  "structure": {
+   "C2a": "coded categorical official food-safety inspection records"
+  }
+ },
+ "dgccrf_fuel_prices": {
+  "curator": "data economie gouv fr",
+  "domain": "retail motor fuel pricing",
+  "generating_system": "French DGCCRF statutory retail motor fuel price reporting feed",
+  "note": "Shares Ministry of Economy OpenDataSoft portal curator with dgfip_dvf and inpi_bce_ratios but independent agency and commodity pricing mechanism",
+  "producer": "Direction generale de la concurrence, de la consommation et de la repression des fraudes (DGCCRF)",
+  "schema_family": "retail fuel station price ledger",
+  "structure": {
+   "C2b": "per-station retail fuel price postings"
+  }
+ },
+ "dgfip_dvf": {
+  "curator": "data.gouv.fr",
+  "domain": "real estate",
+  "generating_system": "French property transaction register",
+  "note": "",
+  "producer": "DGFiP (French tax administration)",
+  "schema_family": "property register csv",
+  "structure": {
+   "C2b": "property sale"
+  }
+ },
+ "dmsp_ssj_auroral": {
+  "curator": "zenodo",
+  "domain": "spacecraft magnetospheric telemetry",
+  "generating_system": "DMSP F16/F17/F18 SSJ precipitating particle spectrometer auroral boundary detector",
+  "note": "Spacecraft orbital particle-precipitation boundary physics; distinct generating system, instrumentation and schema from ground-based GFZ Kp index",
+  "producer": "University of Colorado Boulder / NOAA NCEI (Zenodo 3373812)",
+  "schema_family": "polar satellite particle boundary series",
+  "structure": {
+   "C3": "spacecraft polar-orbit particle spectrometer auroral boundary time series"
+  }
+ },
+ "doaj_directory_of_open_access_journals": {
+  "curator": "doaj.org",
+  "domain": "open access journal registry",
+  "generating_system": "DOAJ journal index curation",
+  "note": "creation-ordered prefix of the journal records; article-level records are not used",
+  "producer": "Directory of Open Access Journals",
+  "schema_family": "doaj bibjson journal records",
+  "structure": {
+   "C6": "journal records with nested editorial, licence, subject, APC and preservation sub-objects"
+  }
+ },
+ "dutch_municipalities": {
+  "curator": "4tu",
+  "domain": "public administration",
+  "generating_system": "building permit process (five municipalities, one group)",
+  "note": "",
+  "producer": "Dutch municipalities (BPI Challenge 2015)",
+  "schema_family": "xes event log",
+  "structure": {
+   "C4": "business process execution"
+  }
+ },
+ "dwd_germany": {
+  "curator": "opendata.dwd.de",
+  "descriptors": {
+   "supported_temporal_scales": "hourly to multi-year synoptic seasonal and inter-annual regime shifts",
+   "temporal_span": "eight years hourly across twelve stations (2018-01-01 to 2025-12-31)"
+  },
+  "domain": "meteorology",
+  "generating_system": "DWD German synoptic hourly weather station network",
+  "note": "12 stations of one national synoptic network, one group",
+  "producer": "Deutscher Wetterdienst (DWD)",
+  "schema_family": "synoptic hourly climate archive",
+  "structure": {
+   "C3": "hourly air temperature and relative humidity with quality codes"
+  }
+ },
+ "ea_hydrology": {
+  "curator": "environment.data.gov.uk",
+  "domain": "hydrology",
+  "generating_system": "EA hydrometric network",
+  "note": "12 stations, one group",
+  "producer": "Environment Agency (England)",
+  "schema_family": "gauging time series",
+  "structure": {
+   "C3": "hydrological gauging"
+  }
+ },
+ "ecb_euro_fx_reference_rates": {
+  "curator": "ecb",
+  "domain": "foreign exchange reference rates",
+  "generating_system": "ECB daily euro foreign exchange reference rate procedure (ESCB concertation)",
+  "note": "complete history, one row per TARGET business day; rates are fixings published by the ECB, not an exchange tape",
+  "producer": "European Central Bank (ECB)",
+  "schema_family": "daily multi-currency rate panel",
+  "structure": {
+   "C3": "daily euro reference rates for 41 currencies with natural missingness where a currency did not exist or was withdrawn"
+  }
+ },
+ "edp_wind_farm_portugal": {
+  "curator": "zenodo",
+  "descriptors": {
+   "natural_labels": "real equipment-fault events kept apart from injections",
+   "temporal_span": "about a year per dataset, ten-minute spacing, anonymised times"
+  },
+  "domain": "wind energy generation",
+  "generating_system": "EDP onshore wind farm 1 in Portugal",
+  "note": "",
+  "producer": "EDP",
+  "schema_family": "care wind turbine datasets",
+  "structure": {
+   "C3": "wind turbine SCADA with logbook fault events"
+  }
+ },
+ "eia_petroleum_spot_prices": {
+  "curator": "eia.gov",
+  "domain": "energy commodity markets",
+  "generating_system": "EIA petroleum spot price compilation",
+  "note": "one bulk file; futures contracts and non-daily series are not used",
+  "producer": "U.S. Energy Information Administration",
+  "schema_family": "commodity spot price panel",
+  "structure": {
+   "C3": "daily spot prices of crude oil and refined products joined on the date"
+  }
+ },
+ "eicu_philips": {
+  "curator": "physionet",
+  "domain": "intensive care",
+  "generating_system": "hospital electronic health record (eICU demo)",
+  "note": "two hospital systems of the same domain and schema family",
+  "producer": "Philips eICU multi-hospital programme via MIT LCP",
+  "schema_family": "clinical record tables",
+  "structure": {
+   "C5": "clinical record graph"
+  }
+ },
+ "elder_home": {
+  "curator": "uci",
+  "domain": "ambient assisted living",
+  "generating_system": "one care-home sensor set",
+  "note": "",
+  "producer": "UCI donors",
+  "schema_family": "uci time series",
+  "structure": {
+   "C3": "ambient living sensors"
+  }
+ },
+ "epa_aqs": {
+  "curator": "aqs.epa.gov",
+  "domain": "environmental monitoring",
+  "generating_system": "EPA Air Quality System ambient monitoring network",
+  "note": "12 monitors of one federal programme, one group; same domain as the Italian air quality sensor group, a different instrument class and operator",
+  "producer": "U.S. Environmental Protection Agency (state and local monitoring agencies)",
+  "schema_family": "hourly monitor long-format records",
+  "structure": {
+   "C3": "hourly ambient ozone instrument values with qualifier and method codes"
+  }
+ },
+ "fda_maude": {
+  "curator": "openfda",
+  "descriptors": {
+   "nesting": "depth 5, arrays of devices and patients, optional keys"
+  },
+  "domain": "medical device safety reporting",
+  "generating_system": "FDA MAUDE medical device adverse event reporting",
+  "note": "shares the publisher and the openFDA platform with the FAERS group; counted separately because the reporting program, reporters and schema differ",
+  "producer": "FDA CDRH with device manufacturers, importers and user facilities",
+  "schema_family": "openfda device event json",
+  "structure": {
+   "C6": "device report with device, patient and problem arrays"
+  }
+ },
+ "fdic_bank_financials": {
+  "curator": "banks.data.fdic.gov",
+  "domain": "prudential banking supervision",
+  "generating_system": "FDIC quarterly Call Report prudential banking supervision system",
+  "note": "Distinct regulatory filing mechanism and supervisor from French corporate INPI/BCE accounts",
+  "producer": "Federal Deposit Insurance Corporation (FDIC)",
+  "schema_family": "bank regulatory call reports",
+  "structure": {
+   "C2b": "insured bank quarterly financial statement cross-sections"
+  }
+ },
+ "fec_federal_campaign_finance_filings": {
+  "curator": "fec.gov",
+  "domain": "federal campaign finance",
+  "generating_system": "FEC campaign finance filing database",
+  "note": "one election cycle; the individual contribution files are not used; the City of Austin campaign finance group is a separate municipal system",
+  "producer": "U.S. Federal Election Commission",
+  "schema_family": "campaign finance relational tables",
+  "structure": {
+   "C5": "candidate and committee master tables with linkage and committee-to-candidate contribution tables keyed by candidate and committee ids"
+  }
+ },
+ "federal_register": {
+  "curator": "federalregister.gov",
+  "domain": "federal regulatory rulemaking",
+  "generating_system": "Office of the Federal Register daily federal rulemaking document publication system",
+  "note": "Distinct regulatory JSON hierarchy (agencies, CFR, dockets, RIN) and US public-domain curator",
+  "producer": "Office of the Federal Register (NARA)",
+  "schema_family": "federal regulatory documents json",
+  "structure": {
+   "C6": "federal rulemaking notice and regulation json"
+  }
+ },
+ "fermi_blazar_flares": {
+  "curator": "zenodo",
+  "domain": "high-energy gamma-ray astrophysics",
+  "generating_system": "Fermi-LAT blazar gamma-ray light-curve Bayesian-block flare segmentation catalog",
+  "note": "Extragalactic blazar flare point-process catalog with waiting times and fluence asymmetry; distinct mechanism and time regime from NAOJ solar bursts and INGV seismic events",
+  "producer": "Zenodo 23039054 Authors (Fermi-LAT Blazar Catalog)",
+  "schema_family": "astrophysical flare point-process catalog",
+  "structure": {
+   "C4": "blazar gamma-ray flare point-process sequences"
+  }
+ },
+ "fin_institute_nl": {
+  "curator": "4tu",
+  "domain": "banking process",
+  "generating_system": "loan application process",
+  "note": "",
+  "producer": "Dutch financial institution (BPI Challenge 2012)",
+  "schema_family": "xes event log",
+  "structure": {
+   "C4": "business process execution"
+  }
+ },
+ "florida_bridge_inspections": {
+  "curator": "zenodo",
+  "domain": "civil bridge infrastructure",
+  "generating_system": "Florida Department of Transportation National Bridge Inventory inspection registry",
+  "note": "Distinct civil infrastructure structural inspection domain from japanese reconstructed buildings",
+  "producer": "Florida Department of Transportation",
+  "schema_family": "bridge structural inspection inventory",
+  "structure": {
+   "C2a": "bridge inspection ratings and traffic class inventory"
+  }
+ },
+ "france_baac_road_accidents": {
+  "curator": "data.gouv.fr",
+  "domain": "road safety",
+  "generating_system": "French police and gendarmerie BAAC injury accident bulletins",
+  "note": "same broad mechanism as the STATS19 group (police-reported road-injury incidents) from a different national collection system and producer; four related tables, one group",
+  "producer": "Ministere de l'Interieur (ONISR; police and gendarmerie)",
+  "schema_family": "road collision coded tables",
+  "structure": {
+   "C5": "accident, place, vehicle and road-user tables joined by the accident id and the vehicle id (places and users are one-to-many)"
+  }
+ },
+ "fraunhofer_iee_care_wind_b": {
+  "curator": "zenodo",
+  "descriptors": {
+   "natural_labels": "real equipment-fault events kept apart from injections",
+   "temporal_span": "about a year per dataset, ten-minute spacing, anonymised times"
+  },
+  "domain": "wind energy generation",
+  "generating_system": "anonymised German offshore wind farm B",
+  "note": "",
+  "producer": "Fraunhofer IEE with the operators",
+  "schema_family": "care wind turbine datasets",
+  "structure": {
+   "C3": "wind turbine SCADA with equipment-fault events"
+  }
+ },
+ "fta_national_transit_database": {
+  "curator": "datahub.transportation.gov",
+  "domain": "public transit operations reporting",
+  "generating_system": "FTA National Transit Database monthly reporting",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "U.S. Department of Transportation (Federal Transit Administration)",
+  "schema_family": "agency-mode-month activity counts",
+  "structure": {
+   "C2b": "agency-mode-month rows with unlinked trips, vehicles, revenue hours and miles"
+  }
+ },
+ "fugaku_riken": {
+  "curator": "zenodo",
+  "domain": "HPC operations",
+  "generating_system": "Supercomputer Fugaku scheduler",
+  "note": "",
+  "producer": "RIKEN R-CCS (F-DATA)",
+  "schema_family": "fugaku job records",
+  "structure": {
+   "C4": "operational job trace"
+  }
+ },
+ "gbif_occurrences": {
+  "curator": "api.gbif.org",
+  "domain": "biodiversity species occurrences",
+  "generating_system": "GBIF Darwin Core primary biodiversity occurrence aggregation portal",
+  "note": "Distinct JSON nested taxonomy, GADM geospatial and extension structure from flat fossil paleobiology_database CSVs",
+  "producer": "Global Biodiversity Information Facility (GBIF)",
+  "schema_family": "darwin core occurrence json",
+  "structure": {
+   "C6": "georeferenced species occurrence json"
+  }
+ },
+ "gene_ontology_consortium_annotations": {
+  "curator": "geneontology.org",
+  "domain": "gene function ontology and annotation",
+  "generating_system": "Gene Ontology Consortium and UniProt-GOA curation",
+  "note": "one release of the ontology and the human annotation file; UniProt is an identifier namespace used as annotation key; the Reactome group is a separate curation system",
+  "producer": "Gene Ontology Consortium; EMBL-EBI (UniProt-GOA)",
+  "schema_family": "ontology term and annotation tables",
+  "structure": {
+   "C5": "ontology terms with an is-a and relationship hierarchy and protein-to-term annotation rows keyed by the GO identifier"
+  }
+ },
+ "georgia_procurement": {
+  "curator": "ocds registry",
+  "domain": "public procurement",
+  "generating_system": "Georgian e-procurement system",
+  "note": "",
+  "producer": "State Procurement Agency of Georgia",
+  "schema_family": "ocds",
+  "structure": {
+   "C2b": "contract award",
+   "C5": "procurement releases (shallow)",
+   "C6": "procurement release"
+  }
+ },
+ "german_paying_agency": {
+  "curator": "4tu",
+  "domain": "agricultural subsidies",
+  "generating_system": "direct payment application process",
+  "note": "",
+  "producer": "German paying agency (BPI Challenge 2018)",
+  "schema_family": "xes event log",
+  "structure": {
+   "C2b": "subsidy payment",
+   "C4": "business process execution"
+  }
+ },
+ "german_water_demand": {
+  "curator": "zenodo",
+  "domain": "municipal water supply",
+  "generating_system": "German regional municipal water pumping station SCADA and weather series (Zenodo 11045013)",
+  "note": "Un-imputed raw pumping consumption series preserving missing intervals and DST transitions",
+  "producer": "Karlsruhe Institute of Technology / regional water supplier (Zenodo 11045013)",
+  "schema_family": "municipal utility pumping time series",
+  "structure": {
+   "C3": "hourly municipal water pumping demand with co-located weather observations"
+  }
+ },
+ "gfz_potsdam_kp": {
+  "curator": "kp.gfz.de",
+  "descriptors": {
+   "supported_temporal_scales": "three-hourly storm transients through 11-year solar-cycle and secular drift",
+   "temporal_span": "94 years three-hourly (1932-01-01 to 2026-11-21)"
+  },
+  "domain": "geomagnetism and space weather",
+  "generating_system": "GFZ Niemegk geomagnetic planetary Kp and ap index",
+  "note": "pure GFZ geomagnetic index under CC BY 4.0; solar-flux file excluded due to CC BY-NC",
+  "producer": "GFZ Helmholtz Centre for Geosciences",
+  "schema_family": "three-hourly geomagnetic index",
+  "structure": {
+   "C3": "planetary geomagnetic Kp and ap activity time series"
+  }
+ },
+ "github_actions_workflows": {
+  "curator": "zenodo",
+  "domain": "software CI/CD workflow evolution",
+  "generating_system": "GitHub Actions CI/CD workflow file commit history",
+  "note": "Software engineering CI/CD configuration event sequences per repository; non-BP mechanism",
+  "producer": "GitHub Open-Source Repositories (Zenodo 20340547)",
+  "schema_family": "git ci workflow change history",
+  "structure": {
+   "C4": "per-repository workflow edit events with git_change_type, YAML validity flags and file content hashes"
+  }
+ },
+ "github_advisory_database": {
+  "curator": "github.com",
+  "domain": "software vulnerability advisories",
+  "generating_system": "GitHub reviewed security advisory database",
+  "note": "first 100 reviewed advisories of each publication year; shares the subject with the Go vulnerability database and the NVD but is a separate curation system",
+  "producer": "GitHub, Inc.",
+  "schema_family": "github advisory json",
+  "structure": {
+   "C6": "advisory records with nested vulnerabilities, package ranges, identifiers, references, CVSS, CWE and EPSS objects"
+  }
+ },
+ "grouplens": {
+  "curator": "grouplens",
+  "domain": "recommender service",
+  "generating_system": "MovieLens service",
+  "note": "",
+  "producer": "GroupLens (University of Minnesota)",
+  "schema_family": "ratings tables",
+  "structure": {
+   "C5": "user-item ratings"
+  }
+ },
+ "gtfs_fr_alterneo": {
+  "curator": "transport.data.gouv.fr",
+  "domain": "public transport timetables",
+  "generating_system": "scheduling system of Alterneo",
+  "note": "distinct network, shared GTFS schema and national access point",
+  "producer": "Alterneo",
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
+ },
+ "gtfs_fr_aravis": {
+  "curator": "transport.data.gouv.fr",
+  "domain": "public transport timetables",
+  "generating_system": "scheduling system of ARAVIS Bus",
+  "note": "distinct network, shared GTFS schema and national access point",
+  "producer": "ARAVIS Bus",
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
+ },
+ "gtfs_fr_citea": {
+  "curator": "transport.data.gouv.fr",
+  "domain": "public transport timetables",
+  "generating_system": "scheduling system of Citea (Valence Romans)",
+  "note": "distinct network, shared GTFS schema and national access point",
+  "producer": "Citea (Valence Romans)",
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
+ },
+ "gtfs_fr_diviamobilites": {
+  "curator": "transport.data.gouv.fr",
+  "domain": "public transport timetables",
+  "generating_system": "scheduling system of DiviaMobilites",
+  "note": "distinct network, shared GTFS schema and national access point",
+  "producer": "DiviaMobilites",
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
+ },
+ "gtfs_fr_filibus": {
+  "curator": "transport.data.gouv.fr",
+  "domain": "public transport timetables",
+  "generating_system": "scheduling system of Filibus",
+  "note": "distinct network, shared GTFS schema and national access point",
+  "producer": "Filibus",
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
+ },
+ "gtfs_fr_kiceo": {
+  "curator": "transport.data.gouv.fr",
+  "domain": "public transport timetables",
+  "generating_system": "scheduling system of Kiceo (Vannes)",
+  "note": "distinct network, shared GTFS schema and national access point",
+  "producer": "Kiceo (Vannes)",
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
+ },
+ "gtfs_fr_optymo": {
+  "curator": "transport.data.gouv.fr",
+  "domain": "public transport timetables",
+  "generating_system": "scheduling system of Optymo (Belfort)",
+  "note": "distinct network, shared GTFS schema and national access point",
+  "producer": "Optymo (Belfort)",
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
+ },
+ "gtfs_fr_palmbus": {
+  "curator": "transport.data.gouv.fr",
+  "domain": "public transport timetables",
+  "generating_system": "scheduling system of Palmbus",
+  "note": "distinct network, shared GTFS schema and national access point",
+  "producer": "Palmbus",
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
+ },
+ "gtfs_fr_sankeo": {
+  "curator": "transport.data.gouv.fr",
+  "domain": "public transport timetables",
+  "generating_system": "scheduling system of Sankeo",
+  "note": "distinct network, shared GTFS schema and national access point",
+  "producer": "Sankeo",
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
+ },
+ "gtfs_fr_sibra": {
+  "curator": "transport.data.gouv.fr",
+  "domain": "public transport timetables",
+  "generating_system": "scheduling system of Sibra (Annecy)",
+  "note": "distinct network, shared GTFS schema and national access point",
+  "producer": "Sibra (Annecy)",
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
+ },
+ "gtfs_fr_tango": {
+  "curator": "transport.data.gouv.fr",
+  "domain": "public transport timetables",
+  "generating_system": "scheduling system of Tango (Niort)",
+  "note": "distinct network, shared GTFS schema and national access point",
+  "producer": "Tango (Niort)",
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
+ },
+ "gtfs_fr_transvilles": {
+  "curator": "transport.data.gouv.fr",
+  "domain": "public transport timetables",
+  "generating_system": "scheduling system of Transvilles",
+  "note": "distinct network, shared GTFS schema and national access point",
+  "producer": "Transvilles",
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
+ },
+ "hm_land_registry": {
+  "curator": "gov.uk",
+  "domain": "real estate",
+  "generating_system": "England and Wales land register",
+  "note": "",
+  "producer": "HM Land Registry",
+  "schema_family": "property register csv",
+  "structure": {
+   "C2b": "property sale"
+  }
+ },
+ "hospital_sepsis_nl": {
+  "curator": "4tu",
+  "domain": "hospital pathways",
+  "generating_system": "hospital information system",
+  "note": "",
+  "producer": "Dutch hospital ERP (sepsis cases)",
+  "schema_family": "xes event log",
+  "structure": {
+   "C4": "business process execution"
+  }
+ },
+ "ingv_seismic": {
+  "curator": "ingv fdsnws",
+  "domain": "geophysical seismology",
+  "generating_system": "INGV ISIDe national seismic sensor detection and event catalog",
+  "note": "Real-time geophysical seismic event sequence grouped by UTC date; non-BP natural physical event mechanism",
+  "producer": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+  "schema_family": "fdsnws seismic event catalog",
+  "structure": {
+   "C4": "chronological seismic detection sequences with UTC timestamps, depth, magnitude scale and event type"
+  }
+ },
+ "inpi_bce_ratios": {
+  "curator": "data economie gouv fr",
+  "domain": "corporate financial reporting",
+  "generating_system": "French INPI National Trade Register corporate annual financial statements",
+  "note": "Distinct French agency, portal and corporate domain from dgfip_dvf property transfers",
+  "producer": "Institut National de la Propriete Industrielle (INPI, France)",
+  "schema_family": "corporate financial filings",
+  "structure": {
+   "C2b": "annual corporate accounting statements and financial ratios"
+  }
+ },
+ "italian_road_fines": {
+  "curator": "4tu",
+  "domain": "police fines",
+  "generating_system": "road traffic fine management",
+  "note": "",
+  "producer": "Italian police information system",
+  "schema_family": "xes event log",
+  "structure": {
+   "C2b": "fine and payment",
+   "C4": "business process execution"
+  }
+ },
+ "japan_reconstructed_buildings": {
+  "curator": "zenodo",
+  "descriptors": {
+   "relational_topology": "seven-table schema (buildings, building_designers, designers, sites, archaeological_evidence_sites, site_sources, sources), 6 foreign-key relations, 0 orphans"
+  },
+  "domain": "architectural heritage and archaeology",
+  "generating_system": "Japanese reconstructed archaeological buildings inventory (Zenodo 23166842)",
+  "note": "non-timetable cultural heritage relational database",
+  "producer": "Zenodo record 23166842 authors",
+  "schema_family": "archaeological heritage database",
+  "structure": {
+   "C5": "archaeological site, building and bibliography relational tables"
+  }
+ },
+ "jolpica_f1": {
+  "curator": "jolpica",
+  "descriptors": {
+   "relational_topology": "11 tables, 13 foreign-key relations, hierarchy season to round to session to entry to lap; complete extract, 0 orphans"
+  },
+  "domain": "motorsport competition records",
+  "generating_system": "Formula One World Championship results as curated by the Jolpica project",
+  "note": "",
+  "producer": "Jolpica volunteers (Ergast lineage) from FIA race records",
+  "schema_family": "competition results database",
+  "structure": {
+   "C5": "season, round, session, entry, lap and pit-stop tables"
+  }
+ },
+ "kanto_landslides": {
+  "curator": "zenodo",
+  "domain": "earth science geomorphology",
+  "generating_system": "1923 Kanto Earthquake Kanagawa digitized landslide inventory",
+  "note": "Historical earthquake-triggered landslide inventory with categorical lithology/watershed and quantitative geometry",
+  "producer": "Kanto Earthquake Landslide Survey Authors",
+  "schema_family": "geomorphological landslide hazard inventory",
+  "structure": {
+   "C2a": "mixed geological classification and morphometric slope/area/volume table"
+  }
+ },
+ "loghub_collection": {
+  "curator": "loghub (one curator)",
+  "domain": "system logs (16 systems)",
+  "generating_system": "16 distinct systems, grouped as one for conservatism",
+  "note": "",
+  "producer": "16 software and hardware systems",
+  "schema_family": "raw logs",
+  "structure": {
+   "C4": "system and application logs"
+  }
+ },
+ "lyft_bikeshare": {
+  "curator": "operator open data",
+  "domain": "bike sharing",
+  "generating_system": "bike sharing operations",
+  "note": "",
+  "producer": "Lyft (Capital Bikeshare, Citi Bike)",
+  "schema_family": "trip records",
+  "structure": {
+   "C2b": "rental"
+  }
+ },
+ "melbourne_pedestrian": {
+  "curator": "monash",
+  "domain": "urban sensing",
+  "generating_system": "Melbourne sensor network",
+  "note": "",
+  "producer": "City of Melbourne",
+  "schema_family": "pedestrian counts",
+  "structure": {
+   "C3": "urban mobility counts"
+  }
+ },
+ "met_museum": {
+  "curator": "met open access",
+  "domain": "cultural heritage",
+  "generating_system": "Met collection management",
+  "note": "",
+  "producer": "The Metropolitan Museum of Art",
+  "schema_family": "museum catalogue json",
+  "structure": {
+   "C6": "cultural catalogue record"
+  }
+ },
+ "metropt_porto": {
+  "curator": "zenodo",
+  "domain": "industrial maintenance",
+  "generating_system": "metro train compressor",
+  "note": "",
+  "producer": "INESC TEC with the Porto metro operator",
+  "schema_family": "sensor csv",
+  "structure": {
+   "C3": "equipment telemetry"
+  }
+ },
+ "microsoft_azure_compute": {
+  "curator": "github",
+  "descriptors": {
+   "event_generation": "cloud data-centre VM allocation requests, not business-process execution"
+  },
+  "domain": "cloud compute infrastructure",
+  "generating_system": "Microsoft Azure Protean VM allocator (Zone A packing trace)",
+  "note": "multi-VM request traces per cloud tenant, non-business-process C4 sequence mechanism",
+  "producer": "Microsoft Azure",
+  "schema_family": "azure vm packing trace",
+  "structure": {
+   "C4": "cloud VM allocation and packing trace"
+  }
+ },
+ "mimic_iv_bidmc": {
+  "curator": "physionet",
+  "domain": "intensive care",
+  "generating_system": "hospital electronic health record (MIMIC-IV demo)",
+  "note": "two hospital systems of the same domain and schema family",
+  "producer": "Beth Israel Deaconess Medical Center via MIT LCP",
+  "schema_family": "clinical record tables",
+  "structure": {
+   "C5": "clinical record graph"
+  }
+ },
+ "mitre_attack_knowledge_base": {
+  "curator": "github.com/mitre-attack",
+  "domain": "cyber threat knowledge base",
+  "generating_system": "MITRE ATT&CK curated adversary behaviour knowledge base",
+  "note": "one curation system; Enterprise, Mobile and ICS collections are not counted separately; MITRE also runs the CVE programme (separate system)",
+  "producer": "The MITRE Corporation",
+  "schema_family": "stix 2.1 bundle json",
+  "structure": {
+   "C6": "heterogeneous STIX domain objects with nested external references, kill-chain phases and x_mitre arrays"
+  }
+ },
+ "montgomery_county_liquor_control_sales": {
+  "curator": "data.montgomerycountymd.gov",
+  "domain": "public liquor wholesale and retail",
+  "generating_system": "Montgomery County DLC warehouse and retail sales",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "Montgomery County, Maryland (Department of Liquor Control)",
+  "schema_family": "item-month sales ledger",
+  "structure": {
+   "C2b": "item-month rows with supplier, item type, retail sales, transfers and warehouse sales"
+  }
+ },
+ "montreal_contracts": {
+  "curator": "ocds registry",
+  "domain": "public procurement",
+  "generating_system": "Montreal contract management",
+  "note": "",
+  "producer": "City of Montreal",
+  "schema_family": "ocds",
+  "structure": {
+   "C2b": "contract award",
+   "C6": "procurement release"
+  }
+ },
+ "moodle_lms_events": {
+  "curator": "zenodo",
+  "domain": "educational software clickstreams",
+  "generating_system": "Moodle learning management system user event logger",
+  "note": "Educational LMS user interaction sequences; non-BP mechanism distinct from ERP/BPEL workflows",
+  "producer": "Zenodo 21410580 Authors",
+  "schema_family": "lms user interaction event log",
+  "structure": {
+   "C4": "student platform clickstream event log"
+  }
+ },
+ "naoj_norp_solar_bursts": {
+  "curator": "zenodo",
+  "domain": "solar radio astrophysics",
+  "generating_system": "NAOJ Nobeyama Radio Polarimeters solar radio flare detection system",
+  "note": "Astrophysical microwave solar radio burst event sequence across six frequency bands (1-35 GHz); non-BP",
+  "producer": "National Astronomical Observatory of Japan (NAOJ)",
+  "schema_family": "solar radio burst event catalog",
+  "structure": {
+   "C4": "chromospheric solar radio burst event catalog"
+  }
+ },
+ "nasa_common_metadata_repository": {
+  "curator": "cmr.earthdata.nasa.gov",
+  "domain": "earth science data catalogue",
+  "generating_system": "NASA Earthdata CMR collection metadata",
+  "note": "title-ordered prefix of nine providers; records are provider-contributed, the repository is one system",
+  "producer": "NASA Earth Science Data and Information System",
+  "schema_family": "umm-c collection json",
+  "structure": {
+   "C6": "collection records with nested keywords, extents, platforms and instruments, related URLs and data centers"
+  }
+ },
+ "nasa_omni_near_earth_solar_wind": {
+  "curator": "nasa_spdf",
+  "domain": "heliospheric space physics",
+  "generating_system": "NASA SPDF OMNI2 near-Earth solar wind compilation (ACE, Wind and earlier L1 spacecraft)",
+  "note": "hourly averages cross-normalised by SPDF from spacecraft instruments; the geomagnetic and solar index columns of the same files come from other institutions and are not retained",
+  "producer": "NASA Goddard Space Flight Center, Space Physics Data Facility (OMNI2)",
+  "schema_family": "hourly fixed-format spacecraft compilation",
+  "structure": {
+   "C3": "hourly interplanetary magnetic field and solar wind plasma measurements with publisher fill values and spacecraft identifiers"
+  }
+ },
+ "ncbi_pubchem_compound_records": {
+  "curator": "pubchem.ncbi.nlm.nih.gov",
+  "domain": "chemical structure records",
+  "generating_system": "NCBI PubChem compound standardisation",
+  "note": "identifier-ordered prefix of the compound table; the ChEMBL group is a separate curation system of the same subject",
+  "producer": "National Center for Biotechnology Information",
+  "schema_family": "pubchem pug compound json",
+  "structure": {
+   "C6": "compound records with nested atom, bond, coordinate and typed property arrays"
+  }
+ },
+ "nces_ipeds_postsecondary_surveys": {
+  "curator": "nces.ed.gov",
+  "domain": "postsecondary education statistics",
+  "generating_system": "NCES IPEDS institutional survey collection",
+  "note": "one survey year; the other IPEDS years and survey components are the same system",
+  "producer": "U.S. Department of Education (NCES)",
+  "schema_family": "institutional survey relational tables",
+  "structure": {
+   "C5": "institution characteristics parent table with admissions, enrolment and completions child tables keyed by UNITID"
+  }
+ },
+ "ndbc_moored_buoys": {
+  "curator": "noaa",
+  "domain": "marine surface meteorology and sea state",
+  "generating_system": "NOAA NDBC moored buoy network",
+  "note": "7 fixed NDBC-operated buoys, calendar 2023, 360,156 rows with publisher missing codes mapped to NaN",
+  "producer": "NOAA National Data Buoy Center (NDBC)",
+  "schema_family": "buoy standard meteorological series",
+  "structure": {
+   "C3": "ten-minute open-ocean wind, wave, pressure and temperature observations per buoy"
+  }
+ },
+ "nhif_hospital_cases": {
+  "curator": "zenodo",
+  "domain": "public healthcare inpatient billing",
+  "generating_system": "Bulgarian National Health Insurance Fund inpatient clinical pathway claims aggregation",
+  "note": "Aggregated facility-month inpatient pathway and ICD-10 diagnosis pairs with natural secondary-diagnosis missingness",
+  "producer": "National Health Insurance Fund (NHIF, Bulgaria)",
+  "schema_family": "clinical pathway icd10 billing table",
+  "structure": {
+   "C2a": "mixed administrative healthcare region/ICD-10 coding and case-count table"
+  }
+ },
+ "nih_research_grants": {
+  "curator": "reporter.nih.gov",
+  "domain": "biomedical research funding administration",
+  "generating_system": "NIH grant award administration system (RePORTER ExPORTER)",
+  "note": "federal grant award records; distinct producer and mechanism from the EU CORDIS programme register",
+  "producer": "U.S. National Institutes of Health (NIH)",
+  "schema_family": "grant award administrative register",
+  "structure": {
+   "C2a": "coded categorical award records (activity, institute, mechanism, study section, institution type) with date and cost fields"
+  }
+ },
+ "nist_nvd": {
+  "curator": "nist",
+  "descriptors": {
+   "nesting": "depth 9, optional weaknesses and configurations, five scoring generations"
+  },
+  "domain": "cybersecurity vulnerability records",
+  "generating_system": "NVD enrichment of CVE records",
+  "note": "",
+  "producer": "NIST NVD with CVE Numbering Authorities (MITRE)",
+  "schema_family": "nvd cve json",
+  "structure": {
+   "C6": "vulnerability records with configurations, metrics and references"
+  }
+ },
+ "noaa_coops": {
+  "curator": "noaa",
+  "domain": "oceanography and coastal tides",
+  "generating_system": "NOAA CO-OPS National Water Level Observation Network (6 coastal stations)",
+  "note": "Shares federal NOAA parent agency curator with noaa_gml_co2; distinct observation network, sensors and domain",
+  "producer": "NOAA Center for Operational Oceanographic Products and Services (CO-OPS)",
+  "schema_family": "gauging time series",
+  "structure": {
+   "C3": "hourly coastal sea-level and astronomical tide telemetry with quality flags"
+  }
+ },
+ "noaa_cpc_arctic_oscillation_index": {
+  "curator": "cpc.ncep.noaa.gov",
+  "domain": "atmospheric circulation climate index",
+  "generating_system": "NOAA CPC CDAS Arctic Oscillation index computation",
+  "note": "one derived daily index; the NOAA National Weather Service is the wider publisher of the separate CAP alert and HURDAT2 groups",
+  "producer": "NOAA National Weather Service, Climate Prediction Center",
+  "schema_family": "daily climate index",
+  "structure": {
+   "C3": "daily Arctic Oscillation index values from 1950"
+  }
+ },
+ "noaa_gml_co2": {
+  "curator": "noaa",
+  "domain": "environmental monitoring",
+  "generating_system": "NOAA GML Mauna Loa Observatory weekly infrared CO2 analyzer",
+  "note": "Shares federal NOAA parent agency curator with noaa_coops; distinct observatory, instrumentation and domain",
+  "producer": "NOAA Global Monitoring Laboratory (GML)",
+  "schema_family": "atmospheric gas concentration time series",
+  "structure": {
+   "C3": "weekly atmospheric CO2 mole fraction time series"
+  }
+ },
+ "noaa_ncei_storm_events": {
+  "curator": "noaa",
+  "domain": "severe weather impact archives",
+  "generating_system": "NOAA National Weather Service / NCEI Storm Data Relational Archival System",
+  "note": "complete 2024 annual 3-table relational release (69,802 details, 40,258 locations, 1,142 fatalities; 0 orphans across 3 FKs)",
+  "producer": "NOAA National Centers for Environmental Information (NCEI)",
+  "schema_family": "storm event impact relational tables",
+  "structure": {
+   "C5": "meteorological episode-event-location-fatality hierarchy"
+  }
+ },
+ "noaa_nhc_hurdat2_best_track": {
+  "curator": "nhc.noaa.gov",
+  "domain": "tropical cyclone climatology",
+  "generating_system": "NOAA NHC HURDAT2 best-track post-season analysis",
+  "note": "Atlantic file only; one record is one analysed storm position; the NOAA National Weather Service is the wider publisher of the separate CAP alert group",
+  "producer": "NOAA National Hurricane Center",
+  "schema_family": "best-track storm record file",
+  "structure": {
+   "C4": "chronological per-storm analysis records with status, position, wind, pressure and wind radii"
+  }
+ },
+ "nsidc_sea_ice_index": {
+  "curator": "nsidc",
+  "domain": "cryosphere sea ice extent",
+  "generating_system": "NOAA at NSIDC passive-microwave Sea Ice Index (SMMR, SSM/I, SSMIS)",
+  "note": "daily hemispheric sea ice extent derived from satellite brightness temperatures; sampling is irregular until 1987-08-20",
+  "producer": "NOAA at the National Snow and Ice Data Center (NSIDC)",
+  "schema_family": "satellite-derived hemispheric daily index",
+  "structure": {
+   "C3": "daily Arctic and Antarctic sea ice extent and missing area with an irregular early sampling interval"
+  }
+ },
+ "ntnu_ev_charging": {
+  "curator": "zenodo",
+  "domain": "electric vehicle charging",
+  "generating_system": "residential EV charging stations across 12 Norwegian apartment complexes",
+  "note": "",
+  "producer": "Sorensen et al. (NTNU / SINTEF)",
+  "schema_family": "ev charging session records",
+  "structure": {
+   "C2b": "residential electric vehicle charging sessions"
+  }
+ },
+ "nws_alerts": {
+  "curator": "api.weather.gov",
+  "descriptors": {
+   "nesting": "depth 5, 62 distinct paths, 25 optional paths, optional CAP polygon geometry, dynamic parameter maps and alert references"
+  },
+  "domain": "operational weather hazard alerting",
+  "generating_system": "NOAA National Weather Service Common Alerting Protocol (CAP) dissemination feed",
+  "note": "Operational weather hazard alert stream under CAP GeoJSON; independent generating system, domain, curator and schema family from NOAA CO-OPS tide gauges and NOAA GML Mauna Loa observatory",
+  "producer": "NOAA National Weather Service",
+  "schema_family": "geojson cap weather alerts",
+  "structure": {
+   "C6": "GeoJSON CAP weather alert features with variable hazard parameter objects and replacement references"
+  }
+ },
+ "nyc_tlc": {
+  "curator": "nyc open data",
+  "domain": "urban taxi fares",
+  "generating_system": "NYC yellow taxi meters and technology service providers reporting to the TLC",
+  "note": "",
+  "producer": "NYC Taxi and Limousine Commission",
+  "schema_family": "trip fare records",
+  "structure": {
+   "C2b": "taxi fare transactions"
+  }
+ },
+ "openalex": {
+  "curator": "openalex",
+  "domain": "scholarly metadata",
+  "generating_system": "OpenAlex pipeline",
+  "note": "",
+  "producer": "OpenAlex",
+  "schema_family": "scholarly graph json",
+  "structure": {
+   "C5": "bibliographic graph",
+   "C6": "scholarly work record"
+  }
+ },
+ "openfda_faers": {
+  "curator": "openfda",
+  "domain": "pharmacovigilance",
+  "generating_system": "FAERS reporting system",
+  "note": "",
+  "producer": "US FDA",
+  "schema_family": "adverse event reports json",
+  "structure": {
+   "C6": "regulatory registry record"
+  }
+ },
+ "openfoodfacts": {
+  "curator": "openfoodfacts",
+  "domain": "consumer products",
+  "generating_system": "crowdsourced product database",
+  "note": "",
+  "producer": "Open Food Facts contributors",
+  "schema_family": "product records json",
+  "structure": {
+   "C6": "product catalogue record"
+  }
+ },
+ "openlibrary": {
+  "curator": "internet archive",
+  "domain": "library catalogue",
+  "generating_system": "Open Library catalogue",
+  "note": "",
+  "producer": "Open Library",
+  "schema_family": "catalogue records json",
+  "structure": {
+   "C6": "library catalogue record"
+  }
+ },
+ "osv_go": {
+  "curator": "osv.dev",
+  "descriptors": {
+   "nesting": "depth 9, 37 distinct paths, 23 optional paths, arrays of affected ranges, references and aliases"
+  },
+  "domain": "cybersecurity vulnerability records",
+  "generating_system": "Go Vulnerability Database (OSV format)",
+  "note": "shares the vulnerability domain with NIST NVD; independent producer, curator, schema family and ecosystem",
+  "producer": "Go Security Team",
+  "schema_family": "osv json",
+  "structure": {
+   "C6": "software vulnerability advisory with semver range events and CWE metadata"
+  }
+ },
+ "ourairports_db": {
+  "curator": "ourairports",
+  "domain": "aviation infrastructure",
+  "generating_system": "OurAirports volunteer-maintained aviation infrastructure database",
+  "note": "complete 6-table relational dump (86,377 airports, 48,437 runways, 30,400 frequencies, 11,008 navaids, 249 countries, 3,987 regions; 0 orphans across 9 FKs)",
+  "producer": "OurAirports (David Megginson and volunteer contributors)",
+  "schema_family": "aviation infrastructure relational tables",
+  "structure": {
+   "C5": "airport-runway-frequency-navaid-region hierarchy"
+  }
+ },
+ "paleobiology_database": {
+  "curator": "zenodo",
+  "descriptors": {
+   "relational_topology": "two tables: many-to-one occurrence to taxon plus a self-referencing taxon tree; closure sampling, no sampling orphans"
+  },
+  "domain": "palaeontology",
+  "generating_system": "Paleobiology Database community registry",
+  "note": "",
+  "producer": "PBDB contributors",
+  "schema_family": "paleobiology occurrence and taxon tables",
+  "structure": {
+   "C2a": "fossil occurrences with high-cardinality taxonomy and geology",
+   "C5": "occurrence-to-taxon references and taxon parent hierarchy"
+  }
+ },
+ "paris_urban_trees": {
+  "curator": "opendata.paris.fr",
+  "domain": "urban forestry and arboriculture",
+  "generating_system": "Ville de Paris municipal urban tree inventory system",
+  "note": "New municipal arboriculture producer, curator and schema family; local under ODbL",
+  "producer": "Ville de Paris (Direction des Espaces Verts et de l'Environnement)",
+  "schema_family": "municipal tree asset inventory",
+  "structure": {
+   "C2a": "municipal street and park tree taxonomy and dimensions"
+  }
+ },
+ "pnnl_epri_bess": {
+  "curator": "zenodo",
+  "descriptors": {
+   "supported_temporal_scales": "minute to months of elapsed time; no calendar seasonality",
+   "temporal_span": "about 262 days of elapsed time, no calendar dates"
+  },
+  "domain": "grid-scale energy storage",
+  "generating_system": "two utility battery energy storage systems",
+  "note": "",
+  "producer": "PNNL and EPRI",
+  "schema_family": "battery meter readings in elapsed time",
+  "structure": {
+   "C3": "battery storage meter readings"
+  }
+ },
+ "port_noumea_stopovers": {
+  "curator": "zenodo",
+  "domain": "maritime port logistics",
+  "generating_system": "Autonomous Port of Noumea harbour master vessel stopover register",
+  "note": "Mixed maritime port call and routing table with vessel codes and natural port coordinate missingness",
+  "producer": "Autonomous Port of Noumea / New Caledonia",
+  "schema_family": "maritime port call stopover log",
+  "structure": {
+   "C2a": "mixed categorical vessel/route table with tonnage and origin-destination coordinates"
+  }
+ },
+ "queensland_petroleum_production": {
+  "curator": "zenodo",
+  "domain": "hydrocarbon resource extraction",
+  "generating_system": "Queensland Department of Natural Resources statutory petroleum and gas production ledger",
+  "note": "",
+  "producer": "Queensland Department of Natural Resources, Manufacturing and Regional and Rural Development",
+  "schema_family": "field production ledger",
+  "structure": {
+   "C2b": "half-yearly field hydrocarbon and water extraction ledger"
+  }
+ },
+ "rabobank_ict": {
+  "curator": "4tu",
+  "domain": "IT service management",
+  "generating_system": "Rabobank Group ICT incident management system",
+  "note": "",
+  "producer": "Rabobank Group ICT (BPI Challenge 2014)",
+  "schema_family": "csv event log",
+  "structure": {
+   "C4": "IT service incident log"
+  }
+ },
+ "rcsb_pdb": {
+  "curator": "rcsb pdb",
+  "descriptors": {
+   "nesting": "depth 6, 38 distinct paths, 15 optional paths, method-specific crystal cell/refinement/symmetry subtrees and polymer entity arrays"
+  },
+  "domain": "structural biology",
+  "generating_system": "Worldwide Protein Data Bank (wwPDB) macromolecular experimental structure archive",
+  "note": "Macromolecular crystallography, cryo-EM and NMR archive; independent domain, producer, curator and schema family from UniProt sequence entries",
+  "producer": "Worldwide Protein Data Bank (wwPDB)",
+  "schema_family": "mmcif pdbx structure json",
+  "structure": {
+   "C6": "macromolecular experimental structure JSON documents with optional crystallographic refinement subtrees"
+  }
+ },
+ "reactome_curated_pathway_database": {
+  "curator": "reactome.org",
+  "domain": "molecular pathway biology",
+  "generating_system": "Reactome curated pathway knowledge base",
+  "note": "one release; UniProt and ChEBI are identifier namespaces of other systems used only as mapping keys",
+  "producer": "Reactome (OICR, EMBL-EBI, NYULMC, CSHL)",
+  "schema_family": "pathway hierarchy and identifier mapping tables",
+  "structure": {
+   "C5": "pathway table with a parent-child hierarchy and UniProt and ChEBI mapping tables keyed by the pathway identifier"
+  }
+ },
+ "rki_surveillance": {
+  "curator": "zenodo",
+  "domain": "public health surveillance",
+  "generating_system": "RKI emergency-department and hospitalisation surveillance",
+  "note": "",
+  "producer": "Robert Koch-Institut",
+  "schema_family": "surveillance panels",
+  "structure": {
+   "C3": "public health surveillance"
+  }
+ },
+ "ror": {
+  "curator": "zenodo",
+  "descriptors": {
+   "nesting": "depth 5, 35 distinct paths, 8 optional paths, arrays of names, external_ids, links, locations and relationships"
+  },
+  "domain": "research institution registries",
+  "generating_system": "Research Organization Registry global persistent identifier directory (v2.16)",
+  "note": "Dedicated persistent identifier directory for research organizations; distinct producer, curator, generating system and schema family from OpenAlex",
+  "producer": "Research Organization Registry (ROR)",
+  "schema_family": "organization registry json",
+  "structure": {
+   "C6": "hierarchical organization directory records with variable external identifiers and relationship edges"
+  }
+ },
+ "rte_france_grid": {
+  "curator": "odre.opendatasoft.com",
+  "descriptors": {
+   "supported_temporal_scales": "half-hourly diurnal cycles through four-year seasonal and macro demand shifts",
+   "temporal_span": "four years half-hourly (2020-01-01 to 2023-12-31)"
+  },
+  "domain": "national electricity transmission grid",
+  "generating_system": "RTE France eco2mix national grid monitoring system",
+  "note": "",
+  "producer": "RTE (Reseau de Transport d'Electricite)",
+  "schema_family": "national electricity grid telemetry",
+  "structure": {
+   "C3": "half-hourly load, generation by fuel, CO2 rate and cross-border flows"
+  }
+ },
+ "seattle_fire_911_dispatch": {
+  "curator": "data.seattle.gov",
+  "domain": "emergency fire and medical dispatch",
+  "generating_system": "Seattle Fire Department 911 computer-aided dispatch feed",
+  "note": "one portal export; shares the municipal portal with the Fremont Bridge counter (separate department, separate generating system); each row is one dispatched incident so sequences are per-day dispatch streams",
+  "producer": "Seattle Fire Department (City of Seattle)",
+  "schema_family": "dispatch event stream",
+  "structure": {
+   "C4": "chronological daily dispatch sequences with incident type, minute timestamp and incident id"
+  }
+ },
+ "seattle_fremont_bridge_counter": {
+  "curator": "data.seattle.gov",
+  "domain": "urban cycling infrastructure counting",
+  "generating_system": "Seattle DOT Fremont Bridge inductive-loop bicycle and scooter counter",
+  "note": "one fixed counter, hourly counts per pathway; local wall-clock timestamps",
+  "producer": "Seattle Department of Transportation (City of Seattle)",
+  "schema_family": "single-site hourly counter series",
+  "structure": {
+   "C3": "hourly bicycle and scooter counts for the east and west pathways of one bridge with natural blank hours"
+  }
+ },
+ "seattle_sdci_building_permits": {
+  "curator": "data.seattle.gov",
+  "domain": "building permitting",
+  "generating_system": "Seattle SDCI permit tracking",
+  "note": "one portal export; shares the municipal portal with the Seattle Fire and Fremont Bridge groups (separate department and generating system); publisher blanks preserved",
+  "producer": "City of Seattle (Seattle Department of Construction and Inspections)",
+  "schema_family": "permit application register",
+  "structure": {
+   "C2a": "permit rows with class, type, status, review days, housing units and estimated cost"
+  }
+ },
+ "seoul_bike": {
+  "curator": "uci",
+  "domain": "bike sharing",
+  "generating_system": "Seoul rental bikes",
+  "note": "",
+  "producer": "Seoul bike service via UCI donors",
+  "schema_family": "uci time series",
+  "structure": {
+   "C3": "urban mobility counts"
+  }
+ },
+ "sffd_fire_incidents": {
+  "curator": "datasf",
+  "domain": "municipal fire and rescue operations",
+  "generating_system": "sffd nfirs incident reporting",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "San Francisco Fire Department (City and County of San Francisco)",
+  "schema_family": "NFIRS-style incident register",
+  "structure": {
+   "C2a": "fire and rescue incident records with situation, action, property-use and ignition codes and unit counts"
+  }
+ },
+ "sfo_passenger_statistics": {
+  "curator": "datasf",
+  "domain": "airport passenger traffic",
+  "generating_system": "sfo airport passenger counting",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "San Francisco International Airport (City and County of San Francisco)",
+  "schema_family": "monthly airline activity counts",
+  "structure": {
+   "C2b": "monthly passenger counts by operating airline, terminal, boarding area, region and activity type"
+  }
+ },
+ "sncf_tgv_regularite": {
+  "curator": "ressources.data.sncf.com",
+  "domain": "intercity rail operations",
+  "generating_system": "SNCF Voyageurs high-speed rail monthly route punctuality monitoring system",
+  "note": "Operational route-month punctuality metrics, not static GTFS timetables; kept local under ODbL",
+  "producer": "SNCF Voyageurs",
+  "schema_family": "rail route operational performance ledger",
+  "structure": {
+   "C2b": "monthly rail corridor delay and cancellation metrics"
+  }
+ },
+ "stackexchange": {
+  "curator": "stack exchange dump",
+  "domain": "community q-and-a",
+  "generating_system": "Stack Exchange platform",
+  "note": "",
+  "producer": "Stack Exchange network (10 sites as one group)",
+  "schema_family": "relational dump",
+  "structure": {
+   "C5": "community question graph"
+  }
+ },
+ "steel_korea": {
+  "curator": "uci",
+  "domain": "industrial energy",
+  "generating_system": "steel industry energy meter",
+  "note": "",
+  "producer": "Korean steel plant via UCI donors",
+  "schema_family": "uci time series",
+  "structure": {
+   "C3": "industrial energy metering"
+  }
+ },
+ "surf_lisa_slurm": {
+  "curator": "zenodo",
+  "domain": "HPC operations",
+  "generating_system": "SLURM at SURF Lisa",
+  "note": "",
+  "producer": "SURF (Lisa cluster)",
+  "schema_family": "slurm job accounting",
+  "structure": {
+   "C4": "operational job trace"
+  }
+ },
+ "telecom_operator_kpis": {
+  "curator": "zenodo",
+  "domain": "telecommunications infrastructure",
+  "generating_system": "Telecommunications operator infrastructure KPI monitoring probes (Zenodo 8147768)",
+  "note": "Real 5-minute network operator KPI traces (data_real only; synthetic series excluded)",
+  "producer": "University of Vigo telecommunications operator study (Zenodo 8147768)",
+  "schema_family": "telecom operator kpi time series",
+  "structure": {
+   "C3": "five-minute telecommunications operator infrastructure KPI time series"
+  }
+ },
+ "terralore_chronicle_db": {
+  "curator": "zenodo",
+  "domain": "historical chronicle archives",
+  "generating_system": "TerraLore Historical Chronicle Event-Source Curation & Verification Pipeline (v1.0.0)",
+  "note": "3-table relational historical chronicle database (4,564 events, 3,922 sources, 8,268 event_sources junction links; 0 orphans across 2 FKs)",
+  "producer": "TerraLore Historical Chronicle Project (Zenodo 22059347)",
+  "schema_family": "historical event-source relational tables",
+  "structure": {
+   "C5": "historical chronicle event-source junction linkage"
+  }
+ },
+ "tetouan_power": {
+  "curator": "uci",
+  "domain": "energy",
+  "generating_system": "Tetouan power consumption",
+  "note": "",
+  "producer": "Moroccan utility via UCI donors",
+  "schema_family": "uci time series",
+  "structure": {
+   "C3": "utility load"
+  }
+ },
+ "tue_travel_claims": {
+  "curator": "4tu",
+  "domain": "university administration",
+  "generating_system": "travel expense claim process",
+  "note": "",
+  "producer": "Eindhoven University of Technology (BPI Challenge 2020)",
+  "schema_family": "xes event log",
+  "structure": {
+   "C4": "business process execution"
+  }
+ },
+ "tx_hhsc_child_care_operations": {
+  "curator": "data.texas.gov",
+  "domain": "child care licensing and inspection",
+  "generating_system": "tx hhsc child care licensing register",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "Texas Health and Human Services Commission (Child Care Regulation)",
+  "schema_family": "licensed operation register",
+  "structure": {
+   "C2a": "licensed child-care operations with type, issuance, subsidy acceptance, capacity, ages served, county and deficiency and inspection counts"
+  }
+ },
+ "tx_hotel_occupancy_tax_revenue": {
+  "curator": "data.texas.gov",
+  "domain": "local tourism tax revenue",
+  "generating_system": "texas comptroller hotel occupancy tax reports",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "Texas Comptroller of Public Accounts",
+  "schema_family": "government-year revenue ledger",
+  "structure": {
+   "C2b": "local government hotel occupancy tax rate and revenue by statutory use category and fiscal year"
+  }
+ },
+ "uci:101": {
+  "curator": "uci",
+  "domain": "Games",
+  "generating_system": "table Tic-Tac-Toe Endgame and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "David Aha",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "other"
+  }
+ },
+ "uci:110": {
+  "curator": "uci",
+  "domain": "Biology",
+  "generating_system": "table Yeast and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Kenta Nakai",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:143": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Statlog (Australian Credit Approval) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Ross Quinlan",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "administrative or survey records"
+  }
+ },
+ "uci:146": {
+  "curator": "uci",
+  "domain": "Climate and Environment",
+  "generating_system": "table Statlog (Landsat Satellite) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Ashwin Srinivasan",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:148": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table Statlog (Shuttle) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:148",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:149": {
+  "curator": "uci",
+  "domain": "Other",
+  "generating_system": "table Statlog (Vehicle Silhouettes) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Pete Mowforth; Barry Shepherd",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "other"
+  }
+ },
+ "uci:15": {
+  "curator": "uci",
+  "domain": "Health and Medicine",
+  "generating_system": "table Breast Cancer Wisconsin (Original) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "WIlliam Wolberg",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:159": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table MAGIC Gamma Telescope and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "R. Bock",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:162": {
+  "curator": "uci",
+  "domain": "Climate and Environment",
+  "generating_system": "table Forest Fires and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Paulo Cortez; Anbal Morais",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:165": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table Concrete Compressive Strength and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "I-Cheng Yeh",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:189": {
+  "curator": "uci",
+  "domain": "Health and Medicine",
+  "generating_system": "table Energy Efficiency and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Athanasios Tsanas; Max Little",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:19": {
+  "curator": "uci",
+  "domain": "Other",
+  "generating_system": "table Car Evaluation and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Marko Bohanec",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "other"
+  }
+ },
+ "uci:193": {
+  "curator": "uci",
+  "domain": "Health and Medicine",
+  "generating_system": "table Cardiotocography and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "D. Campos; J. Bernardes",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:198": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table Steel Plates Faults and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "M Buscema; S Terzi",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:212": {
+  "curator": "uci",
+  "domain": "Health and Medicine",
+  "generating_system": "table Vertebral Column and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Guilherme Barreto; Ajalmar Neto",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:22": {
+  "curator": "uci",
+  "domain": "Games",
+  "generating_system": "table Chess (King-Rook vs. King-Pawn) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Alen Shapiro",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "other"
+  }
+ },
+ "uci:247": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table ISTANBUL STOCK EXCHANGE and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Oguz Akbilgic",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "administrative or survey records"
+  }
+ },
+ "uci:257": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table User Knowledge Modeling and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Hamdi Kahraman; Ilhami Colak",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:26": {
+  "curator": "uci",
+  "domain": "Games",
+  "generating_system": "table Connect-4 and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "John Tromp",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "other"
+  }
+ },
+ "uci:264": {
+  "curator": "uci",
+  "domain": "Health and Medicine",
+  "generating_system": "table EEG Eye State and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Oliver Roesler",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:267": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Banknote Authentication and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Volker Lohweg",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:27": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Credit Approval and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "J. R. Quinlan",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "administrative or survey records"
+  }
+ },
+ "uci:270": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Gas Sensor Array Drift at Different Concentrations and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Alexander Vergara",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:291": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table Airfoil Self-Noise and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Thomas Brooks; D. Pope",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:292": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Wholesale customers and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Margarida Cardoso",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "administrative or survey records"
+  }
+ },
+ "uci:294": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Combined Cycle Power Plant and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Pnar Tfekci; Heysem Kaya",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:296": {
+  "curator": "uci",
+  "domain": "Health and Medicine",
+  "generating_system": "table Mice Protein Expression and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "John Clore; Krzysztof Cios",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:31": {
+  "curator": "uci",
+  "domain": "Biology",
+  "generating_system": "table Covertype and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Jock Blackard",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:312": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Dow Jones Index and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Michael Brown",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "administrative or survey records"
+  }
+ },
+ "uci:32": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table Cylinder Bands and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Bob Evans",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "instrument measurement"
+  }
+ },
+ "uci:327": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Phishing Websites and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Rami Mohammad; Lee McCluskey",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:329": {
+  "curator": "uci",
+  "domain": "Health and Medicine",
+  "generating_system": "table Diabetic Retinopathy Debrecen and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Balint Antal; Andras Hajdu",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:352": {
+  "curator": "uci",
+  "descriptors": {
+   "transaction_semantics": "sales invoice lines and cancellations, not payments"
+  },
+  "domain": "retail commerce",
+  "generating_system": "one UK online gift retailer's invoicing system",
+  "note": "",
+  "producer": "Daqing Chen (South Bank University) with the retailer",
+  "schema_family": "uci transactional invoices",
+  "structure": {
+   "C2b": "e-commerce invoice lines"
+  }
+ },
+ "uci:365": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Polish Companies Bankruptcy and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Sebastian Tomczak",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "administrative or survey records"
+  }
+ },
+ "uci:368": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Facebook Metrics and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Srgio Moro; Paulo Rita",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "administrative or survey records"
+  }
+ },
+ "uci:372": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table HTRU2 and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Robert Lyon",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:379": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Website Phishing and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Neda Abdelhamid",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:381": {
+  "curator": "uci",
+  "domain": "Climate and Environment",
+  "generating_system": "table Beijing PM2.5 and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Song Chen",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:396": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Sales Transactions Weekly and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "James Tan",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "administrative or survey records"
+  }
+ },
+ "uci:464": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table Superconductivty Data and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Kam Hamidieh",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:52": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table Ionosphere and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "V. Sigillito; S. Wing",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:536": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Pedestrians in Traffic and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:536",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:545": {
+  "curator": "uci",
+  "domain": "Biology",
+  "generating_system": "table Rice (Cammeo and Osmancik) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:545",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:551": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Gas Turbine CO and NOx Emission Data Set and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:551",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:555": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Apartment for Rent Classified and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:555",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "administrative or survey records"
+  }
+ },
+ "uci:572": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Taiwanese Bankruptcy Prediction and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:572",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "administrative or survey records"
+  }
+ },
+ "uci:59": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Letter Recognition and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "David Slate",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:597": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Productivity Prediction of Garment Employees and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:597",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "administrative or survey records"
+  }
+ },
+ "uci:601": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table AI4I 2020 Predictive Maintenance Dataset and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:601",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:602": {
+  "curator": "uci",
+  "domain": "Biology",
+  "generating_system": "table Dry Bean and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:602",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:69": {
+  "curator": "uci",
+  "domain": "Biology",
+  "generating_system": "table Molecular Biology (Splice-junction Gene Sequences) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:69",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "clinical or biological records"
+  }
+ },
+ "uci:73": {
+  "curator": "uci",
+  "domain": "Biology",
+  "generating_system": "table Mushroom and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:73",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "clinical or biological records"
+  }
+ },
+ "uci:75": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table Musk (Version 2) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "David Chapman; Ajay Jain",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:755": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Accelerometer Gyro Mobile Phone and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Abdullah AlSahly",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:76": {
+  "curator": "uci",
+  "domain": "Social Science",
+  "generating_system": "table Nursery and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Vladislav Rajkovic",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "administrative or survey records"
+  }
+ },
+ "uci:760": {
+  "curator": "uci",
+  "domain": "Health and Medicine",
+  "generating_system": "table Multivariate Gait Data and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Nathaniel Helwig; Elizabeth Hsiao-Wecksler",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:78": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Page Blocks Classification and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Donato Malerba",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:80": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Optical Recognition of Handwritten Digits and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "E. Alpaydin; C. Kaynak",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:848": {
+  "curator": "uci",
+  "domain": "Biology",
+  "generating_system": "table Secondary Mushroom and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Dennis Wagner; D. Heider",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:850": {
+  "curator": "uci",
+  "domain": "Biology",
+  "generating_system": "table Raisin and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "\u0130\u0307lkay \u00c7inar; Murat Koklu",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:864": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Room Occupancy Estimation and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Adarsh Pal Singh; Sachin Chaudhari",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:911": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Recipe Reviews and User Feedback and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Amir Ali; Stanislaw  Matuszewski",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "computational or derived features"
+  }
+ },
+ "uci:94": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Spambase and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Mark Hopkins; Erik Reeber",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:942": {
+  "curator": "uci",
+  "domain": "Engineering",
+  "generating_system": "table RT-IoT2022  and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "B. S.; Rohini Nagapadma",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:967": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table PhiUSIIL Phishing URL (Website) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Arvind Prasad; Shalini Chandra",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "computational or derived features"
+  }
+ },
+ "uk_charity_commission": {
+  "curator": "ccew",
+  "descriptors": {
+   "relational_topology": "five non-trustee extracts (charity, annual_return_history, area_of_operation, classification, event_history), 4 foreign-key relations, 0 orphans in 1-in-20 organisation_number slice"
+  },
+  "domain": "charitable sector regulation",
+  "generating_system": "Charity Commission for England and Wales public charity register",
+  "note": "non-timetable statutory administrative relational extract; charity_trustee excluded",
+  "producer": "Charity Commission for England and Wales",
+  "schema_family": "charity register relational tables",
+  "structure": {
+   "C5": "charity register and statutory return tables"
+  }
+ },
+ "uk_ledger_mhra": {
+  "curator": "data.gov.uk",
+  "domain": "public expenditure",
+  "generating_system": "MHRA finance system",
+  "note": "",
+  "producer": "MHRA (UK government)",
+  "schema_family": "ledger csv",
+  "structure": {
+   "C2b": "expenditure ledger"
+  }
+ },
+ "uk_ledger_nhsbsa": {
+  "curator": "data.gov.uk",
+  "domain": "public expenditure",
+  "generating_system": "NHSBSA finance system",
+  "note": "",
+  "producer": "NHS Business Services Authority",
+  "schema_family": "ledger csv",
+  "structure": {
+   "C2b": "expenditure ledger"
+  }
+ },
+ "uniprot_kb": {
+  "curator": "uniprot consortium",
+  "descriptors": {
+   "nesting": "depth 11, 408 distinct paths, 370 optional paths, nested protein annotations, features and cross-references"
+  },
+  "domain": "molecular biology",
+  "generating_system": "UniProtKB/Swiss-Prot reviewed protein curation",
+  "note": "",
+  "producer": "UniProt Consortium (EMBL-EBI, SIB, PIR)",
+  "schema_family": "uniprotkb protein entry json",
+  "structure": {
+   "C6": "curated protein entry document with annotations, features and database cross-references"
+  }
+ },
+ "unisg_smart_factory": {
+  "curator": "zenodo",
+  "descriptors": {
+   "c4_note": "workflow-engine events: counted in the business-process family; it adds a new generating system, domain and testbed evidence class, not a new event-generation mechanism",
+   "event_generation": "workflow engine (Camunda) process execution, a business-process mechanism",
+   "evidence_class": "instrumented research testbed, not production",
+   "supported_temporal_scales": "sub-second to tens of minutes; no seasonality or long-horizon drift",
+   "temporal_span": "36 minutes of ten-hertz messages; workflow log 2022-09 to 2023-04"
+  },
+  "domain": "industrial automation testbed",
+  "generating_system": "Fischertechnik smart factory model of the University of St.Gallen with a Camunda workflow engine",
+  "note": "",
+  "producer": "University of St.Gallen",
+  "schema_family": "smart factory iot and workflow logs",
+  "structure": {
+   "C3": "ten-hertz station sensor messages",
+   "C4": "business process execution"
+  }
+ },
+ "us_treasury_dts": {
+  "curator": "fiscaldata.treasury.gov",
+  "domain": "sovereign fiscal cashflows",
+  "generating_system": "U.S. Treasury Bureau of the Fiscal Service Daily Treasury Statement ledger",
+  "note": "Independent federal sovereign cash ledger; shares neither curator nor schema with World Bank project loans",
+  "producer": "U.S. Department of the Treasury",
+  "schema_family": "sovereign treasury cash ledger",
+  "structure": {
+   "C2b": "daily government operating cash deposits and withdrawals ledger"
+  }
+ },
+ "usda_fdc": {
+  "curator": "usda ars",
+  "descriptors": {
+   "relational_topology": "measurement fact table joining foods and nutrients with derivation and portion dimensions; 6 relations, 0 orphans, complete release"
+  },
+  "domain": "food composition and nutrition",
+  "generating_system": "USDA Nutrient Data Laboratory analyses and compilation (SR Legacy)",
+  "note": "distinct from Open Food Facts (crowdsourced labels) and from procurement data",
+  "producer": "USDA Agricultural Research Service",
+  "schema_family": "nutrient measurement fact tables",
+  "structure": {
+   "C5": "food, nutrient measurement, derivation and portion tables"
+  }
+ },
+ "usgs_water": {
+  "curator": "api.waterdata.usgs.gov",
+  "domain": "hydrology",
+  "generating_system": "USGS streamgage network",
+  "note": "four gauges, one group; the same domain and schema family as the Environment Agency gauges, a different agency and instrumentation",
+  "producer": "U.S. Geological Survey",
+  "schema_family": "gauging time series",
+  "structure": {
+   "C3": "continuous river discharge at 15 and 30 minutes with approval and qualifier flags"
+  }
+ },
+ "vif_aegis": {
+  "curator": "zenodo",
+  "domain": "automotive",
+  "generating_system": "one instrumented vehicle",
+  "note": "",
+  "producer": "Virtual Vehicle Research Center",
+  "schema_family": "obd signals",
+  "structure": {
+   "C3": "vehicle signals"
+  }
+ },
+ "volvo_it": {
+  "curator": "4tu",
+  "domain": "IT service management",
+  "generating_system": "Volvo IT Belgium incident management system",
+  "note": "",
+  "producer": "Volvo IT Belgium (BPI Challenge 2013)",
+  "schema_family": "xes event log",
+  "structure": {
+   "C4": "IT service incident log"
+  }
+ },
+ "wa_ecology_ghg_reports": {
+  "curator": "data.wa.gov",
+  "domain": "industrial greenhouse gas reporting",
+  "generating_system": "wa ecology mandatory ghg reporting",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "Washington State Department of Ecology",
+  "schema_family": "facility-year emissions ledger",
+  "structure": {
+   "C2b": "facility-year greenhouse gas reports with sector, NAICS industry, parent company, county and emissions by gas in tonnes of CO2 equivalent"
+  }
+ },
+ "wa_ev_population": {
+  "curator": "data.wa.gov",
+  "domain": "vehicle registration",
+  "generating_system": "wa dol electric vehicle registry",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "Washington State Department of Licensing",
+  "schema_family": "vehicle registry",
+  "structure": {
+   "C2a": "registered electric vehicles with make, model, model year, vehicle type, clean alternative fuel eligibility, range, county, legislative district and utility"
+  }
+ },
+ "wals_cldf": {
+  "curator": "github",
+  "descriptors": {
+   "relational_topology": "eight-table hierarchy/star schema (values -> languages, parameters, codes; codes -> parameters; parameters -> chapters -> areas; languages.Parent_ID -> languages; language_countries -> languages, countries), 9 scalar foreign-key relations across 162,796 checked references with 0 orphans"
+  },
+  "domain": "linguistic typology",
+  "generating_system": "World Atlas of Language Structures (WALS) CLDF cross-linguistic typology database",
+  "note": "Non-timetable linguistic typology relational schema; normalized language_countries junction resolves CLDF space-separated Country_ID list and keep_default_na=False preserves Namibia ISO code NA (0 orphans across all 9 scalar FKs)",
+  "producer": "Max Planck Institute for Evolutionary Anthropology (WALS Editors)",
+  "schema_family": "cldf linguistic typology",
+  "structure": {
+   "C5": "language feature values, codes, chapters, areas, countries and language_countries relational tables"
+  }
+ },
+ "wikimedia_simplewiki": {
+  "curator": "wikimedia",
+  "domain": "collaborative editing activity",
+  "generating_system": "MediaWiki revision log of Simple English Wikipedia",
+  "note": "shares publisher and software platform with wikimedia_wikidata; separate wiki, community and event mechanism",
+  "producer": "Simple English Wikipedia contributors (Wikimedia Foundation)",
+  "schema_family": "mediawiki revision metadata",
+  "structure": {
+   "C4": "per-page revision event sequences with editor, minor flag and parent link"
+  }
+ },
+ "wikimedia_wikidata": {
+  "curator": "wikimedia",
+  "descriptors": {
+   "nesting": "depth up to 11, optional claims, arrays of statements"
+  },
+  "domain": "open knowledge base",
+  "generating_system": "Wikidata community knowledge base",
+  "note": "",
+  "producer": "Wikimedia Foundation and Wikidata editors",
+  "schema_family": "wikidata entity json",
+  "structure": {
+   "C6": "entity documents with claims, qualifiers, references and sitelinks"
+  }
+ },
+ "wind_fragility_power_db": {
+  "curator": "zenodo",
+  "domain": "power infrastructure structural engineering",
+  "generating_system": "Power Infrastructure Wind Fragility & Vulnerability Curve Compilation Pipeline (v2026.10)",
+  "note": "5-table relational engineering fragility curve database (507 curves, 507 discretized curves, 1,988 parameters, 45,608 points, 52 sources; 0 orphans across 5 FKs)",
+  "producer": "Power Infrastructure Wind Fragility Database Consortium (Zenodo 23399966)",
+  "schema_family": "engineering fragility curve relational tables",
+  "structure": {
+   "C5": "engineering fragility curve relational compilation"
+  }
+ },
+ "world_bank_projects": {
+  "curator": "world bank",
+  "domain": "sovereign development finance",
+  "generating_system": "World Bank Projects & Operations lending commitment registry",
+  "note": "",
+  "producer": "The World Bank Group",
+  "schema_family": "sovereign development lending records",
+  "structure": {
+   "C2b": "multilateral sovereign lending commitment records"
+  }
+ },
+ "wri_global_power_plants": {
+  "curator": "github",
+  "domain": "power generation infrastructure",
+  "generating_system": "World Resources Institute Global Power Plant Database asset inventory",
+  "note": "Multi-country facility asset and fuel-mix catalog; distinct from metered grid telemetry and SCADA series",
+  "producer": "World Resources Institute (WRI)",
+  "schema_family": "power generation asset registry",
+  "structure": {
+   "C2a": "global power plant capacity and primary fuel inventory"
+  }
+ },
+ "zambia_procurement": {
+  "curator": "ocds registry",
+  "domain": "public procurement",
+  "generating_system": "Zambian e-procurement system",
+  "note": "",
+  "producer": "Zambia Public Procurement Authority",
+  "schema_family": "ocds",
+  "structure": {
+   "C2b": "contract award",
+   "C5": "procurement releases (shallow)",
+   "C6": "procurement release"
+  }
+ },
+ "zenodo_repository_records": {
+  "curator": "zenodo.org",
+  "domain": "research data repository",
+  "generating_system": "Zenodo repository record store",
+  "note": "one query window; Zenodo DOIs are registered with DataCite, a separate system recorded under datacite_dois",
+  "producer": "CERN (Zenodo)",
+  "schema_family": "repository record json",
+  "structure": {
+   "C6": "record objects with nested metadata, relations, file lists and statistics"
+  }
+ }
+}

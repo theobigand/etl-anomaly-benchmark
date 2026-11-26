@@ -1,0 +1,856 @@
+{
+ "monash_zenodo": {
+  "4654773_sunspot_dataset_with_missing_values.zip": {
+   "frequency": "daily",
+   "has_start": true,
+   "max_length": 73924,
+   "min_length": 73924,
+   "missing_share": 0.043828797143011744,
+   "points": 73924,
+   "series": 1
+  },
+  "4654833_fred_md_dataset.zip": {
+   "frequency": "monthly",
+   "has_start": true,
+   "max_length": 728,
+   "min_length": 728,
+   "missing_share": 0.0,
+   "points": 77896,
+   "series": 107
+  },
+  "4656009_covid_deaths_dataset.zip": {
+   "frequency": "daily",
+   "has_start": true,
+   "max_length": 212,
+   "min_length": 212,
+   "missing_share": 0.0,
+   "points": 56392,
+   "series": 266
+  },
+  "4656014_hospital_dataset.zip": {
+   "frequency": "monthly",
+   "has_start": true,
+   "max_length": 84,
+   "min_length": 84,
+   "missing_share": 0.0,
+   "points": 64428,
+   "series": 767
+  },
+  "4656022_car_parts_dataset_with_missing_values.zip": {
+   "frequency": "monthly",
+   "has_start": true,
+   "max_length": 51,
+   "min_length": 51,
+   "missing_share": 0.04489125493129189,
+   "points": 136374,
+   "series": 2674
+  },
+  "4656027_solar_4_seconds_dataset.zip": {
+   "frequency": "4_seconds",
+   "has_start": true,
+   "max_length": 7397222,
+   "min_length": 7397222,
+   "missing_share": 0.0,
+   "points": 7397222,
+   "series": 1
+  },
+  "4656032_wind_4_seconds_dataset.zip": {
+   "frequency": "4_seconds",
+   "has_start": true,
+   "max_length": 7397147,
+   "min_length": 7397147,
+   "missing_share": 0.0,
+   "points": 7397147,
+   "series": 1
+  },
+  "4656042_cif_2016_dataset.zip": {
+   "frequency": "monthly",
+   "has_start": false,
+   "max_length": 120,
+   "min_length": 28,
+   "missing_share": 0.0,
+   "points": 7108,
+   "series": 72
+  },
+  "4656049_us_births_dataset.zip": {
+   "frequency": "daily",
+   "has_start": true,
+   "max_length": 7305,
+   "min_length": 7305,
+   "missing_share": 0.0,
+   "points": 7305,
+   "series": 1
+  },
+  "4656058_saugeenday_dataset.zip": {
+   "frequency": "daily",
+   "has_start": true,
+   "max_length": 23741,
+   "min_length": 23741,
+   "missing_share": 0.0,
+   "points": 23741,
+   "series": 1
+  },
+  "4656096_tourism_monthly_dataset.zip": {
+   "frequency": "monthly",
+   "has_start": true,
+   "max_length": 333,
+   "min_length": 91,
+   "missing_share": 0.0,
+   "points": 109280,
+   "series": 366
+  },
+  "4656110_nn5_daily_dataset_with_missing_values.zip": {
+   "frequency": "daily",
+   "has_start": true,
+   "max_length": 791,
+   "min_length": 791,
+   "missing_share": 0.01910001025045273,
+   "points": 87801,
+   "series": 111
+  },
+  "4656132_traffic_hourly_dataset.zip": {
+   "frequency": "hourly",
+   "has_start": true,
+   "max_length": 17544,
+   "min_length": 17544,
+   "missing_share": 0.0,
+   "points": 15122928,
+   "series": 862
+  },
+  "4656144_solar_10_minutes_dataset.zip": {
+   "frequency": "10_minutes",
+   "has_start": true,
+   "max_length": 52560,
+   "min_length": 52560,
+   "missing_share": 0.0,
+   "points": 7200720,
+   "series": 137
+  },
+  "4656626_pedestrian_counts_dataset.zip": {
+   "frequency": "hourly",
+   "has_start": true,
+   "max_length": 96424,
+   "min_length": 576,
+   "missing_share": 0.0,
+   "points": 3132346,
+   "series": 66
+  },
+  "4656719_kdd_cup_2018_dataset_with_missing_values.zip": {
+   "frequency": "hourly",
+   "has_start": true,
+   "max_length": 10920,
+   "min_length": 9504,
+   "missing_share": 0.17119295913082133,
+   "points": 2942364,
+   "series": 270
+  },
+  "4659727_australian_electricity_demand_dataset.zip": {
+   "frequency": "half_hourly",
+   "has_start": true,
+   "max_length": 232272,
+   "min_length": 230736,
+   "missing_share": 0.0,
+   "points": 1155264,
+   "series": 5
+  },
+  "5121965_bitcoin_dataset_with_missing_values.zip": {
+   "frequency": "daily",
+   "has_start": true,
+   "max_length": 4581,
+   "min_length": 4581,
+   "missing_share": 0.09808629847922579,
+   "points": 82458,
+   "series": 18
+  },
+  "5122114_rideshare_dataset_with_missing_values.zip": {
+   "frequency": "hourly",
+   "has_start": true,
+   "max_length": 541,
+   "min_length": 541,
+   "missing_share": 0.39684178604436227,
+   "points": 1246464,
+   "series": 2304
+  },
+  "5122535_vehicle_trips_dataset_with_missing_values.zip": {
+   "frequency": "daily",
+   "has_start": true,
+   "max_length": 243,
+   "min_length": 70,
+   "missing_share": 0.17162946533905904,
+   "points": 42382,
+   "series": 329
+  },
+  "5184708_oikolab_weather_dataset.zip": {
+   "frequency": "hourly",
+   "has_start": true,
+   "max_length": 100057,
+   "min_length": 100057,
+   "missing_share": 0.0,
+   "points": 800456,
+   "series": 8
+  }
+ },
+ "openalex": {
+  "foreign_keys": {
+   "authorships.author->authors": {
+    "checked": 3762,
+    "orphans": 0,
+    "share": 0.0
+   },
+   "authorships.institution->institutions": {
+    "checked": 4477,
+    "orphans": 0,
+    "share": 0.0
+   },
+   "primary_location.source->sources": {
+    "checked": 990,
+    "orphans": 0,
+    "share": 0.0
+   },
+   "referenced_works->works (sample only, expected incomplete)": {
+    "checked": 24763,
+    "orphans": 24763,
+    "share": 1.0
+   }
+  },
+  "tables": {
+   "authors": 3756,
+   "institutions": 1520,
+   "sources": 884,
+   "works": 1000
+  },
+  "works_shape": {
+   "max_depth": 6,
+   "optional_paths": 46,
+   "paths": 74,
+   "records": 1000
+  }
+ },
+ "openfda": {
+  "openfda_drug_event": {
+   "array_paths": 21,
+   "max_depth": 6,
+   "optional_paths": 64,
+   "paths": 86,
+   "records": 4000,
+   "variable_structure": true
+  },
+  "openfda_drug_label": {
+   "array_paths": 126,
+   "max_depth": 3,
+   "optional_paths": 124,
+   "paths": 130,
+   "records": 1000,
+   "variable_structure": true
+  },
+  "openfda_food_enforcement": {
+   "array_paths": 0,
+   "max_depth": 2,
+   "optional_paths": 2,
+   "paths": 24,
+   "records": 2155,
+   "variable_structure": true
+  }
+ },
+ "openfoodfacts": {
+  "array_paths": 359,
+  "max_depth": 12,
+  "multi_type_paths": 866,
+  "optional_paths": 9964,
+  "paths": 9999,
+  "records": 9688,
+  "variable_structure": true
+ },
+ "stackexchange": {
+  "3dprinting.stackexchange.com.7z": {
+   "foreign_keys": {
+    "Badges.UserId->Users.Id": {
+     "checked": 34000,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Comments.PostId->Posts.Id": {
+     "checked": 25514,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Comments.UserId->Users.Id": {
+     "checked": 25399,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.PostId->Posts.Id": {
+     "checked": 1581,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.RelatedPostId->Posts.Id": {
+     "checked": 1581,
+     "orphans": 5,
+     "share": 0.0031625553447185324
+    },
+    "Posts.AcceptedAnswerId->Posts.Id": {
+     "checked": 2536,
+     "orphans": 1,
+     "share": 0.0003943217665615142
+    },
+    "Posts.OwnerUserId->Users.Id": {
+     "checked": 15222,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Posts.ParentId->Posts.Id": {
+     "checked": 8905,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Votes.PostId->Posts.Id": {
+     "checked": 56355,
+     "orphans": 9145,
+     "share": 0.16227486469701002
+    }
+   },
+   "tables": {
+    "Badges": 34000,
+    "Comments": 25514,
+    "PostHistory": 52303,
+    "PostLinks": 1581,
+    "Posts": 15283,
+    "Tags": 496,
+    "Users": 33730,
+    "Votes": 56355
+   }
+  },
+  "astronomy.stackexchange.com.7z": {
+   "foreign_keys": {
+    "Badges.UserId->Users.Id": {
+     "checked": 64722,
+     "orphans": 1,
+     "share": 1.5450696826426872e-05
+    },
+    "Comments.PostId->Posts.Id": {
+     "checked": 80598,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Comments.UserId->Users.Id": {
+     "checked": 77849,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.PostId->Posts.Id": {
+     "checked": 6552,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.RelatedPostId->Posts.Id": {
+     "checked": 6552,
+     "orphans": 46,
+     "share": 0.007020757020757021
+    },
+    "Posts.AcceptedAnswerId->Posts.Id": {
+     "checked": 7228,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Posts.OwnerUserId->Users.Id": {
+     "checked": 34728,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Posts.ParentId->Posts.Id": {
+     "checked": 20328,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Votes.PostId->Posts.Id": {
+     "checked": 237730,
+     "orphans": 34194,
+     "share": 0.14383544357043704
+    }
+   },
+   "tables": {
+    "Badges": 64722,
+    "Comments": 80598,
+    "PostHistory": 118097,
+    "PostLinks": 6552,
+    "Posts": 35836,
+    "Tags": 590,
+    "Users": 39348,
+    "Votes": 237730
+   }
+  },
+  "beer.stackexchange.com.7z": {
+   "foreign_keys": {
+    "Badges.UserId->Users.Id": {
+     "checked": 12901,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Comments.PostId->Posts.Id": {
+     "checked": 4007,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Comments.UserId->Users.Id": {
+     "checked": 3945,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.PostId->Posts.Id": {
+     "checked": 152,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.RelatedPostId->Posts.Id": {
+     "checked": 152,
+     "orphans": 1,
+     "share": 0.006578947368421052
+    },
+    "Posts.AcceptedAnswerId->Posts.Id": {
+     "checked": 704,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Posts.OwnerUserId->Users.Id": {
+     "checked": 3868,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Posts.ParentId->Posts.Id": {
+     "checked": 2580,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Votes.PostId->Posts.Id": {
+     "checked": 20765,
+     "orphans": 1906,
+     "share": 0.09178906814351072
+    }
+   },
+   "tables": {
+    "Badges": 12901,
+    "Comments": 4007,
+    "PostHistory": 10423,
+    "PostLinks": 152,
+    "Posts": 3924,
+    "Tags": 152,
+    "Users": 10168,
+    "Votes": 20765
+   }
+  },
+  "coffee.stackexchange.com.7z": {
+   "foreign_keys": {
+    "Badges.UserId->Users.Id": {
+     "checked": 14615,
+     "orphans": 2,
+     "share": 0.00013684570646595962
+    },
+    "Comments.PostId->Posts.Id": {
+     "checked": 4985,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Comments.UserId->Users.Id": {
+     "checked": 4849,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.PostId->Posts.Id": {
+     "checked": 622,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.RelatedPostId->Posts.Id": {
+     "checked": 622,
+     "orphans": 1,
+     "share": 0.001607717041800643
+    },
+    "Posts.AcceptedAnswerId->Posts.Id": {
+     "checked": 691,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Posts.OwnerUserId->Users.Id": {
+     "checked": 4410,
+     "orphans": 1,
+     "share": 0.00022675736961451248
+    },
+    "Posts.ParentId->Posts.Id": {
+     "checked": 2898,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Votes.PostId->Posts.Id": {
+     "checked": 22128,
+     "orphans": 2219,
+     "share": 0.10028018799710774
+    }
+   },
+   "tables": {
+    "Badges": 14615,
+    "Comments": 4985,
+    "PostHistory": 11825,
+    "PostLinks": 622,
+    "Posts": 4525,
+    "Tags": 114,
+    "Users": 11594,
+    "Votes": 22128
+   }
+  },
+  "earthscience.stackexchange.com.7z": {
+   "foreign_keys": {
+    "Badges.UserId->Users.Id": {
+     "checked": 34759,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Comments.PostId->Posts.Id": {
+     "checked": 32655,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Comments.UserId->Users.Id": {
+     "checked": 29886,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.PostId->Posts.Id": {
+     "checked": 1464,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.RelatedPostId->Posts.Id": {
+     "checked": 1464,
+     "orphans": 14,
+     "share": 0.009562841530054645
+    },
+    "Posts.AcceptedAnswerId->Posts.Id": {
+     "checked": 2769,
+     "orphans": 1,
+     "share": 0.00036114120621162876
+    },
+    "Posts.OwnerUserId->Users.Id": {
+     "checked": 15582,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Posts.ParentId->Posts.Id": {
+     "checked": 8846,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Votes.PostId->Posts.Id": {
+     "checked": 105723,
+     "orphans": 13723,
+     "share": 0.12980146231189052
+    }
+   },
+   "tables": {
+    "Badges": 34759,
+    "Comments": 32655,
+    "PostHistory": 54946,
+    "PostLinks": 1464,
+    "Posts": 16348,
+    "Tags": 438,
+    "Users": 21435,
+    "Votes": 105723
+   }
+  },
+  "economics.stackexchange.com.7z": {
+   "foreign_keys": {
+    "Badges.UserId->Users.Id": {
+     "checked": 43498,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Comments.PostId->Posts.Id": {
+     "checked": 56560,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Comments.UserId->Users.Id": {
+     "checked": 55049,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.PostId->Posts.Id": {
+     "checked": 1806,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.RelatedPostId->Posts.Id": {
+     "checked": 1806,
+     "orphans": 52,
+     "share": 0.028792912513842746
+    },
+    "Posts.AcceptedAnswerId->Posts.Id": {
+     "checked": 6156,
+     "orphans": 1,
+     "share": 0.00016244314489928524
+    },
+    "Posts.OwnerUserId->Users.Id": {
+     "checked": 33823,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Posts.ParentId->Posts.Id": {
+     "checked": 18630,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Votes.PostId->Posts.Id": {
+     "checked": 113168,
+     "orphans": 16726,
+     "share": 0.14779796408878834
+    }
+   },
+   "tables": {
+    "Badges": 43498,
+    "Comments": 56560,
+    "PostHistory": 106562,
+    "PostLinks": 1806,
+    "Posts": 34771,
+    "Tags": 509,
+    "Users": 32767,
+    "Votes": 113168
+   }
+  },
+  "fitness.stackexchange.com.7z": {
+   "foreign_keys": {
+    "Badges.UserId->Users.Id": {
+     "checked": 48426,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Comments.PostId->Posts.Id": {
+     "checked": 44707,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Comments.UserId->Users.Id": {
+     "checked": 42005,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.PostId->Posts.Id": {
+     "checked": 3357,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.RelatedPostId->Posts.Id": {
+     "checked": 3357,
+     "orphans": 38,
+     "share": 0.011319630622579685
+    },
+    "Posts.AcceptedAnswerId->Posts.Id": {
+     "checked": 5023,
+     "orphans": 1,
+     "share": 0.00019908421262193908
+    },
+    "Posts.OwnerUserId->Users.Id": {
+     "checked": 28280,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Posts.ParentId->Posts.Id": {
+     "checked": 19171,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Votes.PostId->Posts.Id": {
+     "checked": 116840,
+     "orphans": 17476,
+     "share": 0.14957206436152004
+    }
+   },
+   "tables": {
+    "Badges": 48426,
+    "Comments": 44707,
+    "PostHistory": 78888,
+    "PostLinks": 3357,
+    "Posts": 29704,
+    "Tags": 407,
+    "Users": 28890,
+    "Votes": 116840
+   }
+  },
+  "gardening.stackexchange.com.7z": {
+   "foreign_keys": {
+    "Badges.UserId->Users.Id": {
+     "checked": 57924,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Comments.PostId->Posts.Id": {
+     "checked": 60624,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Comments.UserId->Users.Id": {
+     "checked": 59879,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.PostId->Posts.Id": {
+     "checked": 2390,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.RelatedPostId->Posts.Id": {
+     "checked": 2390,
+     "orphans": 9,
+     "share": 0.0037656903765690376
+    },
+    "Posts.AcceptedAnswerId->Posts.Id": {
+     "checked": 7733,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Posts.OwnerUserId->Users.Id": {
+     "checked": 43628,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Posts.ParentId->Posts.Id": {
+     "checked": 25421,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Votes.PostId->Posts.Id": {
+     "checked": 181160,
+     "orphans": 10173,
+     "share": 0.05615478030470303
+    }
+   },
+   "tables": {
+    "Badges": 57924,
+    "Comments": 60624,
+    "PostHistory": 138238,
+    "PostLinks": 2390,
+    "Posts": 44155,
+    "Tags": 540,
+    "Users": 29094,
+    "Votes": 181160
+   }
+  },
+  "ham.stackexchange.com.7z": {
+   "foreign_keys": {
+    "Badges.UserId->Users.Id": {
+     "checked": 23882,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Comments.PostId->Posts.Id": {
+     "checked": 24896,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Comments.UserId->Users.Id": {
+     "checked": 24328,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.PostId->Posts.Id": {
+     "checked": 1274,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.RelatedPostId->Posts.Id": {
+     "checked": 1274,
+     "orphans": 15,
+     "share": 0.011773940345368918
+    },
+    "Posts.AcceptedAnswerId->Posts.Id": {
+     "checked": 2310,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Posts.OwnerUserId->Users.Id": {
+     "checked": 13892,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Posts.ParentId->Posts.Id": {
+     "checked": 8891,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Votes.PostId->Posts.Id": {
+     "checked": 58889,
+     "orphans": 8124,
+     "share": 0.13795445668970435
+    }
+   },
+   "tables": {
+    "Badges": 23882,
+    "Comments": 24896,
+    "PostHistory": 43071,
+    "PostLinks": 1274,
+    "Posts": 14084,
+    "Tags": 333,
+    "Users": 20512,
+    "Votes": 58889
+   }
+  },
+  "health.stackexchange.com.7z": {
+   "foreign_keys": {
+    "Badges.UserId->Users.Id": {
+     "checked": 32409,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Comments.PostId->Posts.Id": {
+     "checked": 26143,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Comments.UserId->Users.Id": {
+     "checked": 25530,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.PostId->Posts.Id": {
+     "checked": 900,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "PostLinks.RelatedPostId->Posts.Id": {
+     "checked": 900,
+     "orphans": 39,
+     "share": 0.043333333333333335
+    },
+    "Posts.AcceptedAnswerId->Posts.Id": {
+     "checked": 2545,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Posts.OwnerUserId->Users.Id": {
+     "checked": 14618,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Posts.ParentId->Posts.Id": {
+     "checked": 6673,
+     "orphans": 0,
+     "share": 0.0
+    },
+    "Votes.PostId->Posts.Id": {
+     "checked": 80414,
+     "orphans": 23217,
+     "share": 0.2887183823712289
+    }
+   },
+   "tables": {
+    "Badges": 32409,
+    "Comments": 26143,
+    "PostHistory": 56590,
+    "PostLinks": 900,
+    "Posts": 15049,
+    "Tags": 1445,
+    "Users": 21249,
+    "Votes": 80414
+   }
+  }
+ }
+}

@@ -84,14 +84,18 @@ def run_problem(
     return {"seeds": list(seeds), "metrics": metrics, "skipped": skipped, "errors": errors}
 
 
-def run_job(job: dict[str, Any], methods: list[str] | None = None) -> dict[str, Any]:
+def run_job(
+    job: dict[str, Any],
+    methods: list[str] | None = None,
+    seeds: tuple[int, ...] = config.BENCHMARK_SEEDS,
+) -> dict[str, Any]:
     warnings.filterwarnings("ignore")
     try:
         if job["source"] == "adbench":
             x, y, report = load_adbench(job["name"], Path(job["path"]))
         else:
             x, y, report = load_uci(job["meta"], Path(job["path"]))
-        result = run_problem(x, y, methods=methods)
+        result = run_problem(x, y, seeds=seeds, methods=methods)
     except Exception as error:  # recorded, never dropped silently
         return {"problem": job["problem"], "source": job["source"], "failed": repr(error)}
     return {
@@ -152,6 +156,13 @@ def main(argv: list[str] | None = None) -> int:
         default="classical",
         help="the detectors of the registry sweep, or the neural ones (fit rows capped)",
     )
+    parser.add_argument(
+        "--seeds",
+        type=int,
+        nargs="+",
+        default=list(config.BENCHMARK_SEEDS),
+        help="partition and initialisation seeds (default: the archived five)",
+    )
     args = parser.parse_args(argv)
     from etl_benchmark.atomic import atomic_path
 
@@ -168,7 +179,7 @@ def main(argv: list[str] | None = None) -> int:
     failed = 0
     methods = list(DEEP_NAMES) if args.methods == "deep" else list(METHODS)
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
-        for result in pool.map(bind(run_job, methods=methods), todo):
+        for result in pool.map(bind(run_job, methods=methods, seeds=tuple(args.seeds)), todo):
             failed += "failed" in result
             stem = result["problem"].replace(":", "_")
             with atomic_path(args.output / f"{stem}.json") as partial:

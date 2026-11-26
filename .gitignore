@@ -61,9 +61,14 @@ verification/profile.json
 experiments/results/evidence/
 data/adbench/
 data/pool/
+data/temporal/
+data/uci_wave2/
 
 /.venv
 
 
 # slide-quality job output (layout reports, renders)
 experiments/results/slides/
+data/loghub/
+data/acquired/
+data/experimental/

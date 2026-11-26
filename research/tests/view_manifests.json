@@ -1,0 +1,4289 @@
+{
+ "ademe": {
+  "ademe_dpe_existant": {
+   "dropped": [
+    "addresses",
+    "ban_identifiers",
+    "rnb_identifiers",
+    "coordinates"
+   ],
+   "files": {
+    "dpe.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "dpe.csv": "numero_dpe,date_etablissement_dpe,etiquette_dpe,annee_construction,surface_habitable_logement,conso_5_usages_par_m2_ep,e"
+   },
+   "pseudonymised": [
+    "numero_dpe"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "duplicates_dropped": 1,
+    "files": [
+     "dpe_2024_03_15.csv",
+     "dpe_2024_06_14.csv"
+    ],
+    "method": "five fixed 2024 dates (10,000 rows per date) with coded attributes only"
+   },
+   "source_snapshot": "ademe_dpe_existant/2026-11-22"
+  }
+ },
+ "aegis": {
+  "zen_aegis_vehicle": {
+   "dropped": [
+    "positions",
+    "gyroscopes",
+    "accelerations",
+    "absolute dates and times",
+    "trip dates",
+    "vehicle names"
+   ],
+   "files": {
+    "obd.csv": {
+     "rows": 1
+    }
+   },
+   "heads": {
+    "obd.csv": "trip_id,t_s,pid_0C"
+   },
+   "notes": "one driver and one vehicle (35 trips); relative time inside each trip only",
+   "pseudonymised": [],
+   "source_snapshot": "zen_aegis_vehicle/2026-11-21"
+  }
+ },
+ "alim": {
+  "dgal_alimconfiance": {
+   "dropped": [
+    "establishment_names",
+    "siret",
+    "agrement",
+    "addresses",
+    "communes",
+    "geo"
+   ],
+   "files": {
+    "inspections.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "inspections.csv": "numero_inspection,date_inspection,synthese_eval_sanit,app_code_synthese_eval_sanit,evaluation_globale,contexte_inpection"
+   },
+   "pseudonymised": [
+    "numero_inspection"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "duplicates_dropped": 1,
+    "method": "complete Alim'Confiance register projected to coded non-identifying attributes"
+   },
+   "source_snapshot": "dgal_alimconfiance/2026-11-22"
+  }
+ },
+ "aoe": {
+  "zen_aoe_interactions": {
+   "dropped": [],
+   "files": {
+    "events.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "events.csv": "case_id,position,time,action,amount,win,player_id,match_id,strategy,map_type,civilization,civilization_category,elo"
+   },
+   "pseudonymised": [
+    "case_id",
+    "player_id",
+    "match_id"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "member": "aoe_interaction_log_1_of_10.xes",
+    "method": "4 MiB compressed zip-prefix of Age of Empires interaction log decoded via xes_stream",
+    "status": {
+     "bytes_in": 866,
+     "bytes_out": 866,
+     "modulo": 1,
+     "stop": "log_closed",
+     "stream_complete": true,
+     "traces_kept": 2,
+     "traces_seen": 2,
+     "traces_without_case": 0
+    },
+    "traces": 2
+   },
+   "source_snapshot": "zen_aoe_interactions/2026-11-22"
+  }
+ },
+ "apis_guru": {
+  "apis_guru_openapi_directory": {
+   "dropped": [
+    "contact"
+   ],
+   "files": {
+    "apis.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "apis.jsonl": "{\"added\": \"2019-01-01\", \"api\": \"a.example\", \"preferred\": \"1.0\", \"versions\": {\"1.0\": {\"info\": {\"title\": \"A\"}, \"openapiVer"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "complete APIs.guru directory list, one record per API",
+    "versions": 2
+   },
+   "source_snapshot": "apis_guru_openapi_directory/2026-11-23"
+  }
+ },
+ "aqs": {
+  "epa_aqs_ozone_hourly": {
+   "dropped": [
+    "state and county names, datum, date of last change, local time"
+   ],
+   "files": {
+    "monitors.csv": {
+     "rows": 2
+    },
+    "ozone.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "monitors.csv": "monitor,latitude,longitude",
+    "ozone.csv": "monitor,timestamp,ozone_ppm,mdl_ppm,method_code,qualifier"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "first_by_monitor": {
+     "01-003-0010-1": "2022-03-01 07:00:00",
+     "01-003-0020-1": "2022-03-01 07:00:00"
+    },
+    "flagged_share": 0.0,
+    "hours_by_monitor": {
+     "01-003-0010-1": 2,
+     "01-003-0020-1": 2
+    },
+    "last_by_monitor": {
+     "01-003-0010-1": "2023-03-01 07:00:00",
+     "01-003-0020-1": "2023-03-01 07:00:00"
+    },
+    "method": "an even stride over the sorted ids of the monitors that report in both years",
+    "missing_value_share": 0.0,
+    "monitors": 2,
+    "monitors_in_both_years": 3,
+    "rows_dropped": 0,
+    "years": [
+     2022,
+     2023
+    ]
+   },
+   "source_snapshot": "epa_aqs_ozone_hourly/2026-11-22"
+  }
+ },
+ "attack": {
+  "mitre_attack_enterprise_stix": {
+   "dropped": [
+    "x_mitre_contributors"
+   ],
+   "files": {
+    "objects.jsonl": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "objects.jsonl": "{\"external_references\": [{\"external_id\": \"T1\", \"source_name\": \"mitre-attack\"}], \"id\": \"attack-pattern--c\", \"kill_chain_p"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "complete Enterprise STIX 2.1 bundle of ATT&CK release v20.1",
+    "object_types": {
+     "attack-pattern": 2,
+     "intrusion-set": 1,
+     "relationship": 1
+    },
+    "release": "v20.1",
+    "repeated_ids": 2
+   },
+   "source_snapshot": "mitre_attack_enterprise_stix/2026-11-23"
+  }
+ },
+ "azure": {
+  "azure_packing_2020": {
+   "dropped": [
+    "vmType hardware dimensions",
+    "single-VM tenants"
+   ],
+   "files": {
+    "allocations.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "allocations.csv": "tenant_id,position,starttime,endtime,vm_id,vm_type_id,priority"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "deterministic 1-in-100 tenant slice (tenantId % 100 == 0) limited to multi-VM tenants ordered by relative starttime",
+    "modulo": 100,
+    "single_vm_rows_dropped": 1,
+    "tenants": 1
+   },
+   "source_snapshot": "azure_packing_2020/2026-11-22"
+  }
+ },
+ "baac": {
+  "france_baac_road_accidents": {
+   "dropped": [
+    "caracteristiques.adr",
+    "caracteristiques.lat",
+    "caracteristiques.long",
+    "lieux.voie",
+    "lieux.pr",
+    "lieux.pr1",
+    "usagers.an_nais"
+   ],
+   "files": {
+    "caracteristiques.csv": {
+     "rows": 3
+    },
+    "lieux.csv": {
+     "rows": 4
+    },
+    "usagers.csv": {
+     "rows": 6
+    },
+    "vehicules.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "caracteristiques.csv": "Num_Acc,jour,mois,an,hrmn,lum,dep,com,agg,int,atm,col",
+    "lieux.csv": "Num_Acc,catr,v1,v2,circ,nbv,vosp,prof,plan,lartpc,larrout,surf,infra,situ,vma",
+    "usagers.csv": "Num_Acc,id_usager,id_vehicule,num_veh,place,catu,grav,sexe,trajet,secu1,secu2,secu3,locp,actp,etatp",
+    "vehicules.csv": "Num_Acc,id_vehicule,num_veh,senc,catv,obs,obsm,choc,manv,motor,occutc"
+   },
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 4,
+     "child": "lieux.Num_Acc",
+     "orphans": 1,
+     "parent": "caracteristiques.Num_Acc",
+     "share": 0.25
+    },
+    {
+     "checked": 4,
+     "child": "vehicules.Num_Acc",
+     "orphans": 0,
+     "parent": "caracteristiques.Num_Acc",
+     "share": 0.0
+    },
+    {
+     "checked": 6,
+     "child": "usagers.Num_Acc",
+     "orphans": 1,
+     "parent": "caracteristiques.Num_Acc",
+     "share": 0.16666666666666666
+    },
+    {
+     "checked": 5,
+     "child": "usagers.id_vehicule",
+     "orphans": 1,
+     "parent": "vehicules.id_vehicule",
+     "share": 0.2
+    }
+   ],
+   "sampling": {
+    "accidents_without_child": {
+     "lieux": 1,
+     "usagers": 1,
+     "vehicules": 1
+    },
+    "max_rows_per_accident": {
+     "lieux": 2,
+     "usagers": 3,
+     "vehicules": 2
+    },
+    "method": "complete 2024 annual release of the four BAAC tables, no row sampling",
+    "usagers_num_veh_checked": 5,
+    "usagers_num_veh_without_vehicle": 2,
+    "vehicules_duplicate_num_veh": 1
+   },
+   "source_snapshot": "france_baac_road_accidents/2026-11-23"
+  }
+ },
+ "backblaze": {
+  "backblaze_drive_stats": {
+   "dropped": [
+    "serial numbers (replaced by a salted pseudonym)"
+   ],
+   "files": {
+    "drive_days.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "drive_days.csv": "date,drive,model,capacity_bytes,failure,smart_1_normalized,smart_9_raw"
+   },
+   "pseudonymised": [
+    "drive"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "day_files": 2,
+    "days": [
+     "2014/2014-01-01.csv",
+     "2014/2014-01-02.csv"
+    ],
+    "drives": 2,
+    "failures": 1,
+    "method": "the first 2 daily files of the 2014 archive, one drive in 8 chosen by the salted hash of the serial number, whole series kept"
+   },
+   "source_snapshot": "backblaze_drive_stats/2026-11-22"
+  }
+ },
+ "bess": {
+  "zen_bess": {
+   "dropped": [],
+   "files": {
+    "readings.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "readings.csv": "system,meter,hours_elapsed,day_number,power,requested_power,reactive_power,requested_reactive_power,voltage,voltage_max,"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "two of the twelve system files of the release (the two smallest utility systems); the others were not fetched",
+    "rows_in": 3,
+    "systems": [
+     "SYS"
+    ]
+   },
+   "source_snapshot": "zen_bess/2026-11-21"
+  }
+ },
+ "blazar_flares": {
+  "zen_blazar_flares": {
+   "dropped": [
+    "HIndex",
+    "CapToStemR",
+    "CapToStemRUnc",
+    "NumberExtremeEvt",
+    "ClusterMinSize",
+    "ClusterMaxSize"
+   ],
+   "files": {
+    "blazar_flares.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "blazar_flares.csv": "source_id,subclass,redshift,flare_order,start_met,stop_met,duration_s,waiting_time_s,quality,fluence,fluence_unc,asymmet"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "complete Fermi-LAT multi-year blazar gamma-ray flare catalog",
+    "sources": 2
+   },
+   "source_snapshot": "zen_blazar_flares/2026-11-22"
+  }
+ },
+ "borg": {
+  "google_cluster_2019a": {
+   "dropped": [
+    "user",
+    "collection_name",
+    "collection_logical_name",
+    "constraint",
+    "alloc fields"
+   ],
+   "files": {
+    "collection_events.csv": {
+     "rows": 25
+    },
+    "instance_events.csv": {
+     "rows": 25
+    }
+   },
+   "fragments": {
+    "collection_events_head.json.gz": {
+     "lines_read": 33,
+     "stream_complete": false
+    },
+    "instance_events_head.json.gz": {
+     "lines_read": 40,
+     "stream_complete": true
+    }
+   },
+   "heads": {
+    "collection_events.csv": "collection_id,time_us,type,collection_type,priority,scheduling_class,scheduler,vertical_scaling",
+    "instance_events.csv": "collection_id,instance_index,time_us,type,collection_type,priority,scheduling_class,machine_id,cpus,memory"
+   },
+   "pseudonymised": [],
+   "sampling": "prefix of one shard in file order (first 25 lines of each fragment), not random",
+   "source_snapshot": "google_cluster_2019a/2026-11-21"
+  }
+ },
+ "care": {
+  "zen_care_wind_b": {
+   "dropped": [
+    "minimum, maximum and standard-deviation columns of every sensor"
+   ],
+   "files": {
+    "events.csv": {
+     "rows": 4
+    },
+    "series.csv": {
+     "rows": 9
+    }
+   },
+   "heads": {
+    "events.csv": "asset_id,event_id,event_label,event_start,event_start_id,event_end,event_end_id,event_description,in_view",
+    "series.csv": "event_id,asset_id,time_stamp,row_id,train_test,status_type,sensor_0_avg,sensor_1_avg"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "anomaly_datasets_in_view": 1,
+    "datasets": [
+     2,
+     3,
+     5
+    ],
+    "method": "five of the fifteen datasets of Wind Farm B (three with a labelled anomaly event, two normal); Wind Farm A and C and ten datasets of B were not fetched",
+    "rows_in": 9
+   },
+   "source_snapshot": "zen_care_wind_b/2026-11-22"
+  }
+ },
+ "care_a": {
+  "zen_care_wind_a": {
+   "dropped": [
+    "minimum, maximum and standard-deviation columns of every sensor"
+   ],
+   "files": {
+    "events.csv": {
+     "rows": 1
+    },
+    "series.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "events.csv": "asset,event_id,event_label,event_start,event_start_id,event_end,event_end_id,event_description,in_view",
+    "series.csv": "event_id,asset_id,time_stamp,row_id,train_test,status_type,sensor_0_avg,sensor_1_avg"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "anomaly_datasets_in_view": 1,
+    "datasets": [
+     5
+    ],
+    "method": "eight of the 22 datasets of Wind Farm A (four with a labelled fault event, four normal); Wind Farm B and C and fourteen datasets of A were not fetched",
+    "rows_in": 3
+   },
+   "source_snapshot": "zen_care_wind_a/2026-11-22"
+  }
+ },
+ "cftc_cot": {
+  "cftc_cot_disaggregated": {
+   "dropped": [
+    "id",
+    "173 of 194 source columns (crop-year splits, changes, percentages, counts)"
+   ],
+   "files": {
+    "cot_positions.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "cot_positions.csv": "report_date_as_yyyy_mm_dd,market_and_exchange_names,contract_market_name,cftc_contract_market_code,cftc_market_code,comm"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "first_date": "2024-01-02",
+    "last_date": "2024-01-09",
+    "method": "complete 2024-01-01 to 2025-12-31 weekly Disaggregated Futures Only release, 21 of 194 columns",
+    "pages": 2
+   },
+   "source_snapshot": "cftc_cot_disaggregated/2026-11-22"
+  }
+ },
+ "charity": {
+  "uk_charity_register": {
+   "dropped": [
+    "charity_name",
+    "charity_contact_*",
+    "charity_activities",
+    "reason",
+    "assoc_charity_name",
+    "trustee table (not downloaded)"
+   ],
+   "files": {
+    "annual_return_history.csv": {
+     "rows": 2
+    },
+    "area_of_operation.csv": {
+     "rows": 2
+    },
+    "charity.csv": {
+     "rows": 1
+    },
+    "classification.csv": {
+     "rows": 2
+    },
+    "event_history.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "annual_return_history.csv": "organisation_number,registered_charity_number,fin_period_start_date,fin_period_end_date,ar_cycle_reference,reporting_due",
+    "area_of_operation.csv": "organisation_number,registered_charity_number,linked_charity_number,geographic_area_type,geographic_area_description,par",
+    "charity.csv": "organisation_number,registered_charity_number,linked_charity_number,charity_type,charity_registration_status,date_of_reg",
+    "classification.csv": "organisation_number,registered_charity_number,linked_charity_number,classification_code,classification_type,classificati",
+    "event_history.csv": "organisation_number,registered_charity_number,linked_charity_number,charity_event_order,event_type,date_of_event,assoc_o"
+   },
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 2,
+     "child": "annual_return_history.organisation_number",
+     "orphans": 1,
+     "parent": "charity.organisation_number",
+     "share": 0.5
+    },
+    {
+     "checked": 2,
+     "child": "area_of_operation.organisation_number",
+     "orphans": 1,
+     "parent": "charity.organisation_number",
+     "share": 0.5
+    },
+    {
+     "checked": 2,
+     "child": "classification.organisation_number",
+     "orphans": 1,
+     "parent": "charity.organisation_number",
+     "share": 0.5
+    },
+    {
+     "checked": 2,
+     "child": "event_history.organisation_number",
+     "orphans": 1,
+     "parent": "charity.organisation_number",
+     "share": 0.5
+    }
+   ],
+   "sampling": {
+    "method": "deterministic 1-in-20 slice on organisation_number across 5 non-trustee extracts",
+    "modulo": 20
+   },
+   "source_snapshot": "uk_charity_register/2026-11-22"
+  }
+ },
+ "chembl_molecules": {
+  "chembl_molecules": {
+   "dropped": [],
+   "files": {
+    "molecules.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "molecules.jsonl": "{\"molecule_chembl_id\": \"CHEMBL1\", \"pref_name\": \"mail [email]\"}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "files": [
+     "chembl_mol_p00.json",
+     "chembl_mol_p01.json"
+    ],
+    "method": "identifier-ordered prefix 10 pages x 100 of ChEMBL_37 molecules",
+    "molecules_in": 3,
+    "unique_molecules": 2
+   },
+   "source_snapshot": "chembl_molecules/2026-11-22"
+  }
+ },
+ "clue": {
+  "zen_clue_lds": {
+   "dropped": [
+    "params (paths, groups)",
+    "location",
+    "uidType"
+   ],
+   "files": {
+    "events.csv": {
+     "rows": 100
+    }
+   },
+   "heads": {
+    "events.csv": "event_id,time,user,type,role,is_local_ip"
+   },
+   "pseudonymised": [
+    "user"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "events_kept": 100,
+    "events_read": 251,
+    "method": "zip prefix of clue.json (HTTP range from byte 0), first events in log order; not random",
+    "stream_complete": false
+   },
+   "source_snapshot": "zen_clue_lds/2026-11-21 (fragment)"
+  }
+ },
+ "cnc": {
+  "zen_cnc_milling": {
+   "dropped": [
+    "Unnamed: 0",
+    "Phase",
+    "Phase_compressed",
+    "PocketTable"
+   ],
+   "files": {
+    "cnc_milling.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "cnc_milling.csv": "series_id,timestamp,CoolantFlow,ProgramStatus,ProgramDetail,ToolNumber,DriveStatus,DoorStatusMain,DoorStatusTooling,Cabi"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "duplicates_dropped": 1,
+    "first_timestamp": "2021-11-26 07:15:36",
+    "last_timestamp": "2022-04-05 13:06:13",
+    "method": "complete 13-file five-axis CNC production series telemetry (Nov 2021 - Apr 2022)",
+    "series_count": 2,
+    "series_files": 2
+   },
+   "source_snapshot": "zen_cnc_milling/2026-11-22"
+  }
+ },
+ "coops": {
+  "noaa_coops_tides": {
+   "dropped": [],
+   "files": {
+    "tides.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "tides.csv": "station_id,timestamp,water_level_m,sigma_m,flags"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "duplicates_dropped": 1,
+    "first_timestamp": "2022-01-01 00:00:00",
+    "flagged_rows": 2,
+    "last_timestamp": "2022-01-01 01:00:00",
+    "method": "six US coastal stations hourly water level (2022-2024 GMT)",
+    "missing_value_rows": 1,
+    "stations": 2
+   },
+   "source_snapshot": "noaa_coops_tides/2026-11-22"
+  }
+ },
+ "cordis": {
+  "cordis_horizon_europe": {
+   "dropped": [
+    "project.title",
+    "project.objective",
+    "project.keywords",
+    "organization.name",
+    "organization.shortName",
+    "organization.vatNumber",
+    "organization.street",
+    "organization.postCode",
+    "organization.city",
+    "organization.geolocation",
+    "organization.organizationURL",
+    "organization.contactForm",
+    "webItem.csv",
+    "webLink.csv"
+   ],
+   "files": {
+    "euroSciVoc.csv": {
+     "rows": 1
+    },
+    "legalBasis.csv": {
+     "rows": 1
+    },
+    "organization.csv": {
+     "rows": 2
+    },
+    "policyPriorities.csv": {
+     "rows": 1
+    },
+    "project.csv": {
+     "rows": 2
+    },
+    "topics.csv": {
+     "rows": 1
+    }
+   },
+   "heads": {
+    "euroSciVoc.csv": "euroSciVocCode,euroSciVocPath,euroSciVocTitle,euroSciVocDescription,projectID",
+    "legalBasis.csv": "legalBasis,title,uniqueProgrammePart,projectID",
+    "organization.csv": "projectID,projectAcronym,org_id,SME,activityType,country,nutsCode,contentUpdateDate,rcn,order,role,ecContribution,netEcC",
+    "policyPriorities.csv": "ai,biodiversity,cleanAir,climate,digitalAgenda,projectID",
+    "project.csv": "id,acronym,status,startDate,endDate,totalCost,ecMaxContribution,topics,ecSignatureDate,frameworkProgramme,masterCall,sub",
+    "topics.csv": "topic,title,projectID"
+   },
+   "pseudonymised": [
+    "organisationID"
+   ],
+   "relations": [
+    {
+     "checked": 2,
+     "child": "organization.projectID",
+     "orphans": 0,
+     "parent": "project.id",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "euroSciVoc.projectID",
+     "orphans": 0,
+     "parent": "project.id",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "topics.projectID",
+     "orphans": 0,
+     "parent": "project.id",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "legalBasis.projectID",
+     "orphans": 0,
+     "parent": "project.id",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "policyPriorities.projectID",
+     "orphans": 0,
+     "parent": "project.id",
+     "share": 0.0
+    }
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "method": "complete 6 core CORDIS Horizon Europe tables (no row sampling); projects parsed across wrapped quotes"
+   },
+   "source_snapshot": "cordis_horizon_europe/2026-11-22"
+  }
+ },
+ "cpc_ao": {
+  "noaa_cpc_daily_ao_index": {
+   "dropped": [],
+   "files": {
+    "ao_index.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "ao_index.csv": "timestamp,ao_index_cdas"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "first_timestamp": "1950-01-01 00:00:00",
+    "impossible_dates_dropped": 1,
+    "last_timestamp": "1950-01-03 00:00:00",
+    "method": "complete daily Arctic Oscillation index file, impossible dates removed",
+    "missing_values": 1
+   },
+   "source_snapshot": "noaa_cpc_daily_ao_index/2026-11-23"
+  }
+ },
+ "cpsc_recalls": {
+  "cpsc_recalls": {
+   "dropped": [
+    "ConsumerContact",
+    "Images",
+    "URL"
+   ],
+   "files": {
+    "recalls.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "recalls.jsonl": "{\"Description\": \"mail us at [email]\", \"Inconjunctions\": [{\"URL\": \"https://other\"}], \"Products\": [{\"Name\": \"P\"}], \"Recall"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "complete 2024-01-01 to 2025-12-31 recall-date release from the Recall Retrieval API",
+    "recalls_in": 2,
+    "unique_recalls": 2
+   },
+   "source_snapshot": "cpsc_recalls/2026-11-22"
+  }
+ },
+ "csv_events": {
+  "4tu_csv": {
+   "dropped": [
+    "all columns except case, activity, time, sequence and resource"
+   ],
+   "files": {
+    "events.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "events.csv": "case_id,position,time,activity,transition,resource"
+   },
+   "pseudonymised": [
+    "resource"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "cases": 1,
+    "cases_kept": 1,
+    "mapping": {
+     "activity": "Type",
+     "case": "Incident ID",
+     "order": "Num",
+     "resource": "Group",
+     "time": "Stamp"
+    },
+    "modulo": 1,
+    "rows": 2,
+    "rows_without_activity": 0,
+    "rows_without_time": 0
+   },
+   "source_snapshot": "4tu_csv/2026-11-21"
+  }
+ },
+ "datacite_dois": {
+  "datacite_dois": {
+   "dropped": [
+    "contributors",
+    "creators",
+    "descriptions"
+   ],
+   "files": {
+    "dois.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "dois.jsonl": "{\"attributes\": {\"publisher\": \"Pub [email]\"}, \"id\": \"10.1/a\"}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "dois_in": 3,
+    "files": [
+     "datacite_2025_p00.json",
+     "datacite_2025_p01.json"
+    ],
+    "method": "created-ordered first 10 pages x 100 of published=2025 dataset DOIs",
+    "unique_dois": 2
+   },
+   "source_snapshot": "datacite_dois/2026-11-22"
+  }
+ },
+ "daylight_events": {
+  "zen_daylight_events": {
+   "dropped": [
+    "event_start_local"
+   ],
+   "files": {
+    "context_events.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "context_events.csv": "participant_id,event_start_utc,event_end_utc,event_duration_seconds,wear_state,social_context,wear_activity,nonwear_stor"
+   },
+   "pseudonymised": [
+    "participant_id"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "method": "complete events.csv contextual event intervals of the 2025 equinox study",
+    "participants": 2
+   },
+   "source_snapshot": "zen_daylight_events/2026-11-22"
+  }
+ },
+ "dgccrf_fuel": {
+  "dgccrf_fuel_prices": {
+   "dropped": [
+    "adresse",
+    "ville",
+    "cp",
+    "latitude",
+    "longitude",
+    "horaires",
+    "services",
+    "prix",
+    "rupture",
+    "geom",
+    "horaires_jour",
+    "services_service",
+    "departement",
+    "region",
+    "carburants_*",
+    "*_rupture_*"
+   ],
+   "files": {
+    "fuel_prices.csv": {
+     "rows": 5
+    }
+   },
+   "heads": {
+    "fuel_prices.csv": "station_id,pop,code_departement,code_region,automate_24_24,fuel_type,price_eur,price_updated_at"
+   },
+   "pseudonymised": [
+    "id"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "method": "point-in-time national convenience snapshot melted to non-null per-fuel price postings",
+    "stations": 2
+   },
+   "source_snapshot": "dgccrf_fuel_prices/2026-11-22"
+  }
+ },
+ "dk_heating": {
+  "zen_dk_district_heating": {
+   "dropped": [
+    "dma_*_norm_aggregated.csv",
+    "weather.csv"
+   ],
+   "files": {
+    "district_heating.csv": {
+     "rows": 6
+    }
+   },
+   "heads": {
+    "district_heating.csv": "dma_id,timestamp,consumption_kwh,contributing_meters"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "dmas": 3,
+    "first_timestamp": "2016-01-01 00:00:00+00:00",
+    "last_timestamp": "2016-01-01 01:00:00+00:00",
+    "method": "complete 3-DMA hourly raw consumption and contributing-meter series (2016-2019 UTC)"
+   },
+   "source_snapshot": "zen_dk_district_heating/2026-11-22"
+  }
+ },
+ "dmsp_auroral": {
+  "zen_dmsp_auroral": {
+   "dropped": [
+    "UTSec EQ1",
+    "UTSec PO1",
+    "UTSec PO2",
+    "UTSec EQ2"
+   ],
+   "files": {
+    "dmsp_auroral.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "dmsp_auroral.csv": "spacecraft,timestamp,pass_duration_s,hemisphere,fom,lat_eq1,lat_po1,lat_po2,lat_eq2,lon_eq1,lon_po1,lon_po2,lon_eq2,mlat"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "files_loaded": 2,
+    "first_timestamp": "2010-01-01 00:01:00+00:00",
+    "last_timestamp": "2014-01-02 00:00:00+00:00",
+    "method": "complete 2010-2014 DMSP F16/F17/F18 polar-orbit auroral boundary passes",
+    "spacecrafts": 2
+   },
+   "source_snapshot": "zen_dmsp_auroral/2026-11-22"
+  }
+ },
+ "dvf": {
+  "dgfip_dvf": {
+   "dropped": [
+    "address, street code, parcel ids, volume and lot numbers, coordinates"
+   ],
+   "files": {
+    "sales.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "sales.csv": "mutation,date,nature,value_eur,commune,local_type,built_area_m2,rooms,land_area_m2"
+   },
+   "pseudonymised": [
+    "mutation"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "rows": 4,
+    "rows_without_value": 1,
+    "scope": "department 69 (Rhone), transactions of 2024 only"
+   },
+   "source_snapshot": "dgfip_dvf/2026-11-21"
+  }
+ },
+ "dwd": {
+  "dwd_hourly_climate": {
+   "dropped": [
+    "eor_marker"
+   ],
+   "files": {
+    "air_temperature.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "air_temperature.csv": "station_id,timestamp,temp_c,rel_humidity_pct,quality_code"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "archives": 1,
+    "duplicates_dropped": 1,
+    "first_timestamp": "2018-01-01 00:00:00",
+    "last_timestamp": "2018-01-01 01:00:00",
+    "method": "12 strided DWD hourly TU stations filtered from 2018-01-01 onward",
+    "stations": 1
+   },
+   "source_snapshot": "dwd_hourly_climate/2026-11-22"
+  }
+ },
+ "ea": {
+  "ea_hydrology_flow": {
+   "dropped": [
+    "measure URL",
+    "dateTime",
+    "quality code text"
+   ],
+   "files": {
+    "flow.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "flow.csv": "timestamp,station,value"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "complete_share": 0.6667,
+    "method": "daily mean flow of stations chosen as an even stride over the sorted measure list",
+    "missing_value_share": 0.3333,
+    "rows_dropped": 0,
+    "stations": 2
+   },
+   "source_snapshot": "ea_hydrology_flow/2026-11-21"
+  }
+ },
+ "ecb_fx": {
+  "ecb_fx_reference_rates": {
+   "dropped": [
+    "empty_trailing_column"
+   ],
+   "files": {
+    "rates.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "rates.csv": "timestamp,USD,JPY,BGN,CYP"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "currencies": 4,
+    "first_timestamp": "1999-01-05 00:00:00",
+    "last_timestamp": "2024-01-03 00:00:00",
+    "method": "complete history of the daily euro foreign exchange reference rates",
+    "missing_cells": 2
+   },
+   "source_snapshot": "ecb_fx_reference_rates/2026-11-22"
+  }
+ },
+ "eia": {
+  "eia_petroleum_spot_prices": {
+   "dropped": [
+    "futures contracts",
+    "weekly, monthly and annual series"
+   ],
+   "files": {
+    "spot_prices.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "spot_prices.csv": "timestamp,pet_rwtc_d,pet_rbrte_d"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "first_timestamp": "2020-01-01 00:00:00",
+    "last_timestamp": "2020-01-04 00:00:00",
+    "method": "daily spot price series of the EIA petroleum bulk file, joined on the date",
+    "series": [
+     "pet_rbrte_d",
+     "pet_rwtc_d"
+    ]
+   },
+   "source_snapshot": "eia_petroleum_spot_prices/2026-11-23"
+  }
+ },
+ "ev": {
+  "zen_ev_charging": {
+   "dropped": [],
+   "files": {
+    "sessions.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "sessions.csv": "session_id,user_id,location,plugin_time,plugout_time,connection_hours,energy_kwh"
+   },
+   "pseudonymised": [
+    "session_id",
+    "user_id"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "duplicates_dropped": 1,
+    "locations": 1,
+    "method": "complete Dataset1_charging_reports session log across 12 residential sites",
+    "unreadable_timestamps": 1,
+    "users": 1
+   },
+   "source_snapshot": "zen_ev_charging/2026-11-22"
+  }
+ },
+ "fdic_financials": {
+  "fdic_bank_financials": {
+   "dropped": [
+    "ID"
+   ],
+   "files": {
+    "bank_financials.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "bank_financials.csv": "cert_id,repdte,bkclass,stalp,asset,dep,eq,netinc,intinc,eintexp,lnlsnet,roa,roe,rbcrwaj,numemp,offdom"
+   },
+   "pseudonymised": [
+    "CERT"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "institutions": 2,
+    "method": "four complete year-end cross-sections (REPDTE 20221231-20251231)",
+    "snapshots": 2
+   },
+   "source_snapshot": "fdic_bank_financials/2026-11-22"
+  }
+ },
+ "fec": {
+  "fec_federal_campaign_finance_2024": {
+   "dropped": [
+    "cn.CAND_NAME",
+    "cn.CAND_ST1",
+    "cn.CAND_ST2",
+    "cn.CAND_CITY",
+    "cn.CAND_ZIP",
+    "cm.CMTE_NM",
+    "cm.TRES_NM",
+    "cm.CMTE_ST1",
+    "cm.CMTE_ST2",
+    "cm.CMTE_CITY",
+    "cm.CMTE_ZIP",
+    "cm.CONNECTED_ORG_NM",
+    "pas2.NAME",
+    "pas2.CITY",
+    "pas2.STATE",
+    "pas2.ZIP_CODE",
+    "pas2.EMPLOYER",
+    "pas2.OCCUPATION",
+    "pas2.MEMO_TEXT"
+   ],
+   "files": {
+    "ccl.csv": {
+     "rows": 3
+    },
+    "cm.csv": {
+     "rows": 3
+    },
+    "cn.csv": {
+     "rows": 2
+    },
+    "pas2.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "ccl.csv": "CAND_ID,CAND_ELECTION_YR,FEC_ELECTION_YR,CMTE_ID,CMTE_TP,CMTE_DSGN,LINKAGE_ID",
+    "cm.csv": "CMTE_ID,CMTE_TP,CAND_ID",
+    "cn.csv": "CAND_ID,CAND_PTY_AFFILIATION,CAND_ELECTION_YR,CAND_OFFICE",
+    "pas2.csv": "CMTE_ID,TRANSACTION_TP,TRANSACTION_DT,TRANSACTION_AMT,OTHER_ID,CAND_ID,SUB_ID"
+   },
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 2,
+     "child": "cm.CAND_ID",
+     "orphans": 1,
+     "parent": "cn.CAND_ID",
+     "share": 0.5
+    },
+    {
+     "checked": 3,
+     "child": "ccl.CAND_ID",
+     "orphans": 0,
+     "parent": "cn.CAND_ID",
+     "share": 0.0
+    },
+    {
+     "checked": 3,
+     "child": "ccl.CMTE_ID",
+     "orphans": 1,
+     "parent": "cm.CMTE_ID",
+     "share": 0.3333333333333333
+    },
+    {
+     "checked": 3,
+     "child": "pas2.CMTE_ID",
+     "orphans": 1,
+     "parent": "cm.CMTE_ID",
+     "share": 0.3333333333333333
+    },
+    {
+     "checked": 2,
+     "child": "pas2.OTHER_ID",
+     "orphans": 1,
+     "parent": "cm.CMTE_ID",
+     "share": 0.5
+    },
+    {
+     "checked": 3,
+     "child": "pas2.CAND_ID",
+     "orphans": 1,
+     "parent": "cn.CAND_ID",
+     "share": 0.3333333333333333
+    }
+   ],
+   "sampling": {
+    "duplicate_keys": {
+     "ccl": 1,
+     "cm": 0,
+     "cn": 0,
+     "pas2": 1
+    },
+    "method": "complete 2023-2024 cycle candidate, committee, linkage and committee-to-candidate contribution files"
+   },
+   "source_snapshot": "fec_federal_campaign_finance_2024/2026-11-23"
+  }
+ },
+ "federal_register": {
+  "us_federal_register": {
+   "dropped": [],
+   "files": {
+    "documents.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "documents.jsonl": "{\"action\": \"Ask [email]\", \"document_number\": \"2025-001\"}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "documents_in": 3,
+    "files": [
+     "fr_2025_p00.json",
+     "fr_2025_p01.json"
+    ],
+    "method": "oldest 20 pages x 100 published in 2025 from Federal Register API v1",
+    "unique_documents": 2
+   },
+   "source_snapshot": "us_federal_register/2026-11-22"
+  }
+ },
+ "florida_bridges": {
+  "zen_florida_bridges": {
+   "dropped": [
+    "objectid",
+    "location_009",
+    "fracture_last_date_093a",
+    "undwater_last_date_093b",
+    "spec_last_date_093c"
+   ],
+   "files": {
+    "bridges.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "bridges.csv": "bridge_id,highway_district_002,county_code_003,maintenance_021,owner_022,functional_class_026,service_on_042a,service_un"
+   },
+   "pseudonymised": [
+    "bridge_id"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "method": "complete Florida bridge structural inspection v1.0 release"
+   },
+   "source_snapshot": "zen_florida_bridges/2026-11-22"
+  }
+ },
+ "fremont": {
+  "seattle_fremont_bridge": {
+   "dropped": [],
+   "files": {
+    "counts.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "counts.csv": "timestamp,fremont_bridge,fremont_bridge_nb,fremont_bridge_sb"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "first_timestamp": "2020-03-01 00:00:00",
+    "last_timestamp": "2020-03-01 02:00:00",
+    "method": "complete hourly counter export; timestamps are local wall-clock time",
+    "missing_count_rows": 2
+   },
+   "source_snapshot": "seattle_fremont_bridge/2026-11-22"
+  }
+ },
+ "fugaku": {
+  "zen_fdata_fugaku": {
+   "dropped": [
+    "user",
+    "job name",
+    "job id",
+    "text embedding",
+    "job environment string"
+   ],
+   "files": {
+    "jobs.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "jobs.csv": "submit_ts,wait_s,runtime_s,cores_req,cores_alloc,nodes_req,nodes_alloc,exit_code,time_limit_s,priority,energy,avg_power,"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "all rows of one monthly Parquet file (2021-04); the other months were not fetched",
+    "rows_read": 3,
+    "source_rows": 3,
+    "truncated": false
+   },
+   "source_snapshot": "zen_fdata_fugaku/2026-11-21"
+  }
+ },
+ "gbif_cc0": {
+  "gbif_cc0_occurrences": {
+   "dropped": [
+    "creator",
+    "eventRemarks",
+    "fieldNotes",
+    "georeferencedBy",
+    "identifiedBy",
+    "identifiedByIDs",
+    "locality",
+    "occurrenceRemarks",
+    "preparations",
+    "recordedBy",
+    "recordedByIDs",
+    "rightsHolder",
+    "verbatimIdentification",
+    "verbatimLocality"
+   ],
+   "files": {
+    "occurrences.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "occurrences.jsonl": "{\"key\": 10, \"license\": \"http://creativecommons.org/publicdomain/zero/1.0/legalcode\", \"media\": [{}], \"note\": \"[email]\"}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "files": [
+     "gbif_cc0_2024_p00.json",
+     "gbif_cc0_2024_p01.json"
+    ],
+    "method": "offset prefix 5 pages x 300 of 2024 georeferenced CC0_1_0 occurrences",
+    "records_in": 4,
+    "unique_occurrences": 2
+   },
+   "source_snapshot": "gbif_cc0_occurrences/2026-11-22"
+  }
+ },
+ "gfz": {
+  "gfz_kp_index": {
+   "dropped": [
+    "half_hour_midpoint",
+    "days_since_1932",
+    "midpoint_days"
+   ],
+   "files": {
+    "kp_ap.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "kp_ap.csv": "timestamp,kp,ap,definitive"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "definitive_rows": 1,
+    "first_timestamp": "2020-01-01 00:00:00",
+    "last_timestamp": "2020-01-02 03:00:00",
+    "method": "complete GFZ Niemegk 3-hourly Kp/ap time series",
+    "missing_kp_rows": 1
+   },
+   "source_snapshot": "gfz_kp_index/2026-11-22"
+  }
+ },
+ "gha": {
+  "zen_gha_workflows": {
+   "dropped": [
+    "author_email",
+    "author_name",
+    "commit_hash",
+    "committer_email",
+    "committer_name",
+    "uid"
+   ],
+   "files": {
+    "workflows.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "workflows.csv": "repo_id,committed_date,authored_date,file_path,previous_file_path,file_hash,previous_file_hash,git_change_type,valid_yam"
+   },
+   "pseudonymised": [
+    "repository"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "method": "6 MB gzip prefix of Zenodo 20340547 workflows.csv.gz sorted by repository with trailing partial repository dropped when stream truncated",
+    "partial_repo_rows_dropped": 0,
+    "repos": 2,
+    "stream_complete": true
+   },
+   "source_snapshot": "zen_gha_workflows/2026-11-22"
+  }
+ },
+ "gml_co2": {
+  "noaa_gml_co2_weekly": {
+   "dropped": [],
+   "files": {
+    "co2_weekly.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "co2_weekly.csv": "timestamp,decimal_year,co2_ppm,one_year_ago_ppm,ten_years_ago_ppm,increase_since_1800_ppm,ndays"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "first_timestamp": "2020-01-05 00:00:00",
+    "last_timestamp": "2020-01-12 00:00:00",
+    "method": "complete weekly Mauna Loa atmospheric CO2 record (1974-2026)",
+    "missing_co2_rows": 1
+   },
+   "source_snapshot": "noaa_gml_co2_weekly/2026-11-22"
+  }
+ },
+ "go": {
+  "gene_ontology_annotations": {
+   "dropped": [
+    "annotations.object_name",
+    "annotations.synonym"
+   ],
+   "files": {
+    "annotations.csv": {
+     "rows": 3
+    },
+    "relations.csv": {
+     "rows": 3
+    },
+    "terms.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "annotations.csv": "db,db_object_id,symbol,qualifier,go_id,reference,evidence_code,with_from,aspect,object_type,taxon,date,assigned_by,annot",
+    "relations.csv": "child_id,parent_id,relation",
+    "terms.csv": "id,name,namespace,is_obsolete"
+   },
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 3,
+     "child": "relations.child_id",
+     "orphans": 0,
+     "parent": "terms.id",
+     "share": 0.0
+    },
+    {
+     "checked": 3,
+     "child": "relations.parent_id",
+     "orphans": 1,
+     "parent": "terms.id",
+     "share": 0.3333333333333333
+    },
+    {
+     "checked": 3,
+     "child": "annotations.go_id",
+     "orphans": 1,
+     "parent": "terms.id",
+     "share": 0.3333333333333333
+    }
+   ],
+   "sampling": {
+    "duplicate_annotation_rows": 1,
+    "gaf_go_version": "http://x/releases/2026-07-26/go.owl",
+    "method": "complete go-basic ontology and the UniProt human GAF annotation file",
+    "ontology_release": "releases/2026-07-26"
+   },
+   "source_snapshot": "gene_ontology_annotations/2026-11-23"
+  }
+ },
+ "hurdat": {
+  "nhc_hurdat2_atlantic": {
+   "dropped": [],
+   "files": {
+    "events.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "events.csv": "storm_id,storm_name,timestamp,record_identifier,status,latitude,longitude,max_wind_kt,min_pressure_mb,r34_ne_nmi,r34_se_"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "first_timestamp": "1851-06-25 00:00:00",
+    "last_timestamp": "1852-08-22 00:00:00",
+    "method": "complete HURDAT2 Atlantic best-track file, every storm and record",
+    "storms": 2
+   },
+   "source_snapshot": "nhc_hurdat2_atlantic/2026-11-23"
+  }
+ },
+ "ingv": {
+  "ingv_seismic_events": {
+   "dropped": [
+    "Author",
+    "Catalog",
+    "Contributor",
+    "ContributorID",
+    "EventLocationName",
+    "MagAuthor"
+   ],
+   "files": {
+    "events.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "events.csv": "event_id,time,event_date,latitude,longitude,depth_km,mag_type,magnitude,event_type"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "days": 2,
+    "files": [
+     "ingv_2022.txt",
+     "ingv_2023.txt"
+    ],
+    "method": "complete INGV ISIDe FDSNWS catalog queries with minmagnitude>=1.5 across 2022-2024"
+   },
+   "source_snapshot": "ingv_seismic_events/2026-11-22"
+  }
+ },
+ "inpi": {
+  "inpi_bce_ratios": {
+   "dropped": [
+    "confidentiality"
+   ],
+   "files": {
+    "ratios.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "ratios.csv": "siren_id,date_cloture_exercice,type_bilan,chiffre_d_affaires,marge_brute,ebe,ebit,resultat_net,taux_d_endettement,ratio_"
+   },
+   "pseudonymised": [
+    "siren"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "method": "first 30,000 filings ordered by SIREN ascending filtered to confidentiality=Public",
+    "non_public_dropped": 1
+   },
+   "source_snapshot": "inpi_bce_ratios/2026-11-22"
+  }
+ },
+ "ipeds": {
+  "nces_ipeds_2023": {
+   "dropped": [
+    "hd.INSTNM",
+    "hd.IALIAS",
+    "hd.ADDR",
+    "hd.CITY",
+    "hd.ZIP",
+    "hd.CHFNM",
+    "hd.CHFTITLE",
+    "hd.GENTELE",
+    "hd.EIN",
+    "hd.UEIS",
+    "hd.WEBADDR",
+    "hd.ADMINURL",
+    "hd.FAIDURL",
+    "hd.APPLURL",
+    "hd.NPRICURL",
+    "hd.VETURL",
+    "hd.ATHURL",
+    "hd.DISAURL",
+    "hd.F1SYSNAM",
+    "hd.LONGITUD",
+    "hd.LATITUDE"
+   ],
+   "files": {
+    "adm.csv": {
+     "rows": 1
+    },
+    "c.csv": {
+     "rows": 3
+    },
+    "effy.csv": {
+     "rows": 5
+    },
+    "hd.csv": {
+     "rows": 2
+    },
+    "ic.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "adm.csv": "UNITID,ADMCON1",
+    "c.csv": "UNITID,CIPCODE,MAJORNUM,AWLEVEL,CTOTALT",
+    "effy.csv": "UNITID,EFFYALEV,EFFYLEV,EFYTOTLT",
+    "hd.csv": "UNITID,STABBR,SECTOR",
+    "ic.csv": "UNITID,LEVEL1,TUITPL"
+   },
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 3,
+     "child": "ic.UNITID",
+     "orphans": 1,
+     "parent": "hd.UNITID",
+     "share": 0.3333333333333333
+    },
+    {
+     "checked": 1,
+     "child": "adm.UNITID",
+     "orphans": 0,
+     "parent": "hd.UNITID",
+     "share": 0.0
+    },
+    {
+     "checked": 5,
+     "child": "effy.UNITID",
+     "orphans": 1,
+     "parent": "hd.UNITID",
+     "share": 0.2
+    },
+    {
+     "checked": 3,
+     "child": "c.UNITID",
+     "orphans": 0,
+     "parent": "hd.UNITID",
+     "share": 0.0
+    }
+   ],
+   "sampling": {
+    "duplicate_keys": {
+     "adm": 0,
+     "c": 1,
+     "effy": 1,
+     "hd": 0,
+     "ic": 0
+    },
+    "institutions_without_child": {
+     "adm": 1,
+     "c": 0,
+     "effy": 0,
+     "ic": 0
+    },
+    "method": "complete 2023 IPEDS institutional characteristics, admissions, enrolment and completions tables (revised files where published)"
+   },
+   "source_snapshot": "nces_ipeds_2023/2026-11-23"
+  }
+ },
+ "japan": {
+  "zen_japan_buildings": {
+   "dropped": [
+    "designer personal/company names, affiliations and URLs",
+    "source authors, titles and URLs",
+    "site street addresses and postal codes",
+    "free-text notes"
+   ],
+   "files": {
+    "archaeological_evidence_sites.csv": {
+     "rows": 2
+    },
+    "building_designers.csv": {
+     "rows": 2
+    },
+    "buildings.csv": {
+     "rows": 2
+    },
+    "designers.csv": {
+     "rows": 2
+    },
+    "site_sources.csv": {
+     "rows": 2
+    },
+    "sites.csv": {
+     "rows": 2
+    },
+    "sources.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "archaeological_evidence_sites.csv": "archaeological_evidence_site_id,site_name_en,display_site_id",
+    "building_designers.csv": "building_id,designer_id",
+    "buildings.csv": "building_id,site_id,period_id,building_type_id,archaeological_basis_relation_id,archaeological_evidence_site_id,is_above",
+    "designers.csv": "designer_id,is_individual,primary_designer_type_id",
+    "site_sources.csv": "site_id,source_id",
+    "sites.csv": "site_id,prefecture_code,municipality_code,district_code,ward_code,designation_id,designation_date,latitude,longitude",
+    "sources.csv": "source_id,year,source_type_id,source_kind_id,building_info_status_id,ncid,naid,crid"
+   },
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 2,
+     "child": "buildings.site_id",
+     "orphans": 0,
+     "parent": "sites.site_id",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "buildings.archaeological_evidence_site_id",
+     "orphans": 0,
+     "parent": "archaeological_evidence_sites.archaeological_evidence_site_id",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "building_designers.building_id",
+     "orphans": 0,
+     "parent": "buildings.building_id",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "building_designers.designer_id",
+     "orphans": 0,
+     "parent": "designers.designer_id",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "site_sources.site_id",
+     "orphans": 0,
+     "parent": "sites.site_id",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "site_sources.source_id",
+     "orphans": 0,
+     "parent": "sources.source_id",
+     "share": 0.0
+    }
+   ],
+   "sampling": {
+    "method": "complete core 7-table relational schema (no row sampling)"
+   },
+   "source_snapshot": "zen_japan_buildings/2026-11-22"
+  }
+ },
+ "kanto": {
+  "zen_kanto_landslides": {
+   "dropped": [
+    "Note"
+   ],
+   "files": {
+    "landslides.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "landslides.csv": "id,Watershed,Mountain,Symbol code,Lithology category,Area (m2),Inferred volume (m3),Mean slope (degree)"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "complete 1923 Kanto earthquake landslide CSV attribute table"
+   },
+   "source_snapshot": "zen_kanto_landslides/2026-11-22"
+  }
+ },
+ "kelmarsh": {
+  "zen_kelmarsh": {
+   "dropped": [
+    "about 280 other SCADA columns",
+    "status and event files"
+   ],
+   "files": {
+    "series.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "series.csv": "timestamp,turbine,wind_speed,wind_direction,nacelle_position,power_kw,reactive_power,front_bearing_temp,rear_bearing_tem"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "all ten-minute rows of the 2016 SCADA archive for the six turbines; later years were not fetched",
+    "rows_in": 4,
+    "turbines": 2
+   },
+   "source_snapshot": "zen_kelmarsh/2026-11-21"
+  }
+ },
+ "lifecycle_austin_apd_cad": {
+  "austin_apd_cad": {
+   "dropped": [
+    "geoid",
+    "blkgpnm",
+    "council_district",
+    "sector"
+   ],
+   "files": {
+    "events.csv": {
+     "rows": 6
+    }
+   },
+   "heads": {
+    "events.csv": "case,activity,timestamp,type"
+   },
+   "pseudonymised": [
+    "incident_number"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "cases": 2,
+    "events": 6,
+    "first_timestamp": "2023-01-01 00:00:00",
+    "last_timestamp": "2023-01-02 00:00:00",
+    "method": "dispatched incidents of the first quarter of 2023 ordered by incident number",
+    "rows": 2,
+    "unusable_timestamps": {
+     "call_closed": 0,
+     "call_responded": 0,
+     "first_unit_arrived": 0
+    }
+   },
+   "source_snapshot": "austin_apd_cad/2026-11-23"
+  }
+ },
+ "lifecycle_cincinnati_ecc_calls": {
+  "cincinnati_ecc_calls": {
+   "dropped": [
+    "queues",
+    "agents",
+    "line numbers",
+    "durations",
+    "locations"
+   ],
+   "files": {
+    "events.csv": {
+     "rows": 8
+    }
+   },
+   "heads": {
+    "events.csv": "case,activity,timestamp,type"
+   },
+   "pseudonymised": [
+    "call_record_id"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "cases": 2,
+    "events": 8,
+    "first_timestamp": "2023-01-01 00:00:00",
+    "last_timestamp": "2023-01-02 00:00:00",
+    "method": "calls seized in January and February 2023 ordered by call record id",
+    "rows": 2,
+    "unusable_timestamps": {
+     "call_released": 0,
+     "call_seized": 0,
+     "location_queried": 0,
+     "transfer_received": 0
+    }
+   },
+   "source_snapshot": "cincinnati_ecc_calls/2026-11-23"
+  }
+ },
+ "lifecycle_cincinnati_fire_cad": {
+  "cincinnati_fire_cad": {
+   "dropped": [
+    "address_x",
+    "latitude_x",
+    "longitude_x",
+    "neighborhood",
+    "beat"
+   ],
+   "files": {
+    "events.csv": {
+     "rows": 8
+    }
+   },
+   "heads": {
+    "events.csv": "case,activity,timestamp,type"
+   },
+   "pseudonymised": [
+    "event_number"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "cases": 2,
+    "events": 8,
+    "first_timestamp": "2023-01-01 00:00:00",
+    "last_timestamp": "2023-01-02 00:00:00",
+    "method": "fire and EMS incidents created in calendar year 2023 ordered by event number",
+    "rows": 2,
+    "unusable_timestamps": {
+     "incident_closed": 0,
+     "incident_created": 0,
+     "unit_arrived": 0,
+     "unit_dispatched": 0
+    }
+   },
+   "source_snapshot": "cincinnati_fire_cad/2026-11-23"
+  }
+ },
+ "maude": {
+  "openfda_device_event": {
+   "dropped": [
+    "manufacturer contact person fields",
+    "free-text narratives (mdr_text)"
+   ],
+   "files": {
+    "reports.jsonl": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "reports.jsonl": "{\"device\": [{\"brand_name\": \"B\", \"openfda\": {\"device_class\": \"2\"}}], \"event_type\": \"Malfunction\", \"patient\": [{\"patient_p"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "dropped_keys": [
+     "manufacturer_contact_f_name",
+     "manufacturer_contact_l_name",
+     "manufacturer_contact_phone_number",
+     "mdr_text"
+    ],
+    "method": "every report received on one day (2023-03-01), sorted by report number, pages of 500",
+    "pages": [
+     "maude_20230301_s00000.json",
+     "maude_20230301_s00500.json"
+    ],
+    "repeated_reports": 0,
+    "reports": 4
+   },
+   "source_snapshot": "openfda_device_event/2026-11-22"
+  }
+ },
+ "met": {
+  "met_museum_objects": {
+   "dropped": [
+    "artistDisplayBio",
+    "primaryImage",
+    "primaryImageSmall",
+    "additionalImages"
+   ],
+   "files": {
+    "objects.jsonl": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "objects.jsonl": "{\"objectID\": 5, \"title\": \"t5\"}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "object ids chosen as an even stride over the sorted listing, not random",
+    "object_files": 4,
+    "unreadable": 1
+   },
+   "source_snapshot": "met_museum_objects/2026-11-21"
+  }
+ },
+ "metropt": {
+  "zen_metropt2": {
+   "dropped": [
+    "GPS position, speed and quality columns"
+   ],
+   "files": {
+    "series.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "series.csv": "timestamp,TP2"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "bytes_cut_partial_line": 21,
+    "method": "time-ordered prefix of the CSV (HTTP range from byte 0), not random",
+    "rows_dropped": 0
+   },
+   "source_snapshot": "zen_metropt2/2026-11-21 (fragment)"
+  }
+ },
+ "moodle_events": {
+  "zen_moodle_events": {
+   "dropped": [],
+   "files": {
+    "moodle_events.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "moodle_events.csv": "user_id,timestamp,activity,event_code"
+   },
+   "pseudonymised": [
+    "userid"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "activities": 2,
+    "method": "complete Moodle LMS anonymised clickstream log with English activity labels",
+    "user_days": 1,
+    "users": 1
+   },
+   "source_snapshot": "zen_moodle_events/2026-11-22"
+  }
+ },
+ "ncei_storm_events": {
+  "ncei_storm_events_2024": {
+   "dropped": [
+    "details.EPISODE_NARRATIVE",
+    "details.EVENT_NARRATIVE",
+    "details.DATA_SOURCE",
+    "locations.LAT2",
+    "locations.LON2",
+    "fatalities.FATALITY_AGE",
+    "fatalities.FATALITY_SEX",
+    "fatalities.FATALITY_DATE"
+   ],
+   "files": {
+    "details.csv": {
+     "rows": 2
+    },
+    "fatalities.csv": {
+     "rows": 1
+    },
+    "locations.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "details.csv": "EVENT_ID,EPISODE_ID,BEGIN_YEARMONTH,BEGIN_DAY,BEGIN_TIME,END_YEARMONTH,END_DAY,END_TIME,STATE,STATE_FIPS,YEAR,MONTH_NAME",
+    "fatalities.csv": "FATALITY_ID,EVENT_ID,FAT_YEARMONTH,FAT_DAY,FAT_TIME,FATALITY_TYPE,FATALITY_LOCATION,EVENT_YEARMONTH",
+    "locations.csv": "EVENT_ID,EPISODE_ID,YEARMONTH,LOCATION_INDEX,RANGE,AZIMUTH,LOCATION,LATITUDE,LONGITUDE"
+   },
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 2,
+     "child": "locations.EVENT_ID",
+     "orphans": 0,
+     "parent": "details.EVENT_ID",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "locations.EPISODE_ID",
+     "orphans": 0,
+     "parent": "details.EPISODE_ID",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "fatalities.EVENT_ID",
+     "orphans": 0,
+     "parent": "details.EVENT_ID",
+     "share": 0.0
+    }
+   ],
+   "sampling": {
+    "method": "complete 2024 annual NOAA NCEI Storm Events 3-table relational release (no row sampling)"
+   },
+   "source_snapshot": "ncei_storm_events_2024/2026-11-22"
+  }
+ },
+ "ndbc_buoys": {
+  "ndbc_buoys_2023": {
+   "dropped": [
+    "VIS",
+    "TIDE"
+   ],
+   "files": {
+    "buoy_observations.csv": {
+     "rows": 14
+    }
+   },
+   "heads": {
+    "buoy_observations.csv": "station_id,timestamp,WDIR,WSPD,GST,WVHT,DPD,APD,MWD,PRES,ATMP,WTMP,DEWP"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "fixed-station selection: calendar-2023 standard meteorological files of seven NDBC-operated moored buoys",
+    "stations": 7
+   },
+   "source_snapshot": "ndbc_buoys_2023/2026-11-22"
+  }
+ },
+ "nested_doaj_journals": {
+  "doaj_journals": {
+   "dropped": [],
+   "files": {
+    "records.jsonl": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "records.jsonl": "{\"alpha\": [{\"a\": 2, \"b\": 1}], \"id\": 1, \"zeta\": 1}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "journal records in creation order, the first 20 pages of 50",
+    "pages": [
+     "journals_2.json",
+     "journals_10.json"
+    ],
+    "repeated_ids": 2
+   },
+   "source_snapshot": "doaj_journals/2026-11-23"
+  }
+ },
+ "nested_github_reviewed_advisories": {
+  "github_reviewed_advisories": {
+   "dropped": [
+    "credits"
+   ],
+   "files": {
+    "records.jsonl": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "records.jsonl": "{\"alpha\": [{\"a\": 2, \"b\": 1}], \"ghsa_id\": 1, \"zeta\": 1}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "reviewed advisories of 2017 to 2026, the first 100 of each year",
+    "pages": [
+     "advisories_2.json",
+     "advisories_10.json"
+    ],
+    "repeated_ids": 2
+   },
+   "source_snapshot": "github_reviewed_advisories/2026-11-23"
+  }
+ },
+ "nested_nasa_cmr_collections": {
+  "nasa_cmr_collections": {
+   "dropped": [
+    "ContactGroups",
+    "ContactPersons"
+   ],
+   "files": {
+    "records.jsonl": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "records.jsonl": "{\"alpha\": [{\"a\": 2, \"b\": 1}], \"meta\": {\"concept-id\": 1}, \"zeta\": 1}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "collection records of nine providers, the first 100 of each",
+    "pages": [
+     "collections_2.json",
+     "collections_10.json"
+    ],
+    "repeated_ids": 2
+   },
+   "source_snapshot": "nasa_cmr_collections/2026-11-23"
+  }
+ },
+ "nested_pubchem_compounds": {
+  "pubchem_compounds": {
+   "dropped": [],
+   "files": {
+    "records.jsonl": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "records.jsonl": "{\"alpha\": [{\"a\": 2, \"b\": 1}], \"id\": {\"id\": {\"cid\": 1}}, \"zeta\": 1}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "compound records of CID 1 to 1000, ten requests of 100 identifiers",
+    "pages": [
+     "compounds_2.json",
+     "compounds_10.json"
+    ],
+    "repeated_ids": 2
+   },
+   "source_snapshot": "pubchem_compounds/2026-11-23"
+  }
+ },
+ "nhif": {
+  "zen_nhif_hospital_cases": {
+   "dropped": [],
+   "files": {
+    "hospital_cases.csv": {
+     "rows": 1
+    }
+   },
+   "heads": {
+    "hospital_cases.csv": "region_num,region_name,facility_id,pathway_code,diagnosis_primary,diagnosis_secondary,n_cases,n_insured,period,period_st"
+   },
+   "pseudonymised": [
+    "facility_name"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "facilities": 1,
+    "method": "every 75th record across the sorted NHIF hospitalisation table",
+    "stride": 75,
+    "total_records": 2
+   },
+   "source_snapshot": "zen_nhif_hospital_cases/2026-11-22"
+  }
+ },
+ "nih_reporter": {
+  "nih_reporter_projects_fy2024": {
+   "dropped": [
+    "investigator_names_and_ids",
+    "program_officer",
+    "titles_terms_and_abstract_fields",
+    "organisation_identity_and_street_location",
+    "study_section_names",
+    "constant_fiscal_year_and_arra_flag",
+    "spending_category_lists"
+   ],
+   "files": {
+    "awards.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "awards.csv": "APPLICATION_ID,ACTIVITY,ADMINISTERING_IC,APPLICATION_TYPE,AWARD_NOTICE_DATE,BUDGET_START,BUDGET_END,CFDA_CODE,ED_INST_TY"
+   },
+   "pseudonymised": [
+    "APPLICATION_ID"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "duplicates_dropped": 1,
+    "method": "complete fiscal-year 2024 ExPORTER projects file projected to 19 administrative columns"
+   },
+   "source_snapshot": "nih_reporter_projects_fy2024/2026-11-22"
+  }
+ },
+ "norp_solar_bursts": {
+  "zen_norp_solar_bursts": {
+   "dropped": [
+    "units_row"
+   ],
+   "files": {
+    "solar_bursts.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "solar_bursts.csv": "event_id,year_month,start_time,max_time,end_time,duration_s,goes_class,rhessi_id,flux_1g,flux_2g,flux_3_75g,flux_9_4g,fl"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "first_start": "2025-12-28 01:00:00+00:00",
+    "last_start": "2025-12-28 23:58:00+00:00",
+    "method": "complete 1988-2025 NAOJ Nobeyama solar radio burst catalog",
+    "year_months": 1
+   },
+   "source_snapshot": "zen_norp_solar_bursts/2026-11-22"
+  }
+ },
+ "noumea": {
+  "zen_port_noumea": {
+   "dropped": [
+    "shipping_agent",
+    "vessel_operator",
+    "vessel_name"
+   ],
+   "files": {
+    "stopovers.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "stopovers.csv": "id,year,voyage_number,voyage_date,traffic_type,vessel_imo_id,vessel_type,vessel_type_code,vessel_flag,vessel_region,vess"
+   },
+   "pseudonymised": [
+    "vessel_imo"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "method": "complete New Caledonia international port stopover table",
+    "vessels": 2
+   },
+   "source_snapshot": "zen_port_noumea/2026-11-22"
+  }
+ },
+ "nvd": {
+  "nvd_cve": {
+   "dropped": [],
+   "files": {
+    "cves.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "cves.jsonl": "{\"descriptions\": [{\"lang\": \"en\", \"value\": \"CVE-2018-1\"}], \"id\": \"CVE-2018-1\"}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "complete_pages": true,
+    "method": "CVEs published in the first fifteen days of March of four years, one API page each",
+    "pages": [
+     "cves_a.json"
+    ],
+    "repeated_ids": 0,
+    "total_results": [
+     2
+    ]
+   },
+   "source_snapshot": "nvd_cve/2026-11-22"
+  }
+ },
+ "nws": {
+  "nws_weather_alerts": {
+   "dropped": [
+    "sender"
+   ],
+   "files": {
+    "alerts.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "alerts.jsonl": "{\"id\": \"u1\", \"properties\": {\"event\": \"First\", \"id\": \"NWS-1\"}}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "features_in": 3,
+    "files": [
+     "alerts_p1.json",
+     "alerts_p2.json"
+    ],
+    "method": "four consecutive 500-alert cursor pages from NWS alerts API",
+    "unique_alerts": 2
+   },
+   "source_snapshot": "nws_weather_alerts/2026-11-22"
+  }
+ },
+ "omni": {
+  "nasa_omni_solar_wind": {
+   "dropped": [
+    "bartels_rotation",
+    "geomagnetic_and_solar_indices",
+    "energetic_proton_fluxes"
+   ],
+   "files": {
+    "solar_wind.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "solar_wind.csv": "timestamp,imf_spacecraft_id,plasma_spacecraft_id,imf_points,plasma_points,b_magnitude_nt,b_vector_magnitude_nt,b_lat_ang"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "all_missing_hours": 1,
+    "files": 2,
+    "first_timestamp": "2022-01-01 01:00:00",
+    "last_timestamp": "2023-01-01 01:00:00",
+    "method": "complete calendar-year files of the hourly OMNI2 data"
+   },
+   "source_snapshot": "nasa_omni_solar_wind/2026-11-23"
+  }
+ },
+ "openlibrary": {
+  "openlibrary_dump": {
+   "dropped": [
+    "notes",
+    "description",
+    "first_sentence",
+    "table_of_contents"
+   ],
+   "files": {
+    "editions.jsonl": {
+     "rows": 19
+    }
+   },
+   "heads": {
+    "editions.jsonl": "{\"authors\": [{\"key\": \"/authors/OL1A\"}], \"key\": \"/books/OL10M\", \"title\": \"t10\", \"type\": {\"key\": \"/type/edition\"}}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "lines_read": 19,
+    "lines_skipped": 0,
+    "method": "gzip prefix of the editions dump in key-text order, then one record in 1 by key hash; not a random sample of the catalogue",
+    "modulo": 1,
+    "stream_complete": false
+   },
+   "source_snapshot": "openlibrary_dump/2026-11-21 (dump of 2026-10-31, fragment)"
+  }
+ },
+ "osv": {
+  "osv_go_advisories": {
+   "dropped": [
+    "credits"
+   ],
+   "files": {
+    "advisories.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "advisories.jsonl": "{\"id\": \"GO-2024-0001\", \"summary\": \"first\"}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "archive_records": 4,
+    "go_records": 2,
+    "method": "all GO-* Go Vulnerability Database advisories from Go/all.zip (non-GO prefixes excluded to stay under CC BY 4.0)"
+   },
+   "source_snapshot": "osv_go_advisories/2026-11-22"
+  }
+ },
+ "ourairports": {
+  "ourairports_db": {
+   "dropped": [
+    "airports.home_link",
+    "airports.wikipedia_link",
+    "airports.keywords",
+    "runways.le_latitude_deg",
+    "runways.le_longitude_deg",
+    "runways.le_elevation_ft",
+    "runways.le_displaced_threshold_ft",
+    "runways.he_latitude_deg",
+    "runways.he_longitude_deg",
+    "runways.he_elevation_ft",
+    "runways.he_displaced_threshold_ft",
+    "navaids.filename",
+    "navaids.dme_latitude_deg",
+    "navaids.dme_longitude_deg",
+    "navaids.dme_elevation_ft",
+    "navaids.slaved_variation_deg",
+    "countries.wikipedia_link",
+    "countries.keywords",
+    "regions.wikipedia_link",
+    "regions.keywords"
+   ],
+   "files": {
+    "airport_frequencies.csv": {
+     "rows": 1
+    },
+    "airports.csv": {
+     "rows": 2
+    },
+    "countries.csv": {
+     "rows": 2
+    },
+    "navaids.csv": {
+     "rows": 2
+    },
+    "regions.csv": {
+     "rows": 2
+    },
+    "runways.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "airport_frequencies.csv": "id,airport_ref,airport_ident,type,description,frequency_mhz",
+    "airports.csv": "id,ident,type,name,latitude_deg,longitude_deg,elevation_ft,continent,iso_country,iso_region,municipality,scheduled_servi",
+    "countries.csv": "id,code,name,continent",
+    "navaids.csv": "id,ident,name,type,frequency_khz,latitude_deg,longitude_deg,elevation_ft,iso_country,dme_frequency_khz,dme_channel,magne",
+    "regions.csv": "id,code,local_code,name,continent,iso_country",
+    "runways.csv": "id,airport_ref,airport_ident,length_ft,width_ft,surface,lighted,closed,le_ident,le_heading_degT,he_ident,he_heading_degT"
+   },
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 2,
+     "child": "airports.iso_country",
+     "orphans": 0,
+     "parent": "countries.code",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "airports.iso_region",
+     "orphans": 0,
+     "parent": "regions.code",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "regions.iso_country",
+     "orphans": 0,
+     "parent": "countries.code",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "runways.airport_ref",
+     "orphans": 1,
+     "parent": "airports.id",
+     "share": 0.5
+    },
+    {
+     "checked": 2,
+     "child": "runways.airport_ident",
+     "orphans": 1,
+     "parent": "airports.ident",
+     "share": 0.5
+    },
+    {
+     "checked": 1,
+     "child": "airport_frequencies.airport_ref",
+     "orphans": 0,
+     "parent": "airports.id",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "airport_frequencies.airport_ident",
+     "orphans": 0,
+     "parent": "airports.ident",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "navaids.associated_airport",
+     "orphans": 0,
+     "parent": "airports.ident",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "navaids.iso_country",
+     "orphans": 0,
+     "parent": "countries.code",
+     "share": 0.0
+    }
+   ],
+   "sampling": {
+    "method": "complete 2026-11-22 daily dump of six OurAirports relational tables (no row sampling)"
+   },
+   "source_snapshot": "ourairports_db/2026-11-22"
+  }
+ },
+ "panels": {
+  "panels": {
+   "dropped": [],
+   "files": {
+    "p.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "p.csv": "timestamp,syndrome,n"
+   },
+   "pseudonymised": [],
+   "rows_dropped": {
+    "p": 1
+   },
+   "source_snapshot": "zen_rki_* records of 2026-11-21 (the series are revised by the publisher)"
+  }
+ },
+ "paris_trees": {
+  "paris_urban_trees": {
+   "dropped": [
+    "typeemplacement",
+    "complementadresse",
+    "adresse",
+    "idemplacement",
+    "varieteoucultivar",
+    "geo_point_2d"
+   ],
+   "files": {
+    "trees.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "trees.csv": "idbase,domanialite,arrondissement,libellefrancais,genre,espece,stadedeveloppement,remarquable,circonferenceencm,hauteure"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "genera": 2,
+    "method": "first 25,000 trees ordered ascending by idbase"
+   },
+   "source_snapshot": "paris_urban_trees/2026-11-22"
+  }
+ },
+ "pbdb": {
+  "zen_pbdb": {
+   "dropped": [
+    "contributor and enterer names",
+    "free-text comments",
+    "identifier columns",
+    "image and reference text"
+   ],
+   "files": {
+    "occurrences.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "occurrences.csv": "occurrence_no,accepted_rank,phylum,class,order,family,early_interval,late_interval,cc,state,latlng_basis,geogscale,forma"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "member": "pbdb_occs.parquet",
+    "method": "one row in 2 of the occurrence table in file order (the order of entry), not random",
+    "rows_kept": 3,
+    "rows_read": 6,
+    "source_rows": 6,
+    "stride": 2,
+    "truncated": false
+   },
+   "source_snapshot": "zen_pbdb/2026-11-21"
+  }
+ },
+ "pbdb_relational": {
+  "zen_pbdb_relational": {
+   "dropped": [
+    "contributor names",
+    "free text",
+    "all other columns of both tables"
+   ],
+   "files": {
+    "occurrences.csv": {
+     "rows": 4
+    },
+    "taxa.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "occurrences.csv": "occurrence_no,collection_no,accepted_no,reference_no,accepted_rank,early_interval,max_ma,min_ma",
+    "taxa.csv": "taxon_no,orig_no,accepted_no,parent_no,taxon_rank,taxon_name,is_extant,n_occs,reference_no,firstapp_max_ma,firstapp_min_"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "ancestors_absent_from_source": 1,
+    "method": "one occurrence in 1 in file order (the C2a sample) with the taxa they name and every ancestor of those taxa; the other taxa are not included",
+    "occurrences_rows_read": 4,
+    "occurrences_with_unknown_taxon": 0,
+    "occurrences_without_taxon": 1,
+    "relations": [
+     [
+      "occurrences",
+      "accepted_no",
+      "taxa",
+      "taxon_no"
+     ],
+     [
+      "taxa",
+      "parent_no",
+      "taxa",
+      "taxon_no"
+     ]
+    ],
+    "taxa_in_source": 5
+   },
+   "source_snapshot": "zen_pbdb/2026-11-21"
+  }
+ },
+ "qld": {
+  "zen_queensland_petrol": {
+   "dropped": [
+    "authorized_holder",
+    "remark",
+    "secondary_strat_unit_name",
+    "field_name_prod_corr"
+   ],
+   "files": {
+    "production.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "production.csv": "reporting_period,production_type,permit_number,basin,reservoir_unit_name,strat_unit_name,field_name,gas_cum_volume_mm3,g"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "complete 2026-09-04 Queensland petroleum and gas field release"
+   },
+   "source_snapshot": "zen_queensland_petrol/2026-11-22"
+  }
+ },
+ "rcsb": {
+  "rcsb_pdb_entries": {
+   "dropped": [
+    "audit_author (omitted in GraphQL query)",
+    "citation authors (omitted in GraphQL query)"
+   ],
+   "files": {
+    "entries.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "entries.jsonl": "{\"rcsb_id\": \"7YBF\", \"struct\": {\"title\": \"First entry\"}}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "entries_in": 3,
+    "files": [
+     "entries_b00.json",
+     "entries_b01.json"
+    ],
+    "method": "earliest released structures per calendar year ordered by initial_release_date and rcsb_id (2024:350, 2025:350, 2026:300)"
+   },
+   "source_snapshot": "rcsb_pdb_entries/2026-11-22"
+  }
+ },
+ "reactome": {
+  "reactome_pathway_knowledgebase": {
+   "dropped": [
+    "uniprot.url",
+    "chebi.url"
+   ],
+   "files": {
+    "chebi.csv": {
+     "rows": 1
+    },
+    "pathways.csv": {
+     "rows": 2
+    },
+    "relations.csv": {
+     "rows": 3
+    },
+    "uniprot.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "chebi.csv": "chebi_id,pathway_id,pathway_name,evidence,species",
+    "pathways.csv": "pathway_id,pathway_name,species",
+    "relations.csv": "parent_id,child_id",
+    "uniprot.csv": "uniprot_id,pathway_id,pathway_name,evidence,species"
+   },
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 3,
+     "child": "relations.parent_id",
+     "orphans": 0,
+     "parent": "pathways.pathway_id",
+     "share": 0.0
+    },
+    {
+     "checked": 3,
+     "child": "relations.child_id",
+     "orphans": 1,
+     "parent": "pathways.pathway_id",
+     "share": 0.3333333333333333
+    },
+    {
+     "checked": 4,
+     "child": "uniprot.pathway_id",
+     "orphans": 1,
+     "parent": "pathways.pathway_id",
+     "share": 0.25
+    },
+    {
+     "checked": 1,
+     "child": "chebi.pathway_id",
+     "orphans": 0,
+     "parent": "pathways.pathway_id",
+     "share": 0.0
+    }
+   ],
+   "sampling": {
+    "duplicate_keys": {
+     "chebi": 0,
+     "pathways": 0,
+     "relations": 1,
+     "uniprot": 1
+    },
+    "method": "complete Reactome current release files: pathways, pathway hierarchy, UniProt and ChEBI mappings",
+    "pathways_without_relation": 0,
+    "release": "98"
+   },
+   "source_snapshot": "reactome_pathway_knowledgebase/2026-11-23"
+  }
+ },
+ "ror": {
+  "ror_organizations": {
+   "dropped": [],
+   "files": {
+    "organizations.jsonl": {
+     "rows": 1
+    }
+   },
+   "heads": {
+    "organizations.jsonl": "{\"id\": \"https://ror.org/01\", \"names\": [{\"value\": \"Uni A\"}]}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "kept": 1,
+    "method": "every 15th ROR v2 organization record in canonical id order across all statuses",
+    "stride": 15,
+    "total_records": 3
+   },
+   "source_snapshot": "ror_organizations/2026-11-22"
+  }
+ },
+ "rte": {
+  "rte_eco2mix_national": {
+   "dropped": [
+    "perimetre",
+    "nature",
+    "date",
+    "heure"
+   ],
+   "files": {
+    "eco2mix.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "eco2mix.csv": "timestamp,consommation,nucleaire"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "duplicates_dropped": 1,
+    "files": [
+     "eco2mix_national_2020.csv"
+    ],
+    "first_timestamp": "2019-12-31 23:00:00",
+    "last_timestamp": "2020-03-29 01:00:00",
+    "method": "half-hourly definitive RTE eco2mix national grid series for 2020-2023",
+    "quarter_hour_rows_dropped": 1,
+    "unreadable_timestamps": 1
+   },
+   "source_snapshot": "rte_eco2mix_national/2026-11-22"
+  }
+ },
+ "sea_ice": {
+  "nsidc_sea_ice_index": {
+   "dropped": [
+    "source_data_file_paths"
+   ],
+   "files": {
+    "extent.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "extent.csv": "timestamp,north_extent_mkm2,north_missing_mkm2,south_extent_mkm2,south_missing_mkm2"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "first_timestamp": "1978-10-26 00:00:00",
+    "last_timestamp": "1978-10-30 00:00:00",
+    "method": "complete daily files of both hemispheres; every second day until 1987-08-20",
+    "missing_extent_rows": 3
+   },
+   "source_snapshot": "nsidc_sea_ice_index/2026-11-22"
+  }
+ },
+ "seattle_fire": {
+  "seattle_fire_911_calls": {
+   "dropped": [
+    "address",
+    "latitude",
+    "longitude",
+    "report_location",
+    "regions"
+   ],
+   "files": {
+    "events.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "events.csv": "event_date,time,type,incident"
+   },
+   "pseudonymised": [
+    "incident_number"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "days": 2,
+    "first_time": "2023-01-01 23:58:00",
+    "last_time": "2023-01-02 01:00:00",
+    "method": "dispatches of calendar year 2023 ordered by time and incident number"
+   },
+   "source_snapshot": "seattle_fire_911_calls/2026-11-23"
+  }
+ },
+ "sncf_tgv": {
+  "sncf_tgv_regularite": {
+   "dropped": [
+    "commentaire_annulation",
+    "commentaire_retards_depart",
+    "commentaires_retard_arrivee"
+   ],
+   "files": {
+    "tgv_regularity.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "tgv_regularity.csv": "date,service,gare_depart,gare_arrivee,duree_moyenne,nb_train_prevu,nb_annulation,nb_train_depart_retard,retard_moyen_dep"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "first_month": "2024-01",
+    "last_month": "2024-02",
+    "method": "complete monthly SNCF TGV route punctuality and delay-cause ledger"
+   },
+   "source_snapshot": "sncf_tgv_regularite/2026-11-22"
+  }
+ },
+ "socrata_austin_campaign_finance": {
+  "austin_campaign_finance": {
+   "dropped": [
+    "filer_name",
+    "transactor_name",
+    "transactor_address_2",
+    "transactor_city",
+    "transactor_state",
+    "transactor_zip_code",
+    "transactor_employer",
+    "transactor_occupation",
+    "lender_institution",
+    "guarantor",
+    "guarantor_name",
+    "guarantor_address_2",
+    "guarantor_city",
+    "guarantor_employer",
+    "guarantor_occupation",
+    "link_to_report",
+    "transaction_description",
+    "expense_description",
+    "collateral"
+   ],
+   "files": {
+    "transactions.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "transactions.csv": "transaction_type,entity,transaction_amount,date_filed,form,report_id,transaction,transaction_id,date_due,report_type,ele"
+   },
+   "pseudonymised": [
+    "transaction_id",
+    "report_id"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "columns": 27,
+    "first_transaction_date": "2023-05-06 07:08:09",
+    "last_transaction_date": "2023-05-06 07:08:09",
+    "method": "campaign finance transactions of calendar year 2022 ordered by id"
+   },
+   "source_snapshot": "austin_campaign_finance/2026-11-23"
+  }
+ },
+ "socrata_austin_water_quality": {
+  "austin_water_quality": {
+   "dropped": [
+    "ref_no",
+    "qc_flag",
+    "collecting_group"
+   ],
+   "files": {
+    "results.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "results.csv": "sample_ref_no,project,watershed,site_type,sample_site_no,site_name,lat_dd_wgs84,lon_dd_wgs84,sample_date,time_null,sampl"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "columns": 21,
+    "first_sample_date": "2023-05-06 07:08:09",
+    "last_sample_date": "2023-05-06 07:08:09",
+    "method": "water quality results sampled in calendar year 2023 ordered by reference number"
+   },
+   "source_snapshot": "austin_water_quality/2026-11-23"
+  }
+ },
+ "socrata_bloomington_solar_sites": {
+  "bloomington_solar_sites": {
+   "dropped": [
+    "site",
+    "address",
+    "latitude",
+    "longitude",
+    "department"
+   ],
+   "files": {
+    "daily.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "daily.csv": "site_id,date,watt_min,watt_max,watt_avg,watt_hours,watt_hours_expected"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "columns": 7,
+    "first_date": "2023-05-06 07:08:09",
+    "last_date": "2023-05-06 07:08:09",
+    "method": "complete daily solar generation table ordered by site and date"
+   },
+   "source_snapshot": "bloomington_solar_sites/2026-11-23"
+  }
+ },
+ "socrata_bloomington_water_plant_energy": {
+  "bloomington_water_plant_energy": {
+   "dropped": [],
+   "files": {
+    "daily.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "daily.csv": "date,kwh1,kw1,kwh2,kw2,billed_kwh,solar_kwh,total_kwh,mg_finish,mg_raw"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "columns": 10,
+    "first_date": "2023-05-06 07:08:09",
+    "last_date": "2023-05-06 07:08:09",
+    "method": "complete daily table of the Monroe Water Treatment Plant ordered by date"
+   },
+   "source_snapshot": "bloomington_water_plant_energy/2026-11-23"
+  }
+ },
+ "socrata_bts_daily_mobility_national": {
+  "bts_daily_mobility_national": {
+   "dropped": [
+    "level",
+    "state_fips",
+    "state_code",
+    "county_fips",
+    "county",
+    "row_id"
+   ],
+   "files": {
+    "daily.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "daily.csv": "date,pop_stay_at_home,pop_not_stay_at_home,trips,trips_1,trips_1_3,trips_3_5,trips_5_10,trips_10_25,trips_25_50,trips_50"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "columns": 16,
+    "first_date": "2023-05-06 07:08:09",
+    "last_date": "2023-05-06 07:08:09",
+    "method": "national-level daily mobility rows ordered by date"
+   },
+   "source_snapshot": "bts_daily_mobility_national/2026-11-23"
+  }
+ },
+ "socrata_cdc_covid_vaccination_trends_us": {
+  "cdc_covid_vaccination_trends_us": {
+   "dropped": [
+    "location"
+   ],
+   "files": {
+    "daily.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "daily.csv": "date,date_type,mmwr_week,administered_daily,administered_cumulative,administered_7_day_rolling,admin_dose_1_daily,admin_"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "columns": 28,
+    "first_date": "2023-05-06 07:08:09",
+    "last_date": "2023-05-06 07:08:09",
+    "method": "national vaccination trend rows ordered by date type and date"
+   },
+   "source_snapshot": "cdc_covid_vaccination_trends_us/2026-11-23"
+  }
+ },
+ "socrata_colorado_dam_safety": {
+  "colorado_dam_safety": {
+   "dropped": [
+    "dam_name",
+    "other_dam_names",
+    "nid_id",
+    "wdid",
+    "utm_x",
+    "utm_y",
+    "latdecdeg",
+    "longdecdeg",
+    "location",
+    "more_information",
+    "inspector",
+    "assigned_to",
+    "primary_name",
+    "primary_contact",
+    "stream",
+    "downstream_town",
+    "outlet_inspection",
+    "eap_date",
+    "inundation_map_date"
+   ],
+   "files": {
+    "dams.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "dams.csv": "damid,physical_status,div,wd,county,pm,township,range,section,q160,q40,location_accuracy,town_distance,year_completed,pu"
+   },
+   "pseudonymised": [
+    "damid"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "columns": 34,
+    "method": "complete jurisdictional dam registry ordered by dam identifier"
+   },
+   "source_snapshot": "colorado_dam_safety/2026-11-23"
+  }
+ },
+ "socrata_colorado_storage_tanks": {
+  "colorado_storage_tanks": {
+   "dropped": [
+    "facility_name",
+    "address",
+    "tank_name",
+    "tank_tag",
+    "tank_wall_type",
+    "overfill_prevention",
+    "tank_release_detection_method_primary_",
+    "tank_release_detection_method_secondary_",
+    "tank_corrosion_protection_method",
+    "piping_system",
+    "piping_release_detection_method_primary_",
+    "piping_release_detection_method_secondary_",
+    "piping_corrosion_protection",
+    "piping_corrosion_protection_at_tank",
+    "piping_corrosion_protection_at_dispenser",
+    "line_leak_detector_type"
+   ],
+   "files": {
+    "tanks.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "tanks.csv": "facility_id,city,county,zip_code,facility_type,facility_category,tank_type,tank_status,installation_date,closure_date,pr"
+   },
+   "pseudonymised": [
+    "facility_id"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "columns": 16,
+    "method": "complete regulated storage tank registry ordered by facility and tank"
+   },
+   "source_snapshot": "colorado_storage_tanks/2026-11-23"
+  }
+ },
+ "socrata_delaware_state_credit_cards": {
+  "delaware_state_credit_cards": {
+   "dropped": [],
+   "files": {
+    "transactions.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "transactions.csv": "fiscal_year,fiscal_period,dept_name,div_name,merchant,cat_descr,trans_dt,merchandise_amt"
+   },
+   "pseudonymised": [
+    "merchant"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "columns": 8,
+    "first_trans_dt": "2023-05-06 07:08:09",
+    "last_trans_dt": "2023-05-06 07:08:09",
+    "method": "state credit card transactions of fiscal year 2023 ordered by date and merchant"
+   },
+   "source_snapshot": "delaware_state_credit_cards/2026-11-23"
+  }
+ },
+ "socrata_delaware_well_permits": {
+  "delaware_well_permits": {
+   "dropped": [
+    "url_for_permit_details",
+    "owner",
+    "owneraddressfull",
+    "taxid",
+    "wellcomments",
+    "wellcontractor",
+    "licensenumber",
+    "localwellid",
+    "x",
+    "y",
+    "latitude",
+    "longitude",
+    "geocoded_location",
+    "septicpermitnumber",
+    "replacedwellpermitnumber",
+    "reference_number",
+    "abandonreportdate",
+    "wellterminustype",
+    "pumpmaker",
+    "pumpintakesetting",
+    "pumpratedcapacity",
+    "waterleveldate",
+    "wellabandonmentreason"
+   ],
+   "files": {
+    "permits.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "permits.csv": "permitnumber,welltype,wellstatus,estconstructdate,apprecdate,locreviewdate,proposedconstructionreviewdate,permitapproval"
+   },
+   "pseudonymised": [
+    "permitnumber"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "columns": 57,
+    "first_apprecdate": "2023-05-06 07:08:09",
+    "last_apprecdate": "2023-05-06 07:08:09",
+    "method": "well permits received in 2018 to 2022 ordered by permit number"
+   },
+   "source_snapshot": "delaware_well_permits/2026-11-23"
+  }
+ },
+ "socrata_fta_ntd_monthly_ridership": {
+  "fta_ntd_monthly_ridership": {
+   "dropped": [
+    "legacy_ntd_id",
+    "agency_mode_tos_date"
+   ],
+   "files": {
+    "ridership.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "ridership.csv": "ntd_id,agency,mode_type_of_service_status,reporter_type,uace_cd,uza_name,mode,tos,_3_mode,date,upt,voms,vrh,vrm,state,ft"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "columns": 16,
+    "first_date": "2023-05-06 07:08:09",
+    "last_date": "2023-05-06 07:08:09",
+    "method": "monthly ridership rows from January 2022 ordered by agency and month"
+   },
+   "source_snapshot": "fta_ntd_monthly_ridership/2026-11-23"
+  }
+ },
+ "socrata_montgomery_dlc_sales": {
+  "montgomery_dlc_sales": {
+   "dropped": [],
+   "files": {
+    "sales.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "sales.csv": "calendar_year,cal_month_num,supplier,item_code,item_description,item_type,rtl_sales,rtl_transfers,whs_sales"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "columns": 9,
+    "method": "warehouse and retail sales of calendar year 2019 ordered by month and item code"
+   },
+   "source_snapshot": "montgomery_dlc_sales/2026-11-23"
+  }
+ },
+ "socrata_seattle_building_permits": {
+  "seattle_building_permits": {
+   "dropped": [
+    "description",
+    "originaladdress1",
+    "contractorcompanyname",
+    "link",
+    "latitude",
+    "longitude",
+    "location1",
+    "relatedmup",
+    "daysissuepermitcity",
+    "zoning",
+    "dwellingunittype",
+    "standardplan",
+    "parentpermitnum",
+    "development_site"
+   ],
+   "files": {
+    "permits.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "permits.csv": "permitnum,permitclass,permitclassmapped,permittypemapped,permittypedesc,housingunits,housingunitsremoved,housingunitsadd"
+   },
+   "pseudonymised": [
+    "permitnum"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "columns": 27,
+    "first_applieddate": "2023-05-06 07:08:09",
+    "last_applieddate": "2023-05-06 07:08:09",
+    "method": "building permits applied for in calendar year 2023 ordered by permit number"
+   },
+   "source_snapshot": "seattle_building_permits/2026-11-23"
+  }
+ },
+ "socrata_sffd_fire_incidents": {
+  "sffd_fire_incidents": {
+   "dropped": [
+    "id",
+    "call_number",
+    "address",
+    "point",
+    "data_as_of",
+    "data_loaded_at",
+    "first_unit_on_scene",
+    "estimated_property_loss",
+    "estimated_contents_loss",
+    "action_taken_secondary",
+    "action_taken_other",
+    "detector_alerted_occupants",
+    "area_of_fire_origin",
+    "ignition_cause",
+    "ignition_factor_primary",
+    "ignition_factor_secondary",
+    "heat_source",
+    "item_first_ignited",
+    "human_factors_associated_with_ignition",
+    "structure_type",
+    "structure_status",
+    "floor_of_fire_origin",
+    "fire_spread",
+    "number_of_floors_with_minimum_damage",
+    "number_of_floors_with_significant_damage",
+    "number_of_floors_with_heavy_damage",
+    "number_of_floors_with_extreme_damage",
+    "detectors_present",
+    "detector_type",
+    "detector_operation",
+    "detector_effectiveness",
+    "detector_failure_reason",
+    "automatic_extinguishing_system_present",
+    "automatic_extinguishing_sytem_type",
+    "automatic_extinguishing_sytem_perfomance",
+    "automatic_extinguishing_sytem_failure_reason",
+    "number_of_sprinkler_heads_operating"
+   ],
+   "files": {
+    "incidents.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "incidents.csv": "incident_number,exposure_number,incident_date,alarm_dttm,arrival_dttm,close_dttm,city,zipcode,battalion,station_area,box"
+   },
+   "pseudonymised": [
+    "incident_number"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "columns": 29,
+    "first_incident_date": "2023-05-06 07:08:09",
+    "last_incident_date": "2023-05-06 07:08:09",
+    "method": "fire incidents of calendar year 2023 ordered by incident and exposure number"
+   },
+   "source_snapshot": "sffd_fire_incidents/2026-11-23"
+  }
+ },
+ "socrata_sfo_air_traffic": {
+  "sfo_air_traffic": {
+   "dropped": [
+    "data_as_of",
+    "data_loaded_at"
+   ],
+   "files": {
+    "passengers.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "passengers.csv": "activity_period,activity_period_start_date,operating_airline,operating_airline_iata_code,published_airline,published_air"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "columns": 13,
+    "method": "complete export of the monthly passenger statistics"
+   },
+   "source_snapshot": "sfo_air_traffic/2026-11-23"
+  }
+ },
+ "socrata_tx_hhsc_child_care": {
+  "tx_hhsc_child_care": {
+   "dropped": [
+    "operation_name",
+    "operation_number",
+    "location_address",
+    "mailing_address",
+    "phone_number",
+    "website_address",
+    "administrator_director_name",
+    "email_address",
+    "location_address_geo",
+    "address_line",
+    "zipcode",
+    "hours_of_operation",
+    "other_schedule_information",
+    "programmatic_services",
+    "treatment_services"
+   ],
+   "files": {
+    "operations.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "operations.csv": "operation_id,operation_type,programs_provided,county,type_of_issuance,issuance_date,conditions_on_permit,accepts_child_c"
+   },
+   "pseudonymised": [
+    "operation_id"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "columns": 29,
+    "method": "complete child-care operation register ordered by operation identifier"
+   },
+   "source_snapshot": "tx_hhsc_child_care/2026-11-23"
+  }
+ },
+ "socrata_tx_hotel_occupancy_tax": {
+  "tx_hotel_occupancy_tax": {
+   "dropped": [
+    "www"
+   ],
+   "files": {
+    "revenue.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "revenue.csv": "fy,local_government_type,muni_name,_351_rate,_351_revenue,_1_info_revenue,_1_info__percentage,_2_reg_revenue,_2_reg__per"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "columns": 19,
+    "method": "complete local hotel occupancy tax revenue by government and fiscal year"
+   },
+   "source_snapshot": "tx_hotel_occupancy_tax/2026-11-23"
+  }
+ },
+ "socrata_wa_ev_population": {
+  "wa_ev_population": {
+   "dropped": [
+    "vin_1_10",
+    "city",
+    "zip_code",
+    "geocoded_column",
+    "_2020_census_tract"
+   ],
+   "files": {
+    "vehicles.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "vehicles.csv": "county,state,model_year,make,model,ev_type,cafv_type,electric_range,legislative_district,dol_vehicle_id,electric_utility"
+   },
+   "pseudonymised": [
+    "dol_vehicle_id"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "columns": 11,
+    "method": "first 30,000 registered electric vehicles ordered by dol_vehicle_id"
+   },
+   "source_snapshot": "wa_ev_population/2026-11-23"
+  }
+ },
+ "socrata_wa_ghg_reporting": {
+  "wa_ghg_reporting": {
+   "dropped": [
+    "location",
+    "geocoded_column",
+    "notes",
+    "point_size"
+   ],
+   "files": {
+    "emissions.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "emissions.csv": "facility,year,sector,subsector,primary_naics_code,naics_definition,parent_company,city,county,jurisdiction,reported_emis"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "columns": 22,
+    "method": "complete facility greenhouse gas reports ordered by year and facility"
+   },
+   "source_snapshot": "wa_ghg_reporting/2026-11-23"
+  }
+ },
+ "surf": {
+  "zen_surf_lisa_slurm": {
+   "dropped": [
+    "node host names"
+   ],
+   "files": {
+    "jobs.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "jobs.csv": "job_id,submit_ts,wait_s,runtime_s,nodes,cores,node_type,state"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "member": "slurm_table_cleaned.parquet/part-00003-x.snappy.parquet",
+    "method": "one row in 8 of the only non-empty Parquet part, from the first, in file order",
+    "rows_kept": 2,
+    "rows_read": 12,
+    "source_rows": 12,
+    "stride": 8,
+    "truncated": false
+   },
+   "source_snapshot": "zen_surf_lisa_slurm/2026-11-21"
+  }
+ },
+ "tables_zip": {
+  "src_zip": {
+   "dropped": [
+    "title"
+   ],
+   "files": {
+    "movies.csv": {
+     "rows": 2
+    },
+    "ratings.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "movies.csv": "movieId,genres",
+    "ratings.csv": "userId,movieId"
+   },
+   "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract; optional tables absent from the archive: calendar",
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 2,
+     "child": "ratings.movieId",
+     "orphans": 1,
+     "parent": "movies.movieId",
+     "share": 0.5
+    }
+   ],
+   "source_snapshot": "src_zip/2026-11-21"
+  }
+ },
+ "telecom_kpis": {
+  "zen_telecom_kpis": {
+   "dropped": [
+    "data_series/"
+   ],
+   "files": {
+    "telecom_kpis.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "telecom_kpis.csv": "series_id,elapsed_s,kpi_value"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "max_elapsed_s": 300,
+    "method": "complete 14 real telecom operator KPI traces from data_real/ (300s elapsed cadence)",
+    "min_elapsed_s": 0,
+    "series_count": 2
+   },
+   "source_snapshot": "zen_telecom_kpis/2026-11-22"
+  }
+ },
+ "terralore_chronicle": {
+  "zen_terralore_chronicle": {
+   "dropped": [
+    "events.title",
+    "events.summary",
+    "events.canonical_url",
+    "sources.label",
+    "sources.url",
+    "events.ndjson"
+   ],
+   "files": {
+    "event_sources.csv": {
+     "rows": 2
+    },
+    "events.csv": {
+     "rows": 2
+    },
+    "sources.csv": {
+     "rows": 1
+    }
+   },
+   "heads": {
+    "event_sources.csv": "claim_id,source_key",
+    "events.csv": "claim_id,country_code,country_name,year,year_label,end_year,category,era_id,history_updated",
+    "sources.csv": "source_key,country_code,source_id,publisher,kind,license,accessed"
+   },
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 2,
+     "child": "event_sources.claim_id",
+     "orphans": 0,
+     "parent": "events.claim_id",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "event_sources.source_key",
+     "orphans": 0,
+     "parent": "sources.source_key",
+     "share": 0.0
+    }
+   ],
+   "sampling": {
+    "method": "complete 3-table TerraLore v1.0.0 historical chronicle relational archive (no row sampling)"
+   },
+   "source_snapshot": "zen_terralore_chronicle/2026-11-22"
+  }
+ },
+ "tlc": {
+  "nyc_tlc_yellow": {
+   "dropped": [],
+   "files": {
+    "trips.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "trips.csv": "vendorid,tpep_pickup_datetime,tpep_dropoff_datetime,passenger_count,trip_distance,ratecodeid,store_and_fwd_flag,pulocati"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "three complete pickup days (a Tuesday, a Saturday and a Sunday of March 2023) in stable row-id order, paged",
+    "pages": [
+     "yellow_2023-03-07_p0.csv"
+    ],
+    "rows_by_day": {
+     "2023-03-07": 2
+    },
+    "rows_read": 2,
+    "rows_without_pickup_time": 0,
+    "zero_or_negative_totals": 1
+   },
+   "source_snapshot": "nyc_tlc_yellow/2026-11-22"
+  }
+ },
+ "treasury_dts": {
+  "us_treasury_dts": {
+   "dropped": [
+    "transaction_catg_desc",
+    "table_nbr",
+    "table_nm",
+    "record_calendar_year",
+    "record_calendar_quarter",
+    "record_calendar_month",
+    "record_calendar_day"
+   ],
+   "files": {
+    "dts_operating_cash.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "dts_operating_cash.csv": "record_date,account_type,transaction_type,transaction_catg,transaction_today_amt,transaction_mtd_amt,transaction_fytd_am"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "first_date": "2024-01-02",
+    "last_date": "2024-01-03",
+    "method": "complete 2024-01-01 to 2025-12-31 Daily Treasury Statement Table II release",
+    "pages": 2
+   },
+   "source_snapshot": "us_treasury_dts/2026-11-22"
+  }
+ },
+ "uniprot": {
+  "uniprot_kb_reviewed": {
+   "dropped": [
+    "references",
+    "sequence"
+   ],
+   "files": {
+    "entries.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "entries.jsonl": "{\"entryType\": \"UniProtKB reviewed (Swiss-Prot)\", \"primaryAccession\": \"P10000\"}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "entries_in": 3,
+    "files": [
+     "uniprot_human_9606.json",
+     "uniprot_mouse_10090.json"
+    ],
+    "method": "250 reviewed Swiss-Prot entries per organism across six model organisms"
+   },
+   "source_snapshot": "uniprot_kb_reviewed/2026-11-22"
+  }
+ },
+ "unisg": {
+  "zen_unisg_factory": {
+   "dropped": [
+    "message identifiers"
+   ],
+   "files": {
+    "activities.csv": {
+     "rows": 3
+    },
+    "sensors.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "activities.csv": "process_instance,process_key,process_state,activity_name,activity_type,start_time,end_time,duration_ms,canceled",
+    "sensors.csv": "timestamp,station,current_state,current_task,current_task_duration,current_sub_task,i1_pos,i3_photo,m1_speed"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "activity_instances": 3,
+    "messages": 4,
+    "method": "the 36-minute 10 Hz training log of 2023-04-11 and the whole Camunda activity and process logs of 2022-09 to 2023-04; the test log was not fetched",
+    "process_instances": 1,
+    "stations": [
+     "EC_1",
+     "MM_1",
+     "VGR_1"
+    ],
+    "unreadable_lines": 1
+   },
+   "source_snapshot": "zen_unisg_factory/2026-11-22"
+  }
+ },
+ "usgs": {
+  "usgs_continuous_discharge": {
+   "dropped": [
+    "geometry",
+    "row and time series identifiers",
+    "last_modified",
+    "method_category"
+   ],
+   "files": {
+    "discharge.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "discharge.csv": "monitor,timestamp,discharge_cfs,approval_status,qualifier"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "duplicates": 0,
+    "first_by_monitor": {
+     "USGS-1": "2022-01-01 00:00:00"
+    },
+    "last_by_monitor": {
+     "USGS-1": "2022-01-01 00:30:00"
+    },
+    "median_step_minutes": {
+     "USGS-1": 15.0
+    },
+    "method": "four fixed monitoring locations, 2022-01-01 to 2023-12-31, pages of 50,000 values",
+    "missing_value_share": 0.0,
+    "pages": [
+     "discharge_1_p0.json",
+     "discharge_1_p1.json"
+    ],
+    "provisional_share": 0.0
+   },
+   "source_snapshot": "usgs_continuous_discharge/2026-11-22"
+  }
+ },
+ "wals": {
+  "wals_cldf": {
+   "dropped": [
+    "contributors.csv",
+    "Contributor_ID",
+    "With_Contributor_ID",
+    "Contributor",
+    "Citation",
+    "Source",
+    "Comment",
+    "Description",
+    "examples.csv",
+    "media.csv",
+    "genealogy.csv",
+    "language_names.csv"
+   ],
+   "files": {
+    "areas.csv": {
+     "rows": 1
+    },
+    "chapters.csv": {
+     "rows": 1
+    },
+    "codes.csv": {
+     "rows": 1
+    },
+    "countries.csv": {
+     "rows": 2
+    },
+    "language_countries.csv": {
+     "rows": 3
+    },
+    "languages.csv": {
+     "rows": 2
+    },
+    "parameters.csv": {
+     "rows": 1
+    },
+    "values.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "areas.csv": "ID,Name",
+    "chapters.csv": "ID,Name,Number,Area_ID",
+    "codes.csv": "ID,Parameter_ID,Name,Description,Number",
+    "countries.csv": "ID,Name",
+    "language_countries.csv": "Language_ID,Country_ID",
+    "languages.csv": "ID,Name,Macroarea,Latitude,Longitude,Glottocode,ISO639P3code,Family,Subfamily,Genus,Country_ID,Parent_ID",
+    "parameters.csv": "ID,Name,Chapter_ID",
+    "values.csv": "ID,Language_ID,Parameter_ID,Value,Code_ID"
+   },
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 2,
+     "child": "values.Language_ID",
+     "orphans": 0,
+     "parent": "languages.ID",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "values.Parameter_ID",
+     "orphans": 0,
+     "parent": "parameters.ID",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "values.Code_ID",
+     "orphans": 0,
+     "parent": "codes.ID",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "codes.Parameter_ID",
+     "orphans": 0,
+     "parent": "parameters.ID",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "parameters.Chapter_ID",
+     "orphans": 0,
+     "parent": "chapters.ID",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "chapters.Area_ID",
+     "orphans": 0,
+     "parent": "areas.ID",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "languages.Parent_ID",
+     "orphans": 0,
+     "parent": "languages.ID",
+     "share": 0.0
+    },
+    {
+     "checked": 3,
+     "child": "language_countries.Language_ID",
+     "orphans": 0,
+     "parent": "languages.ID",
+     "share": 0.0
+    },
+    {
+     "checked": 3,
+     "child": "language_countries.Country_ID",
+     "orphans": 0,
+     "parent": "countries.ID",
+     "share": 0.0
+    }
+   ],
+   "sampling": {
+    "method": "complete 7 core CLDF linguistic typology tables plus normalized language_countries junction table (no row sampling)"
+   },
+   "source_snapshot": "wals_cldf/2026-11-22"
+  }
+ },
+ "water_demand": {
+  "zen_water_demand": {
+   "dropped": [],
+   "files": {
+    "water_demand.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "water_demand.csv": "timestamp,consumption_m3,temperature_c,rain_mm,sun_min"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "duplicates_dropped": 1,
+    "first_timestamp": "2016-01-01 00:00:00",
+    "last_timestamp": "2016-10-30 02:00:00",
+    "method": "complete un-imputed raw hourly water pumping series (2016-2021)",
+    "missing_consumption_rows": 1,
+    "missing_rain_rows": 1
+   },
+   "source_snapshot": "zen_water_demand/2026-11-22"
+  }
+ },
+ "wb": {
+  "wb_lending_projects": {
+   "dropped": [
+    "teamleadname",
+    "project_name",
+    "projectdocs",
+    "url"
+   ],
+   "files": {
+    "projects.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "projects.csv": "project_id,board_approval_date,closing_date,approval_fy,country_code,region_name,lending_instrument,lending_instrument_t"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "first 10 deterministic pagination pages (500 rows per offset 0..4500 in API default order)",
+    "pages": 2
+   },
+   "source_snapshot": "wb_lending_projects/2026-11-22"
+  }
+ },
+ "wiki": {
+  "wikimedia_simplewiki_edits": {
+   "dropped": [
+    "user names",
+    "page titles",
+    "edit summaries",
+    "text locations and hashes"
+   ],
+   "files": {
+    "revisions.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "revisions.csv": "page_id,namespace,revision_id,parent_id,timestamp,editor,editor_kind,minor,has_comment,text_bytes"
+   },
+   "pseudonymised": [
+    "editor"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "anonymous_share": 0.0,
+    "first_revision": "2003-03-27 09:24:48",
+    "incomplete_pages": 0,
+    "last_revision": "2003-03-27 09:24:48",
+    "method": "gzip prefix of the stub history in page-id order: complete revision histories of the lowest page ids",
+    "pages": 1,
+    "parents_outside_view": 0,
+    "stream_complete": true,
+    "unreadable_timestamps": 0
+   },
+   "source_snapshot": "wikimedia_simplewiki_edits/2026-11-22 (dump of 2026-11-01)"
+  }
+ },
+ "wikidata": {
+  "wikidata_entities": {
+   "dropped": [
+    "items that are instances of human"
+   ],
+   "files": {
+    "items.jsonl": {
+     "rows": 1
+    }
+   },
+   "heads": {
+    "items.jsonl": "{\"claims\": {}, \"id\": \"Q9\", \"labels\": {\"en\": {\"language\": \"en\", \"value\": \"x9\"}}, \"type\": \"item\"}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "identifiers_absent": 1,
+    "method": "identifiers Q(1 + k x 52361) spread over the identifier range, not random; items about people are excluded",
+    "people_dropped": 1,
+    "request_files": 1
+   },
+   "source_snapshot": "wikidata_entities/2026-11-21"
+  }
+ },
+ "wind_fragility": {
+  "zen_wind_fragility": {
+   "dropped": [
+    "CURVES.Source_Location",
+    "CURVES.Notes",
+    "CURVES.Limit_State_Definition",
+    "DISCRETIZED.V1..V149_intermediate_grid",
+    "SOURCES.Authors",
+    "SOURCES.Title"
+   ],
+   "files": {
+    "curves.csv": {
+     "rows": 2
+    },
+    "discretized.csv": {
+     "rows": 2
+    },
+    "parameters.csv": {
+     "rows": 2
+    },
+    "points.csv": {
+     "rows": 2
+    },
+    "sources.csv": {
+     "rows": 1
+    }
+   },
+   "heads": {
+    "curves.csv": "Curve_ID,Source_ID,Asset_Class,Material,Structure_Form,Structure_Function,Circuit_Count,Voltage_kV,Structure_Height_m,Sp",
+    "discretized.csv": "Curve_ID,Source_ID,Asset_Class,Damage_State,Model_Form,Median_mps,Brackets_P50,IM_Averaging_Time_s,IM_Reference_Height_m",
+    "parameters.csv": "Curve_ID,Param_Name,Param_Value,Param_Unit,Param_Applies_When",
+    "points.csv": "Curve_ID,IM_Value,Probability,Point_Source",
+    "sources.csv": "Source_ID,DOI,Year,Venue,Publication_Type,N_Curves"
+   },
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 2,
+     "child": "curves.Source_ID",
+     "orphans": 0,
+     "parent": "sources.Source_ID",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "discretized.Curve_ID",
+     "orphans": 0,
+     "parent": "curves.Curve_ID",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "discretized.Source_ID",
+     "orphans": 0,
+     "parent": "sources.Source_ID",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "parameters.Curve_ID",
+     "orphans": 0,
+     "parent": "curves.Curve_ID",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "points.Curve_ID",
+     "orphans": 0,
+     "parent": "curves.Curve_ID",
+     "share": 0.0
+    }
+   ],
+   "sampling": {
+    "method": "complete 5-table Wind Fragility Database v2026.10 relational release (no row sampling)"
+   },
+   "source_snapshot": "zen_wind_fragility/2026-11-22"
+  }
+ },
+ "wri_power_plants": {
+  "wri_power_plants": {
+   "dropped": [
+    "name",
+    "owner",
+    "url",
+    "wepp_id",
+    "other_fuel1",
+    "other_fuel2",
+    "other_fuel3",
+    "commissioning_year",
+    "year_of_capacity_data",
+    "generation_gwh_2013..2019",
+    "generation_data_source",
+    "estimated_generation_gwh_2013..2015"
+   ],
+   "files": {
+    "power_plants.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "power_plants.csv": "gppd_idnr,country,country_long,primary_fuel,source,geolocation_source,estimated_generation_note_2013,estimated_generatio"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "countries": 2,
+    "method": "complete Global Power Plant Database v1.3.0 CSV release"
+   },
+   "source_snapshot": "wri_power_plants/2026-11-22"
+  }
+ },
+ "xes": {
+  "4tu_a": {
+   "dropped": [
+    "all trace and event attributes except activity, time, transition, resource and listed numbers"
+   ],
+   "files": {
+    "events.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "events.csv": "case_id,position,time,activity,transition,resource,amount"
+   },
+   "pseudonymised": [
+    "resource"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "cases_kept": 3,
+    "cases_read": 3,
+    "modulo": 1,
+    "selection": "complete traces in log order, then one case in 1 by case-name hash; a prefix of the log is not a random sample",
+    "source_fragment": false,
+    "stop": "log_closed",
+    "stream_complete": true
+   },
+   "source_snapshot": "4tu_a/2026-11-21"
+  },
+  "4tu_b": {
+   "dropped": [
+    "all trace and event attributes except activity, time, transition, resource and listed numbers"
+   ],
+   "files": {
+    "events.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "events.csv": "case_id,position,time,activity,transition,resource"
+   },
+   "pseudonymised": [
+    "resource"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "cases_kept": 2,
+    "cases_read": 2,
+    "modulo": 1,
+    "selection": "complete traces in log order, then one case in 1 by case-name hash; a prefix of the log is not a random sample",
+    "source_fragment": true,
+    "stop": "input_ended_before_log_closed",
+    "stream_complete": false
+   },
+   "source_snapshot": "4tu_b/2026-11-21"
+  }
+ },
+ "zenodo_records": {
+  "zenodo_dataset_records_2023_03": {
+   "dropped": [
+    "contributors",
+    "creators",
+    "description",
+    "links",
+    "owners",
+    "swh"
+   ],
+   "files": {
+    "records.jsonl": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "records.jsonl": "{\"created\": \"2023-03-01\", \"files\": [{\"checksum\": \"md5:x\", \"key\": \"a.csv\", \"size\": 3}], \"id\": 2, \"metadata\": {\"license\": "
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "dataset records published in March 2023, sorted by recency, paged by 25",
+    "pages": [
+     "records_2.json",
+     "records_10.json"
+    ],
+    "repeated_ids": 2,
+    "total_results": [
+     3,
+     3
+    ]
+   },
+   "source_snapshot": "zenodo_dataset_records_2023_03/2026-11-23"
+  }
+ }
+}

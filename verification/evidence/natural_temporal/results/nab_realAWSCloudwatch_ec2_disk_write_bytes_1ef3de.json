@@ -1,0 +1,17 @@
+{
+ "end": "2014-03-18 03:39:00+00:00",
+ "excluded": "0 anomalies in the test partition (at least 20)",
+ "features": [
+  "value",
+  "diff",
+  "deviation",
+  "spread"
+ ],
+ "file_in_time_order": true,
+ "group": "nab_aws",
+ "id": "nab/realAWSCloudwatch/ec2_disk_write_bytes_1ef3de",
+ "rows": 4706,
+ "rows_dropped": 24,
+ "source": "nab",
+ "start": "2014-03-01 19:34:00+00:00"
+}

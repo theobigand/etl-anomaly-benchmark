@@ -117,6 +117,7 @@ def run_frame(
     times: pd.Series,
     methods: list[str] | None = None,
     seeds: tuple[int, ...] = config.BENCHMARK_SEEDS,
+    pi_floor: float = 0.0,
 ) -> dict[str, Any]:
     warnings.filterwarnings("ignore")
     methods = methods or METHODS
@@ -126,7 +127,7 @@ def run_frame(
     n = len(y)
     a, b = int(n * 0.70), int(n * 0.85)
     tr, va, te = np.arange(a), np.arange(a, b), np.arange(b, n)
-    pi = float(y[tr].mean())
+    pi = max(float(y[tr].mean()), pi_floor)
     out: dict[str, Any] = {
         "partitions": {
             k: _describe(y[i]) for k, i in (("train", tr), ("validation", va), ("test", te))

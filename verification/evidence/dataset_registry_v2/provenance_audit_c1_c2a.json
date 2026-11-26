@@ -1,0 +1,66 @@
+{
+ "ALL": {
+  "groups": 116,
+  "sources": 132,
+  "tables": 155
+ },
+ "C1": {
+  "domain_list": [
+   "Biology",
+   "Business",
+   "Climate and Environment",
+   "Computer Science",
+   "Engineering",
+   "Health and Medicine",
+   "Physics and Chemistry",
+   "Social Science"
+  ],
+  "domains": 8,
+  "groups": 80,
+  "guardrails": {
+   "exploratory": true,
+   "generalisation": true,
+   "missing": []
+  },
+  "largest_group_share": 0.0532,
+  "mechanism_list": [
+   "administrative or survey records",
+   "clinical or biological records",
+   "computational or derived features",
+   "instrument measurement"
+  ],
+  "mechanisms": 4,
+  "sources": 94,
+  "tables": 115,
+  "target": 36
+ },
+ "C2a": {
+  "domain_list": [
+   "Biology",
+   "Business",
+   "Computer Science",
+   "Games",
+   "Health and Medicine",
+   "Physics and Chemistry",
+   "Social Science"
+  ],
+  "domains": 7,
+  "groups": 40,
+  "guardrails": {
+   "exploratory": true,
+   "generalisation": true,
+   "missing": []
+  },
+  "largest_group_share": 0.025,
+  "mechanism_list": [
+   "administrative or survey records",
+   "clinical or biological records",
+   "computational or derived features",
+   "instrument measurement"
+  ],
+  "mechanisms": 4,
+  "sources": 40,
+  "tables": 40,
+  "target": 30
+ }
+}

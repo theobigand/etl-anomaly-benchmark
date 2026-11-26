@@ -113,3 +113,8 @@ cache_invalidation_files = [
     "verification/evidence/scaling.json",
     "verification/environment/*",
 ]
+
+# Read by research/ only (parquet and feather views). Kept out of [project] because that table is
+# part of the recipe-2 scientific fingerprint and no archived result depends on pyarrow.
+[dependency-groups]
+research = ["pyarrow>=21,<27"]

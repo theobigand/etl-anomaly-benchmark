@@ -1,0 +1,11467 @@
+import csv
+import io
+import json
+import sys
+import zipfile
+from pathlib import Path
+
+import pandas as pd
+import pytest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import experimental_views as ev  # noqa: E402
+
+
+def test_pseudonyms_are_stable_salted_and_keep_missing_values_missing():
+    a = ev.pseudonym("https://openalex.org/A1", "s1")
+    assert a == ev.pseudonym("https://openalex.org/A1", "s1") and len(a) == 16
+    assert a != ev.pseudonym("https://openalex.org/A1", "s2")
+    assert a != ev.pseudonym("https://openalex.org/A2", "s1")
+    assert ev.pseudonym(None, "s1") is None
+
+
+WORKS = [
+    {
+        "id": "https://openalex.org/W1",
+        "publication_year": 2023,
+        "type": "article",
+        "cited_by_count": 3,
+        "language": "en",
+        "open_access": {"is_oa": True},
+        "referenced_works": ["x", "y"],
+        "primary_location": {"source": {"id": "https://openalex.org/S1"}},
+        "authorships": [
+            {
+                "author_position": "first",
+                "author": {"id": "https://openalex.org/A1", "display_name": "Ann", "orcid": "o"},
+                "institutions": [{"id": "https://openalex.org/I1", "display_name": "U"}],
+            },
+            {
+                "author_position": "last",
+                "author": {"id": "https://openalex.org/A2"},
+                "institutions": [],
+            },
+        ],
+    }
+]
+AUTHORS = [
+    {"id": "https://openalex.org/A1", "works_count": 4, "cited_by_count": 9, "display_name": "Ann"},
+    {"id": "https://openalex.org/A2", "works_count": 1, "cited_by_count": 0},
+]
+INSTS = [
+    {"id": "https://openalex.org/I1", "country_code": "FR", "type": "education", "works_count": 7}
+]
+SRCS = [{"id": "https://openalex.org/S1", "type": "journal", "works_count": 5, "is_oa": False}]
+
+
+def test_openalex_views_drop_names_and_orcid_and_keep_every_foreign_key_resolvable():
+    tables = ev.openalex_views(WORKS, AUTHORS, INSTS, SRCS, salt="s")
+    for frame in tables.values():
+        assert not {"display_name", "orcid"} & set(frame.columns)
+    assert set(tables) == {"works", "authorships", "authors", "institutions", "sources"}
+    assert "A1" not in "".join(tables["authors"]["author_id"])  # pseudonymised
+    assert set(tables["authorships"]["author_id"]) <= set(tables["authors"]["author_id"])
+    assert set(tables["authorships"]["work_id"]) <= set(tables["works"]["work_id"])
+    assert set(tables["authorships"]["institution_id"].dropna()) <= set(
+        tables["institutions"]["institution_id"]
+    )
+    assert tables["works"].loc[0, "n_references"] == 2 and tables["works"].loc[0, "n_authors"] == 2
+    assert len(tables["authorships"]) == 2  # an author without institution keeps one row
+
+
+def test_a_tsf_becomes_a_wide_frame_on_a_regular_time_index():
+    parsed = {
+        "frequency": "hourly",
+        "series": [
+            {"name": "a", "start": "2020-01-01 00-00-00", "values": [1.0, 2.0, None]},
+            {"name": "b", "start": "2020-01-01 01-00-00", "values": [5.0, 6.0]},
+        ],
+    }
+    frame = ev.tsf_wide(parsed)
+    assert list(frame.columns) == ["a", "b"]
+    assert frame.index[0] == pd.Timestamp("2020-01-01 00:00") and len(frame) == 3
+    assert pd.isna(frame.loc[pd.Timestamp("2020-01-01 00:00"), "b"])
+    assert frame.loc[pd.Timestamp("2020-01-01 02:00"), "b"] == 6.0
+
+
+def test_event_reports_lose_identifying_fields_and_sort_deterministically():
+    records = [
+        {
+            "safetyreportid": "2",
+            "receivedate": "20240102",
+            "companynumb": "c",
+            "authoritynumb": "a",
+            "patient": {"patientsex": "1"},
+        },
+        {"safetyreportid": "1", "receivedate": "20240102", "companynumb": "c2"},
+        {"safetyreportid": "0", "receivedate": "20240101"},
+    ]
+    out = ev.faers_view(records)
+    assert [r["safetyreportid"] for r in out] == ["0", "1", "2"]
+    assert all("companynumb" not in r and "authoritynumb" not in r for r in out)
+    assert out[2]["patient"] == {"patientsex": "1"}
+
+
+def test_log_views_drop_the_message_text_that_can_hold_addresses_and_hosts():
+    frame = pd.DataFrame(
+        {
+            "LineId": [1],
+            "Time": ["t"],
+            "Level": ["info"],
+            "Content": ["from 10.0.0.1"],
+            "EventId": ["E1"],
+            "EventTemplate": ["from <*>"],
+        }
+    )
+    out = ev.loghub_view(frame)
+    assert list(out.columns) == ["LineId", "Time", "Level", "EventId"]
+
+
+def test_log_views_keep_only_the_listed_columns_that_exist_and_never_node_names():
+    frame = pd.DataFrame(
+        {
+            "LineId": [1],
+            "Label": ["-"],
+            "Timestamp": [5],
+            "Node": ["R01-M0"],
+            "Content": ["x"],
+            "EventId": ["E2"],
+        }
+    )
+    assert list(ev.loghub_view(frame).columns) == ["LineId", "Label", "Timestamp", "EventId"]
+
+
+def test_spend_views_share_one_schema_pseudonymise_suppliers_and_drop_free_text():
+    raw = pd.DataFrame(
+        {
+            "﻿Department family": ["D", "D", None],
+            "Entity": ["E", "E", "E"],
+            "Paid Date": ["01/02/2024", "03/02/2024", None],
+            "Expense type": ["Fees", "Fees", "x"],
+            "Expense area": ["A", "A", "A"],
+            "Supplier": ["Acme Ltd", "Acme Ltd", "J Smith"],
+            "Transaction No": ["1", "2", "3"],
+            "Amount": ["£1,200.50", "30", "bad"],
+            "Description": ["john smith consulting", "x", "y"],
+            "Post Code": ["AB1", "AB1", "CD2"],
+        }
+    )
+    out = ev.spend_view(raw, "org")
+    assert list(out.columns) == list(ev.SPEND_COLUMNS)
+    assert len(out) == 2  # the row without a readable amount or date is dropped
+    assert out["amount"].tolist() == [1200.5, 30.0]
+    assert out["supplier_id"].nunique() == 1 and "Acme" not in out["supplier_id"].iloc[0]
+    assert (out["organisation"] == "org").all()
+    assert pd.api.types.is_datetime64_any_dtype(out["date"])
+
+
+def test_spend_views_report_a_file_that_is_not_a_table_instead_of_guessing():
+    import pytest
+
+    with pytest.raises(ev.ViewError, match="columns"):
+        ev.spend_view(pd.DataFrame({"x": [1]}), "org")
+
+
+def test_read_spend_skips_banner_rows_and_refuses_spreadsheets_saved_as_csv():
+    import pytest
+
+    text = "Consolidated spend for May\n\nSupplier,Amount,Date,Transaction No\nA,1,01/01/2024,9\n"
+    frame = ev.read_spend(text.encode("latin-1"))
+    assert (
+        list(frame.columns) == ["Supplier", "Amount", "Date", "Transaction No"] and len(frame) == 1
+    )
+    with pytest.raises(ev.ViewError, match="spreadsheet"):
+        ev.read_spend(b"PK\x03\x04binary")
+    with pytest.raises(ev.ViewError, match="header"):
+        ev.read_spend(b"a,b\n1,2\n")
+
+
+def test_food_views_drop_contributor_fields_at_every_depth_and_keep_the_structure():
+    records = [
+        {
+            "_id": "2",
+            "creator": "bob",
+            "editors_tags": ["a"],
+            "images": {"1": {"uploader": "bob", "sizes": {"100": {"h": 1}}}},
+            "nutriments": {"fat": 1.0},
+            "ingredients": [{"id": "x", "owner": "o"}, {"id": "y"}],
+        },
+        {"_id": "1", "last_editor": "al", "owner": "o"},
+    ]
+    out = ev.off_view(records)
+    assert [r["_id"] for r in out] == ["1", "2"]
+    text = json.dumps(out)
+    for name in ("creator", "editors_tags", "uploader", "owner", "last_editor", "bob", "al"):
+        assert name not in text
+    assert out[1]["images"]["1"]["sizes"]["100"]["h"] == 1  # the nested structure stays
+    assert out[1]["ingredients"] == [{"id": "x"}, {"id": "y"}]
+    assert records[0]["creator"] == "bob"  # the input is not modified
+
+
+def test_stack_views_drop_text_and_names_pseudonymise_users_and_keep_every_link():
+    tables = {
+        "Users": [
+            {
+                "Id": "5",
+                "DisplayName": "Ann",
+                "Location": "Paris",
+                "AboutMe": "hi",
+                "Reputation": "10",
+                "CreationDate": "2020-01-01",
+                "Views": "2",
+                "UpVotes": "1",
+                "DownVotes": "0",
+            }
+        ],
+        "Posts": [
+            {
+                "Id": "1",
+                "PostTypeId": "1",
+                "OwnerUserId": "5",
+                "Title": "t",
+                "Body": "b",
+                "Score": "3",
+                "CreationDate": "2020-01-02",
+                "AcceptedAnswerId": "2",
+                "Tags": "|a|",
+            },
+            {
+                "Id": "2",
+                "PostTypeId": "2",
+                "ParentId": "1",
+                "OwnerUserId": "99",
+                "Body": "c",
+                "Score": "1",
+                "CreationDate": "2020-01-03",
+            },
+        ],
+        "Comments": [
+            {
+                "Id": "7",
+                "PostId": "1",
+                "UserId": "5",
+                "Text": "secret",
+                "Score": "0",
+                "CreationDate": "x",
+                "UserDisplayName": "Ann",
+            }
+        ],
+        "Votes": [{"Id": "8", "PostId": "1", "VoteTypeId": "2", "CreationDate": "2020-01-04"}],
+        "Badges": [{"Id": "9", "UserId": "5", "Name": "Teacher", "Date": "d", "Class": "3"}],
+        "PostLinks": [
+            {"Id": "3", "PostId": "1", "RelatedPostId": "2", "LinkTypeId": "1", "CreationDate": "d"}
+        ],
+    }
+    views = ev.stack_views(tables, salt="s")
+    text = "".join(f.to_csv() for f in views.values())
+    for word in ("Ann", "Paris", "secret", "hi,", "Title"):
+        assert word not in text
+    assert "Body" not in views["Posts"].columns and "Text" not in views["Comments"].columns
+    users = set(views["Users"]["user_id"])
+    assert views["Posts"].loc[0, "owner_user_id"] in users  # a resolvable owner keeps its link
+    assert (
+        views["Comments"].loc[0, "user_id"] in users and views["Badges"].loc[0, "user_id"] in users
+    )
+    assert views["Posts"].loc[1, "owner_user_id"] == ev.pseudonym(
+        "99", "s"
+    )  # same mapping, orphan kept
+    assert list(views["Votes"].columns) == ["vote_id", "post_id", "vote_type_id", "creation_date"]
+    assert views["PostLinks"].loc[0, "related_post_id"] == "2"
+
+
+def _release(i, supplier="s1", amount=100.0):
+    return {
+        "id": f"r{i}",
+        "ocid": f"oc-{i}",
+        "date": f"2022-05-{i % 28 + 1:02d}T00:00:00-04:00",
+        "buyer": {"id": "b1", "name": "Dept"},
+        "awards": [
+            {
+                "id": f"a{i}",
+                "date": "2022-05-30T00:00:00-04:00",
+                "items": [{"id": "", "quantity": 1, "description": "buy from Jean Tremblay"}],
+                "value": {"amount": amount, "currency": "CAD"},
+                "suppliers": [{"id": supplier, "name": "J Tremblay"}],
+            }
+        ],
+        "tender": {"status": "complete", "procuringEntity": {"id": "p1", "name": "X"}},
+        "parties": [
+            {"id": "b1", "name": "Dept", "roles": ["buyer"], "address": {"streetAddress": "1 rue"}},
+            {
+                "id": supplier,
+                "name": "J Tremblay",
+                "roles": ["supplier"],
+                "contactPoint": {"email": "a@b"},
+            },
+        ],
+    }
+
+
+def test_ocds_views_drop_names_addresses_and_free_text_but_keep_the_nesting_and_the_links():
+    releases = [_release(i, supplier=f"s{i % 3}") for i in range(30)]
+    nested, awards, contracts = ev.ocds_view(releases, salt="s", keep_modulo=1)
+    text = json.dumps(nested)
+    for word in (
+        "Tremblay",
+        "Dept",
+        "rue",
+        "a@b",
+        "name",
+        "address",
+        "contactPoint",
+        "description",
+    ):
+        assert word not in text
+    first = nested[0]
+    assert first["awards"][0]["value"]["amount"] == 100.0 and "items" in first["awards"][0]
+    supplier = first["awards"][0]["suppliers"][0]["id"]
+    assert supplier in {p["id"] for p in first["parties"]}  # the same pseudonym on both sides
+    assert first["buyer"]["id"] == ev.pseudonym("b1", "s")
+    assert list(awards.columns) == list(ev.AWARD_COLUMNS) and len(awards) == 30
+    assert awards["supplier_id"].nunique() == 3 and awards["amount"].eq(100.0).all()
+
+
+def test_ocds_sampling_keeps_whole_contracts_by_a_stable_hash_of_the_contract_id():
+    releases = [_release(i) for i in range(400)]
+    a, _, _ = ev.ocds_view(releases, salt="s", keep_modulo=10)
+    b, _, _ = ev.ocds_view(list(reversed(releases)), salt="s", keep_modulo=10)
+    assert sorted(r["ocid"] for r in a) == sorted(r["ocid"] for r in b)
+    assert 10 < len(a) < 90
+    assert [r["date"] for r in a] == sorted(r["date"] for r in a)  # fixed chronological order
+
+
+def test_ocds_contracts_link_to_their_awards_and_a_process_without_awards_adds_no_rows():
+    r = _release(1)
+    r["contracts"] = [
+        {"id": "c1", "awardID": "a1", "dateSigned": "2022-06-01T00:00:00Z", "title": "Jean T",
+         "value": {"amount": 90.0, "currency": "CAD"}},
+        {"id": "c2", "awardID": "zzz", "value": {"amount": 5.0, "currency": "CAD"}},
+    ]  # fmt: skip
+    bare = {
+        "id": "r2",
+        "ocid": "oc-bare",
+        "date": "2022-01-01",
+        "buyer": {"id": "b1"},
+        "parties": [],
+    }
+    nested, awards, contracts = ev.ocds_view([r, bare], salt="s", keep_modulo=1)
+    assert len(nested) == 2 and len(awards) == 1
+    assert list(contracts.columns) == list(ev.CONTRACT_COLUMNS) and len(contracts) == 2
+    assert contracts["award_id"].tolist() == ["a1", "zzz"]
+    assert "Jean T" not in json.dumps(nested)  # titles are free text
+    assert contracts.loc[0, "amount"] == 90.0 and contracts.loc[0, "date_signed"].startswith(
+        "2022-06-01"
+    )
+
+
+def test_trip_views_drop_coordinates_and_names_and_derive_the_duration_without_hiding_bad_rows():
+    raw = pd.DataFrame(
+        {
+            "ride_id": ["a", "b", "c"],
+            "rideable_type": ["classic_bike", "electric_bike", "classic_bike"],
+            "started_at": ["2024-09-01 10:00:00", "2024-09-01 11:00:00", "2024-09-01 12:00:00"],
+            "ended_at": ["2024-09-01 10:30:00", "2024-09-01 10:00:00", "not a time"],
+            "start_station_name": ["X st", "Y st", "Z st"],
+            "start_station_id": ["31001", "31002", None],
+            "end_station_name": ["A", "B", "C"],
+            "end_station_id": ["31005", None, None],
+            "start_lat": [38.9, 38.8, 38.7],
+            "start_lng": [-77.0, -77.1, -77.2],
+            "end_lat": [38.9, None, None],
+            "end_lng": [-77.0, None, None],
+            "member_casual": ["member", "casual", "member"],
+        }
+    )
+    out = ev.trip_view(raw)
+    assert list(out.columns) == list(ev.TRIP_COLUMNS)
+    text = out.to_csv()
+    for word in ("X st", "38.9", "-77"):
+        assert word not in text
+    assert len(out) == 3  # nothing is silently dropped
+    assert out["duration_min"].iloc[0] == 30.0
+    assert out["duration_min"].iloc[1] == -60.0  # an impossible trip stays visible
+    assert pd.isna(out["duration_min"].iloc[2])
+    import pytest
+
+    with pytest.raises(ev.ViewError, match="columns"):
+        ev.trip_view(pd.DataFrame({"x": [1]}))
+
+
+def test_zip_members_skip_macos_resource_forks_and_keep_real_csv_files():
+    names = ["a.csv", "__MACOSX/._a.csv", "dir/._b.csv", "dir/b.csv", "readme.txt"]
+    assert ev.csv_members(names) == ["a.csv", "dir/b.csv"]
+
+
+# --- every builder, on a tiny raw tree, with exact outputs and exact input paths ---------------
+
+SNAP = "2026-11-21"
+
+
+def _w(path, text):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text)
+
+
+def _ocds_release(i, supplier="s1"):
+    return {
+        "id": f"r{i}",
+        "ocid": f"oc-{i}",
+        "date": f"2022-05-{i % 28 + 1:02d}",
+        "buyer": {"id": "b"},
+        "awards": [
+            {
+                "id": f"a{i}",
+                "date": "2022-05-30",
+                "value": {"amount": 10.0, "currency": "CAD"},
+                "suppliers": [{"id": supplier}],
+            }
+        ],
+        "parties": [{"id": "b"}, {"id": supplier}],
+    }
+
+
+def _raw_tree(tmp_path, monkeypatch):
+    import gzip
+    import json
+    import subprocess
+    import zipfile
+    from pathlib import Path
+
+    root = tmp_path / "acquired"
+    raw = root / "openalex_works" / SNAP / "raw"
+    _w(
+        raw / "works_1.json",
+        json.dumps(
+            {
+                "results": [
+                    {
+                        "id": "https://o/W2",
+                        "publication_year": 2022,
+                        "type": "article",
+                        "cited_by_count": 1,
+                        "language": "fr",
+                        "open_access": {"is_oa": False},
+                        "referenced_works": [],
+                        "primary_location": None,
+                        "authorships": [],
+                    }
+                ]
+            }
+        ),
+    )
+    _w(
+        raw / "works_0.json",
+        json.dumps(
+            {
+                "results": [
+                    {
+                        "id": "https://o/W1",
+                        "publication_year": 2023,
+                        "type": "article",
+                        "cited_by_count": 3,
+                        "language": "en",
+                        "open_access": {"is_oa": True},
+                        "referenced_works": ["x", "y"],
+                        "primary_location": {"source": {"id": "https://o/S1"}},
+                        "authorships": [
+                            {
+                                "author_position": "first",
+                                "author": {"id": "https://o/A1", "display_name": "Ann"},
+                                "institutions": [{"id": "https://o/I1"}],
+                            }
+                        ],
+                    }
+                ]
+            }
+        ),
+    )
+    _w(
+        raw / "authors_0.json",
+        json.dumps(
+            {
+                "results": [
+                    {
+                        "id": "https://o/A1",
+                        "works_count": 4,
+                        "cited_by_count": 9,
+                        "display_name": "Ann",
+                    }
+                ]
+            }
+        ),
+    )
+    _w(
+        raw / "institutions_0.json",
+        json.dumps(
+            {
+                "results": [
+                    {
+                        "id": "https://o/I1",
+                        "country_code": "FR",
+                        "type": "education",
+                        "works_count": 7,
+                    }
+                ]
+            }
+        ),
+    )
+    _w(
+        raw / "sources_0.json",
+        json.dumps(
+            {
+                "results": [
+                    {"id": "https://o/S1", "type": "journal", "works_count": 5, "is_oa": False}
+                ]
+            }
+        ),
+    )
+    tsf = (
+        "@attribute series_name string\n@attribute start_timestamp date\n@frequency hourly\n@data\n"
+    )
+    tsf += "a:2020-01-01 00-00-00:1,2\nb:2020-01-01 01-00-00:5,6\n"
+    archive = root / "monash_zenodo" / SNAP / "raw" / "4656626_pedestrian_counts_dataset.zip"
+    archive.parent.mkdir(parents=True)
+    with zipfile.ZipFile(archive, "w") as z:
+        z.writestr("x.tsf", tsf)
+    events = root / "openfda_drug_event" / SNAP / "raw"
+    _w(
+        events / "event_1.json",
+        json.dumps(
+            {
+                "results": [
+                    {
+                        "safetyreportid": "2",
+                        "receivedate": "20240102",
+                        "companynumb": "c",
+                        "patient": {"s": 1},
+                    }
+                ]
+            }
+        ),
+    )
+    _w(
+        events / "event_0.json",
+        json.dumps(
+            {"results": [{"safetyreportid": "1", "receivedate": "20240101", "authoritynumb": "a"}]}
+        ),
+    )
+    head = "LineId,Time,Level,Content,EventId,EventTemplate\n"
+    _w(tmp_path / "loghub" / "B.csv", head + "1,t,info,from 10.0.0.1,E1,from <*>\n")
+    _w(tmp_path / "loghub" / "A.csv", head + "1,t,warn,x,E2,x\n2,t2,warn,y,E3,y\n")
+    food = root / "openfoodfacts_products" / SNAP / "raw" / "d.json.gz"
+    food.parent.mkdir(parents=True)
+    with gzip.open(food, "wt") as handle:
+        handle.write(
+            json.dumps({"_id": "2", "creator": "bob", "a": {"uploader": "u", "k": 1}}) + "\n\n"
+        )
+        handle.write(json.dumps({"_id": "1", "owner": "o"}) + "\n")
+    dump = root / "stackexchange_dump" / SNAP / "raw"
+    dump.mkdir(parents=True)
+    (dump / "zed.stackexchange.com.7z").write_bytes(b"x")
+    (dump / "abc.stackexchange.com.7z").write_bytes(b"x")
+    xml = {
+        "Users": '<users><row Id="5" DisplayName="Ann" Reputation="10" CreationDate="d" Views="1" UpVotes="2" DownVotes="3"/></users>',  # noqa: E501
+        "Posts": '<posts><row Id="1" PostTypeId="1" OwnerUserId="5" Title="t" Body="b" Score="3" CreationDate="d"/></posts>',  # noqa: E501
+    }
+
+    def fake_run(command, check):
+        target = Path(command[command.index("-C") + 1])
+        for name, text in xml.items():
+            (target / f"{name}.xml").write_text(text)
+
+    monkeypatch.setattr(subprocess, "run", fake_run)
+    for source in ("ocds_montreal", "ocds_georgia", "ocds_zambia"):
+        path = root / source / SNAP / "raw" / "full.jsonl.gz"
+        path.parent.mkdir(parents=True)
+        with gzip.open(path, "wt") as handle:
+            for i in range(60):
+                handle.write(json.dumps(_ocds_release(i)) + "\n")
+    csv = (
+        "ride_id,rideable_type,started_at,ended_at,start_station_id,end_station_id,member_casual\n"
+    )
+    csv += "r2,e,2024-09-02 10:00:00,2024-09-02 10:10:00,1,2,member\n"
+    csv += "r1,c,2024-09-01 09:00:00,2024-09-01 09:30:00,3,,casual\n"
+    for source in ("bikeshare_capital", "bikeshare_jc"):
+        folder = root / source / SNAP / "raw"
+        folder.mkdir(parents=True)
+        with zipfile.ZipFile(folder / "b.zip", "w") as z:
+            z.writestr("a.csv", csv)
+            z.writestr("__MACOSX/._a.csv", "junk")
+        with zipfile.ZipFile(folder / "a.zip", "w") as z:
+            z.writestr("c.csv", csv.replace("r2", "r3"))
+    import io
+    import tarfile
+
+    jobs = root / "slurm_ccin2p3" / SNAP / "raw"
+    jobs.mkdir(parents=True)
+    data = _jobs().to_csv(sep="\t", index=False).encode()
+    with tarfile.open(jobs / "07.tsv.tar.gz", "w:gz") as tar:
+        info = tarfile.TarInfo("07.tsv")
+        info.size = len(data)
+        tar.addfile(info, io.BytesIO(data))
+    _w(
+        root / "clinicaltrials_v2" / SNAP / "raw" / "studies_2023-01.json",
+        json.dumps({"studies": [{"protocolSection": {"identificationModule": {"nctId": "NCT1"}}}]}),
+    )
+    _w(
+        root / "crossref_works" / SNAP / "raw" / "sample_00.json",
+        json.dumps({"message": {"items": [{"DOI": "10.1/a"}]}}),
+    )
+    import gzip as _gzip
+
+    borg = root / "google_cluster_2019a" / SNAP / "raw"
+    borg.mkdir(parents=True)
+    (borg / "collection_events_head.json.gz").write_bytes(
+        _gzip.compress((_collection_line(1, 1, 0) + "\n").encode())
+    )
+    (borg / "instance_events_head.json.gz").write_bytes(
+        _gzip.compress((_instance_line(1, 0, 1, 0) + "\n").encode())
+    )
+    good = "Department family,Entity,Date,Expense type,Expense area,Supplier,Transaction number,Amount\n"  # noqa: E501
+    good += 'D,E,01/02/2024,Fees,A,Acme,2,"£1,000.50"\nD,E,03/02/2024,Fees,A,Beta,1,30\n'
+    _w(root / "ukspend_mhra" / SNAP / "raw" / "00.csv", good)
+    _w(
+        root / "ukspend_nhsbsa" / SNAP / "raw" / "00.csv",
+        "Banner\n" + good.replace("Department family", "Dept"),
+    )
+    (root / "ukspend_nice" / SNAP / "raw").mkdir(parents=True)
+    (root / "ukspend_nice" / SNAP / "raw" / "00.csv").write_bytes(b"PK\x03\x04")
+    _w(root / "ukspend_ofsted" / SNAP / "raw" / "00.csv", "a,b\n1,2\n")
+    return root
+
+
+def _accessed(monkeypatch, root):
+    """Exact path strings under ``root`` that the code opens or lists."""
+    import builtins
+    import os
+
+    seen = []
+    real_open = builtins.open
+    base = str(root.parent)
+
+    def spy_open(file, *a, **k):
+        if isinstance(file, str | os.PathLike) and str(file).startswith(base):
+            seen.append(str(file)[len(base) + 1 :])
+        return real_open(file, *a, **k)
+
+    import io
+
+    monkeypatch.setattr(builtins, "open", spy_open)
+    monkeypatch.setattr(io, "open", spy_open)
+    return seen
+
+
+def _sha(path):
+    import hashlib
+
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def test_the_openalex_builder_writes_five_sorted_tables_and_reads_the_documented_paths(
+    tmp_path, monkeypatch
+):
+    root = _raw_tree(tmp_path, monkeypatch)
+    out = tmp_path / "out"
+    seen = _accessed(monkeypatch, root)
+    manifest = {}
+    ev._build_openalex(root, out, manifest)
+    reads = sorted(set(p for p in seen if p.startswith("acquired/")))
+    base = "acquired/openalex_works/2026-11-21/raw"
+    assert reads == sorted(
+        [
+            *(f"{base}/{n}_0.json" for n in ("authors", "institutions", "sources", "works")),
+        ]
+        + [f"{base}/works_1.json"]
+    )
+    texts = {f.name: f.read_text() for f in (out / "openalex").glob("*.csv")}
+    assert texts == {
+        "authors.csv": "author_id,works_count,cited_by_count\nd62d7796a28c16a2,4,9\n",
+        "authorships.csv": "work_id,author_id,institution_id,position\nW1,d62d7796a28c16a2,I1,first\n",  # noqa: E501
+        "institutions.csv": "institution_id,country_code,type,works_count\nI1,FR,education,7\n",
+        "sources.csv": "source_id,type,works_count,is_oa\nS1,journal,5,False\n",
+        "works.csv": "work_id,year,type,cited_by_count,language,is_oa,source_id,n_references,n_authors\n"  # noqa: E501
+        "W1,2023,article,3,en,True,S1,2,1\nW2,2022,article,1,fr,False,,0,0\n",
+    }
+    view = manifest["openalex"]
+    assert view["files"] == {
+        n: {"sha256": _sha(out / "openalex" / n), "rows": rows}
+        for n, rows in (
+            ("authors.csv", 1),
+            ("authorships.csv", 1),
+            ("institutions.csv", 1),
+            ("sources.csv", 1),
+            ("works.csv", 2),
+        )
+    }
+    assert {k: v for k, v in view.items() if k != "files"} == {
+        "dropped": ["display_name", "orcid", "observed_orcids", "raw works ids of authors"],
+        "pseudonymised": ["author_id"],
+        "salt_label": ev.SALT,
+        "source_snapshot": "openalex_works/2026-11-21",
+    }
+    assert list(manifest) == ["openalex"]
+
+
+def _record_of(manifest, view, out_dir):
+    entry = manifest[view]
+    return {n: {"sha256": _sha(out_dir / n), "rows": f["rows"]} for n, f in entry["files"].items()}
+
+
+def test_the_monash_faers_and_log_builders_have_exact_outputs_and_manifests(tmp_path, monkeypatch):
+    root = _raw_tree(tmp_path, monkeypatch)
+    out = tmp_path / "out"
+    seen = _accessed(monkeypatch, root)
+    manifest = {}
+    ev._build_monash(root, out, manifest)
+    ev._build_faers(root, out, manifest)
+    ev._build_loghub(root, out, manifest)
+    reads = sorted(set(seen))
+    assert "acquired/monash_zenodo/2026-11-21/raw/4656626_pedestrian_counts_dataset.zip" in reads
+    assert "acquired/openfda_drug_event/2026-11-21/raw/event_0.json" in reads
+    assert "acquired/openfda_drug_event/2026-11-21/raw/event_1.json" in reads
+    assert "loghub/A.csv" in reads and "loghub/B.csv" in reads
+    assert (out / "monash_pedestrian" / "wide.csv").read_text() == (
+        "timestamp,a,b\n2020-01-01 00:00:00,1.0,\n2020-01-01 01:00:00,2.0,5.0\n2020-01-01 02:00:00,,6.0\n"  # noqa: E501
+    )
+    assert (out / "openfda_drug_event" / "events.jsonl").read_text() == (
+        '{"receivedate": "20240101", "safetyreportid": "1"}\n'
+        '{"patient": {"s": 1}, "receivedate": "20240102", "safetyreportid": "2"}\n'
+    )
+    assert (
+        out / "loghub" / "A.csv"
+    ).read_text() == "LineId,Time,Level,EventId\n1,t,warn,E2\n2,t2,warn,E3\n"
+    assert (out / "loghub" / "B.csv").read_text() == "LineId,Time,Level,EventId\n1,t,info,E1\n"
+    assert manifest["monash_pedestrian"] == {
+        "files": _record_of(manifest, "monash_pedestrian", out / "monash_pedestrian")
+        | {"wide.csv": {"sha256": _sha(out / "monash_pedestrian" / "wide.csv"), "rows": 3}},
+        "dropped": [],
+        "pseudonymised": [],
+        "source_snapshot": "monash_zenodo/2026-11-21",
+    }
+    assert manifest["openfda_drug_event"]["files"] == {
+        "events.jsonl": {"sha256": _sha(out / "openfda_drug_event" / "events.jsonl"), "rows": 2}
+    }
+    assert {k: v for k, v in manifest["openfda_drug_event"].items() if k != "files"} == {
+        "dropped": ["companynumb", "authoritynumb"],
+        "pseudonymised": [],
+        "source_snapshot": "openfda_drug_event/2026-11-21",
+    }
+    assert manifest["loghub"]["files"] == {
+        "A.csv": {"sha256": _sha(out / "loghub" / "A.csv"), "rows": 2},
+        "B.csv": {"sha256": _sha(out / "loghub" / "B.csv"), "rows": 1},
+    }
+    assert {k: v for k, v in manifest["loghub"].items() if k != "files"} == {
+        "dropped": ["Content", "EventTemplate"],
+        "pseudonymised": [],
+        "source_snapshot": "loghub@dd61d09",
+    }
+
+
+def test_the_food_and_stack_builders_have_exact_outputs_and_manifests(tmp_path, monkeypatch):
+    root = _raw_tree(tmp_path, monkeypatch)
+    out = tmp_path / "out"
+    seen = _accessed(monkeypatch, root)
+    manifest = {}
+    ev._build_food(root, out, manifest)
+    ev._build_stack(root, out, manifest)
+    assert "acquired/openfoodfacts_products/2026-11-21/raw/d.json.gz" in seen
+    assert (
+        out / "openfoodfacts" / "products.jsonl"
+    ).read_text() == '{"_id": "1"}\n{"_id": "2", "a": {"k": 1}}\n'
+    assert manifest["openfoodfacts"]["files"]["products.jsonl"]["rows"] == 2
+    assert {k: v for k, v in manifest["openfoodfacts"].items() if k != "files"} == {
+        "dropped": sorted(ev.OFF_DROP),
+        "pseudonymised": [],
+        "source_snapshot": "openfoodfacts_products/2026-11-21",
+    }
+    for site in ("abc", "zed"):
+        folder = out / "stackexchange" / site
+        assert (folder / "Users.csv").read_text() == (
+            "user_id,reputation,creation_date,views,up_votes,down_votes\n3e9ef5a6b3d5aa75,10,d,1,2,3\n"
+        )
+        assert (folder / "Posts.csv").read_text() == (
+            "post_id,post_type_id,parent_id,accepted_answer_id,creation_date,score,view_count,answer_count,"
+            "comment_count,tags,owner_user_id\n1,1,,,d,3,,,,,3e9ef5a6b3d5aa75\n"
+        )
+        assert (folder / "Votes.csv").read_text() == "vote_id,post_id,vote_type_id,creation_date\n"
+    files = manifest["stackexchange"]["files"]
+    assert list(files) == [
+        f"{s}/{t}.csv"
+        for s in ("abc", "zed")
+        for t in ("Users", "Posts", "Comments", "Votes", "Badges", "PostLinks")
+    ]
+    assert files["abc/Users.csv"] == {
+        "sha256": _sha(out / "stackexchange" / "abc" / "Users.csv"),
+        "rows": 1,
+    }
+    assert files["zed/Comments.csv"]["rows"] == 0
+    assert {k: v for k, v in manifest["stackexchange"].items() if k != "files"} == {
+        "dropped": [
+            "Title",
+            "Body",
+            "Text",
+            "DisplayName",
+            "Location",
+            "AboutMe",
+            "WebsiteUrl",
+            "profile fields",
+        ],
+        "pseudonymised": ["user_id", "owner_user_id"],
+        "salt_label": ev.SALT,
+        "source_snapshot": "stackexchange_dump/2026-11-21",
+        "notes": "CC BY-SA: a redistributed derived database needs attribution and the same licence",  # noqa: E501
+    }
+    assert (
+        "acquired/stackexchange_dump/2026-11-21/raw/abc.stackexchange.com.7z" not in seen
+    )  # extractor is mocked
+
+
+def test_the_procurement_builder_writes_three_sources_with_whole_hash_sampled_processes(
+    tmp_path, monkeypatch
+):
+    import json
+
+    root = _raw_tree(tmp_path, monkeypatch)
+    out = tmp_path / "out"
+    manifest = {}
+    ev._build_ocds(root, out, manifest)
+    assert list(manifest) == ["ocds_montreal", "ocds_georgia", "ocds_zambia"]
+    for source in manifest:
+        folder = out / source
+        releases = [
+            json.loads(line) for line in (folder / "releases.jsonl").read_text().splitlines()
+        ]
+        assert [r["date"] for r in releases] == sorted(r["date"] for r in releases)
+        assert 1 <= len(releases) < 60 and all("name" not in r["buyer"] for r in releases)
+        assert (folder / "awards.csv").read_text().splitlines()[0] == (
+            "ocid,award_id,date,amount,currency,supplier_id,buyer_id,method"
+        )
+        assert (
+            folder / "contracts.csv"
+        ).read_text() == "ocid,contract_id,award_id,date_signed,amount,currency\n"
+        files = manifest[source]["files"]
+        assert list(files) == ["releases.jsonl", "awards.csv", "contracts.csv"]
+        assert files["releases.jsonl"] == {
+            "sha256": _sha(folder / "releases.jsonl"),
+            "rows": len(releases),
+        }
+        assert files["awards.csv"]["rows"] == len(releases) and files["contracts.csv"]["rows"] == 0
+        assert {k: v for k, v in manifest[source].items() if k != "files"} == {
+            "dropped": sorted(ev.OCDS_DROP),
+            "pseudonymised": ["party ids"],
+            "salt_label": ev.SALT,
+            "sampling": "contracting processes with sha256(ocid) % 10 == 0, whole processes, by date",  # noqa: E501
+            "source_snapshot": f"{source}/2026-11-21",
+        }
+
+
+def test_the_bikeshare_builder_skips_resource_forks_and_sorts_by_start_then_ride(
+    tmp_path, monkeypatch
+):
+    root = _raw_tree(tmp_path, monkeypatch)
+    out = tmp_path / "out"
+    seen = _accessed(monkeypatch, root)
+    manifest = {}
+    ev._build_bikeshare(root, out, manifest)
+    expected = (
+        "ride_id,rideable_type,started_at,ended_at,duration_min,start_station_id,end_station_id,member_casual\n"
+        "r1,c,2024-09-01 09:00:00,2024-09-01 09:30:00,30.0,3,,casual\n"
+        "r1,c,2024-09-01 09:00:00,2024-09-01 09:30:00,30.0,3,,casual\n"
+        "r2,e,2024-09-02 10:00:00,2024-09-02 10:10:00,10.0,1,2,member\n"
+        "r3,e,2024-09-02 10:00:00,2024-09-02 10:10:00,10.0,1,2,member\n"
+    )
+    for source in ("bikeshare_capital", "bikeshare_jc"):
+        assert (out / source / "trips.csv").read_text() == expected
+        assert manifest[source]["files"] == {
+            "trips.csv": {"sha256": _sha(out / source / "trips.csv"), "rows": 4}
+        }
+        assert {k: v for k, v in manifest[source].items() if k != "files"} == {
+            "dropped": ["station names", "start and end coordinates"],
+            "pseudonymised": [],
+            "source_snapshot": f"{source}/2026-11-21",
+        }
+        assert f"acquired/{source}/2026-11-21/raw/a.zip" in seen
+        assert f"acquired/{source}/2026-11-21/raw/b.zip" in seen
+    assert list(manifest) == ["bikeshare_capital", "bikeshare_jc"]
+
+
+def test_the_spending_builder_reports_files_it_cannot_read_instead_of_hiding_them(
+    tmp_path, monkeypatch
+):
+    root = _raw_tree(tmp_path, monkeypatch)
+    out = tmp_path / "out"
+    seen = _accessed(monkeypatch, root)
+    manifest = {}
+    ev._build_ukspend(root, out, manifest)
+    rows = "organisation,date,expense_type,expense_area,supplier_id,transaction_no,amount\n"
+    for org in ("mhra", "nhsbsa"):
+        assert (out / "ukspend" / f"{org}.csv").read_text() == (
+            rows + f"{org},2024-02-01,Fees,A,4f37571c7ae9051b,2,1000.5\n"
+            f"{org},2024-02-03,Fees,A,7f062e7195549622,1,30.0\n"
+        )
+    assert sorted(p.name for p in (out / "ukspend").iterdir()) == ["mhra.csv", "nhsbsa.csv"]
+    view = manifest["ukspend"]
+    assert list(view["files"]) == ["mhra.csv", "nhsbsa.csv"]
+    assert view["files"]["mhra.csv"] == {"sha256": _sha(out / "ukspend" / "mhra.csv"), "rows": 2}
+    assert view["skipped"] == {
+        "nice": ["00.csv: a spreadsheet saved with a .csv name"],
+        "ofsted": ["00.csv: no header line with a supplier column in the first 15 lines"],
+    }
+    assert {k: v for k, v in view.items() if k not in ("files", "skipped")} == {
+        "dropped": [
+            "Description",
+            "post code",
+            "supplier type",
+            "VAT number",
+            "contract and project codes",
+        ],
+        "pseudonymised": ["supplier_id"],
+        "salt_label": ev.SALT,
+        "source_snapshot": "ukspend_*/2026-11-21",
+    }
+    for org in ("mhra", "nhsbsa", "nice", "ofsted"):
+        assert f"acquired/ukspend_{org}/2026-11-21/raw/00.csv" in seen
+    assert not any(
+        "charity_commission" in p and p.endswith(".csv") for p in seen
+    )  # no files: nothing read
+
+
+def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
+    tmp_path, monkeypatch, capsys
+):
+    import json
+
+    root = _raw_tree(tmp_path, monkeypatch)
+    monkeypatch.setattr(
+        ev, "SERIES_SPECS", {"uci:5": {"dir": "pool", "time": ["t"], "format": "%Y-%m-%d"}}
+    )
+    _w(tmp_path / "pool" / "5.csv", "t,v\n2020-01-01,1\n")
+    _w(root / "zen_p" / SNAP / "raw" / "p.csv", "d,k,v\n2020-01-01,a,1\n")
+    monkeypatch.setattr(
+        ev,
+        "PANEL_SPECS",
+        {
+            "p": {
+                "source": "zen_p",
+                "file": "p.csv",
+                "sep": ",",
+                "time": ["d"],
+                "format": "%Y-%m-%d",
+                "keys": ["k"],
+            }
+        },
+    )
+    _w(root / "zen_t" / SNAP / "raw" / "a.csv", "k\tv\n1\t2\n")
+    monkeypatch.setattr(
+        ev,
+        "TABLE_SETS",
+        {"zen_t": {"dropped": [], "tables": {"a": {"keep": ["k"]}}, "relations": []}},
+    )
+    import zipfile as _zf
+
+    import pyarrow as _pa
+    import pyarrow.parquet as _pq
+
+    surf = root / "zen_surf_lisa_slurm" / SNAP / "raw"
+    surf.mkdir(parents=True)
+    _pq.write_table(
+        _pa.Table.from_pandas(_surf_frame(), preserve_index=False), tmp_path / "s.parquet"
+    )
+    with _zf.ZipFile(surf / "slurm_table_cleaned.zip", "w") as _z:
+        _z.write(tmp_path / "s.parquet", "d.parquet/part-00001-x.parquet")
+    fz = root / "zen_fdata_fugaku" / SNAP / "raw"
+    fz.mkdir(parents=True)
+    _pq.write_table(
+        _pa.Table.from_pandas(_fdata_frame(), preserve_index=False), fz / "21_04.parquet"
+    )
+    mz = root / "zen_metropt2" / SNAP / "raw"
+    mz.mkdir(parents=True)
+    (mz / "MetroPT2_head.csv").write_bytes(b"timestamp,TP2\n2022-04-28 12:33:29.120,1.0\n")
+    import gzip as _g
+
+    ol = root / "openlibrary_dump" / SNAP / "raw"
+    ol.mkdir(parents=True)
+    (ol / "editions_head.txt.gz").write_bytes(_g.compress((_ol_line(1) + "\n").encode()))
+    import zipfile as _zz
+
+    ag = root / "zen_aegis_vehicle" / SNAP / "raw"
+    ag.mkdir(parents=True)
+    with _zz.ZipFile(ag / "Automotive-ResearchDataSet-VIF-AEGIS.zip", "w") as _a:
+        _a.writestr(
+            "obdData.csv",
+            '"obdData_id","trip_id","obdPid","data","timestamp"\n"1","3","0C","9","2017-01-19 16:19:03.0"\n',  # noqa: E501
+        )
+    import zipfile as _zc
+
+    cl = root / "zen_clue_lds" / SNAP / "raw"
+    cl.mkdir(parents=True)
+    with _zc.ZipFile(cl / "clue_head.zip", "w", _zc.ZIP_DEFLATED) as _c:
+        _c.writestr("clue.json", _clue(1) + "\n")
+    monkeypatch.setattr(ev, "XES_SPECS", {})
+    monkeypatch.setattr(ev, "CSV_EVENT_SPECS", {})
+    _fs = tmp_path / "flat_sel.json"
+    _fs.write_text('{"views": []}')
+    monkeypatch.setattr(ev, "FLAT_SELECTION", _fs)
+    _w(root / "met_museum_objects" / SNAP / "raw" / "obj_1.json", '{"objectID": 1}')
+    import gzip as _gz
+
+    dv = root / "dgfip_dvf" / SNAP / "raw"
+    dv.mkdir(parents=True)
+    (dv / "dvf_69_2024.csv.gz").write_bytes(_gz.compress(_dvf_frame().to_csv(index=False).encode()))
+    _w(root / "hmlr_price_paid" / SNAP / "raw" / "pp-2024_head.csv", PPD_HEAD)
+    (tmp_path / "uci_wave2").mkdir(exist_ok=True)
+    _retail_frame().to_csv(tmp_path / "uci_wave2" / "352.csv", index=False)
+    import pyarrow as _pa
+    import pyarrow.parquet as _pq
+
+    pb = root / "zen_pbdb" / SNAP / "raw"
+    pb.mkdir(parents=True)
+    _pq.write_table(
+        _pa.Table.from_pandas(_pbdb_frame(), preserve_index=False), tmp_path / "pb.parquet"
+    )
+    with _zc.ZipFile(pb / "pbdb_parquet.zip", "w") as _p:
+        _p.write(tmp_path / "pb.parquet", "pbdb_occs.parquet")
+    km = root / "zen_kelmarsh" / SNAP / "raw"
+    km.mkdir(parents=True)
+    _kelmarsh_zip(km / "Kelmarsh_SCADA_2016_3082.zip")
+    _w(
+        root / "wikidata_entities" / SNAP / "raw" / "entities_00.json",
+        json.dumps({"entities": {"Q1": {"id": "Q1", "claims": {}}}}),
+    )
+    import pyarrow.feather as _fe2
+
+    bs = root / "zen_bess" / SNAP / "raw"
+    bs.mkdir(parents=True)
+    _fe2.write_feather(_pa.Table.from_pandas(_bess_frame(), preserve_index=False), bs / "S.feather")
+    _care_snapshot(root, ids=(1,))
+    _maude_snapshot(root)
+    _tlc_page([{}]).to_csv(_tlc_dir(root), index=False)
+    _aqs_snapshot(root)
+    _usgs_snapshot(root)
+    _wiki_snapshot(root)
+    _uniprot_snapshot(root)
+    _osv_snapshot(root)
+    _gfz_snapshot(root)
+    _dwd_snapshot(root)
+    _rte_snapshot(root)
+    _ademe_snapshot(root)
+    _alim_snapshot(root)
+    _ev_snapshot(root)
+    _azure_snapshot(root)
+    _aoe_snapshot(root)
+    _charity_snapshot(root)
+    _japan_snapshot(root)
+    _coops_snapshot(root)
+    _gml_co2_snapshot(root)
+    _cnc_snapshot(root)
+    _wb_snapshot(root)
+    _qld_snapshot(root)
+    _inpi_snapshot(root)
+    _ror_snapshot(root)
+    _rcsb_snapshot(root)
+    _nws_snapshot(root)
+    _noumea_snapshot(root)
+    _kanto_snapshot(root)
+    _nhif_snapshot(root)
+    _ingv_snapshot(root)
+    _gha_snapshot(root)
+    _wals_snapshot(root)
+    _cordis_snapshot(root)
+    _telecom_snapshot(root)
+    _dk_heating_snapshot(root)
+    _water_demand_snapshot(root)
+    _dmsp_snapshot(root)
+    _dts_snapshot(root)
+    _fdic_snapshot(root)
+    _sncf_snapshot(root)
+    _dgccrf_snapshot(root)
+    _fr_snapshot(root)
+    _datacite_snapshot(root)
+    _gbif_snapshot(root)
+    _chembl_snapshot(root)
+    _florida_bridges_snapshot(root)
+    _wri_power_plants_snapshot(root)
+    _paris_trees_snapshot(root)
+    _moodle_snapshot(root)
+    _norp_snapshot(root)
+    _blazar_snapshot(root)
+    _wind_fragility_snapshot(root)
+    _terralore_snapshot(root)
+    _ncei_storm_snapshot(root)
+    _ourairports_snapshot(root)
+    _cftc_snapshot(root)
+    _ndbc_snapshot(root)
+    _daylight_snapshot(root)
+    _cpsc_snapshot(root)
+    _nih_snapshot(root)
+    _ecb_snapshot(root)
+    _fremont_snapshot(root)
+    _sea_ice_snapshot(root)
+    _omni_snapshot(root)
+    _socrata_snapshots(root)
+    _seattle_fire_911_snapshot(root)
+    _baac_snapshot(root)
+    _attack_snapshot(root)
+    _eia_snapshot(root)
+    _cpc_ao_snapshot(root)
+    _hurdat_snapshot(root)
+    _ipeds_snapshot(root)
+    _apis_guru_snapshot(root)
+    _zenodo_snapshot(root)
+    _lifecycle_snapshot(root)
+    _fec_snapshot(root)
+    _reactome_snapshot(root)
+    _go_snapshot(root)
+    _nested_snapshots(root)
+    _bb_zip(root)
+    _pbdb_rel_snapshot_extra(root, tmp_path)
+    _care_a_snapshot(root)
+    _w(root / "nvd_cve" / ev.NVD_SNAPSHOT / "raw" / "cves_a.json", json.dumps(_nvd_page(["CVE-1"])))
+    _unisg_snapshot(root)
+    monkeypatch.setattr(ev, "EA_STATIONS", ["s"])
+    _w(
+        root / "ea_hydrology_flow" / SNAP / "raw" / "flow_s.csv",
+        "date,value,completeness\n2020-01-01,1,Complete\n",
+    )
+    out = tmp_path / "out"
+    manifest = ev.build(root, out)
+    assert list(manifest) == [
+        "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
+        "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "zen_florida_bridges", "wri_power_plants", "paris_urban_trees", "zen_moodle_events", "zen_norp_solar_bursts", "zen_blazar_flares", "zen_wind_fragility", "zen_terralore_chronicle", "ncei_storm_events_2024", "ourairports_db", "cftc_cot_disaggregated", "ndbc_buoys_2023", "zen_daylight_events", "cpsc_recalls", "nih_reporter_projects_fy2024", "ecb_fx_reference_rates", "seattle_fremont_bridge", "nsidc_sea_ice_index", "nasa_omni_solar_wind", "sffd_fire_incidents", "colorado_storage_tanks", "colorado_dam_safety", "wa_ev_population", "tx_hhsc_child_care", "austin_water_quality", "wa_ghg_reporting", "sfo_air_traffic", "tx_hotel_occupancy_tax", "seattle_building_permits", "delaware_well_permits", "austin_campaign_finance", "delaware_state_credit_cards", "montgomery_dlc_sales", "fta_ntd_monthly_ridership", "bloomington_water_plant_energy", "bloomington_solar_sites", "bts_daily_mobility_national", "cdc_covid_vaccination_trends_us", "seattle_fire_911_calls", "france_baac_road_accidents", "mitre_attack_enterprise_stix", "eia_petroleum_spot_prices", "noaa_cpc_daily_ao_index", "nhc_hurdat2_atlantic", "nces_ipeds_2023", "apis_guru_openapi_directory", "zenodo_dataset_records_2023_03", "cincinnati_fire_cad", "cincinnati_ecc_calls", "austin_apd_cad", "fec_federal_campaign_finance_2024", "reactome_pathway_knowledgebase", "gene_ontology_annotations", "nasa_cmr_collections", "doaj_journals", "github_reviewed_advisories", "pubchem_compounds", "series", "ukspend",  # noqa: E501
+    ]  # fmt: skip
+    target = tmp_path / "m.json"
+    assert (
+        ev.main(["--root", str(root), "--out", str(tmp_path / "out2"), "--manifest", str(target)])
+        == 0
+    )
+    text = target.read_text()
+    assert json.loads(text) == json.loads(json.dumps(manifest))
+    assert text == json.dumps(manifest, indent=1, sort_keys=True) + "\n"
+    printed = capsys.readouterr().out.strip()
+    assert printed == str(
+        {k: sum(f["rows"] for f in v["files"].values()) for k, v in manifest.items()}
+    )
+    assert ev.SNAPSHOT == "2026-11-21" and ev.SALT == "etl-benchmark-views-v1"
+
+
+# --- remaining exact behaviours -------------------------------------------------------------------
+
+
+def _rich_release(ocid="oc-1", with_award_date=True):
+    award = {
+        "id": "a1",
+        "value": {"amount": 12.5, "currency": "GEL"},
+        "suppliers": [{"id": "s1", "name": "Sup One"}, {"id": "s2"}],
+        "items": [{"id": "i", "description": "text"}],
+    }
+    if with_award_date:
+        award["date"] = "2021-02-03"
+    return {
+        "id": "r1",
+        "ocid": ocid,
+        "date": "2021-02-01",
+        "buyer": {"id": "b1", "name": "Buyer"},
+        "tender": {
+            "title": "t",
+            "procurementMethod": "open",
+            "procuringEntity": {"id": "p1", "name": "Entity"},
+            "documents": [{"url": "x"}],
+        },
+        "parties": [
+            {"id": "b1", "name": "Buyer", "address": {"x": 1}, "roles": ["buyer"]},
+            {"id": "s1", "identifier": {"id": "slug"}, "roles": ["supplier"]},
+        ],
+        "awards": [award],
+        "contracts": [
+            {
+                "id": "c1",
+                "awardID": "a1",
+                "dateSigned": "2021-03-01",
+                "value": {"amount": 9.0, "currency": "GEL"},
+            }
+        ],
+    }
+
+
+def test_ocds_view_maps_every_field_of_awards_contracts_parties_and_tenders_exactly():
+    nested, awards, contracts = ev.ocds_view([_rich_release()], salt="k", keep_modulo=1)
+    pid = lambda v: ev.pseudonym(v, "k")  # noqa: E731
+    assert nested == [
+        {
+            "id": "r1",
+            "ocid": "oc-1",
+            "date": "2021-02-01",
+            "buyer": {"id": pid("b1")},
+            "tender": {"procurementMethod": "open", "procuringEntity": {"id": pid("p1")}},
+            "parties": [
+                {"id": pid("b1"), "roles": ["buyer"]},
+                {"id": pid("s1"), "roles": ["supplier"]},
+            ],
+            "awards": [
+                {
+                    "id": "a1",
+                    "value": {"amount": 12.5, "currency": "GEL"},
+                    "suppliers": [{"id": pid("s1")}, {"id": pid("s2")}],
+                    "items": [{"id": "i"}],
+                    "date": "2021-02-03",
+                }
+            ],
+            "contracts": [
+                {
+                    "id": "c1",
+                    "awardID": "a1",
+                    "dateSigned": "2021-03-01",
+                    "value": {"amount": 9.0, "currency": "GEL"},
+                }
+            ],
+        }
+    ]
+    assert awards.to_dict("records") == [
+        {
+            "ocid": "oc-1", "award_id": "a1", "date": "2021-02-03", "amount": 12.5, "currency": "GEL",  # noqa: E501
+            "supplier_id": pid("s1"), "buyer_id": pid("b1"), "method": "open",
+        }
+    ]  # fmt: skip
+    assert contracts.to_dict("records") == [
+        {
+            "ocid": "oc-1",
+            "contract_id": "c1",
+            "award_id": "a1",
+            "date_signed": "2021-03-01",
+            "amount": 9.0,
+            "currency": "GEL",
+        }
+    ]
+    assert ev.CONTRACT_COLUMNS == (
+        "ocid",
+        "contract_id",
+        "award_id",
+        "date_signed",
+        "amount",
+        "currency",
+    )
+    assert ev.AWARD_COLUMNS == (
+        "ocid",
+        "award_id",
+        "date",
+        "amount",
+        "currency",
+        "supplier_id",
+        "buyer_id",
+        "method",
+    )
+    assert (
+        frozenset(
+            [
+                "name",
+                "address",
+                "contactPoint",
+                "description",
+                "legalName",
+                "identifier",
+                "title",
+                "documents",
+            ]
+        )
+        == ev.OCDS_DROP
+    )
+
+
+def test_ocds_view_falls_back_on_the_release_date_and_tolerates_missing_parts():
+    release = _rich_release(with_award_date=False)
+    release["awards"][0]["suppliers"] = []
+    del release["buyer"], release["tender"], release["parties"]
+    nested, awards, _ = ev.ocds_view([release], salt="k", keep_modulo=1)
+    assert awards.loc[0, "date"] == "2021-02-01"  # the award has no date: the release date
+    assert awards.loc[0, "supplier_id"] is None or pd.isna(awards.loc[0, "supplier_id"])
+    assert pd.isna(awards.loc[0, "buyer_id"]) and pd.isna(awards.loc[0, "method"])
+    assert nested[0]["parties"] == [] and "buyer" not in nested[0]
+    bare = {"id": "r", "ocid": "oc-9", "date": "d"}
+    nested, awards, contracts = ev.ocds_view([bare], salt="k", keep_modulo=1)
+    assert nested == [{"id": "r", "ocid": "oc-9", "date": "d", "parties": []}]
+    assert len(awards) == 0 and len(contracts) == 0
+    no_tender = {"id": "r", "ocid": "oc-8", "date": "d", "tender": {"procurementMethod": "m"}}
+    assert ev.ocds_view([no_tender], salt="k", keep_modulo=1)[0][0]["tender"] == {
+        "procurementMethod": "m"
+    }
+
+
+def test_the_ocds_sample_is_a_stable_hash_of_the_first_eight_hex_digits_modulo_the_divisor():
+    import hashlib
+
+    releases = [{"id": f"r{i}", "ocid": f"oc-{i}", "date": "d"} for i in range(300)]
+    for modulo in (10, 7, 1):
+        expected = sorted(
+            r["ocid"]
+            for r in releases
+            if int(hashlib.sha256(r["ocid"].encode()).hexdigest()[:8], 16) % modulo == 0
+        )
+        got, _, _ = ev.ocds_view(releases, keep_modulo=modulo)
+        assert sorted(r["ocid"] for r in got) == expected
+    default, _, _ = ev.ocds_view(releases)
+    assert len(default) == len(ev.ocds_view(releases, keep_modulo=10)[0]) and 5 < len(default) < 60
+    assert (
+        ev.ocds_view(releases, salt="a", keep_modulo=1)[0][0]
+        == ev.ocds_view(releases, keep_modulo=1, salt="a")[0][0]
+    )
+
+
+def test_spend_views_handle_mixed_date_formats_bad_dates_optional_columns_and_missing_suppliers():
+    raw = pd.DataFrame(
+        {
+            "Transaction No.": ["1", "2", "3", "4", "5"],
+            "Date": ["01/02/2024", "2024-02-03", "not a date", "05/02/2024", "06/02/2024"],
+            "Supplier": ["A", "B", "C", None, "A"],
+            "Amount (GBP)": ["10", "20", "30", "40", "oops"],
+        }
+    )
+    out = ev.spend_view(raw, "org", salt="x")
+    assert out["transaction_no"].tolist() == [
+        "1",
+        "2",
+        "4",
+    ]  # bad date and bad amount rows are dropped
+    assert out["date"].dt.strftime("%Y-%m-%d").tolist() == [
+        "2024-02-01",
+        "2024-02-03",
+        "2024-02-05",
+    ]
+    assert out["expense_type"].isna().all() and out["expense_area"].isna().all()
+    assert out["supplier_id"].tolist()[:2] == [ev.pseudonym("a", "x"), ev.pseudonym("b", "x")]
+    assert out["supplier_id"].isna().tolist() == [False, False, True]
+    assert ev.spend_view(raw, "org")["supplier_id"].iloc[0] == ev.pseudonym("a")  # the default salt
+    only_amount_bad = raw.assign(Date="01/02/2024", **{"Amount (GBP)": ["10", "x", "x", "x", "x"]})
+    assert len(ev.spend_view(only_amount_bad, "o")) == 1
+    only_date_bad = raw.assign(Date=["01/02/2024", "x", "x", "x", "x"], **{"Amount (GBP)": "5"})
+    assert len(ev.spend_view(only_date_bad, "o")) == 1
+    wide = pd.DataFrame({f"c{i}": [1] for i in range(10)})
+    with pytest.raises(ev.ViewError) as info:
+        ev.spend_view(wide, "o")
+    assert str(info.value) == "required columns not found in ['c0', 'c1', 'c2', 'c3', 'c4', 'c5']"
+    full = pd.DataFrame({"Expense type": ["T"], "Expense area": ["Z"], "Date": ["01/02/2024"], "Supplier": ["S"],  # noqa: E501
+                         "Transaction No": ["9"], "Amount": ["1"]})  # fmt: skip
+    kept = ev.spend_view(full, "o")
+    assert kept.loc[0, "expense_type"] == "T" and kept.loc[0, "expense_area"] == "Z"
+    assert list(ev.SPEND_COLUMNS) == [
+        "organisation", "date", "expense_type", "expense_area", "supplier_id", "transaction_no", "amount",  # noqa: E501
+    ]  # fmt: skip
+
+
+def test_read_spend_decodes_both_encodings_keeps_text_and_skips_broken_rows():
+    header = "Supplier,Amount,Date,Transaction No\n"
+    latin = (header + "Café,007,01/01/2024,9\nBroken,1,2,3,4,5\nOk,2,01/01/2024,10\n").encode(
+        "latin-1"
+    )
+    frame = ev.read_spend(latin)
+    assert frame["Supplier"].tolist() == [
+        "Café",
+        "Ok",
+    ]  # decoded as latin-1, extra-field row skipped
+    assert frame["Amount"].tolist() == ["007", "2"]  # text, not numbers
+    bom = ("﻿" + header + "A,1,d,1\n").encode("utf-8")
+    assert list(ev.read_spend(bom).columns)[0] == "Supplier"  # a UTF-8 BOM is not part of the name
+    lines = ["banner"] * 14 + [header.strip(), "A,1,d,1"]
+    assert ev.read_spend("\n".join(lines).encode())["Supplier"].tolist() == [
+        "A"
+    ]  # header on line 15
+    lines = ["banner"] * 15 + [header.strip(), "A,1,d,1"]
+    with pytest.raises(ev.ViewError, match="first 15 lines"):
+        ev.read_spend("\n".join(lines).encode())  # the header on line 16 is out of range
+
+
+def test_small_view_helpers_have_exact_edge_behaviour():
+    assert ev.csv_members(["__macosx/a.csv", "x/__MACOSX/b.csv", "__MACOSX/c.csv", "d/._e.csv", "d/f._g.csv", "h.CSV"]) == [  # noqa: E501
+        "__macosx/a.csv", "d/f._g.csv", "x/__MACOSX/b.csv",
+    ]  # fmt: skip
+    assert (
+        ev._short("https://a/b/c") == "c"
+        and ev._short("plain") == "plain"
+        and ev._short(None) is None
+    )
+    wide = ev.tsf_wide(
+        {
+            "frequency": "daily",
+            "series": [{"name": "a", "start": "2020-01-01 00-00-00", "values": [None, None]}],
+        }
+    )
+    assert str(wide["a"].dtype) == "float64"
+    assert [
+        r["safetyreportid"]
+        for r in ev.faers_view(
+            [{"safetyreportid": "1", "receivedate": "20240101"}, {"safetyreportid": "2"}]
+        )
+    ] == ["2", "1"]
+    shape = ev.openalex_views([{"id": "https://o/W1"}], [], [], [], salt="s")
+    assert shape["works"].loc[0, "n_authors"] == 0 and shape["authorships"].empty
+    raw = pd.DataFrame({c: ["x"] for c in "abcdefgh"})
+    with pytest.raises(ev.ViewError) as info:
+        ev.trip_view(raw)
+    assert str(info.value) == "trip columns not found in ['a', 'b', 'c', 'd', 'e', 'f']"
+    bad_start = pd.DataFrame({"ride_id": ["r"], "started_at": ["nope"], "ended_at": ["2024-01-01"],
+                              "start_station_id": ["1"], "end_station_id": ["2"]})  # fmt: skip
+    assert pd.isna(ev.trip_view(bad_start)["duration_min"].iloc[0])
+
+
+def test_every_builder_creates_missing_parents_runs_twice_and_writes_to_the_exact_paths(
+    tmp_path, monkeypatch
+):
+    root = _raw_tree(tmp_path, monkeypatch)
+    out = tmp_path / "o" / "deep"
+    written = []
+    import builtins
+    import io
+
+    real_open = builtins.open
+
+    def spy(file, mode="r", *a, **k):
+        if "w" in mode and str(file).startswith(str(out)):
+            written.append(str(file)[len(str(out)) + 1 :])
+        return real_open(file, mode, *a, **k)
+
+    monkeypatch.setattr(builtins, "open", spy)
+    monkeypatch.setattr(io, "open", spy)
+    for step in (
+        ev._build_openalex, ev._build_monash, ev._build_faers, ev._build_loghub, ev._build_food,
+        ev._build_stack, ev._build_ocds, ev._build_bikeshare, ev._build_ukspend,
+    ):  # fmt: skip
+        fresh = {}
+        step(root, out, fresh)
+        step(root, out, fresh)  # a second run over existing directories
+    names = sorted(set(written))
+    expected = (
+        [
+            f"openalex/{n}.csv"
+            for n in ("authors", "authorships", "institutions", "sources", "works")
+        ]
+        + ["monash_pedestrian/wide.csv", "openfda_drug_event/events.jsonl"]
+        + ["loghub/A.csv", "loghub/B.csv", "openfoodfacts/products.jsonl"]
+        + [
+            f"stackexchange/{s}/{t}.csv"
+            for s in ("abc", "zed")
+            for t in ("Badges", "Comments", "PostLinks", "Posts", "Users", "Votes")
+        ]
+        + [
+            f"{s}/{f}"
+            for s in ("ocds_georgia", "ocds_montreal", "ocds_zambia")
+            for f in ("awards.csv", "contracts.csv", "releases.jsonl")
+        ]
+        + [
+            "bikeshare_capital/trips.csv",
+            "bikeshare_jc/trips.csv",
+            "ukspend/mhra.csv",
+            "ukspend/nhsbsa.csv",
+        ]
+    )
+    assert names == sorted(expected)
+
+
+def test_json_lines_views_sort_keys_and_the_tsf_decoder_replaces_bad_bytes(tmp_path, monkeypatch):
+    import gzip
+    import json
+    import zipfile
+
+    root = tmp_path / "acquired"
+    gz = root / "openfoodfacts_products" / SNAP / "raw" / "d.json.gz"
+    gz.parent.mkdir(parents=True)
+    with gzip.open(gz, "wt") as handle:
+        handle.write(json.dumps({"b": 1, "_id": "1", "a": {"z": 1, "y": 2}}) + "\n")
+    events = root / "openfda_drug_event" / SNAP / "raw"
+    _w(
+        events / "event_0.json",
+        json.dumps({"results": [{"safetyreportid": "1", "receivedate": "20240101", "a": 1}]}),
+    )
+    ev._build_food(root, tmp_path / "o", {})
+    ev._build_faers(root, tmp_path / "o", {})
+    assert (
+        tmp_path / "o" / "openfoodfacts" / "products.jsonl"
+    ).read_text() == '{"_id": "1", "a": {"y": 2, "z": 1}, "b": 1}\n'
+    assert (
+        tmp_path / "o" / "openfda_drug_event" / "events.jsonl"
+    ).read_text() == '{"a": 1, "receivedate": "20240101", "safetyreportid": "1"}\n'
+    archive = root / "monash_zenodo" / SNAP / "raw" / "4656626_pedestrian_counts_dataset.zip"
+    archive.parent.mkdir(parents=True)
+    tsf = b"# caf\xff\n@attribute series_name string\n@attribute start_timestamp date\n@frequency hourly\n@data\na:2020-01-01 00-00-00:1\n"  # noqa: E501
+    with zipfile.ZipFile(archive, "w") as z:
+        z.writestr("x.tsf", tsf)
+    ev._build_monash(root, tmp_path / "o2", {})
+    assert (
+        tmp_path / "o2" / "monash_pedestrian" / "wide.csv"
+    ).read_text() == "timestamp,a\n2020-01-01,1.0\n"
+
+
+def test_dates_are_parsed_iso_as_written_and_everything_else_day_first():
+    values = pd.Series(
+        [
+            "2024-02-03",
+            "03/02/2024",
+            "2024-02-03T10:30:00",
+            None,
+            "garbage",
+            "2024-13-45",
+            "12/25/2024",
+        ],
+        index=[10, 11, 12, 13, 14, 15, 16],
+    )
+    out = ev._parse_dates(values)
+    assert out.index.tolist() == [10, 11, 12, 13, 14, 15, 16]
+    assert str(out.dtype) == "datetime64[ns]"
+    assert out.iloc[0] == pd.Timestamp("2024-02-03") and out.iloc[1] == pd.Timestamp("2024-02-03")
+    assert out.iloc[2] == pd.Timestamp("2024-02-03 10:30:00")
+    assert out.iloc[3:6].isna().all()  # missing, unreadable, an impossible ISO date
+    assert out.iloc[6] == pd.Timestamp(
+        "2024-12-25"
+    )  # day-first falls back when the day is not valid
+    assert ev._parse_dates(pd.Series(["01/02/2024"])).iloc[0] == pd.Timestamp("2024-02-01")
+    assert ev._parse_dates(pd.Series([], dtype=object)).empty
+    only_iso = ev._parse_dates(pd.Series(["2024-02-03", "2024-03-04"]))
+    assert only_iso.tolist() == [pd.Timestamp("2024-02-03"), pd.Timestamp("2024-03-04")]
+    unreadable_iso = ev._parse_dates(pd.Series(["2024-99-99"]))
+    assert unreadable_iso.isna().all()
+
+
+def test_log_views_keep_text_values_and_missing_markers_as_they_are(tmp_path):
+    root = tmp_path / "acquired"
+    _w(
+        tmp_path / "loghub" / "X.csv",
+        "LineId,Time,Level,Content,EventId,EventTemplate\n007,NA,NA,c,E1,t\n",
+    )
+    for n in range(3):
+        out = tmp_path / f"o{n}" / "deep"  # a fresh, not yet existing output directory each time
+        ev._build_loghub(root, out, {})
+    text = (tmp_path / "o2" / "deep" / "loghub" / "X.csv").read_text()
+    assert text == "LineId,Time,Level,EventId\n007,NA,NA,E1\n"  # not 7, not an empty cell
+
+
+def test_the_research_directory_is_on_the_import_path_once_and_the_monash_builder_runs(tmp_path):
+    import sys
+    import zipfile
+    from pathlib import Path
+
+    here = str(Path(ev.__file__).resolve().parent)
+    assert here in sys.path and str(ev._HERE) == here  # sibling modules import by name
+    root = tmp_path / "acquired"
+    archive = root / "monash_zenodo" / SNAP / "raw" / "4656626_pedestrian_counts_dataset.zip"
+    archive.parent.mkdir(parents=True)
+    with zipfile.ZipFile(archive, "w") as z:
+        z.writestr("x.tsf", "@attribute n s\n@frequency daily\n@data\n")
+    before = list(sys.path)
+    manifest: dict = {}
+    ev._build_monash(root, tmp_path / "o", manifest)
+    assert (
+        sys.path == before and "monash_pedestrian" in manifest
+    )  # a builder no longer edits the path
+
+
+def test_the_stack_builder_runs_the_extractor_with_the_documented_command(tmp_path, monkeypatch):
+    import subprocess
+
+    root = tmp_path / "acquired"
+    dump = root / "stackexchange_dump" / SNAP / "raw"
+    dump.mkdir(parents=True)
+    (dump / "abc.stackexchange.com.7z").write_bytes(b"x")
+    calls = []
+    monkeypatch.setattr(subprocess, "run", lambda command, check: calls.append((command, check)))
+    ev._build_stack(root, tmp_path / "o" / "deep", {})
+    ((command, check),) = calls
+    assert command[:3] == ["bsdtar", "-xf", str(dump / "abc.stackexchange.com.7z")]
+    assert command[3] == "-C" and check is True and len(command) == 5
+    assert (tmp_path / "o" / "deep" / "stackexchange" / "abc").is_dir()
+
+
+def test_main_has_repository_defaults_a_description_and_path_options(tmp_path, monkeypatch, capsys):
+    import json
+    from pathlib import Path
+
+    seen = {}
+
+    def fake_build(root, out):
+        seen.update(root=root, out=out)
+        return {"v": {"files": {"a": {"rows": 2}}}}
+
+    monkeypatch.setattr(ev, "build", fake_build)
+    fake = tmp_path / "repo" / "research" / "experimental_views.py"
+    fake.parent.mkdir(parents=True)
+    default_manifest = tmp_path / "repo" / "verification" / "evidence" / "dataset_registry_v2"
+    default_manifest.mkdir(parents=True)
+    monkeypatch.setattr(ev, "__file__", str(fake))
+    assert ev.main([]) == 0
+    assert seen["root"] == tmp_path / "repo" / "data" / "acquired"
+    assert seen["out"] == tmp_path / "repo" / "data" / "experimental"
+    written = default_manifest / "experimental_views.json"
+    assert json.loads(written.read_text()) == {"v": {"files": {"a": {"rows": 2}}}}
+    assert capsys.readouterr().out.strip() == "{'v': 2}"
+    assert (
+        ev.main(
+            [
+                "--root",
+                str(tmp_path / "r"),
+                "--out",
+                str(tmp_path / "o"),
+                "--manifest",
+                str(tmp_path / "m.json"),
+            ]
+        )
+        == 0
+    )
+    assert isinstance(seen["root"], Path) and isinstance(seen["out"], Path)
+    assert seen["root"] == tmp_path / "r" and (tmp_path / "m.json").exists()
+    with pytest.raises(SystemExit):
+        ev.main(["--help"])
+    assert "Experimental views of acquired data" in capsys.readouterr().out
+
+
+# --- HPC job records (CC-IN2P3) -----------------------------------------------------------------
+
+
+def _jobs(n=6):
+    return pd.DataFrame(
+        {
+            "jobid": [str(100 + i) for i in range(n)],
+            "state": ["completed", "failed", "timeout", "cancelled", "completed", "node_fail"][:n],
+            "account": [f"account{i % 2:03d}" for i in range(n)],
+            "user": [f"user{i:04d}" for i in range(n)],
+            "partition": ["htc", "gpu"] * (n // 2),
+            "submit": [str(1000 + 10 * (n - i)) for i in range(n)],  # newest id first
+            "eligible": ["1"] * n,
+            "start": [str(1100 + 10 * (n - i)) if i != 1 else "" for i in range(n)],
+            "end": [str(1200 + 10 * (n - i)) for i in range(n)],
+            "timelimit": ["60"] * n,
+            "elapsed": ["100"] * n,
+            "allocmem": ["2000"] * n,
+            "maxrss": ["5"] * n,
+            "alloccpus": ["1"] * n,
+            "totalcpu": ["9"] * n,
+            "allocgpus": ["0"] * n,
+            "started": ["1"] * n,
+            "maxdiskwrite": ["2"] * n,
+            "nsteps": ["1"] * n,
+            "el9": ["0"] * n,
+            "hostnames": ["b009"] * n,
+        }
+    )
+
+
+def test_job_views_keep_the_scheduler_columns_drop_hosts_and_derive_the_waiting_time():
+    out = ev.slurm_view(_jobs(), keep_modulo=1)
+    assert list(out.columns) == list(ev.SLURM_COLUMNS)
+    assert ev.SLURM_COLUMNS == (
+        "jobid", "state", "account", "user", "partition", "submit", "start", "end", "timelimit",
+        "elapsed", "allocmem", "alloccpus", "allocgpus", "wait_s",
+    )  # fmt: skip
+    assert out["jobid"].tolist() == ["105", "104", "103", "102", "101", "100"]  # by submit time
+    assert out["submit"].tolist() == [1010, 1020, 1030, 1040, 1050, 1060]
+    assert out["wait_s"].isna().tolist() == [False, False, False, False, True, False]
+    assert out.loc[out["jobid"] == "100", "wait_s"].iloc[0] == 100.0
+    assert "hostnames" not in out and "maxrss" not in out and "eligible" not in out
+    assert (
+        out["state"].tolist()[0] == "node_fail"
+    )  # failures stay visible as the scheduler wrote them
+    assert out["user"].tolist()[0] == "user0005"  # the producer's own pseudonym, not re-hashed
+
+
+def test_job_sampling_keeps_every_nth_job_id_and_tolerates_missing_times():
+    frame = _jobs()
+    assert ev.slurm_view(frame, keep_modulo=2)["jobid"].tolist() == ["104", "102", "100"]
+    assert ev.slurm_view(frame)["jobid"].tolist() == ["100"] and ev.SLURM_MODULO == 20
+    assert ev.slurm_view(frame.iloc[0:0], keep_modulo=1).empty
+    with pytest.raises(ev.ViewError, match="job columns"):
+        ev.slurm_view(pd.DataFrame({"x": [1]}))
+
+
+def test_the_job_builder_reads_each_month_from_its_archive_and_writes_one_sorted_table(
+    tmp_path, monkeypatch
+):
+    import io
+    import tarfile
+
+    root = tmp_path / "acquired"
+    raw = root / "slurm_ccin2p3" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    for name, frame in (
+        ("12.tsv.tar.gz", _jobs().assign(jobid=lambda f: f["jobid"].astype(int) + 100)),
+        ("07.tsv.tar.gz", _jobs()),
+    ):
+        data = frame.to_csv(sep="\t", index=False).encode()
+        with tarfile.open(raw / name, "w:gz") as tar:
+            info = tarfile.TarInfo(name.replace(".tar.gz", ""))
+            info.size = len(data)
+            tar.addfile(info, io.BytesIO(data))
+    monkeypatch.setattr(ev, "SLURM_MODULO", 1)
+    seen = _accessed(monkeypatch, root)
+    manifest = {}
+    ev._build_slurm(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "slurm_ccin2p3" / "jobs.csv"
+    table = pd.read_csv(target, dtype=str)
+    assert len(table) == 12 and list(table.columns) == list(ev.SLURM_COLUMNS)
+    assert table["submit"].astype(int).is_monotonic_increasing
+    assert manifest["slurm_ccin2p3"]["files"] == {"jobs.csv": {"sha256": _sha(target), "rows": 12}}
+    assert {k: v for k, v in manifest["slurm_ccin2p3"].items() if k != "files"} == {
+        "dropped": [
+            "hostnames",
+            "eligible",
+            "maxrss",
+            "totalcpu",
+            "started",
+            "maxdiskwrite",
+            "nsteps",
+            "el9",
+        ],
+        "pseudonymised": [],
+        "sampling": "jobs with job id % 1 == 0, by submit time",
+        "source_snapshot": "slurm_ccin2p3/2026-11-21",
+        "notes": "user and account names are the producer's pseudonyms",
+    }
+    for month in ("07", "12"):
+        assert f"acquired/slurm_ccin2p3/2026-11-21/raw/{month}.tsv.tar.gz" in seen
+    assert [s.__name__ for s in ev.BUILD_STEPS].count("_build_slurm") == 1
+
+
+# --- generic nested views: clinical-trial records and bibliographic metadata ---------------------
+
+
+def test_nested_views_drop_the_named_keys_at_every_depth_sort_and_do_not_modify_the_input():
+    records = [
+        {"id": "b", "x": {"name": "n", "keep": [{"name": "m", "k": 1}]}, "name": "top"},
+        {"id": "a", "x": {"keep": []}},
+    ]
+    out = ev.nested_view(records, drop=frozenset(["name"]), key=lambda r: r["id"])
+    assert out == [{"id": "a", "x": {"keep": []}}, {"id": "b", "x": {"keep": [{"k": 1}]}}]
+    assert records[0]["name"] == "top" and records[0]["x"]["keep"][0]["name"] == "m"
+    assert ev.nested_view([], drop=frozenset(), key=lambda r: 0) == []
+
+
+def test_clinical_trial_views_remove_people_and_contact_details_but_keep_the_trial_structure():
+    study = {
+        "protocolSection": {
+            "identificationModule": {"nctId": "NCT2", "organization": {"fullName": "Org A"}},
+            "contactsLocationsModule": {
+                "centralContacts": [{"name": "Ann", "email": "a@b"}],
+                "overallOfficials": [{"name": "Bob", "affiliation": "U"}],
+                "locations": [{"city": "Paris", "contacts": [{"name": "Cy", "phone": "1"}]}],
+            },
+            "sponsorCollaboratorsModule": {
+                "leadSponsor": {"name": "Sponsor Inc", "class": "INDUSTRY"},
+                "responsibleParty": {
+                    "type": "PI",
+                    "investigatorFullName": "Dee",
+                    "investigatorTitle": "Dr",
+                },
+            },
+        },
+        "resultsSection": {"moreInfoModule": {"pointOfContact": {"email": "x@y"}}},
+    }
+    other = {"protocolSection": {"identificationModule": {"nctId": "NCT1"}}}
+    out = ev.clinical_trials_view([study, other])
+    assert [s["protocolSection"]["identificationModule"]["nctId"] for s in out] == ["NCT1", "NCT2"]
+    text = json.dumps(out)
+    for word in (
+        "Ann",
+        "a@b",
+        "Bob",
+        "Cy",
+        "Dee",
+        "x@y",
+        "centralContacts",
+        "overallOfficials",
+        "pointOfContact",
+    ):
+        assert word not in text
+    kept = out[1]["protocolSection"]
+    assert kept["contactsLocationsModule"]["locations"] == [{"city": "Paris"}]
+    assert kept["sponsorCollaboratorsModule"]["leadSponsor"] == {
+        "name": "Sponsor Inc",
+        "class": "INDUSTRY",
+    }
+    assert kept["sponsorCollaboratorsModule"]["responsibleParty"] == {"type": "PI"}
+    assert kept["identificationModule"]["organization"] == {"fullName": "Org A"}
+    assert frozenset(
+        ["centralContacts", "overallOfficials", "pointOfContact", "contacts", "investigatorFullName",  # noqa: E501
+         "investigatorTitle", "investigatorAffiliation"]
+    ) == ev.CT_DROP  # fmt: skip
+
+
+def test_bibliographic_views_replace_authors_by_their_count_and_sort_by_doi_without_duplicates():
+    works = [
+        {
+            "DOI": "10.2/b",
+            "title": ["T"],
+            "author": [{"name": "Ann", "ORCID": "o"}, {"name": "Bo"}],
+            "reference": [{"DOI": "x"}],
+        },
+        {"DOI": "10.1/a", "title": ["U"]},
+        {"DOI": "10.2/b", "title": ["T again"], "author": []},
+    ]
+    out = ev.crossref_view(works)
+    assert [w["DOI"] for w in out] == ["10.1/a", "10.2/b"]  # one record per DOI
+    assert out[0] == {"DOI": "10.1/a", "title": ["U"], "n_authors": 0}
+    assert (
+        out[1]["n_authors"] == 2
+        and "author" not in out[1]
+        and out[1]["reference"] == [{"DOI": "x"}]
+    )
+    assert "Ann" not in json.dumps(out) and "ORCID" not in json.dumps(out)
+
+
+def test_the_study_and_bibliography_builders_write_sorted_json_lines_and_manifests(
+    tmp_path, monkeypatch
+):
+    root = tmp_path / "acquired"
+    ct = root / "clinicaltrials_v2" / SNAP / "raw"
+    _w(
+        ct / "studies_2023-02.json",
+        json.dumps(
+            {
+                "studies": [
+                    {"protocolSection": {"identificationModule": {"nctId": "NCT2"}, "z": 1, "a": 2}}
+                ]
+            }
+        ),
+    )
+    _w(
+        ct / "studies_2023-01.json",
+        json.dumps({"studies": [{"protocolSection": {"identificationModule": {"nctId": "NCT1"}}}]}),
+    )
+    cr = root / "crossref_works" / SNAP / "raw"
+    _w(
+        cr / "sample_01.json",
+        json.dumps({"message": {"items": [{"DOI": "10.9/z", "author": [{"name": "A"}]}]}}),
+    )
+    _w(
+        cr / "sample_00.json",
+        json.dumps({"message": {"items": [{"DOI": "10.1/a"}, {"DOI": "10.9/z"}]}}),
+    )
+    seen = _accessed(monkeypatch, root)
+    manifest = {}
+    out = tmp_path / "o" / "deep"
+    ev._build_clinicaltrials(root, out, manifest)
+    ev._build_crossref(root, out, manifest)
+    lines = (out / "clinicaltrials_v2" / "studies.jsonl").read_text().splitlines()
+    assert [json.loads(x)["protocolSection"]["identificationModule"]["nctId"] for x in lines] == [
+        "NCT1",
+        "NCT2",
+    ]
+    assert (
+        lines[1]
+        == '{"protocolSection": {"a": 2, "identificationModule": {"nctId": "NCT2"}, "z": 1}}'
+    )
+    dois = [
+        json.loads(x)["DOI"]
+        for x in (out / "crossref_works" / "works.jsonl").read_text().splitlines()
+    ]
+    assert dois == ["10.1/a", "10.9/z"]
+    assert manifest["clinicaltrials_v2"]["files"] == {
+        "studies.jsonl": {"sha256": _sha(out / "clinicaltrials_v2" / "studies.jsonl"), "rows": 2}
+    }
+    assert {k: v for k, v in manifest["clinicaltrials_v2"].items() if k != "files"} == {
+        "dropped": sorted(ev.CT_DROP), "pseudonymised": [], "source_snapshot": "clinicaltrials_v2/2026-11-21",  # noqa: E501
+    }  # fmt: skip
+    assert manifest["crossref_works"]["files"]["works.jsonl"]["rows"] == 2
+    assert {k: v for k, v in manifest["crossref_works"].items() if k != "files"} == {
+        "dropped": ["author"], "pseudonymised": [], "source_snapshot": "crossref_works/2026-11-21",
+        "notes": "authors are replaced by their count; one record per DOI",
+    }  # fmt: skip
+    assert "acquired/clinicaltrials_v2/2026-11-21/raw/studies_2023-01.json" in seen
+    assert "acquired/crossref_works/2026-11-21/raw/sample_01.json" in seen
+
+
+def test_email_addresses_in_free_text_are_redacted_at_every_depth_without_touching_other_text():
+    node = {
+        "a": "write to Jo.Doe+x@lab-1.example.co.uk or sam@x.org now",
+        "b": [{"c": "no address, 3 @ 4"}, "plain@host"],
+        "d": 5,
+        "e": None,
+        "f": {"g": "a@b.cd"},
+    }
+    assert ev.redact_emails(node) == {
+        "a": "write to [email] or [email] now",
+        "b": [{"c": "no address, 3 @ 4"}, "plain@host"],
+        "d": 5,
+        "e": None,
+        "f": {"g": "[email]"},
+    }
+    assert node["a"].startswith("write to Jo.Doe")  # the input is not modified
+
+
+def test_study_views_also_redact_addresses_written_in_data_sharing_statements():
+    study = {
+        "protocolSection": {
+            "identificationModule": {"nctId": "N"},
+            "ipdSharingStatementModule": {"description": "ask me@uni.edu"},
+        }
+    }
+    out = ev.clinical_trials_view([study])
+    assert out[0]["protocolSection"]["ipdSharingStatementModule"]["description"] == "ask [email]"
+
+
+# --- time-series tables with a verified time column ---------------------------------------------
+
+
+def test_series_views_parse_the_declared_format_drop_unreadable_times_and_keep_numeric_columns():
+    raw = pd.DataFrame(
+        {
+            "Date": ["3/10/2004", "3/11/2004", "13/45/2004", "3/10/2004"],
+            "Time": ["18:00:00", "19:00:00", "00:00:00", "17:00:00"],
+            "CO": ["2.6", "2", "9", "x"],
+            "label": ["a", "b", "c", "d"],
+        }
+    )
+    spec = {"time": ["Date", "Time"], "format": "%m/%d/%Y %H:%M:%S"}
+    out = ev.series_view(raw, spec)
+    assert list(out.columns) == ["timestamp", "CO"]
+    assert out["timestamp"].tolist() == [
+        pd.Timestamp("2004-03-10 17:00:00"),
+        pd.Timestamp("2004-03-10 18:00:00"),
+        pd.Timestamp("2004-03-11 19:00:00"),
+    ]
+    assert out["CO"].isna().tolist() == [True, False, False]  # an unreadable value stays missing
+    assert out["CO"].iloc[1] == 2.6
+    assert out.attrs == {"rows_dropped": 1}
+    assert len(raw) == 4
+
+
+def test_series_views_add_an_hour_column_and_handle_a_single_time_column():
+    raw = pd.DataFrame(
+        {"Date": ["1/12/2017", "1/12/2017"], "Hour": ["1", "0"], "Rented": ["10", "5"]}
+    )
+    spec = {"time": ["Date"], "format": "%d/%m/%Y", "hour": "Hour"}
+    out = ev.series_view(raw, spec)
+    assert out["timestamp"].tolist() == [
+        pd.Timestamp("2017-12-01 00:00"),
+        pd.Timestamp("2017-12-01 01:00"),
+    ]
+    assert list(out.columns) == ["timestamp", "Rented"] and out["Rented"].tolist() == [5.0, 10.0]
+    iso = pd.DataFrame(
+        {"t": ["2019-11-06 11:37:13+01:00", "2019-11-06 11:37:12+01:00"], "v": ["1", "2"]}
+    )
+    parsed = ev.series_view(iso, {"time": ["t"], "format": "ISO8601"})
+    assert parsed["v"].tolist() == [2.0, 1.0] and str(parsed["timestamp"].dtype).startswith(
+        "datetime64"
+    )
+    bom = pd.DataFrame({"﻿date": ["01/01/2018 00:15"], "k": ["3"]})
+    assert ev.series_view(bom, {"time": ["date"], "format": "%d/%m/%Y %H:%M"})["k"].tolist() == [
+        3.0
+    ]
+    with pytest.raises(ev.ViewError, match="time column"):
+        ev.series_view(raw, {"time": ["nope"], "format": "%d/%m/%Y"})
+
+
+def test_the_series_builder_reads_pool_and_wave2_tables_and_writes_sorted_views(
+    tmp_path, monkeypatch
+):
+    root = tmp_path / "acquired"
+    root.mkdir()
+    specs = {
+        "uci:5": {"dir": "pool", "time": ["date"], "format": "%Y-%m-%d %H:%M:%S"},
+        "uci:6": {"dir": "uci_wave2", "time": ["d"], "format": "%m/%d/%Y"},
+    }
+    monkeypatch.setattr(ev, "SERIES_SPECS", specs)
+    _w(tmp_path / "pool" / "5.csv", "id,date,v\n1,2015-02-04 17:52:00,2\n2,2015-02-04 17:51:00,1\n")
+    _w(tmp_path / "uci_wave2" / "6.csv", "d,w\n1/2/1998,3\n1/1/1998,4\n")
+    seen = _accessed(monkeypatch, root)
+    manifest = {}
+    ev._build_series(root, tmp_path / "o" / "deep", manifest)
+    assert (
+        tmp_path / "o" / "deep" / "series" / "uci_5.csv"
+    ).read_text() == "timestamp,id,v\n2015-02-04 17:51:00,2,1\n2015-02-04 17:52:00,1,2\n"
+    assert (
+        tmp_path / "o" / "deep" / "series" / "uci_6.csv"
+    ).read_text() == "timestamp,w\n1998-01-01,4\n1998-01-02,3\n"
+    assert list(manifest["series"]["files"]) == ["uci_5.csv", "uci_6.csv"]
+    assert manifest["series"]["files"]["uci_5.csv"] == {
+        "sha256": _sha(tmp_path / "o" / "deep" / "series" / "uci_5.csv"),
+        "rows": 2,
+    }
+    assert manifest["series"]["dropped"] == []
+    assert (
+        manifest["series"]["source_snapshot"]
+        == "data/pool and data/uci_wave2 tables, pinned by the pool manifests"
+    )
+    assert manifest["series"]["rows_dropped"] == {"uci:5": 0, "uci:6": 0}
+    assert "pool/5.csv" in seen and "uci_wave2/6.csv" in seen
+    assert set(ev.SERIES_SPECS) == set(specs)
+
+
+def test_the_new_builders_create_missing_parents_twice_and_write_exact_paths_and_sorted_keys(
+    tmp_path, monkeypatch
+):
+    import builtins
+    import io
+
+    root = tmp_path / "acquired"
+    ct = root / "clinicaltrials_v2" / SNAP / "raw"
+    _w(
+        ct / "studies_2023-01.json",
+        json.dumps({"studies": [{"protocolSection": {"identificationModule": {"nctId": "N1"}}}]}),
+    )
+    cr = root / "crossref_works" / SNAP / "raw"
+    _w(
+        cr / "sample_00.json",
+        json.dumps(
+            {"message": {"items": [{"title": ["t"], "DOI": "10.1/a", "author": [{"name": "A"}]}]}}
+        ),
+    )
+    _w(tmp_path / "pool" / "5.csv", "t,v\n2020-01-01,1\n")
+    monkeypatch.setattr(
+        ev, "SERIES_SPECS", {"uci:5": {"dir": "pool", "time": ["t"], "format": "%Y-%m-%d"}}
+    )
+    out = tmp_path / "o" / "deep"
+    written = []
+    real_open = builtins.open
+
+    def spy(file, mode="r", *a, **k):
+        if "w" in mode and str(file).startswith(str(out)):
+            written.append(str(file)[len(str(out)) + 1 :])
+        return real_open(file, mode, *a, **k)
+
+    monkeypatch.setattr(builtins, "open", spy)
+    monkeypatch.setattr(io, "open", spy)
+    for step in (ev._build_clinicaltrials, ev._build_crossref, ev._build_series):
+        manifest = {}
+        step(root, out, manifest)
+        step(root, out, manifest)  # a second run over existing directories
+    assert sorted(set(written)) == [
+        "clinicaltrials_v2/studies.jsonl",
+        "crossref_works/works.jsonl",
+        "series/uci_5.csv",
+    ]
+    text = (out / "crossref_works" / "works.jsonl").read_text()
+    assert text == '{"DOI": "10.1/a", "n_authors": 1, "title": ["t"]}\n'  # keys in sorted order
+
+
+def test_series_edge_cases_stable_order_unreadable_hours_and_the_error_message():
+    raw = pd.DataFrame(
+        {
+            "t": ["2020-01-01", "2020-01-01", "2020-01-01"],
+            "k": ["a", "b", "c"],
+            "v": ["3", "1", "2"],
+        }
+    )
+    out = ev.series_view(raw, {"time": ["t"], "format": "%Y-%m-%d"})
+    assert out["v"].tolist() == [3.0, 1.0, 2.0]  # equal timestamps keep their file order
+    hours = pd.DataFrame({"d": ["01/01/2020", "01/01/2020"], "h": ["x", "2"], "v": ["1", "2"]})
+    parsed = ev.series_view(hours, {"time": ["d"], "format": "%d/%m/%Y", "hour": "h"})
+    assert parsed["v"].tolist() == [2.0] and parsed.attrs["rows_dropped"] == 1
+    wide = pd.DataFrame({f"c{i}": [1] for i in range(8)})
+    with pytest.raises(ev.ViewError) as info:
+        ev.series_view(wide, {"time": ["missing"], "format": "%Y"})
+    assert str(info.value) == "time column not found in ['c0', 'c1', 'c2', 'c3', 'c4', 'c5']"
+    assert set(ev.SERIES_SPECS) == {
+        "uci:357",
+        "uci:360",
+        "uci:374",
+        "uci:560",
+        "uci:799",
+        "uci:849",
+        "uci:851",
+        "uci:172",
+        "uci:492",
+    }
+
+
+# --- Borg cluster trace prefixes (event sequences) -----------------------------------------------
+
+
+def _collection_line(cid, time, kind, **over):
+    record = {
+        "time": str(time), "type": str(kind), "collection_id": str(cid), "scheduling_class": "1",
+        "collection_type": "0", "priority": "103", "user": "HASHED=", "collection_name": "HASHED2=",
+        "collection_logical_name": "HASHED3=", "start_after_collection_ids": [], "vertical_scaling": "2",  # noqa: E501
+        "scheduler": "1",
+    }  # fmt: skip
+    record.update(over)
+    return json.dumps(record)
+
+
+def _instance_line(cid, index, time, kind, machine="9"):
+    return json.dumps(
+        {"time": str(time), "type": str(kind), "collection_id": str(cid), "scheduling_class": "0",
+         "collection_type": "0", "priority": "114", "instance_index": str(index), "machine_id": machine,  # noqa: E501
+         "alloc_collection_id": "0", "alloc_instance_index": "-1", "missing_type": "1",
+         "resource_request": {"cpus": 0.5, "memory": 0.25}, "constraint": []}
+    )  # fmt: skip
+
+
+def test_collection_event_views_keep_the_sequence_fields_drop_hashed_names_and_order_each_collection():  # noqa: E501
+    lines = [
+        _collection_line(2, 30, 6),
+        _collection_line(1, 20, 3),
+        _collection_line(1, 10, 0),
+        "",
+        _collection_line(2, 5, 0),
+    ]
+    out = ev.borg_collection_view(lines)
+    assert list(out.columns) == list(ev.BORG_COLLECTION_COLUMNS)
+    assert ev.BORG_COLLECTION_COLUMNS == (
+        "collection_id", "time_us", "type", "collection_type", "priority", "scheduling_class",
+        "scheduler", "vertical_scaling",
+    )  # fmt: skip
+    assert out["collection_id"].tolist() == [1, 1, 2, 2]
+    assert out["time_us"].tolist() == [10, 20, 5, 30]  # time order inside each collection
+    assert out["type"].tolist() == [0, 3, 0, 6]
+    assert out.iloc[0].to_dict() == {
+        "collection_id": 1,
+        "time_us": 10,
+        "type": 0,
+        "collection_type": 0,
+        "priority": 103,
+        "scheduling_class": 1,
+        "scheduler": 1,
+        "vertical_scaling": 2,
+    }
+    assert "user" not in out and "collection_name" not in out
+    assert len(ev.borg_collection_view([])) == 0
+    missing = json.dumps({"time": "1", "type": "0", "collection_id": "7"})
+    assert pd.isna(ev.borg_collection_view([missing])["priority"].iloc[0])
+
+
+def test_instance_event_views_unpack_the_resource_request_and_order_each_instance():
+    lines = [
+        _instance_line(1, 1, 50, 6),
+        _instance_line(1, 0, 40, 3),
+        _instance_line(1, 1, 10, 0, machine=""),
+    ]
+    out = ev.borg_instance_view(lines)
+    assert list(out.columns) == list(ev.BORG_INSTANCE_COLUMNS)
+    assert out[["collection_id", "instance_index", "time_us", "type"]].values.tolist() == [
+        [1, 0, 40, 3],
+        [1, 1, 10, 0],
+        [1, 1, 50, 6],
+    ]
+    assert out["cpus"].tolist() == [0.5, 0.5, 0.5] and out["memory"].tolist() == [0.25, 0.25, 0.25]
+    assert out["machine_id"].tolist()[0] == 9 and pd.isna(out["machine_id"].iloc[1])
+    bare = json.dumps({"time": "1", "type": "0", "collection_id": "1", "instance_index": "0"})
+    row = ev.borg_instance_view([bare]).iloc[0]
+    assert pd.isna(row["cpus"]) and pd.isna(row["memory"])
+
+
+def test_the_borg_builder_reads_gzip_prefixes_records_the_cut_and_caps_the_rows(
+    tmp_path, monkeypatch
+):
+    import gzip
+
+    root = tmp_path / "acquired"
+    raw = root / "google_cluster_2019a" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    text = "\n".join(_collection_line(i % 7, 100 - i, i % 4) for i in range(60)) + "\n"
+    blob = gzip.compress(text.encode())
+    (raw / "collection_events_head.json.gz").write_bytes(blob[: len(blob) * 3 // 4])  # a cut stream
+    text = "\n".join(_instance_line(i % 3, i % 5, 100 - i, i % 4) for i in range(40)) + "\n"
+    (raw / "instance_events_head.json.gz").write_bytes(gzip.compress(text.encode()))
+    monkeypatch.setattr(ev, "BORG_MAX_LINES", 25)
+    manifest = {}
+    ev._build_borg(root, tmp_path / "o" / "deep", manifest)
+    folder = tmp_path / "o" / "deep" / "google_cluster_2019a"
+    assert len(pd.read_csv(folder / "collection_events.csv")) == 25  # capped, a prefix of the file
+    assert len(pd.read_csv(folder / "instance_events.csv")) == 25
+    view = manifest["google_cluster_2019a"]
+    assert view["files"] == {
+        "collection_events.csv": {"sha256": _sha(folder / "collection_events.csv"), "rows": 25},
+        "instance_events.csv": {"sha256": _sha(folder / "instance_events.csv"), "rows": 25},
+    }
+    assert view["sampling"].startswith("prefix of one shard in file order")
+    assert view["fragments"]["collection_events_head.json.gz"]["stream_complete"] is False
+    assert view["fragments"]["instance_events_head.json.gz"]["stream_complete"] is True
+    assert view["fragments"]["instance_events_head.json.gz"]["lines_read"] == 40
+    assert {k: v for k, v in view.items() if k not in ("files", "fragments", "sampling")} == {
+        "dropped": [
+            "user",
+            "collection_name",
+            "collection_logical_name",
+            "constraint",
+            "alloc fields",
+        ],
+        "pseudonymised": [],
+        "source_snapshot": "google_cluster_2019a/2026-11-21",
+    }
+
+
+# --- panels of series (RKI) and multi-table relational extracts (3PFL) ---------------------------
+
+
+def test_panel_views_keep_key_columns_sort_by_key_then_time_and_read_na_markers_as_missing():
+    raw = pd.DataFrame(
+        {
+            "date": ["2020-01-02", "2020-01-01", "2020-01-01", "bad"],
+            "region": ["B", "B", "A", "A"],
+            "cases": ["5", "NA", "3", "9"],
+            "note": ["x", "y", "z", "w"],
+        }
+    )
+    spec = {"time": ["date"], "format": "%Y-%m-%d", "keys": ["region"]}
+    out = ev.panel_view(raw, spec)
+    assert list(out.columns) == ["timestamp", "region", "cases"]
+    assert out["region"].tolist() == ["A", "B", "B"]
+    assert out["timestamp"].tolist() == [
+        pd.Timestamp("2020-01-01"),
+        pd.Timestamp("2020-01-01"),
+        pd.Timestamp("2020-01-02"),
+    ]
+    assert out["cases"].isna().tolist() == [False, True, False]
+    assert out.attrs == {"rows_dropped": 1}
+    with pytest.raises(ev.ViewError, match="key column"):
+        ev.panel_view(raw, {**spec, "keys": ["zzz"]})
+
+
+def _tables():
+    return {
+        "01_links": pd.DataFrame({"piid": ["p1", "p2", "p9"], "patent": ["10", "11", "12"]}),
+        "02_orders": pd.DataFrame(
+            {"piid": ["p1", "p2"], "vendor": ["v1", "v2"], "title": ["secret a", "secret b"]}
+        ),
+        "03_vendors": pd.DataFrame({"vendor": ["v1"], "street": ["1 rue"], "state": ["OH"]}),
+    }
+
+
+TABLE_SPEC = {
+    "tables": {
+        "01_links": {"keep": ["piid", "patent"]},
+        "02_orders": {"keep": ["piid", "vendor"]},
+        "03_vendors": {"keep": ["vendor", "state"]},
+    },
+    "relations": [
+        ["01_links", "piid", "02_orders", "piid"],
+        ["02_orders", "vendor", "03_vendors", "vendor"],
+        ["01_links", "piid", "02_orders", "piid", {"where": ["patent", "10"]}],
+    ],
+}
+
+
+def test_table_views_keep_only_listed_columns_and_measure_every_relation_with_its_orphans():
+    out, relations = ev.tables_view(_tables(), TABLE_SPEC)
+    assert list(out) == ["01_links", "02_orders", "03_vendors"]
+    assert (
+        list(out["02_orders"].columns) == ["piid", "vendor"] and "street" not in out["03_vendors"]
+    )
+    assert relations == [
+        {
+            "child": "01_links.piid",
+            "parent": "02_orders.piid",
+            "checked": 3,
+            "orphans": 1,
+            "share": 1 / 3,
+        },
+        {
+            "child": "02_orders.vendor",
+            "parent": "03_vendors.vendor",
+            "checked": 2,
+            "orphans": 1,
+            "share": 0.5,
+        },
+        {
+            "child": "01_links.piid where patent=10",
+            "parent": "02_orders.piid",
+            "checked": 1,
+            "orphans": 0,
+            "share": 0.0,
+        },
+    ]
+    with pytest.raises(ev.ViewError, match="column"):
+        ev.tables_view(_tables(), {"tables": {"01_links": {"keep": ["nope"]}}, "relations": []})
+    with pytest.raises(ev.ViewError, match="table"):
+        ev.tables_view({}, TABLE_SPEC)
+
+
+def test_the_panel_and_relational_builders_write_views_and_record_relations(tmp_path, monkeypatch):
+    root = tmp_path / "acquired"
+    raw = root / "zen_rki_notaufnahme" / SNAP / "raw"
+    _w(
+        raw / "Notaufnahmesurveillance_Zeitreihen_Syndrome.tsv",
+        "date\tsyndrome\tn\n2019-01-02\tARI\t2\n2019-01-01\tARI\t1\n",
+    )
+    monkeypatch.setattr(
+        ev,
+        "PANEL_SPECS",
+        {
+            "rki_notaufnahme": {
+                "source": "zen_rki_notaufnahme",
+                "file": "Notaufnahmesurveillance_Zeitreihen_Syndrome.tsv",
+                "sep": "\t",
+                "time": ["date"],
+                "format": "%Y-%m-%d",
+                "keys": ["syndrome"],
+            }
+        },
+    )
+    manifest = {}
+    ev._build_panels(root, tmp_path / "o" / "deep", manifest)
+    ev._build_panels(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "panels" / "rki_notaufnahme.csv"
+    assert target.read_text() == "timestamp,syndrome,n\n2019-01-01,ARI,1\n2019-01-02,ARI,2\n"
+    assert manifest["panels"]["files"] == {
+        "rki_notaufnahme.csv": {"sha256": _sha(target), "rows": 2}
+    }
+    assert manifest["panels"]["rows_dropped"] == {"rki_notaufnahme": 0}
+    tables = root / "zen_3pfl" / SNAP / "raw"
+    _w(tables / "01_links.csv", 'piid\tpatent\n"p1"\t"10"\n"p9"\t"12"\n')
+    _w(tables / "02_orders.csv", 'piid\tvendor\ttitle\n"p1"\t"v1"\t"s"\n')
+    monkeypatch.setattr(ev, "TABLE_SETS", {"zen_3pfl": {"dropped": ["names"],
+        "tables": {"01_links": {"keep": ["piid", "patent"]}, "02_orders": {"keep": ["piid", "vendor"]}},  # noqa: E501
+        "relations": [["01_links", "piid", "02_orders", "piid"]]}})  # fmt: skip
+    ev._build_tables(root, tmp_path / "o" / "deep", manifest)
+    ev._build_tables(root, tmp_path / "o" / "deep", manifest)
+    folder = tmp_path / "o" / "deep" / "zen_3pfl"
+    assert (
+        folder / "01_links.csv"
+    ).read_text() == "piid,patent\np1,10\np9,12\n"  # quotes are not data
+    assert (folder / "02_orders.csv").read_text() == "piid,vendor\np1,v1\n"
+    view = manifest["zen_3pfl"]
+    assert view["relations"] == [
+        {
+            "child": "01_links.piid",
+            "parent": "02_orders.piid",
+            "checked": 2,
+            "orphans": 1,
+            "share": 0.5,
+        }
+    ]
+    assert view["files"]["01_links.csv"] == {"sha256": _sha(folder / "01_links.csv"), "rows": 2}
+    assert (
+        view["notes"]
+        == "relations are the source's own keys; orphans are natural incompleteness of the published extract"  # noqa: E501
+    )
+
+
+# --- SURF Lisa SLURM job table from a zipped Parquet part ----------------------------------------
+
+
+def _surf_frame():
+    return pd.DataFrame(
+        {
+            "id": pd.array([3, 1, 2], dtype="int32"),
+            "start_date": pd.to_datetime(["2022-01-01 10:00:00", "2022-01-01 09:00:00", None]),
+            "end_date": pd.to_datetime(["2022-01-01 10:30:00", "2022-01-01 09:10:00", None]),
+            "node": ["r1n1", "r1n2", "r1n3"],
+            "nodetypes": ["normal(1)", "gpu(1)", "normal(1)"],
+            "numnodes": ["1", "2", "x"],
+            "numcores": ["16", "32", "8"],
+            "submit_date": pd.to_datetime(["2022-01-01 09:55:00", "2022-01-01 08:00:00", "2022-01-01 09:00:00"]),  # noqa: E501
+            "state": ["COMPLETED", "FAILED", "CANCELLED"],
+        }
+    )  # fmt: skip
+
+
+def test_surf_job_view_derives_wait_and_runtime_orders_by_submit_and_keeps_unstarted_jobs():
+    out = ev.surf_slurm_view(_surf_frame())
+    assert list(out.columns) == list(ev.SURF_COLUMNS)
+    assert ev.SURF_COLUMNS == (
+        "job_id", "submit_ts", "wait_s", "runtime_s", "nodes", "cores", "node_type", "state",
+    )  # fmt: skip
+    assert out["job_id"].tolist() == [1, 2, 3]  # submit order
+    assert out["wait_s"].tolist()[0] == 3600.0 and out["runtime_s"].tolist()[0] == 600.0
+    assert pd.isna(out["wait_s"].iloc[1]) and pd.isna(out["runtime_s"].iloc[1])  # never started
+    assert out["wait_s"].iloc[2] == 300.0 and out["runtime_s"].iloc[2] == 1800.0
+    assert out["nodes"].iloc[0] == 2 and pd.isna(
+        out["nodes"].iloc[1]
+    )  # unreadable count stays missing
+    assert out["cores"].tolist() == [32, 8, 16]
+    assert out["node_type"].tolist() == ["gpu", "normal", "normal"]
+    assert out["state"].tolist() == ["FAILED", "CANCELLED", "COMPLETED"]
+    assert "node" not in out  # host names are not experimental features
+    with pytest.raises(ev.ViewError, match="column"):
+        ev.surf_slurm_view(_surf_frame().drop(columns=["state"]))
+
+
+def test_the_surf_builder_extracts_the_zipped_part_samples_with_a_stride_and_records_it(
+    tmp_path, monkeypatch
+):
+    import zipfile
+
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    root = tmp_path / "acquired"
+    raw = root / "zen_surf_lisa_slurm" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    pq.write_table(
+        pa.Table.from_pandas(
+            pd.concat([_surf_frame()] * 4, ignore_index=True), preserve_index=False
+        ),
+        tmp_path / "p.parquet",
+        row_group_size=5,
+    )
+    empty = tmp_path / "empty.parquet"
+    pq.write_table(pa.Table.from_pandas(_surf_frame().iloc[:0], preserve_index=False), empty)
+    with zipfile.ZipFile(raw / "slurm_table_cleaned.zip", "w") as z:
+        z.write(empty, "slurm_table_cleaned.parquet/part-00000-x.snappy.parquet")
+        z.write(tmp_path / "p.parquet", "slurm_table_cleaned.parquet/part-00003-x.snappy.parquet")
+    monkeypatch.setattr(ev, "SURF_STRIDE", 3)
+    manifest = {}
+    ev._build_surf(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "zen_surf_lisa_slurm" / "jobs.csv"
+    assert len(pd.read_csv(target)) == 4  # rows 0, 3, 6, 9 of 12
+    view = manifest["zen_surf_lisa_slurm"]
+    assert view["files"] == {"jobs.csv": {"sha256": _sha(target), "rows": 4}}
+    assert view["sampling"] == {
+        "method": "one row in 3 of the only non-empty Parquet part, from the first, in file order",
+        "stride": 3, "rows_read": 12, "rows_kept": 4, "source_rows": 12, "truncated": False,
+        "member": "slurm_table_cleaned.parquet/part-00003-x.snappy.parquet",
+    }  # fmt: skip
+    assert view["dropped"] == ["node host names"]
+
+
+# --- Fugaku job records (Parquet) and the MetroPT2 time-ordered CSV prefix ------------------------
+
+
+def _fdata_frame():
+    return pd.DataFrame(
+        {
+            "jid": ["a", "b", "c"], "usr": ["u1", "u2", "u3"], "jnam": ["n1", "n2", "n3"],
+            "cnumr": [48, 96, 48], "cnumat": [48, 96, 48], "nnumr": [1, 2, 1], "nnuma": [1, 2, 1],
+            "adt": ["2021-04-02 10:00:00", "2021-04-01 09:00:00", "2021-04-03 08:00:00"],
+            "sdt": ["2021-04-02 10:10:00", "2021-04-01 09:30:00", None],
+            "edt": ["2021-04-02 11:10:00", "2021-04-01 09:40:00", None],
+            "ec": [0, 1, 0], "elpl": [3600.0, 600.0, 60.0], "pri": [1, 2, 3],
+            "econ": [5.0, 1.0, None], "avgpcon": [100.0, 90.0, None], "maxpcon": [120.0, 95.0, None],  # noqa: E501
+            "mszl": [1.0, 2.0, 3.0], "msza": [1, 2, 3], "mmszu": [0.5, 1.0, None], "pclass": ["compute", "memory", None],  # noqa: E501
+            "exit state": ["completed", "failed", "cancelled"], "duration": [3600.0, 600.0, None],
+            "embedding": [[0.1], [0.2], [0.3]], "jobenv_req": ["x", "y", "z"],
+        }
+    )  # fmt: skip
+
+
+def test_fugaku_job_view_drops_identifiers_and_text_derives_wait_and_orders_by_arrival():
+    out = ev.fugaku_jobs_view(_fdata_frame())
+    assert list(out.columns) == list(ev.FUGAKU_COLUMNS)
+    assert out["submit_ts"].tolist() == sorted(out["submit_ts"].tolist())
+    assert (
+        out["wait_s"].iloc[0] == 1800.0
+        and out["wait_s"].iloc[1] == 600.0
+        and pd.isna(out["wait_s"].iloc[2])
+    )
+    assert out["state"].tolist() == ["failed", "completed", "cancelled"]
+    for gone in ("jid", "usr", "jnam", "embedding", "jobenv_req"):
+        assert gone not in out
+    with pytest.raises(ev.ViewError, match="column"):
+        ev.fugaku_jobs_view(_fdata_frame().drop(columns=["adt"]))
+
+
+def test_csv_prefixes_keep_only_complete_lines_and_say_how_many_bytes_were_cut():
+    blob = b"a,b\n1,2\n3,4\n5,"
+    frame, cut = ev.csv_prefix(blob)
+    assert frame.to_dict("list") == {"a": [1, 3], "b": [2, 4]} and cut == 2
+    whole, none = ev.csv_prefix(b"a,b\n1,2\n")
+    assert len(whole) == 1 and none == 0
+
+
+def test_the_metropt_view_drops_gps_columns_and_keeps_time_order_and_sensors():
+    raw = pd.DataFrame(
+        {"timestamp": ["2022-04-28 12:33:30.111", "2022-04-28 12:33:29.120"], "TP2": [1.0, 2.0],
+         "COMP": [0.0, 1.0], "gpsLat": [41.1, 41.2], "gpsLong": [-8.6, -8.7], "gpsSpeed": [1.0, 2.0], "gpsQuality": [1.0, 1.0]}  # noqa: E501
+    )  # fmt: skip
+    out = ev.metropt_view(raw)
+    assert list(out.columns) == ["timestamp", "TP2", "COMP"]
+    assert out["TP2"].tolist() == [2.0, 1.0]  # time order
+    assert out["timestamp"].iloc[0] == pd.Timestamp("2022-04-28 12:33:29.120")
+
+
+def test_the_fugaku_and_metropt_builders_write_views_with_sampling_records(tmp_path):
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    root = tmp_path / "acquired"
+    raw = root / "zen_fdata_fugaku" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    pq.write_table(
+        pa.Table.from_pandas(_fdata_frame(), preserve_index=False), raw / "21_04.parquet"
+    )
+    m = root / "zen_metropt2" / SNAP / "raw"
+    m.mkdir(parents=True)
+    (m / "MetroPT2_head.csv").write_bytes(
+        b"timestamp,TP2,gpsLat\n2022-04-28 12:33:29.120,1.0,41.1\n2022-04-28 12:33:30.111,2.0,41.2\n2022-04-28 12:33:31.1"  # noqa: E501
+    )
+    manifest = {}
+    ev._build_fugaku(root, tmp_path / "o" / "deep", manifest)
+    ev._build_metropt(root, tmp_path / "o" / "deep", manifest)
+    jobs = tmp_path / "o" / "deep" / "zen_fdata_fugaku" / "jobs.csv"
+    assert len(pd.read_csv(jobs)) == 3
+    f = manifest["zen_fdata_fugaku"]
+    assert f["files"] == {"jobs.csv": {"sha256": _sha(jobs), "rows": 3}}
+    assert f["sampling"] == {
+        "method": "all rows of one monthly Parquet file (2021-04); the other months were not fetched",  # noqa: E501
+        "rows_read": 3,
+        "source_rows": 3,
+        "truncated": False,
+    }
+    series = tmp_path / "o" / "deep" / "zen_metropt2" / "series.csv"
+    assert (
+        series.read_text().splitlines()[0] == "timestamp,TP2"
+        and len(series.read_text().splitlines()) == 3
+    )
+    g = manifest["zen_metropt2"]
+    assert g["sampling"] == {
+        "method": "time-ordered prefix of the CSV (HTTP range from byte 0), not random",
+        "bytes_cut_partial_line": 21,
+        "rows_dropped": 0,
+    }
+    assert g["dropped"] == ["GPS position, speed and quality columns"]
+
+
+# --- Open Library editions (complete nested catalogue records from a dump prefix) -----------------
+
+
+def _ol_line(number, **extra):
+    record = {"key": f"/books/OL{number}M", "type": {"key": "/type/edition"}, "title": f"t{number}",
+              "authors": [{"key": "/authors/OL1A"}], "notes": {"type": "/type/text", "value": "free text"}, **extra}  # fmt: skip  # noqa: E501
+    return f"/type/edition\t/books/OL{number}M\t3\t2020-01-01T00:00:00.1\t{json.dumps(record)}"
+
+
+def test_open_library_view_keeps_a_deterministic_hash_subset_drops_free_text_and_sorts_by_key():
+    lines = [_ol_line(n, description="d", publishers=["P"]) for n in (5, 3, 9, 1, 7, 2)]
+    bad = ["", "only\ttwo", "/type/edition\tk\t1\t2020\tnot json"]
+    kept, skipped = ev.open_library_view(lines + bad, modulo=1)
+    assert [r["key"] for r in kept] == [f"/books/OL{n}M" for n in (1, 2, 3, 5, 7, 9)]
+    assert (
+        "notes" not in kept[0] and "description" not in kept[0] and kept[0]["publishers"] == ["P"]
+    )
+    assert (
+        kept[0]["authors"] == [{"key": "/authors/OL1A"}] and skipped == 2
+    )  # blank lines are not counted
+    some, _ = ev.open_library_view(lines, modulo=2)
+    import hashlib as _h
+
+    expected = sorted(
+        r
+        for r in (f"/books/OL{n}M" for n in (5, 3, 9, 1, 7, 2))
+        if int(_h.sha256(r.encode()).hexdigest(), 16) % 2 == 0
+    )
+    assert [r["key"] for r in some] == expected and 0 < len(some) < 6
+    assert ev.open_library_view(lines, modulo=2)[0] == some  # same subset every time
+
+
+def test_the_open_library_builder_reads_the_gzip_prefix_and_records_the_cut(tmp_path, monkeypatch):
+    import gzip
+
+    root = tmp_path / "acquired"
+    raw = root / "openlibrary_dump" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    blob = gzip.compress(("\n".join(_ol_line(n) for n in range(1, 30)) + "\n").encode())
+    (raw / "editions_head.txt.gz").write_bytes(blob[: len(blob) * 4 // 5])
+    monkeypatch.setattr(ev, "OPENLIBRARY_MODULO", 1)
+    manifest = {}
+    ev._build_openlibrary(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "openlibrary_dump" / "editions.jsonl"
+    rows = [json.loads(x) for x in target.read_text().splitlines()]
+    view = manifest["openlibrary_dump"]
+    assert len(rows) == view["files"]["editions.jsonl"]["rows"] > 0 and "notes" not in rows[0]
+    assert view["sampling"]["stream_complete"] is False and view["sampling"]["modulo"] == 1
+    assert view["sampling"]["lines_read"] >= len(rows) and view["sampling"]["lines_skipped"] == 0
+    assert view["sampling"]["method"].startswith(
+        "gzip prefix of the editions dump in key-text order"
+    )
+    assert view["dropped"] == ["notes", "description", "first_sentence", "table_of_contents"]
+
+
+def test_blank_keys_are_missing_not_orphans_in_relation_checks():
+    tables = {
+        "a": pd.DataFrame({"k": ["1", "", "9", None]}),
+        "b": pd.DataFrame({"k": ["1", ""]}),
+    }
+    spec = {
+        "tables": {"a": {"keep": ["k"]}, "b": {"keep": ["k"]}},
+        "relations": [["a", "k", "b", "k"]],
+    }
+    _, relations = ev.tables_view(tables, spec)
+    assert relations == [
+        {"child": "a.k", "parent": "b.k", "checked": 2, "orphans": 1, "share": 0.5}
+    ]
+
+
+# --- AEGIS OBD signals: one value per pid and second, relative time, no dates or positions -------
+
+
+def test_the_aegis_view_pivots_pids_to_seconds_since_trip_start_and_drops_absolute_time():
+    raw = pd.DataFrame(
+        {
+            "obdData_id": range(1, 8),
+            "trip_id": [2, 2, 2, 2, 1, 1, 1],
+            "obdPid": ["0C", "0D", "0C", "0D", "0C", "0C", "0D"],
+            "data": ["10", "20", "30", "40", "5", "7", "x"],
+            "timestamp": ["2017-01-19 10:00:00.1", "2017-01-19 10:00:00.5", "2017-01-19 10:00:01.2",
+                          "2017-01-19 10:00:01.6", "2017-02-01 08:00:00.0", "2017-02-01 08:00:00.9", "2017-02-01 08:00:02.0"],  # noqa: E501
+        }
+    )  # fmt: skip
+    out = ev.aegis_obd_view(raw)
+    assert list(out.columns) == ["trip_id", "t_s", "pid_0C", "pid_0D"]
+    assert out[["trip_id", "t_s"]].values.tolist() == [[1, 0], [1, 2], [2, 0], [2, 1]]
+    first = out.iloc[0]
+    assert first["pid_0C"] == 6.0 and pd.isna(first["pid_0D"])  # mean of 5 and 7 inside second 0
+    assert pd.isna(out.iloc[1]["pid_0D"])  # an unreadable value stays missing
+    assert out.iloc[2]["pid_0C"] == 10.0 and out.iloc[3]["pid_0D"] == 40.0
+    assert "timestamp" not in out
+    with pytest.raises(ev.ViewError, match="column"):
+        ev.aegis_obd_view(raw.drop(columns=["data"]))
+
+
+def test_the_aegis_builder_reads_only_the_obd_member_and_records_what_was_dropped(tmp_path):
+    import zipfile
+
+    root = tmp_path / "acquired"
+    raw = root / "zen_aegis_vehicle" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    with zipfile.ZipFile(raw / "Automotive-ResearchDataSet-VIF-AEGIS.zip", "w") as z:
+        z.writestr(
+            "obdData.csv",
+            '"obdData_id","trip_id","obdPid","data","timestamp"\n"1","3","0C","9","2017-01-19 16:19:03.045593"\n',  # noqa: E501
+        )
+        z.writestr("positions.csv", '"lat","lon"\n"47.0","15.4"\n')
+    manifest = {}
+    ev._build_aegis(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "zen_aegis_vehicle" / "obd.csv"
+    assert target.read_text() == "trip_id,t_s,pid_0C\n3,0,9.0\n"
+    view = manifest["zen_aegis_vehicle"]
+    assert view["files"] == {"obd.csv": {"sha256": _sha(target), "rows": 1}}
+    assert view["dropped"] == [
+        "positions",
+        "gyroscopes",
+        "accelerations",
+        "absolute dates and times",
+        "trip dates",
+        "vehicle names",
+    ]
+    assert (
+        view["notes"]
+        == "one driver and one vehicle (35 trips); relative time inside each trip only"
+    )
+
+
+# --- CLUE-LDS user events from a zip prefix ------------------------------------------------------
+
+
+def _clue(n, uid="u-a", kind="file_accessed", **over):
+    record = {"params": {"path": "/secret/file"}, "type": kind, "time": f"2017-07-07T08:57:{n:02d}Z", "uid": uid, "id": n, "uidType": "name",  # noqa: E501
+              "location": {"city": "Graz", "latitude": 47.0}, **over}  # fmt: skip
+    return json.dumps(record)
+
+
+def test_clue_view_keeps_type_time_role_and_pseudonymous_user_and_drops_params_and_location():
+    lines = [
+        _clue(2, uid="u-b", role="sales", isLocalIP=True),
+        _clue(1),
+        "",
+        _clue(3, uid="1.2.3.4", uidType="ip"),
+    ]
+    out = ev.clue_events_view(lines)
+    assert list(out.columns) == list(ev.CLUE_COLUMNS)
+    assert ev.CLUE_COLUMNS == ("event_id", "time", "user", "type", "role", "is_local_ip")
+    assert out["event_id"].tolist() == [1, 2, 3] and out["type"].tolist() == ["file_accessed"] * 3
+    assert out["time"].iloc[0] == pd.Timestamp("2017-07-07 08:57:01", tz="UTC")
+    assert out["user"].tolist() == [
+        ev.pseudonym("u-a"),
+        ev.pseudonym("u-b"),
+        ev.pseudonym("1.2.3.4"),
+    ]
+    assert out["role"].tolist()[1] == "sales" and pd.isna(out["role"].iloc[0])
+    assert out["is_local_ip"].tolist()[1] is True or out["is_local_ip"].iloc[1] == True  # noqa: E712
+    assert "params" not in out and "location" not in out and "uid" not in out
+    assert len(ev.clue_events_view([])) == 0
+
+
+def test_the_clue_builder_reads_the_zip_prefix_caps_the_events_and_records_the_cut(
+    tmp_path, monkeypatch
+):
+    import zipfile
+
+    root = tmp_path / "acquired"
+    raw = root / "zen_clue_lds" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    with zipfile.ZipFile(raw / "clue_head.zip", "w", zipfile.ZIP_DEFLATED) as z:
+        z.writestr(
+            "clue.json", "\n".join(_clue(n % 50, uid=f"u{n % 4}") for n in range(400)) + "\n"
+        )
+    blob = (raw / "clue_head.zip").read_bytes()
+    (raw / "clue_head.zip").write_bytes(blob[: len(blob) * 3 // 4])
+    monkeypatch.setattr(ev, "CLUE_MAX_EVENTS", 100)
+    manifest = {}
+    ev._build_clue(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "zen_clue_lds" / "events.csv"
+    assert len(pd.read_csv(target)) == 100
+    view = manifest["zen_clue_lds"]
+    assert view["files"] == {"events.csv": {"sha256": _sha(target), "rows": 100}}
+    assert view["sampling"]["stream_complete"] is False and view["sampling"]["events_kept"] == 100
+    assert view["sampling"]["events_read"] >= 100 and view["sampling"]["method"].startswith(
+        "zip prefix of clue.json"
+    )
+    assert view["dropped"] == ["params (paths, groups)", "location", "uidType"]
+    assert view["pseudonymised"] == ["user"]
+
+
+# --- XES event logs (process-mining logs of real organisations) -----------------------------------
+
+XES = """<?xml version="1.0" encoding="UTF-8"?>
+<log xes.version="1.0">
+ <trace><string key="concept:name" value="c1"/>
+  <event><string key="concept:name" value="A"/>
+   <date key="time:timestamp" value="2012-01-01T10:00:00.000+01:00"/>
+   <string key="lifecycle:transition" value="START"/><string key="org:resource" value="r1"/>
+   <float key="amount" value="5.5"/></event>
+  <event><string key="concept:name" value="B"/>
+   <date key="time:timestamp" value="2012-01-01T11:00:00.000+01:00"/></event>
+ </trace>
+ <trace><string key="concept:name" value="c2"/>
+  <event><string key="concept:name" value="A"/>
+   <date key="time:timestamp" value="2012-01-02T10:00:00.000+01:00"/>
+   <int key="amount" value="7"/></event>
+ </trace>
+ <trace><string key="concept:name" value="c3"/>
+  <event><string key="concept:name" value="C"/>
+   <date key="time:timestamp" value="2012-01-03T10:00:00.000+01:00"/></event>
+</log>
+"""
+
+
+def test_the_xes_view_flattens_events_orders_cases_by_hash_pseudonymises_resources_and_keeps_listed_numbers():  # noqa: E501
+    import io
+
+    import xes_stream
+
+    fixed = XES.replace("</event>\n</log>", "</event></trace></log>")
+    traces = xes_stream.read_traces(io.BytesIO(fixed.encode())).traces
+    out = ev.xes_view(traces, modulo=1, numeric=["amount"])
+    assert list(out.columns) == [
+        "case_id",
+        "position",
+        "time",
+        "activity",
+        "transition",
+        "resource",
+        "amount",
+    ]
+    assert out["case_id"].tolist() == ["c1", "c1", "c2", "c3"] and out["position"].tolist() == [
+        0,
+        1,
+        0,
+        0,
+    ]
+    assert out["activity"].tolist() == ["A", "B", "A", "C"]
+    assert out["time"].iloc[0] == pd.Timestamp("2012-01-01 09:00:00", tz="UTC")  # normalised to UTC
+    assert out["resource"].iloc[0] == ev.pseudonym("r1") and pd.isna(out["resource"].iloc[1])
+    assert out["transition"].iloc[0] == "START" and pd.isna(out["transition"].iloc[2])
+    assert (
+        out["amount"].tolist()[0] == 5.5
+        and pd.isna(out["amount"].iloc[1])
+        and out["amount"].iloc[2] == 7.0
+    )
+    import hashlib as _h
+
+    some = ev.xes_view(traces, modulo=2, numeric=[])
+    want = [c for c in ("c1", "c2", "c3") if int(_h.sha256(c.encode()).hexdigest(), 16) % 2 == 0]
+    assert sorted(some["case_id"].unique().tolist()) == want and "amount" not in some
+
+
+def test_the_xes_builder_reads_gz_and_plain_files_and_records_cut_and_sampling(
+    tmp_path, monkeypatch
+):
+    import gzip
+
+    root = tmp_path / "acquired"
+    for name, raw_name, data in (
+        (
+            "4tu_a",
+            "log.xes.gz",
+            gzip.compress(XES.replace("</event>\n</log>", "</event></trace></log>").encode()),
+        ),
+        ("4tu_b", "head.xes", XES[: XES.index('value="c3"')].encode()),
+    ):
+        folder = root / name / SNAP / "raw"
+        folder.mkdir(parents=True)
+        (folder / raw_name).write_bytes(data)
+    monkeypatch.setattr(ev, "XES_SPECS", {
+        "4tu_a": {"file": "log.xes.gz", "modulo": 1, "numeric": ["amount"], "partial": False},
+        "4tu_b": {"file": "head.xes", "modulo": 1, "numeric": [], "partial": True}})  # fmt: skip
+    manifest = {}
+    ev._build_xes(root, tmp_path / "o" / "deep", manifest)
+    a, b = manifest["4tu_a"], manifest["4tu_b"]
+    assert a["files"]["events.csv"]["rows"] == 4 and a["sampling"] == {"cases_read": 3, "cases_kept": 3, "modulo": 1, "stream_complete": True, "stop": "log_closed", "source_fragment": False, "selection": "complete traces in log order, then one case in 1 by case-name hash; a prefix of the log is not a random sample"}  # fmt: skip  # noqa: E501
+    assert b["files"]["events.csv"]["rows"] == 3 and b["sampling"]["cases_read"] == 2
+    assert b["sampling"]["stream_complete"] is False and b["sampling"]["source_fragment"] is True
+    assert b["sampling"]["stop"] == "input_ended_before_log_closed"
+    assert a["pseudonymised"] == ["resource"] and a["dropped"] == ["all trace and event attributes except activity, time, transition, resource and listed numbers"]  # fmt: skip  # noqa: E501
+
+
+# --- CSV event logs with an explicit schema mapping (one row is one event) ------------------------
+
+CSV_SPEC = {
+    "case": "Incident ID", "activity": "Type", "time": "Stamp", "format": "%d-%m-%Y %H:%M:%S",
+    "order": "Num", "resource": "Group", "modulo": 1, "sep": ";",
+}  # fmt: skip
+
+
+def _csv_events():
+    return pd.DataFrame(
+        {
+            "Incident ID": ["I2", "I1", "I1", "I1", "I3"],
+            "Type": ["Open", "Closed", "Open", "Assign", None],
+            "Stamp": ["02-01-2013 10:00:00", "05-01-2013 09:00:00", "01-01-2013 08:00:00",
+                      "01-01-2013 08:00:00", "03-01-2013 10:00:00"],
+            "Num": ["002", "003", "001", "00A", "004"],
+            "Group": ["T1", "T2", "T1", "T1", "T3"],
+        }
+    )  # fmt: skip
+
+
+def test_csv_event_view_orders_each_case_by_time_then_the_source_sequence_and_drops_unusable_rows():
+    out, info = ev.csv_event_view(_csv_events(), CSV_SPEC)
+    assert list(out.columns) == [
+        "case_id",
+        "position",
+        "time",
+        "activity",
+        "transition",
+        "resource",
+    ]
+    assert out["case_id"].tolist() == ["I1", "I1", "I1", "I2"]
+    assert out["activity"].tolist() == ["Open", "Assign", "Closed", "Open"]  # tie broken by Num
+    assert out["position"].tolist() == [0, 1, 2, 0]
+    assert out["time"].iloc[0] == pd.Timestamp("2013-01-01 08:00:00", tz="UTC")
+    assert out["resource"].iloc[0] == ev.pseudonym("T1") and out["transition"].isna().all()
+    assert info == {
+        "rows": 5,
+        "rows_without_activity": 1,
+        "rows_without_time": 0,
+        "cases": 3,
+        "cases_kept": 2,
+    }
+
+
+def test_csv_event_view_counts_unreadable_times_and_selects_cases_by_hash():
+    frame = _csv_events()
+    frame.loc[0, "Stamp"] = "not a date"
+    out, info = ev.csv_event_view(frame, {**CSV_SPEC, "modulo": 1})
+    assert info["rows_without_time"] == 1 and "I2" not in out["case_id"].tolist()
+    import hashlib as _h
+
+    some, rep = ev.csv_event_view(_csv_events(), {**CSV_SPEC, "modulo": 2})
+    want = {c for c in ("I1", "I2") if int(_h.sha256(c.encode()).hexdigest(), 16) % 2 == 0}
+    assert set(some["case_id"]) == want and rep["cases_kept"] == len(want)
+    with pytest.raises(ev.ViewError, match="column 'Stamp'"):
+        ev.csv_event_view(frame.drop(columns=["Stamp"]), CSV_SPEC)
+
+
+def test_the_csv_event_builder_reads_the_declared_file_and_records_the_mapping(
+    tmp_path, monkeypatch
+):
+    root = tmp_path / "acquired"
+    raw = root / "4tu_csv" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    (raw / "log.csv").write_text(
+        "Incident ID;Type;Stamp;Num;Group\nI1;Open;01-01-2013 08:00:00;001;T1\nI1;Closed;02-01-2013 08:00:00;002;T1\n"  # noqa: E501
+    )
+    monkeypatch.setattr(ev, "CSV_EVENT_SPECS", {"4tu_csv": {**CSV_SPEC, "file": "log.csv"}})
+    manifest = {}
+    ev._build_csv_events(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "4tu_csv" / "events.csv"
+    assert len(pd.read_csv(target)) == 2
+    view = manifest["4tu_csv"]
+    assert view["files"] == {"events.csv": {"sha256": _sha(target), "rows": 2}}
+    assert view["sampling"]["cases_kept"] == 1 and view["sampling"]["rows_without_time"] == 0
+    assert view["sampling"]["mapping"] == {"case": "Incident ID", "activity": "Type", "time": "Stamp", "order": "Num", "resource": "Group"}  # fmt: skip  # noqa: E501
+    assert view["pseudonymised"] == ["resource"]
+
+
+def test_table_sets_support_other_member_extensions_and_skip_missing_optional_tables(
+    tmp_path, monkeypatch
+):
+    import zipfile
+
+    root = tmp_path / "acquired"
+    raw = root / "feed_a" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    with zipfile.ZipFile(raw / "gtfs.zip", "w") as z:
+        z.writestr("routes.txt", "route_id,route_name\nR1,x\n")
+        z.writestr("trips.txt", "trip_id,route_id\nT1,R1\nT2,R9\n")
+    monkeypatch.setattr(ev, "TABLE_SETS", {"feed_a": {
+        "archive": {"file": "gtfs.zip", "prefix": "", "ext": ".txt"}, "sep": ",", "quote_none": False,  # noqa: E501
+        "dropped": ["names"],
+        "tables": {"routes": {"keep": ["route_id"]}, "trips": {"keep": ["trip_id", "route_id"]},
+                   "calendar": {"keep": ["service_id"], "optional": True}},
+        "relations": [["trips", "route_id", "routes", "route_id"], ["trips", "service_id", "calendar", "service_id"]]}})  # fmt: skip  # noqa: E501
+    manifest = {}
+    ev._build_tables(root, tmp_path / "o" / "deep", manifest)
+    folder = tmp_path / "o" / "deep" / "feed_a"
+    assert sorted(p.name for p in folder.iterdir()) == [
+        "routes.csv",
+        "trips.csv",
+    ]  # no calendar table
+    view = manifest["feed_a"]
+    assert sorted(view["files"]) == ["routes.csv", "trips.csv"]
+    assert view["relations"] == [{"child": "trips.route_id", "parent": "routes.route_id", "checked": 2, "orphans": 1, "share": 0.5}]  # fmt: skip  # noqa: E501
+    assert view["notes"].endswith("; optional tables absent from the archive: calendar")
+
+
+# --- Met Museum catalogue records (nested JSON, one request per object) ----------------------------  # noqa: E501
+
+
+def test_met_view_drops_biographies_and_images_deduplicates_and_sorts_by_object_id():
+    records = [
+        {"objectID": 9, "title": "b", "artistDisplayBio": "bio text", "primaryImage": "u", "additionalImages": ["x"],  # noqa: E501
+         "constituents": [{"name": "n", "role": "Artist"}], "measurements": [{"elementName": "Overall", "elementMeasurements": {"Height": 1.5}}]},  # noqa: E501
+        {"objectID": 3, "title": "a", "artistDisplayBio": "other", "tags": None},
+        {"objectID": 9, "title": "b again"},
+    ]  # fmt: skip
+    out = ev.met_objects_view(records)
+    assert [r["objectID"] for r in out] == [3, 9] and out[1][
+        "title"
+    ] == "b"  # first record per id wins
+    assert (
+        "artistDisplayBio" not in out[0]
+        and "primaryImage" not in out[1]
+        and "additionalImages" not in out[1]
+    )
+    assert out[1]["constituents"] == [{"name": "n", "role": "Artist"}]
+    assert out[1]["measurements"][0]["elementMeasurements"] == {
+        "Height": 1.5
+    }  # nested values are kept
+    assert records[0]["artistDisplayBio"] == "bio text"  # the input is untouched
+
+
+def test_the_met_builder_reads_the_object_files_in_id_order_and_counts_unreadable_ones(tmp_path):
+    root = tmp_path / "acquired"
+    raw = root / "met_museum_objects" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    for i in (20, 5, 11):
+        (raw / f"obj_{i}.json").write_text(
+            json.dumps({"objectID": i, "title": f"t{i}", "artistDisplayBio": "x"})
+        )
+    (raw / "obj_99.json").write_text("not json")
+    (raw / "manifest.json").write_text("{}")  # not an object file
+    manifest = {}
+    ev._build_met(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "met_museum_objects" / "objects.jsonl"
+    rows = [json.loads(x) for x in target.read_text().splitlines()]
+    assert [r["objectID"] for r in rows] == [5, 11, 20] and "artistDisplayBio" not in rows[0]
+    view = manifest["met_museum_objects"]
+    assert view["files"] == {"objects.jsonl": {"sha256": _sha(target), "rows": 3}}
+    assert view["sampling"] == {"object_files": 4, "unreadable": 1, "method": "object ids chosen as an even stride over the sorted listing, not random"}  # fmt: skip  # noqa: E501
+    assert view["dropped"] == [
+        "artistDisplayBio",
+        "primaryImage",
+        "primaryImageSmall",
+        "additionalImages",
+    ]
+
+
+# --- Environment Agency daily river flow: one csv per station, one network -----------------------
+
+
+def test_the_flow_builder_stacks_stations_into_a_panel_and_records_quality_shares(
+    tmp_path, monkeypatch
+):
+    root = tmp_path / "acquired"
+    raw = root / "ea_hydrology_flow" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    head = '"measure","dateTime","date","value","completeness","quality","qcode"\n'
+    (raw / "flow_s1.csv").write_text(
+        head + '"m1","2020-01-02T09:00:00","2020-01-02","2.5","Complete","Good",""\n'
+        '"m1","2020-01-01T09:00:00","2020-01-01","1.5","Incomplete","Estimated",""\n'
+    )
+    (raw / "flow_s2.csv").write_text(
+        head + '"m2","2020-01-01T09:00:00","2020-01-01","","Complete","Unchecked",""\n'
+    )
+    monkeypatch.setattr(ev, "EA_STATIONS", ["s1", "s2"])
+    manifest = {}
+    ev._build_ea(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "ea_hydrology_flow" / "flow.csv"
+    assert (
+        target.read_text()
+        == "timestamp,station,value\n2020-01-01,s1,1.5\n2020-01-02,s1,2.5\n2020-01-01,s2,\n"
+    )
+    view = manifest["ea_hydrology_flow"]
+    assert view["files"] == {"flow.csv": {"sha256": _sha(target), "rows": 3}}
+    assert view["sampling"] == {"stations": 2, "rows_dropped": 0, "complete_share": 0.6667, "missing_value_share": 0.3333,  # noqa: E501
+                                "method": "daily mean flow of stations chosen as an even stride over the sorted measure list"}  # fmt: skip  # noqa: E501
+
+
+# --- French property transactions (DVF): privacy-reduced sales rows --------------------------------  # noqa: E501
+
+
+def _dvf_frame():
+    return pd.DataFrame(
+        {
+            "id_mutation": ["2024-2", "2024-1", "2024-1", "2024-3"],
+            "date_mutation": ["2024-01-03", "2024-01-02", "2024-01-02", "2024-02-01"],
+            "nature_mutation": ["Vente", "Vente", "Vente", "Echange"],
+            "valeur_fonciere": ["10000", "346.5", "346.5", ""],
+            "adresse_nom_voie": ["RUE A", "RUE B", "RUE B", "RUE C"],
+            "id_parcelle": ["p1", "p2", "p2", "p3"],
+            "code_commune": ["69123", "69123", "69123", "69381"],
+            "type_local": ["Maison", "Appartement", None, "Maison"],
+            "surface_reelle_bati": ["100", "50", "", "80"],
+            "nombre_pieces_principales": ["4", "2", "", "3"],
+            "surface_terrain": ["500", "", "20", "300"],
+            "longitude": ["4.8", "4.9", "4.9", "4.7"],
+            "latitude": ["45.7", "45.8", "45.8", "45.6"],
+        }
+    )  # fmt: skip
+
+
+def test_dvf_view_keeps_commercial_fields_pseudonymises_the_mutation_and_drops_addresses_and_positions():  # noqa: E501
+    out = ev.dvf_view(_dvf_frame())
+    assert list(out.columns) == list(ev.DVF_COLUMNS)
+    assert ev.DVF_COLUMNS == (
+        "mutation", "date", "nature", "value_eur", "commune", "local_type", "built_area_m2", "rooms", "land_area_m2",  # noqa: E501
+    )  # fmt: skip
+    assert out["date"].tolist() == sorted(out["date"].tolist())  # date order
+    assert out["mutation"].iloc[0] == ev.pseudonym("2024-1") and out["mutation"].iloc[
+        2
+    ] == ev.pseudonym("2024-2")
+    assert out["value_eur"].tolist()[:2] == [346.5, 346.5] and pd.isna(out["value_eur"].iloc[3])
+    assert out["commune"].tolist()[0] == "69123" and out["local_type"].iloc[0] == "Appartement"
+    assert pd.isna(out["rooms"].iloc[1]) and out["land_area_m2"].iloc[1] == 20.0
+    for gone in ("adresse_nom_voie", "id_parcelle", "longitude", "latitude", "id_mutation"):
+        assert gone not in out
+    with pytest.raises(ev.ViewError, match="column 'valeur_fonciere'"):
+        ev.dvf_view(_dvf_frame().drop(columns=["valeur_fonciere"]))
+
+
+def test_the_dvf_builder_reads_the_gzip_csv_and_records_the_department_scope(tmp_path):
+    import gzip
+
+    root = tmp_path / "acquired"
+    raw = root / "dgfip_dvf" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    (raw / "dvf_69_2024.csv.gz").write_bytes(
+        gzip.compress(_dvf_frame().to_csv(index=False).encode())
+    )
+    manifest = {}
+    ev._build_dvf(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "dgfip_dvf" / "sales.csv"
+    assert len(pd.read_csv(target)) == 4
+    view = manifest["dgfip_dvf"]
+    assert view["files"] == {"sales.csv": {"sha256": _sha(target), "rows": 4}}
+    assert view["pseudonymised"] == ["mutation"] and "address" in view["dropped"][0]
+    assert view["sampling"] == {"scope": "department 69 (Rhone), transactions of 2024 only", "rows": 4, "rows_without_value": 1}  # fmt: skip  # noqa: E501
+
+
+def test_the_gtfs_template_keeps_only_keys_and_the_three_relations_and_registers_every_feed():
+    spec = ev._gtfs_spec("feed.zip")
+    assert spec == {
+        "archive": {"file": "feed.zip", "prefix": "", "ext": ".txt"},
+        "sep": ",",
+        "quote_none": False,
+        "dropped": ["stop and route names", "coordinates", "shapes", "fares", "free text"],
+        "tables": {
+            "routes": {"keep": ["route_id", "route_type"]},
+            "trips": {"keep": ["trip_id", "route_id", "service_id"]},
+            "stop_times": {"keep": ["trip_id", "stop_id", "stop_sequence"]},
+            "stops": {"keep": ["stop_id"]},
+            "calendar_dates": {"keep": ["service_id", "date", "exception_type"], "optional": True},
+        },
+        "relations": [
+            ["trips", "route_id", "routes", "route_id"],
+            ["stop_times", "trip_id", "trips", "trip_id"],
+            ["stop_times", "stop_id", "stops", "stop_id"],
+        ],
+    }
+    assert len(ev.GTFS_FEEDS) == 12 and all(
+        name.endswith(".zip") for name in ev.GTFS_FEEDS.values()
+    )
+    assert all(
+        source in ev.TABLE_SETS for source in ev.GTFS_FEEDS
+    )  # the real registry holds every feed
+
+
+# --- UK Price Paid Data (property sales of England and Wales) --------------------------------------  # noqa: E501
+
+PPD_HEAD = (
+    '"{A}","320000","2024-03-20 00:00","NR9 5FP","D","Y","F","24","","DUSTY MILLER DRIVE","EASTON",'
+    '"NORWICH","SOUTH NORFOLK","NORFOLK","A","A"\n'
+    '"{B}","291000","2024-01-26 00:00","NR20 3UF","S","N","L","8","FLAT 2","CLIFTONVILLE DRIVE","",'
+    '"DEREHAM","BRECKLAND","NORFOLK","B","A"\n'
+)
+
+
+def test_price_paid_view_keeps_the_commercial_fields_a_postcode_district_and_a_salted_transaction_id():  # noqa: E501
+    frame, cut = ev.csv_prefix_no_header(PPD_HEAD.encode() + b'"{C}","1","2024')
+    assert cut == len(b'"{C}","1","2024') and len(frame) == 2
+    out = ev.price_paid_view(frame)
+    assert list(out.columns) == list(ev.PPD_COLUMNS)
+    assert ev.PPD_COLUMNS == (
+        "transaction", "price_gbp", "date", "postcode_district", "property_type", "new_build",
+        "tenure", "county", "ppd_category", "status",
+    )  # fmt: skip
+    assert out["date"].tolist() == ["2024-01-26", "2024-03-20"]  # date order, time of day dropped
+    assert out["price_gbp"].tolist() == [291000, 320000] and str(out["price_gbp"].dtype) == "int64"
+    assert out["postcode_district"].tolist() == ["NR20", "NR9"]
+    assert out["transaction"].tolist() == [ev.pseudonym("{B}"), ev.pseudonym("{A}")]
+    assert out["property_type"].tolist() == ["S", "D"] and out["new_build"].tolist() == ["N", "Y"]
+    assert out["tenure"].tolist() == ["L", "F"] and out["county"].tolist() == ["NORFOLK", "NORFOLK"]
+    assert out["ppd_category"].tolist() == ["B", "A"] and out["status"].tolist() == ["A", "A"]
+    for gone in ("street", "paon", "saon", "locality", "town", "district"):
+        assert gone not in out
+    with pytest.raises(ev.ViewError, match="16 columns"):
+        ev.price_paid_view(frame.iloc[:, :10])
+
+
+def test_the_price_paid_builder_reads_the_fragment_and_records_the_cut_and_the_scope(tmp_path):
+    root = tmp_path / "acquired"
+    raw = root / "hmlr_price_paid" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    (raw / "pp-2024_head.csv").write_bytes(PPD_HEAD.encode() + b'"{C}","5000')
+    manifest = {}
+    ev._build_ppd(root, tmp_path / "o" / "deep", manifest)
+    ev._build_ppd(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "hmlr_price_paid" / "sales.csv"
+    assert len(pd.read_csv(target)) == 2
+    view = manifest["hmlr_price_paid"]
+    assert view["files"] == {"sales.csv": {"sha256": _sha(target), "rows": 2}}
+    assert view["pseudonymised"] == ["transaction"] and view["salt_label"] == ev.SALT
+    assert view["dropped"] == [
+        "street, house number, flat, locality, town and district",
+        "postcode unit",
+    ]
+    assert view["sampling"] == {"method": "first bytes of the 2024 file (HTTP range from byte 0), file order, not random", "rows": 2, "bytes_cut_partial_line": 11}  # fmt: skip  # noqa: E501
+
+
+# --- Online Retail invoice lines (UK e-commerce) ----------------------------------------------------  # noqa: E501
+
+
+def _retail_frame():
+    return pd.DataFrame(
+        {
+            "InvoiceNo": ["536366", "C536379", "536365", "536365"],
+            "StockCode": ["22633", "D", "85123A", "71053"],
+            "Description": ["HAND WARMER", "Discount", "WHITE HANGING HEART", "WHITE METAL LANTERN"],  # noqa: E501
+            "Quantity": ["6", "-1", "6", "x"],
+            "InvoiceDate": ["12/1/2010 8:28", "12/1/2010 9:41", "12/1/2010 8:26", "12/1/2010 8:26"],
+            "UnitPrice": ["1.85", "27.50", "2.55", "3.39"],
+            "CustomerID": ["17850", None, "17850", "13047.0"],
+            "Country": ["United Kingdom", "United Kingdom", "United Kingdom", "France"],
+        }
+    )  # fmt: skip
+
+
+def test_retail_view_pseudonymises_invoices_and_customers_flags_cancellations_and_computes_line_values():  # noqa: E501
+    out = ev.retail_view(_retail_frame())
+    assert list(out.columns) == list(ev.RETAIL_COLUMNS)
+    assert ev.RETAIL_COLUMNS == (
+        "timestamp", "invoice", "stock_code", "quantity", "unit_price", "line_value", "customer", "country", "cancellation",  # noqa: E501
+    )  # fmt: skip
+    assert out["timestamp"].tolist() == sorted(out["timestamp"].tolist())
+    assert out["invoice"].tolist()[:2] == [ev.pseudonym("536365")] * 2
+    assert out["cancellation"].tolist() == [
+        False,
+        False,
+        False,
+        True,
+    ]  # the invoice number starts with C
+    assert out["customer"].iloc[0] == ev.pseudonym("17850") and pd.isna(out["customer"].iloc[3])
+    assert out["customer"].iloc[1] == ev.pseudonym(
+        "13047"
+    )  # a float-formatted id is the same customer
+    assert (
+        out["line_value"].iloc[0] == pytest.approx(15.3)
+        and out["quantity"].iloc[1] != out["quantity"].iloc[1]
+    )  # x is missing
+    assert pd.isna(out["line_value"].iloc[1])
+    assert out["cancellation"].dtype == bool and out["stock_code"].tolist()[0] == "85123A"
+    for gone in ("Description", "InvoiceNo", "CustomerID"):
+        assert gone not in out
+    with pytest.raises(ev.ViewError, match="column 'UnitPrice'"):
+        ev.retail_view(_retail_frame().drop(columns=["UnitPrice"]))
+
+
+def test_the_retail_builder_reads_the_pinned_table_and_records_what_it_dropped(tmp_path):
+    root = tmp_path / "acquired"
+    (tmp_path / "uci_wave2").mkdir()
+    _retail_frame().to_csv(tmp_path / "uci_wave2" / "352.csv", index=False)
+    manifest: dict = {}
+    ev._build_retail(root, tmp_path / "o", manifest)
+    ev._build_retail(root, tmp_path / "o", manifest)
+    target = tmp_path / "o" / "uci_online_retail" / "lines.csv"
+    assert len(pd.read_csv(target)) == 4 and target.read_text().splitlines()[0] == ",".join(
+        ev.RETAIL_COLUMNS
+    )
+    view = manifest["uci_online_retail"]
+    assert view["files"] == {"lines.csv": {"sha256": _sha(target), "rows": 4}}
+    assert view["dropped"] == ["product description (free text)"] and view["pseudonymised"] == [
+        "invoice",
+        "customer",
+    ]
+    assert view["salt_label"] == ev.SALT and view["sampling"] == {
+        "rows_in": 4,
+        "cancellations": 1,
+        "rows_without_customer": 1,
+    }
+    assert view["source_snapshot"] == "uci:352 (repository file pinned by checksum)"
+
+
+def test_retail_view_turns_unreadable_prices_customers_and_dates_into_missing_values():
+    raw = _retail_frame()
+    raw.loc[0, "UnitPrice"] = "n/a"
+    raw.loc[2, "CustomerID"] = "unknown"
+    raw.loc[3, "InvoiceDate"] = "not a date"
+    out = ev.retail_view(raw)
+    assert out["timestamp"].isna().sum() == 1 and out["timestamp"].iloc[-1] is pd.NaT
+    assert out["unit_price"].isna().sum() == 1 and out["line_value"].isna().sum() >= 1
+    assert out["customer"].isna().sum() == 2  # the missing id and the unreadable one
+    ok = ev.retail_view(
+        pd.DataFrame({**_retail_frame().to_dict("list"), "InvoiceDate": ["13/01/2010 9:00"] * 4})
+    )
+    assert ok["timestamp"].isna().all()  # the declared month-first layout rejects a day-first date
+
+
+def test_retail_view_reads_dates_in_the_declared_month_first_layout():
+    raw = _retail_frame()
+    raw["InvoiceDate"] = ["12/1/2010 8:28", "1/12/2011 9:41", "12/13/2010 8:26", "2/3/2011 8:26"]
+    out = ev.retail_view(raw)
+    assert sorted(out["timestamp"].dt.month) == [1, 2, 12, 12]
+    assert out["timestamp"].min() == pd.Timestamp("2010-12-01 08:28")
+
+
+def test_the_retail_builder_keeps_codes_with_leading_zeros_as_text(tmp_path):
+    root = tmp_path / "acquired"
+    (tmp_path / "uci_wave2").mkdir()
+    frame = _retail_frame()
+    frame["StockCode"] = ["00123", "0042", "85123", "0007"]
+    frame.to_csv(tmp_path / "uci_wave2" / "352.csv", index=False)
+    ev._build_retail(root, tmp_path / "o", {})
+    out = pd.read_csv(tmp_path / "o" / "uci_online_retail" / "lines.csv", dtype=str)
+    assert sorted(out["stock_code"]) == ["0007", "00123", "0042", "85123"]
+    assert (
+        out["quantity"].tolist().count("6.0") == 2
+    )  # numbers were parsed by the view, not the reader
+
+
+# --- Paleobiology Database occurrences ---------------------------------------------------------------  # noqa: E501
+
+
+def _pbdb_frame():
+    base = {c: ["x", " Mammalia ", "", None] for c in ev.PBDB_TEXT}
+    base.update({c: ["1.5", "bad", "3", None] for c in ev.PBDB_NUMBER})
+    base["occurrence_no"] = ["30", "10", "20", "x"]
+    base["collection_no"] = ["1", "1", "2", "3"]
+    base["accepted_no"] = ["30", "30", "50", None]
+    base["reference_no"] = ["9", "9", "8", "7"]
+    base["enterer"] = ["a person", "b", "c", "d"]  # contributor names must not reach the view
+    base["collection_aka"] = ["free text"] * 4
+    return pd.DataFrame(base)
+
+
+def test_pbdb_view_keeps_the_named_columns_trims_text_and_turns_unreadable_numbers_into_missing():
+    out = ev.pbdb_occurrence_view(_pbdb_frame())
+    assert list(out.columns) == list(ev.PBDB_COLUMNS) and ev.PBDB_COLUMNS[0] == "occurrence_no"
+    assert out["occurrence_no"].iloc[:3].tolist() == [10, 20, 30] and pd.isna(
+        out["occurrence_no"].iloc[3]
+    )
+    assert out["class"].tolist() == [
+        "Mammalia",
+        pd.NA,
+        "x",
+        pd.NA,
+    ]  # trimmed; blank and missing both missing
+    assert out.loc[out["occurrence_no"] == 10, "max_ma"].isna().all()
+    assert out.loc[out["occurrence_no"] == 30, "max_ma"].iloc[0] == 1.5
+    assert "enterer" not in out and "collection_aka" not in out
+    with pytest.raises(ev.ViewError, match="columns not found: .*'lat'"):
+        ev.pbdb_occurrence_view(_pbdb_frame().drop(columns=["lat"]))
+
+
+# --- Kelmarsh wind farm SCADA ------------------------------------------------------------------------  # noqa: E501
+
+
+def _kelmarsh_text(turbine=1, rows=None, extra="Lost Production (kWh)"):
+    """A file in the exported layout: comment lines, a commented column header, then data lines."""
+    names = ["Date and time", *ev.KELMARSH_SIGNALS, extra]
+    rows = rows if rows is not None else [
+        ["2016-01-03 00:10:00"] + ["2.5"] * len(ev.KELMARSH_SIGNALS) + ["9"],
+        ["2016-01-03 00:00:00"] + ["NaN"] * len(ev.KELMARSH_SIGNALS) + ["9"],
+    ]  # fmt: skip
+    head = f"# This file was exported by a tool.\n#\n# Turbine: Kelmarsh {turbine}\n#\n"
+    header = "# " + ",".join(f'"{n}"' if "," in n else n for n in names)
+    return head + header + "\n" + "\n".join(",".join(r) for r in rows) + "\n"
+
+
+def _kelmarsh_zip(path, turbines=(1, 2), text=None):
+    import zipfile as _zk
+
+    with _zk.ZipFile(path, "w") as z:
+        for t in turbines:
+            z.writestr(
+                f"Turbine_Data_Kelmarsh_{t}_2016-01-03_-_2017-01-01_22{t}.csv",
+                text or _kelmarsh_text(t),
+            )
+            z.writestr(f"Status_Kelmarsh_{t}_2016-01-03_-_2017-01-01_22{t}.csv", "# status\n")
+
+
+def test_kelmarsh_view_renames_signals_keeps_missing_values_and_sorts_by_time():
+    names = ["Date and time", *ev.KELMARSH_SIGNALS]
+    raw = pd.DataFrame(
+        [["2016-01-03 00:10:00"] + [2.5] * len(ev.KELMARSH_SIGNALS),
+         ["2016-01-03 00:00:00"] + [None] * len(ev.KELMARSH_SIGNALS),
+         ["bad"] + [1.0] * len(ev.KELMARSH_SIGNALS)],
+        columns=names,
+    )  # fmt: skip
+    out = ev.kelmarsh_view(raw, "T3")
+    assert list(out.columns) == list(ev.KELMARSH_COLUMNS) and ev.KELMARSH_COLUMNS[:2] == (
+        "timestamp",
+        "turbine",
+    )
+    assert len(out) == 2 and out["turbine"].tolist() == [
+        "T3",
+        "T3",
+    ]  # the unreadable time is dropped
+    assert out["timestamp"].is_monotonic_increasing and out["wind_speed"].isna().tolist() == [
+        True,
+        False,
+    ]
+    assert out["power_kw"].iloc[1] == 2.5 and out["generator_rpm"].dtype == "float64"
+    with pytest.raises(ev.ViewError, match="columns not found: .*Power"):
+        ev.kelmarsh_view(raw.drop(columns=["Power (kW)"]), "T3")
+
+
+def test_kelmarsh_header_is_found_in_the_comment_block_and_a_missing_one_is_an_error():
+    lines = _kelmarsh_text().split("\n")
+    index, header = ev._kelmarsh_header(lines)
+    assert index == 4 and header[0] == "Date and time" and header[-1] == "Lost Production (kWh)"
+    assert "Wind speed, Standard deviation (m/s)" not in header
+    with pytest.raises(ev.ViewError, match="column header line not found"):
+        ev._kelmarsh_header(["# nothing", "1,2"])
+
+
+def test_the_kelmarsh_builder_stacks_the_turbines_reads_nan_as_missing_and_records_sampling(
+    tmp_path,
+):
+    raw = tmp_path / "acquired" / "zen_kelmarsh" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    _kelmarsh_zip(raw / "Kelmarsh_SCADA_2016_3082.zip")
+    manifest: dict = {}
+    ev._build_kelmarsh(tmp_path / "acquired", tmp_path / "o", manifest)
+    out = pd.read_csv(tmp_path / "o" / "zen_kelmarsh" / "series.csv")
+    assert out["turbine"].tolist() == ["T1", "T1", "T2", "T2"]
+    assert out["timestamp"].iloc[:2].tolist() == ["2016-01-03 00:00:00", "2016-01-03 00:10:00"]
+    assert (
+        out["wind_speed"].isna().tolist() == [True, False, True, False]
+        and out["power_kw"].iloc[1] == 2.5
+    )
+    view = manifest["zen_kelmarsh"]
+    assert view["sampling"] == {"method": view["sampling"]["method"], "turbines": 2, "rows_in": 4}
+    assert (
+        "2016" in view["sampling"]["method"] and view["source_snapshot"] == f"zen_kelmarsh/{SNAP}"
+    )
+    assert view["files"]["series.csv"]["rows"] == 4 and view["pseudonymised"] == []
+
+
+def test_the_kelmarsh_builder_refuses_an_archive_without_turbine_files_or_header(tmp_path):
+    import zipfile as _zk
+
+    raw = tmp_path / "acquired" / "zen_kelmarsh" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    with _zk.ZipFile(raw / "Kelmarsh_SCADA_2016_3082.zip", "w") as z:
+        z.writestr("Status_Kelmarsh_1_x.csv", "# status\n")
+    with pytest.raises(ev.ViewError, match="no turbine data file in the archive"):
+        ev._build_kelmarsh(tmp_path / "acquired", tmp_path / "o", {})
+    _kelmarsh_zip(raw / "Kelmarsh_SCADA_2016_3082.zip", text="no header here\n1,2\n")
+    with pytest.raises(ev.ViewError, match="column header line not found"):
+        ev._build_kelmarsh(tmp_path / "acquired", tmp_path / "o", {})
+
+
+# --- Wikidata items ----------------------------------------------------------------------------------  # noqa: E501
+
+
+def _wd_item(number, instance=None, extra=None):
+    claims = {}
+    if instance:
+        claims["P31"] = [{"mainsnak": {"datavalue": {"value": {"id": instance}}}}]
+    item = {
+        "id": f"Q{number}",
+        "type": "item",
+        "labels": {"en": {"language": "en", "value": f"x{number}"}},
+        "claims": claims,
+    }
+    item.update(extra or {})
+    return item
+
+
+def test_wikidata_view_drops_people_keeps_everything_else_and_orders_by_identifier():
+    records = [_wd_item(30, "Q5"), _wd_item(100, "Q13442814"), _wd_item(9), _wd_item(100, "Q5"), _wd_item(7, "Q5"),  # noqa: E501
+               _wd_item(20, "Q6256", {"sitelinks": {"enwiki": {"title": "T"}}})]  # fmt: skip
+    view, people = ev.wikidata_view(records)
+    assert [r["id"] for r in view] == [
+        "Q9",
+        "Q20",
+        "Q100",
+    ] and people == 2  # Q100 keeps its first record
+    assert (
+        view[1]["sitelinks"] == {"enwiki": {"title": "T"}}
+        and view[2]["claims"]["P31"][0]["mainsnak"]["datavalue"]["value"]["id"] == "Q13442814"
+    )
+    assert (
+        ev.wikidata_view([])[1] == 0
+        and ev.wikidata_view([_wd_item(1)])[0][0]["labels"]["en"]["value"] == "x1"
+    )
+
+
+def test_a_human_is_recognised_only_by_an_instance_of_human_claim():
+    assert (
+        ev._is_human(_wd_item(1, "Q5"))
+        and not ev._is_human(_wd_item(1, "Q6256"))
+        and not ev._is_human(_wd_item(1))
+    )
+    odd = {
+        "id": "Q1",
+        "claims": {
+            "P31": [
+                {"mainsnak": {"snaktype": "novalue"}},
+                {"mainsnak": {"datavalue": {"value": "Q5"}}},
+            ]
+        },
+    }
+    assert not ev._is_human(odd)
+    assert not ev._is_human(
+        {"id": "Q1", "claims": {"P279": [{"mainsnak": {"datavalue": {"value": {"id": "Q5"}}}}]}}
+    )
+
+
+def test_the_wikidata_builder_skips_missing_items_counts_people_and_writes_sorted_json_lines(
+    tmp_path,
+):
+    raw = tmp_path / "acquired" / "wikidata_entities" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    (raw / "entities_01.json").write_text(
+        json.dumps({"entities": {"Q50": _wd_item(50), "Q51": {"id": "Q51", "missing": ""}}})
+    )
+    (raw / "entities_00.json").write_text(
+        json.dumps(
+            {
+                "entities": {
+                    "Q5000": _wd_item(5000, "Q5"),
+                    "Q40": _wd_item(40, "Q1", {"z": 1, "a": 2}),
+                }
+            }
+        )
+    )
+    manifest: dict = {}
+    ev._build_wikidata(tmp_path / "acquired", tmp_path / "o", manifest)
+    lines = (tmp_path / "o" / "wikidata_entities" / "items.jsonl").read_text().splitlines()
+    assert [json.loads(line)["id"] for line in lines] == ["Q40", "Q50"]
+    assert lines[0].startswith('{"a": 2, "claims"') and lines[0].endswith('"z": 1}')  # keys sorted
+    view = manifest["wikidata_entities"]
+    assert (
+        view["sampling"]["identifiers_absent"] == 1
+        and view["sampling"]["people_dropped"] == 1
+        and view["sampling"]["request_files"] == 2
+    )
+    assert view["files"]["items.jsonl"]["rows"] == 2 and view["dropped"] == [
+        "items that are instances of human"
+    ]
+    assert view["source_snapshot"] == f"wikidata_entities/{SNAP}"
+
+
+# --- Grid-scale battery systems ----------------------------------------------------------------------  # noqa: E501
+
+
+def _bess_frame():
+    return pd.DataFrame(
+        {
+            "HoursElapsed": [1.0, 0.0, 0.0, None], "DayNumber": [0, 0, 0, 1],
+            "Meter": ["PDC", "PDC", "PAC", "PAC"], "Power": [0.5, 0.1, 0.2, 0.3],
+            "RequestedPower": [None, None, 0.2, 0.3], "ReactivePower": [None] * 4,
+            "RequestedReactivePower": [None] * 4, "Voltage": [3.3, 3.2, None, None],
+            "VoltageMax": [None] * 4, "VoltageMin": [None] * 4, "VoltageAvg": [3.3, 3.2, None, None],  # noqa: E501
+            "Current": [0.1, 0.0, None, None], "SOC": [0.9, 0.8, None, None],
+            "TempMax": [None] * 4, "TempMin": [None] * 4, "TempAvg": [25.0, 24.0, None, None],
+            "TempAmbient": [None] * 4, "QualityFlag": [False, True, False, False],
+            "CycleIndex": ["0Out", "1", "0Out", "2"], "Use": [True, False, True, True],
+        }
+    )  # fmt: skip
+
+
+def test_bess_view_keeps_missing_channels_and_flags_in_elapsed_time_order():
+    out = ev.bess_view(_bess_frame(), "SYS")
+    assert list(out.columns) == list(ev.BESS_COLUMNS) and ev.BESS_COLUMNS[:3] == (
+        "system",
+        "meter",
+        "hours_elapsed",
+    )
+    assert len(out) == 3 and set(out["system"]) == {
+        "SYS"
+    }  # the row without elapsed time is dropped
+    assert out[["hours_elapsed", "meter"]].values.tolist() == [
+        [0.0, "PAC"],
+        [0.0, "PDC"],
+        [1.0, "PDC"],
+    ]
+    assert out["voltage"].isna().tolist() == [True, False, False] and out["soc"].iloc[2] == 0.9
+    assert (
+        out["quality_flag"].tolist() == [False, True, False] and out["quality_flag"].dtype == bool
+    )
+    assert out["cycle_index"].tolist() == ["0Out", "1", "0Out"] and out["use"].tolist() == [
+        True,
+        False,
+        True,
+    ]
+    with pytest.raises(ev.ViewError, match="columns not found: .*SOC"):
+        ev.bess_view(_bess_frame().drop(columns=["SOC"]), "SYS")
+
+
+def test_the_bess_builder_stacks_the_system_files_and_refuses_an_empty_snapshot(tmp_path):
+    import pyarrow as _pa
+    import pyarrow.feather as _fe
+
+    raw = tmp_path / "acquired" / "zen_bess" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    with pytest.raises(ev.ViewError, match="no feather file in the snapshot"):
+        ev._build_bess(tmp_path / "acquired", tmp_path / "o", {})
+    for name in ("B_SYS", "A_SYS"):
+        _fe.write_feather(
+            _pa.Table.from_pandas(_bess_frame(), preserve_index=False), raw / f"{name}.feather"
+        )
+    manifest: dict = {}
+    ev._build_bess(tmp_path / "acquired", tmp_path / "o", manifest)
+    out = pd.read_csv(tmp_path / "o" / "zen_bess" / "readings.csv")
+    assert out["system"].tolist() == ["A_SYS"] * 3 + ["B_SYS"] * 3
+    view = manifest["zen_bess"]
+    assert view["sampling"]["systems"] == ["A_SYS", "B_SYS"] and view["sampling"]["rows_in"] == 6
+    assert (
+        view["files"]["readings.csv"]["rows"] == 6 and view["source_snapshot"] == f"zen_bess/{SNAP}"
+    )
+
+
+# --- CARE to Compare, Wind Farm B -------------------------------------------------------------------  # noqa: E501
+
+
+def _zip_local(name, content, method=8):
+    import struct as _st
+    import zlib as _zl
+
+    if method == 8:
+        packer = _zl.compressobj(wbits=-15)
+        body = packer.compress(content) + packer.flush()
+    else:
+        body = content
+    header = b"PK\x03\x04" + _st.pack(
+        "<HHHHHIIIHH", 20, 0, method, 0, 0, 0, len(body), len(content), len(name), 0
+    )
+    return header + name.encode() + body
+
+
+def _care_frame(rows=3):
+    data = {
+        "time_stamp": ["2023-01-01 00:20:00", "2023-01-01 00:00:00", "2023-01-01 00:10:00"][:rows],
+        "asset_id": [7] * rows, "id": [3, 1, 2][:rows], "train_test": ["train", "train", "prediction"][:rows],  # noqa: E501
+        "status_type_id": [0, 2, 4][:rows], "sensor_0_avg": [1.5, None, 3.0][:rows], "sensor_0_max": [9.0] * rows,  # noqa: E501
+        "sensor_1_avg": ["x", "2", "3"][:rows], "sensor_1_std": [0.1] * rows,
+    }  # fmt: skip
+    return pd.DataFrame(data)
+
+
+def test_zip_local_member_reads_a_deflated_member_and_refuses_damaged_or_unsupported_ones():
+    content = b"a;b\n1;2\n" * 50
+    assert ev.zip_local_member(_zip_local("m.csv", content) + b"PK\x03\x04next") == content
+    with pytest.raises(ev.ViewError, match="^unsupported zip method 0$"):
+        ev.zip_local_member(_zip_local("m.csv", b"x", method=0))
+    with pytest.raises(ev.ViewError, match="^not a zip local header$"):
+        ev.zip_local_member(b"PK\x01\x02" + b"\0" * 40)
+    with pytest.raises(ev.ViewError, match="^not a zip local header$"):
+        ev.zip_local_member(b"PK\x03\x04")
+    cut = _zip_local("m.csv", content)[:-8]
+    with pytest.raises(ev.ViewError, match="^deflate stream incomplete$"):
+        ev.zip_local_member(cut)
+    with pytest.raises(ev.ViewError, match="^member larger than the limit$"):
+        ev.zip_local_member(_zip_local("m.csv", content), max_out=10)
+    assert (
+        ev.zip_local_member(_zip_local("m.csv", b"x" * 10), max_out=10) == b"x" * 10
+    )  # exactly at the limit
+
+
+def test_care_view_keeps_the_average_sensors_status_and_phase_and_orders_by_time():
+    out = ev.care_series_view(_care_frame(), 34)
+    assert list(out.columns) == [*ev.CARE_META, "sensor_0_avg", "sensor_1_avg"]
+    assert out["event_id"].tolist() == [34, 34, 34] and out["row_id"].tolist() == [1, 2, 3]
+    assert out["train_test"].tolist() == ["train", "prediction", "train"] and out[
+        "status_type"
+    ].tolist() == [2, 4, 0]
+    assert out["sensor_0_avg"].isna().tolist() == [True, False, False]
+    assert out["sensor_1_avg"].iloc[:2].tolist() == [2.0, 3.0] and pd.isna(
+        out["sensor_1_avg"].iloc[2]
+    )  # "x" is unreadable
+    assert out["asset_id"].tolist() == [7, 7, 7] and out["time_stamp"].is_monotonic_increasing
+    for gone in ("sensor_0_max", "sensor_1_std"):
+        assert gone not in out
+    with pytest.raises(ev.ViewError, match="^columns not found: \\['status_type_id'\\]$"):
+        ev.care_series_view(_care_frame().drop(columns=["status_type_id"]), 1)
+    with pytest.raises(ev.ViewError, match="^no average sensor columns$"):
+        ev.care_series_view(
+            _care_frame()[["time_stamp", "asset_id", "id", "train_test", "status_type_id"]], 1
+        )
+    bad = _care_frame()
+    bad.loc[0, "time_stamp"] = "not a time"
+    assert len(ev.care_series_view(bad, 1)) == 2  # a row without a readable time is dropped
+
+
+def _care_snapshot(root, ids=(5, 2, 3)):
+    raw = root / "zen_care_wind_b" / ev.CARE_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    info = "asset_id;event_id;event_label;event_start;event_start_id;event_end;event_end_id;event_description\n"  # noqa: E501
+    info += "7;5;anomaly;2023-01-01 00:00:00;1;2023-01-02 00:00:00;2;high temperature\n"
+    info += "8;2;normal;2023-01-01 00:00:00;1;2023-01-02 00:00:00;2;\n"
+    info += "9;9;normal;2023-01-01 00:00:00;1;2023-01-02 00:00:00;2;\n"
+    info += "8;3;normal;2023-01-01 00:00:00;1;2023-01-02 00:00:00;2;\n"
+    (raw / "event_info.csv").write_bytes(_zip_local("info", info.encode()))
+    for event_id in ids:
+        csv_text = _care_frame().assign(asset_id=event_id).to_csv(sep=";", index=False)
+        (raw / f"{event_id}.csv").write_bytes(_zip_local(f"{event_id}.csv", csv_text.encode()))
+
+
+def test_the_care_builder_stacks_the_datasets_and_keeps_the_natural_labels_in_a_separate_file(
+    tmp_path,
+):
+    _care_snapshot(tmp_path / "acquired")
+    (
+        tmp_path
+        / "acquired"
+        / "zen_care_wind_b"
+        / ev.CARE_SNAPSHOT
+        / "raw"
+        / "feature_description.csv"
+    ).write_bytes(b"x")
+    manifest: dict = {}
+    ev._build_care(tmp_path / "acquired", tmp_path / "o", manifest)
+    folder = tmp_path / "o" / "zen_care_wind_b"
+    series = pd.read_csv(folder / "series.csv")
+    assert (
+        series["event_id"].tolist() == [2] * 3 + [3] * 3 + [5] * 3
+    )  # datasets in identifier order
+    assert "event_label" not in series and "event_description" not in series
+    events = pd.read_csv(folder / "events.csv")
+    assert events["event_id"].tolist() == [2, 3, 5, 9]
+    assert events["in_view"].tolist() == [True, True, True, False]
+    assert events["event_label"].tolist() == ["normal", "normal", "anomaly", "normal"]
+    view = manifest["zen_care_wind_b"]
+    assert (
+        view["sampling"]["datasets"] == [2, 3, 5]
+        and view["sampling"]["anomaly_datasets_in_view"] == 1
+    )
+    assert view["sampling"]["rows_in"] == 9 and view["files"]["events.csv"]["rows"] == 4
+    assert (
+        view["source_snapshot"] == f"zen_care_wind_b/{ev.CARE_SNAPSHOT}"
+        and view["pseudonymised"] == []
+    )
+
+
+def test_the_care_builder_refuses_a_snapshot_without_datasets(tmp_path):
+    _care_snapshot(tmp_path / "acquired", ids=())
+    with pytest.raises(ev.ViewError, match="^no dataset in the snapshot$"):
+        ev._build_care(tmp_path / "acquired", tmp_path / "o", {})
+
+
+def test_zip_local_member_header_boundaries_extra_field_and_wide_name_lengths():
+    import struct as _st
+
+    bare = b"PK\x03\x04" + b"\0" * 26  # exactly 30 bytes: a header with nothing after it
+    assert len(bare) == 30
+    with pytest.raises(ev.ViewError, match="^unsupported zip method 0$"):
+        ev.zip_local_member(bare)
+    deflate_header = bytearray(bare)
+    deflate_header[8:10] = _st.pack("<H", 8)
+    with pytest.raises(ev.ViewError, match="^deflate stream incomplete$"):
+        ev.zip_local_member(bytes(deflate_header))
+    body = _zip_local("n.csv", b"data;1\n")
+    head, rest = body[:30], body[30:]
+    wide = bytearray(head)
+    wide[28:30] = _st.pack("<H", 6)  # extra field of six bytes between name and data
+    padded = bytes(wide) + rest[:5] + b"ABCDEF" + rest[5:]
+    assert ev.zip_local_member(padded) == b"data;1\n"
+    long_name = "n" * 40000  # above the signed 16-bit range
+    assert ev.zip_local_member(_zip_local(long_name, b"abc")) == b"abc"
+
+
+def test_care_view_turns_unreadable_ids_and_status_into_missing_and_orders_equal_times_by_file_order():  # noqa: E501
+    raw = _care_frame().astype({"asset_id": object, "id": object, "status_type_id": object})
+    raw.loc[0, ["asset_id", "id", "status_type_id"]] = ["x", "y", "z"]
+    out = ev.care_series_view(raw, 1)
+    last = out.iloc[-1]
+    assert pd.isna(last["asset_id"]) and pd.isna(last["row_id"]) and pd.isna(last["status_type"])
+    n = 40
+    tied = pd.DataFrame(
+        {
+            "time_stamp": ["2023-01-01 00:00:00"] * n,
+            "asset_id": 1,
+            "id": range(n),
+            "train_test": "train",
+            "status_type_id": 0,
+            "s_avg": range(n),
+        }
+    )
+    assert ev.care_series_view(tied, 1)["row_id"].tolist() == list(range(n))
+
+
+# --- NVD CVE records ---------------------------------------------------------------------------------  # noqa: E501
+
+
+def _nvd_page(ids, total=None, **extra):
+    records = [
+        {"cve": {"id": i, "descriptions": [{"lang": "en", "value": i}], **extra}} for i in ids
+    ]
+    return {"totalResults": len(records) if total is None else total, "vulnerabilities": records}
+
+
+def test_nvd_view_orders_by_identifier_keeps_the_first_of_a_repeated_identifier_and_counts_repeats():  # noqa: E501
+    first = _nvd_page(["CVE-2022-0002", "CVE-2018-0001"], extra_tag="first")
+    second = _nvd_page(["CVE-2022-0002", "CVE-2020-0003"], extra_tag="second")
+    view, repeated = ev.nvd_view([first, second])
+    assert [r["id"] for r in view] == [
+        "CVE-2018-0001",
+        "CVE-2020-0003",
+        "CVE-2022-0002",
+    ] and repeated == 1
+    assert view[2]["extra_tag"] == "first" and view[0]["descriptions"][0]["lang"] == "en"
+    assert ev.nvd_view([]) == ([], 0)
+
+
+def test_the_nvd_builder_records_completeness_writes_the_required_notice_and_refuses_an_empty_snapshot(  # noqa: E501
+    tmp_path,
+):
+    raw = tmp_path / "acquired" / "nvd_cve" / ev.NVD_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with pytest.raises(ev.ViewError, match="^no NVD page in the snapshot$"):
+        ev._build_nvd(tmp_path / "acquired", tmp_path / "o", {})
+    (raw / "cves_b.json").write_text(json.dumps(_nvd_page(["CVE-2020-1"], total=5)))
+    (raw / "cves_a.json").write_text(json.dumps(_nvd_page(["CVE-2018-1", "CVE-2018-2"])))
+    manifest: dict = {}
+    ev._build_nvd(tmp_path / "acquired", tmp_path / "o", manifest)
+    folder = tmp_path / "o" / "nvd_cve"
+    lines = (folder / "cves.jsonl").read_text().splitlines()
+    assert [json.loads(line)["id"] for line in lines] == ["CVE-2018-1", "CVE-2018-2", "CVE-2020-1"]
+    assert lines[0].startswith('{"descriptions"')  # keys sorted
+    notice = (folder / "NOTICE.txt").read_text()
+    assert (
+        notice == ev.NVD_NOTICE + "\n"
+        and "MITRE" in notice
+        and "not endorsed or certified by the NVD" in notice
+    )
+    sampling = manifest["nvd_cve"]["sampling"]
+    assert sampling["pages"] == ["cves_a.json", "cves_b.json"] and sampling["total_results"] == [
+        2,
+        5,
+    ]
+    assert sampling["complete_pages"] is False and sampling["repeated_ids"] == 0
+    assert (
+        manifest["nvd_cve"]["files"]["cves.jsonl"]["rows"] == 3
+        and manifest["nvd_cve"]["source_snapshot"] == f"nvd_cve/{ev.NVD_SNAPSHOT}"
+    )
+
+
+# --- St. Gallen smart factory ------------------------------------------------------------------------  # noqa: E501
+
+
+def _unisg_messages():
+    base = {
+        "current_state": "ready",
+        "current_task": "",
+        "current_task_duration": 0.0,
+        "current_sub_task": "",
+    }
+    return [
+        {"id": "u3", "station": "VGR_1", "timestamp": "2023-04-11 09:57:48.75", "i1_pos": 1, **base},  # noqa: E501
+        {"id": "u1", "station": "MM_1", "timestamp": "2023-04-11 09:57:48.72", "m1_speed": 0, **base},  # noqa: E501
+        {"id": "u2", "station": "EC_1", "timestamp": "2023-04-11 09:57:48.72", "i3_photo": "x", **base, "current_task_duration": "n/a"},  # noqa: E501
+        {"id": "u4", "station": "MM_1", "timestamp": "bad", "m1_speed": 5, **base},
+    ]  # fmt: skip
+
+
+def _unisg_activities():
+    def act(i, pi, name, start, canceled=False):
+        return {
+            "processInstanceId": pi,
+            "processDefinitionKey": "storage",
+            "activityName": name,
+            "activityType": "serviceTask",
+            "startTime": start,
+            "endTime": start,
+            "durationInMillis": i,
+            "canceled": canceled,
+        }  # noqa: E501
+
+    return [
+        act(5, "p2", "B", "2023-04-11T10:00:05.000+0200"),
+        act(1, "p1", "A", "2023-04-11T10:00:01.000+0200", True),
+        act(2, "p9", "C", "2023-04-11T10:00:05.000+0200"),
+    ]  # noqa: E501
+
+
+def test_unisg_sensor_view_keeps_station_columns_drops_ids_and_orders_by_time_and_station():
+    out = ev.unisg_sensor_view(_unisg_messages())
+    assert list(out.columns) == [*ev.UNISG_HEAD, "i1_pos", "i3_photo", "m1_speed"]
+    assert (
+        out["station"].tolist() == ["EC_1", "MM_1", "VGR_1"] and len(out) == 3
+    )  # the unreadable time is dropped
+    assert out["m1_speed"].isna().tolist() == [True, False, True] and out[
+        "i1_pos"
+    ].isna().tolist() == [True, True, False]
+    assert out["i3_photo"].isna().all() and pd.isna(out["current_task_duration"].iloc[0])
+    assert "id" not in out and out["timestamp"].is_monotonic_increasing
+    with pytest.raises(ev.ViewError, match="^column 'current_state' not found$"):
+        ev.unisg_sensor_view([{"station": "A", "timestamp": "2023-04-11 09:57:48.72"}])
+
+
+def test_unisg_activity_view_joins_the_process_state_and_orders_by_start_then_instance():
+    out = ev.unisg_activity_view(
+        _unisg_activities(),
+        [{"id": "p1", "state": "COMPLETED"}, {"id": "p2", "state": "EXTERNALLY_TERMINATED"}],
+    )
+    assert list(out.columns) == list(ev.UNISG_ACTIVITY_COLUMNS)
+    assert out["process_instance"].tolist() == ["p1", "p2", "p9"]
+    assert out["process_state"].tolist()[:2] == ["COMPLETED", "EXTERNALLY_TERMINATED"] and pd.isna(
+        out["process_state"].iloc[2]
+    )
+    assert out["canceled"].tolist() == [True, False, False] and out["canceled"].dtype == bool
+    assert out["start_time"].is_monotonic_increasing and str(out["start_time"].dtype).endswith(
+        "UTC]"
+    )
+    assert out["duration_ms"].tolist() == [1, 5, 2] and out["activity_name"].tolist() == [
+        "A",
+        "B",
+        "C",
+    ]
+    assert list(ev.unisg_activity_view([], []).columns) == list(ev.UNISG_ACTIVITY_COLUMNS)
+
+
+def _unisg_snapshot(root):
+    raw = root / "zen_unisg_factory" / ev.UNISG_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    lines = [json.dumps(m) for m in _unisg_messages()] + ["{broken"]
+    (raw / ev.UNISG_LOG).write_text("\n".join(lines) + "\n", encoding="utf-8")
+    (raw / "camunda-activity.json").write_text(json.dumps(_unisg_activities()), encoding="utf-8")
+    (raw / "camunda-process.json").write_text(
+        json.dumps([{"id": "p1", "state": "COMPLETED"}]), encoding="utf-8"
+    )
+
+
+def test_the_unisg_builder_writes_both_views_and_records_what_it_read(tmp_path):
+    _unisg_snapshot(tmp_path / "acquired")
+    manifest: dict = {}
+    ev._build_unisg(tmp_path / "acquired", tmp_path / "o", manifest)
+    folder = tmp_path / "o" / "zen_unisg_factory"
+    assert (
+        len(pd.read_csv(folder / "sensors.csv")) == 3
+        and len(pd.read_csv(folder / "activities.csv")) == 3
+    )
+    view = manifest["zen_unisg_factory"]
+    assert view["sampling"]["messages"] == 4 and view["sampling"]["unreadable_lines"] == 1
+    assert view["sampling"]["stations"] == ["EC_1", "MM_1", "VGR_1"]
+    assert (
+        view["sampling"]["activity_instances"] == 3 and view["sampling"]["process_instances"] == 1
+    )
+    assert (
+        view["files"]["sensors.csv"]["rows"] == 3 and view["files"]["activities.csv"]["rows"] == 3
+    )
+    assert (
+        view["dropped"] == ["message identifiers"]
+        and view["source_snapshot"] == f"zen_unisg_factory/{ev.UNISG_SNAPSHOT}"
+    )
+
+
+def test_unisg_views_keep_every_value_and_coerce_unreadable_ones():
+    out = ev.unisg_sensor_view(
+        _unisg_messages()
+        + [
+            {
+                "station": "WT_1",
+                "timestamp": "2023-04-11 09:57:49.00",
+                "current_state": "ready",
+                "current_task": "t",
+                "current_task_duration": 2.5,
+                "current_sub_task": "",
+            }
+        ]
+    )
+    assert (
+        out["current_task_duration"].dtype == "float64"
+        and out["current_task_duration"].iloc[-1] == 2.5
+    )
+    assert out["current_task_duration"].isna().tolist() == [
+        True,
+        False,
+        False,
+        False,
+    ]  # only the unreadable text
+    acts = _unisg_activities()
+    acts[1]["endTime"] = "not a time"
+    acts[2]["durationInMillis"] = "slow"
+    out = ev.unisg_activity_view(acts, [{"id": "p1", "state": "COMPLETED"}])
+    assert (
+        out["process_key"].tolist() == ["storage"] * 3
+        and out["activity_type"].tolist() == ["serviceTask"] * 3
+    )
+    assert out["end_time"].isna().tolist() == [True, False, False] and str(
+        out["end_time"].dtype
+    ).endswith("UTC]")
+    assert out["duration_ms"].isna().tolist() == [False, False, True]
+    assert out["end_time"].iloc[1].tzinfo is not None
+    bad_start = _unisg_activities()
+    bad_start[0]["startTime"] = "never"
+    assert ev.unisg_activity_view(bad_start, [])["start_time"].isna().sum() == 1
+
+
+def test_the_unisg_builder_counts_every_unreadable_line_and_reads_utf8_whatever_the_locale(
+    tmp_path,
+):
+    _unisg_snapshot(tmp_path / "acquired")
+    raw = tmp_path / "acquired" / "zen_unisg_factory" / ev.UNISG_SNAPSHOT / "raw"
+    acts = _unisg_activities()
+    acts[0]["activityName"] = "Pr\u00e9parer \u00b0C"
+    (raw / "camunda-activity.json").write_bytes(
+        json.dumps(acts, ensure_ascii=False).encode("utf-8")
+    )
+    log = (raw / ev.UNISG_LOG).read_bytes().decode("utf-8")
+    (raw / ev.UNISG_LOG).write_bytes((log + "{also broken\n").encode("utf-8"))
+    manifest: dict = {}
+    ev._build_unisg(tmp_path / "acquired", tmp_path / "o", manifest)
+    assert manifest["zen_unisg_factory"]["sampling"]["unreadable_lines"] == 2
+    names = pd.read_csv(tmp_path / "o" / "zen_unisg_factory" / "activities.csv")[
+        "activity_name"
+    ].tolist()
+    assert "Pr\u00e9parer \u00b0C" in names
+
+
+def _care_a_snapshot(root):
+    raw = root / "zen_care_wind_a" / ev.CARE_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    info = "asset;event_id;event_label;event_start;event_start_id;event_end;event_end_id;event_description\n"  # noqa: E501
+    info += "7;5;anomaly;2023-01-01 00:00:00;1;2023-01-02 00:00:00;2;Gearbox failure\n"
+    (raw / "event_info.csv").write_bytes(_zip_local("info", info.encode()))
+    frame = _care_frame().assign(asset_id=7)
+    (raw / "5.csv").write_bytes(_zip_local("5.csv", frame.to_csv(sep=";", index=False).encode()))
+
+
+def test_the_care_farm_a_builder_uses_its_own_folder_name_and_method(tmp_path):
+    _care_a_snapshot(tmp_path / "acquired")
+    manifest: dict = {}
+    ev._build_care_a(tmp_path / "acquired", tmp_path / "o", manifest)
+    assert (
+        list(manifest) == ["zen_care_wind_a"]
+        and (tmp_path / "o" / "zen_care_wind_a" / "series.csv").exists()
+    )
+    view = manifest["zen_care_wind_a"]
+    assert view["sampling"]["method"].startswith("eight of the 22 datasets of Wind Farm A")
+    assert view["sampling"]["anomaly_datasets_in_view"] == 1
+    assert view["source_snapshot"] == f"zen_care_wind_a/{ev.CARE_SNAPSHOT}"
+    assert pd.read_csv(tmp_path / "o" / "zen_care_wind_a" / "events.csv")["in_view"].tolist() == [
+        True
+    ]
+
+
+# --- PBDB relational view ----------------------------------------------------------------------------  # noqa: E501
+
+
+def _taxa(rows):
+    return pd.DataFrame(rows, columns=["taxon_no", "parent_no"])
+
+
+def test_taxon_closure_follows_parents_once_and_counts_ancestors_missing_from_the_source():
+    taxa = _taxa([(1, None), (2, 1), (3, 2), (4, 2), (5, 99), (6, 7), (7, 6), (8, 1)])
+    kept, absent = ev.taxon_closure(taxa, {3, 5})
+    assert kept["taxon_no"].tolist() == [1, 2, 3, 5] and absent == 1  # 99 is not in the source
+    kept, absent = ev.taxon_closure(taxa, {6})
+    assert kept["taxon_no"].tolist() == [6, 7] and absent == 0  # a cycle ends the walk
+    kept, absent = ev.taxon_closure(taxa, {1000})
+    assert kept.empty and absent == 0  # an unknown needed identifier selects nothing
+    kept, _ = ev.taxon_closure(taxa, {4, 3})
+    assert kept["taxon_no"].tolist() == [1, 2, 3, 4] and kept.index.tolist() == [0, 1, 2, 3]
+
+
+def _pbdb_rel_snapshot(root, tmp):
+    import zipfile
+
+    import pyarrow as _pa
+    import pyarrow.parquet as _pq
+
+    raw = root / "zen_pbdb" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    occ = pd.DataFrame({c: [None] * 4 for c in ev.PBDB_REL_OCC})
+    occ["occurrence_no"] = [4, 3, 2, 1]
+    occ["accepted_no"] = [30, 30, 50, None]
+    taxa = pd.DataFrame({c: [None] * 5 for c in ev.PBDB_REL_TAXA})
+    taxa["taxon_no"] = [30, 20, 10, 50, 60]
+    taxa["parent_no"] = [20, 10, 99, 10, 10]
+    for name, frame, zip_name in (
+        ("occ", occ, "pbdb_parquet.zip"),
+        ("taxa", taxa, "pbdb_taxa_parquet.zip"),
+    ):
+        _pq.write_table(_pa.Table.from_pandas(frame, preserve_index=False), tmp / f"{name}.parquet")
+        with zipfile.ZipFile(raw / zip_name, "w") as z:
+            z.write(tmp / f"{name}.parquet", f"{name}.parquet")
+
+
+def test_the_pbdb_relational_builder_keeps_the_referenced_taxa_and_records_the_relations(
+    tmp_path, monkeypatch
+):
+    monkeypatch.setattr(ev, "PBDB_STRIDE", 1)
+    _pbdb_rel_snapshot(tmp_path / "acquired", tmp_path)
+    manifest: dict = {}
+    ev._build_pbdb_relational(tmp_path / "acquired", tmp_path / "o", manifest)
+    folder = tmp_path / "o" / "zen_pbdb_relational"
+    occ = pd.read_csv(folder / "occurrences.csv")
+    taxa = pd.read_csv(folder / "taxa.csv")
+    assert occ["occurrence_no"].tolist() == [1, 2, 3, 4] and taxa["taxon_no"].tolist() == [
+        10,
+        20,
+        30,
+        50,
+    ]
+    assert (
+        60 not in taxa["taxon_no"].tolist()
+    )  # not named by a sampled occurrence and not an ancestor
+    view = manifest["zen_pbdb_relational"]
+    sampling = view["sampling"]
+    assert sampling["relations"] == [
+        ["occurrences", "accepted_no", "taxa", "taxon_no"],
+        ["taxa", "parent_no", "taxa", "taxon_no"],
+    ]
+    assert (
+        sampling["occurrences_without_taxon"] == 1
+        and sampling["occurrences_with_unknown_taxon"] == 0
+    )
+    assert sampling["ancestors_absent_from_source"] == 1 and sampling["taxa_in_source"] == 5
+    assert sampling["occurrences_rows_read"] == 4 and view["source_snapshot"] == f"zen_pbdb/{SNAP}"
+    assert view["files"]["occurrences.csv"]["rows"] == 4 and view["files"]["taxa.csv"]["rows"] == 4
+
+
+def _pbdb_rel_snapshot_extra(root, tmp):
+    import zipfile
+
+    import pyarrow as _pa
+    import pyarrow.parquet as _pq
+
+    taxa = pd.DataFrame({c: [None] * 3 for c in ev.PBDB_REL_TAXA})
+    taxa["taxon_no"] = [30, 20, 50]
+    taxa["parent_no"] = [20, 50, None]
+    _pq.write_table(_pa.Table.from_pandas(taxa, preserve_index=False), tmp / "taxa_extra.parquet")
+    with zipfile.ZipFile(root / "zen_pbdb" / SNAP / "raw" / "pbdb_taxa_parquet.zip", "w") as z:
+        z.write(tmp / "taxa_extra.parquet", "taxa.parquet")
+
+
+def test_jolpica_spec_declares_tables_keys_and_a_snapshot_and_hides_persons():
+    spec = ev.TABLE_SETS["jolpica_f1"]
+    assert spec["snapshot"] == "2026-11-22" and spec["archive"]["file"] == "jolpica-f1-csv.zip"
+    for child, child_key, parent, parent_key in spec["relations"]:
+        assert (
+            child_key in spec["tables"][child]["keep"]
+            and parent_key in spec["tables"][parent]["keep"]
+        )
+    kept = {c for t in spec["tables"].values() for c in t["keep"]}
+    assert not kept & {
+        "forename",
+        "surname",
+        "date_of_birth",
+        "nationality_driver",
+        "wikipedia",
+        "api_id",
+    }
+    assert spec["tables"]["formula_one_driver"]["keep"] == ["id", "permanent_car_number"]
+
+
+def test_a_table_set_with_its_own_snapshot_is_read_from_that_snapshot_and_recorded(
+    tmp_path, monkeypatch
+):
+    root = tmp_path / "acquired"
+    raw = root / "src" / "2030-01-01" / "raw"
+    raw.mkdir(parents=True)
+    _w(raw / "t.csv", "k,v\n1,a\n2,b\n")
+    monkeypatch.setattr(ev, "TABLE_SETS", {"src": {"snapshot": "2030-01-01", "sep": ",", "quote_none": False, "dropped": [], "tables": {"t": {"keep": ["k", "v"]}}, "relations": []}})  # fmt: skip  # noqa: E501
+    manifest: dict = {}
+    ev._build_tables(root, tmp_path / "o", manifest)
+    assert (
+        manifest["src"]["source_snapshot"] == "src/2030-01-01"
+        and manifest["src"]["files"]["t.csv"]["rows"] == 2
+    )
+
+
+# --- Backblaze Drive Stats ---------------------------------------------------------------------------  # noqa: E501
+
+
+def _serials():
+    kept = [
+        s
+        for s in (f"S{i}" for i in range(200))
+        if int(ev.pseudonym(s), 16) % ev.BACKBLAZE_MODULO == 0
+    ]
+    skipped = [
+        s
+        for s in (f"S{i}" for i in range(200))
+        if int(ev.pseudonym(s), 16) % ev.BACKBLAZE_MODULO != 0
+    ]
+    return kept, skipped
+
+
+def _bb_day(day, serials, failed=()):
+    rows = [
+        {
+            "date": day,
+            "serial_number": s,
+            "model": "M1",
+            "capacity_bytes": "3000",
+            "failure": "1" if s in failed else "0",
+            "smart_9_raw": "15",
+            "smart_1_normalized": "bad" if s == serials[0] else "100",
+        }
+        for s in serials
+    ]  # noqa: E501
+    return pd.DataFrame(rows)
+
+
+def test_backblaze_view_keeps_one_drive_in_eight_with_its_whole_series_pseudonymised():
+    kept, skipped = _serials()
+    frames = [
+        _bb_day("2014-01-02", [kept[0], kept[1], skipped[0]], failed={kept[1]}),
+        _bb_day("2014-01-01", [kept[0], kept[1], skipped[1]]),
+    ]
+    out = ev.backblaze_view(frames)
+    assert list(out.columns) == [
+        "date",
+        "drive",
+        "model",
+        "capacity_bytes",
+        "failure",
+        "smart_1_normalized",
+        "smart_9_raw",
+    ]
+    assert len(out) == 4 and set(out["drive"]) == {ev.pseudonym(kept[0]), ev.pseudonym(kept[1])}
+    assert (
+        out["date"].is_monotonic_increasing is False
+        and out.groupby("drive")["date"].apply(lambda d: d.is_monotonic_increasing).all()
+    )
+    assert (
+        out["failure"].sum() == 1
+        and out["failure"].dtype.kind in "if"
+        and out["capacity_bytes"].iloc[0] == 3000
+    )
+    assert (
+        out["smart_1_normalized"].isna().sum() == 2 and "serial_number" not in out
+    )  # the unreadable value is missing
+    with pytest.raises(ev.ViewError, match="^columns not found: \\['failure'\\]$"):
+        ev.backblaze_view([_bb_day("2014-01-01", kept[:1]).drop(columns=["failure"])])
+    bad = _bb_day("not a date", kept[:1])
+    assert ev.backblaze_view([bad]).empty
+
+
+def _bb_zip(root, days=3):
+    import zipfile as _z
+
+    kept, skipped = _serials()
+    raw = root / "backblaze_drive_stats" / ev.BACKBLAZE_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with _z.ZipFile(raw / "data_2014.zip", "w") as z:
+        for d in range(days, 0, -1):
+            day = f"2014-01-0{d}"
+            z.writestr(
+                f"2014/{day}.csv",
+                _bb_day(
+                    day, [kept[0], kept[1], skipped[0]], failed={kept[1]} if d == 2 else ()
+                ).to_csv(index=False),
+            )
+        z.writestr("__MACOSX/2014/._2014-01-01.csv", "x")
+        z.writestr("2014/readme.txt", "x")
+
+
+def test_the_backblaze_builder_uses_the_first_daily_files_and_records_failures(
+    tmp_path, monkeypatch
+):
+    monkeypatch.setattr(ev, "BACKBLAZE_DAYS", 2)
+    _bb_zip(tmp_path / "acquired")
+    manifest: dict = {}
+    ev._build_backblaze(tmp_path / "acquired", tmp_path / "o", manifest)
+    out = pd.read_csv(tmp_path / "o" / "backblaze_drive_stats" / "drive_days.csv")
+    assert sorted(set(out["date"])) == ["2014-01-01", "2014-01-02"] and len(out) == 4
+    view = manifest["backblaze_drive_stats"]
+    assert (
+        view["sampling"]["days"] == ["2014/2014-01-01.csv", "2014/2014-01-02.csv"]
+        and view["sampling"]["day_files"] == 2
+    )
+    assert view["sampling"]["drives"] == 2 and view["sampling"]["failures"] == 1
+    assert view["pseudonymised"] == ["drive"] and view["salt_label"] == ev.SALT
+    assert (
+        view["source_snapshot"] == f"backblaze_drive_stats/{ev.BACKBLAZE_SNAPSHOT}"
+        and view["files"]["drive_days.csv"]["rows"] == 4
+    )
+
+
+def test_the_backblaze_builder_refuses_an_archive_without_daily_files(tmp_path):
+    import zipfile as _z
+
+    raw = tmp_path / "acquired" / "backblaze_drive_stats" / ev.BACKBLAZE_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with _z.ZipFile(raw / "data_2014.zip", "w") as z:
+        z.writestr("2014/readme.txt", "x")
+    with pytest.raises(ev.ViewError, match="^no daily file in the archive$"):
+        ev._build_backblaze(tmp_path / "acquired", tmp_path / "o", {})
+
+
+def test_the_backblaze_builder_reports_the_last_chosen_day_and_passes_the_extraction_limits(
+    tmp_path, monkeypatch
+):
+    import acquisition as _aq
+
+    seen = []
+    real = _aq.extract_member
+    monkeypatch.setattr(_aq, "extract_member", lambda *a, **k: seen.append(k) or real(*a, **k))
+    monkeypatch.setattr(ev, "BACKBLAZE_DAYS", 3)
+    _bb_zip(tmp_path / "acquired")
+    manifest: dict = {}
+    ev._build_backblaze(tmp_path / "acquired", tmp_path / "o", manifest)
+    assert manifest["backblaze_drive_stats"]["sampling"]["days"] == [
+        "2014/2014-01-01.csv",
+        "2014/2014-01-03.csv",
+    ]
+    assert manifest["backblaze_drive_stats"]["sampling"]["day_files"] == 3
+    assert seen == [{"max_bytes": 1 << 28, "max_ratio": 100}] * 3
+
+
+# --- NYC yellow taxi trips ---------------------------------------------------------------------------  # noqa: E501
+
+
+def _tlc_page(rows):
+    base = {c: "1" for c in ev.TLC_COLUMNS}
+    base.update(
+        {
+            "store_and_fwd_flag": "N",
+            "tpep_pickup_datetime": "2023-03-07T08:00:00.000",
+            "tpep_dropoff_datetime": "2023-03-07T08:10:00.000",
+            "total_amount": "10.5",
+        }
+    )  # noqa: E501
+    return pd.DataFrame([{**base, **r} for r in rows])
+
+
+def test_taxi_view_keeps_every_trip_with_its_amounts_codes_and_order():
+    page_a = _tlc_page(
+        [
+            {
+                "tpep_pickup_datetime": "2023-03-07T09:00:00.000",
+                "total_amount": "-5.0",
+                "payment_type": "4",
+            },
+            {
+                "tpep_pickup_datetime": "2023-03-07T07:00:00.000",
+                "total_amount": "0.0",
+                "passenger_count": "0.0",
+            },
+        ]
+    )  # noqa: E501
+    page_b = _tlc_page(
+        [
+            {
+                "tpep_pickup_datetime": "2023-03-07T08:00:00.000",
+                "fare_amount": "bad",
+                "vendorid": "x",
+                "store_and_fwd_flag": "Y",
+            },
+            {"tpep_pickup_datetime": "not a time"},
+        ]
+    )  # noqa: E501
+    out = ev.taxi_trip_view([page_a, page_b])
+    assert (
+        list(out.columns) == list(ev.TLC_COLUMNS) and len(out) == 3
+    )  # the unreadable pickup is dropped
+    assert out["tpep_pickup_datetime"].is_monotonic_increasing and out["total_amount"].tolist() == [
+        0.0,
+        10.5,
+        -5.0,
+    ]
+    assert str(out["payment_type"].dtype) == "Int64" and out["payment_type"].tolist() == [1, 1, 4]
+    assert out["fare_amount"].isna().tolist() == [False, True, False] and pd.isna(
+        out["vendorid"].iloc[1]
+    )
+    assert (
+        out["store_and_fwd_flag"].tolist() == ["N", "Y", "N"]
+        and out["passenger_count"].iloc[0] == 0.0
+    )
+    assert (
+        out["tpep_dropoff_datetime"].dtype.kind == "M" and out["trip_distance"].dtype == "float64"
+    )
+    with pytest.raises(ev.ViewError, match="^columns not found: \\['airport_fee'\\]$"):
+        ev.taxi_trip_view([_tlc_page([{}]).drop(columns=["airport_fee"])])
+
+
+def test_the_tlc_builder_reads_every_page_and_records_days_and_unusual_fares(tmp_path):
+    raw = tmp_path / "acquired" / "nyc_tlc_yellow" / ev.TLC_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with pytest.raises(ev.ViewError, match="^no trip page in the snapshot$"):
+        ev._build_tlc(tmp_path / "acquired", tmp_path / "o", {})
+    _tlc_page(
+        [
+            {"tpep_pickup_datetime": "2023-03-07T10:00:00.000"},
+            {"tpep_pickup_datetime": "2023-03-07T11:00:00.000", "total_amount": "0.0"},
+        ]
+    ).to_csv(raw / "yellow_2023-03-07_p0.csv", index=False)
+    _tlc_page(
+        [
+            {"tpep_pickup_datetime": "2023-03-11T10:00:00.000", "total_amount": "-1.0"},
+            {"tpep_pickup_datetime": "bad"},
+        ]
+    ).to_csv(raw / "yellow_2023-03-11_p0.csv", index=False)
+    manifest: dict = {}
+    ev._build_tlc(tmp_path / "acquired", tmp_path / "o", manifest)
+    view = manifest["nyc_tlc_yellow"]
+    assert view["sampling"]["rows_by_day"] == {"2023-03-07": 2, "2023-03-11": 1}
+    assert view["sampling"]["rows_read"] == 4 and view["sampling"]["rows_without_pickup_time"] == 1
+    assert view["sampling"]["zero_or_negative_totals"] == 2 and view["sampling"]["pages"] == [
+        "yellow_2023-03-07_p0.csv",
+        "yellow_2023-03-11_p0.csv",
+    ]
+    assert (
+        view["files"]["trips.csv"]["rows"] == 3
+        and view["source_snapshot"] == f"nyc_tlc_yellow/{ev.TLC_SNAPSHOT}"
+    )
+    assert len(pd.read_csv(tmp_path / "o" / "nyc_tlc_yellow" / "trips.csv")) == 3
+
+
+def _tlc_dir(root):
+    raw = root / "nyc_tlc_yellow" / ev.TLC_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    return raw / "yellow_2023-03-07_p0.csv"
+
+
+# --- openFDA device adverse event reports -----------------------------------------------------------------  # noqa: E501
+
+
+def _maude(number, **extra):
+    return {
+        "report_number": number,
+        "event_type": "Malfunction",
+        "manufacturer_contact_f_name": "A",
+        "manufacturer_contact_phone_number": "1",
+        "mdr_text": [{"text": "free text", "mdr_text_key": "k"}],
+        "device": [
+            {
+                "brand_name": "B",
+                "manufacturer_contact_l_name": "nested",
+                "openfda": {"device_class": "2"},
+            }
+        ],
+        "patient": [{"patient_sex": "Unknown", "patient_problems": ["p"]}],
+        **extra,
+    }  # noqa: E501
+
+
+def test_maude_view_drops_contact_persons_and_narratives_at_every_depth_and_orders_by_report_number():  # noqa: E501
+    first = {"results": [_maude("B-2"), _maude("A-1", date_received="20230301")]}
+    second = {"results": [_maude("B-2", event_type="Death"), _maude("C-3")]}
+    view, repeated, dropped = ev.maude_view([first, second])
+    assert [r["report_number"] for r in view] == ["A-1", "B-2", "C-3"] and repeated == 1
+    assert view[1]["event_type"] == "Malfunction"  # the first of a repeated report is kept
+    assert dropped == [
+        "manufacturer_contact_f_name",
+        "manufacturer_contact_l_name",
+        "manufacturer_contact_phone_number",
+        "mdr_text",
+    ]
+    for record in view:
+        assert (
+            not any(k.startswith("manufacturer_contact_") for k in record)
+            and "mdr_text" not in record
+        )
+        assert (
+            "manufacturer_contact_l_name" not in record["device"][0]
+        )  # not even inside the device array
+        assert record["device"][0]["openfda"] == {"device_class": "2"} and record["patient"][0][
+            "patient_problems"
+        ] == ["p"]
+    assert ev.maude_view([{"results": []}]) == ([], 0, ["mdr_text"])
+
+
+def _maude_snapshot(root, pages=2):
+    raw = root / "openfda_device_event" / ev.MAUDE_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    for k in range(pages):
+        (raw / f"maude_20230301_s{k * 500:05d}.json").write_text(
+            json.dumps({"results": [_maude(f"R-{k}-{i}") for i in range(2)]}), encoding="utf-8"
+        )
+
+
+def test_the_maude_builder_writes_sorted_json_lines_and_records_what_it_dropped(tmp_path):
+    raw_root = tmp_path / "acquired"
+    (raw_root / "openfda_device_event" / ev.MAUDE_SNAPSHOT / "raw").mkdir(parents=True)
+    with pytest.raises(ev.ViewError, match="^no report page in the snapshot$"):
+        ev._build_maude(raw_root, tmp_path / "o0", {})
+    import shutil
+
+    shutil.rmtree(raw_root)
+    _maude_snapshot(raw_root)
+    manifest: dict = {}
+    ev._build_maude(raw_root, tmp_path / "o", manifest)
+    lines = (tmp_path / "o" / "openfda_device_event" / "reports.jsonl").read_text().splitlines()
+    assert [json.loads(line)["report_number"] for line in lines] == [
+        "R-0-0",
+        "R-0-1",
+        "R-1-0",
+        "R-1-1",
+    ]
+    assert lines[0].startswith('{"device"') and "free text" not in lines[0]
+    view = manifest["openfda_device_event"]
+    assert (
+        view["sampling"]["reports"] == 4
+        and view["sampling"]["repeated_reports"] == 0
+        and view["sampling"]["pages"]
+        == ["maude_20230301_s00000.json", "maude_20230301_s00500.json"]
+    )
+    assert view["sampling"]["dropped_keys"] == [
+        "manufacturer_contact_f_name",
+        "manufacturer_contact_l_name",
+        "manufacturer_contact_phone_number",
+        "mdr_text",
+    ]
+    assert (
+        view["files"]["reports.jsonl"]["rows"] == 4
+        and view["source_snapshot"] == f"openfda_device_event/{ev.MAUDE_SNAPSHOT}"
+    )
+
+
+def test_usda_spec_declares_keys_for_every_relation_and_uses_its_own_snapshot():
+    spec = ev.TABLE_SETS["usda_fdc_sr_legacy"]
+    assert spec["snapshot"] == "2026-11-22" and spec["archive"]["prefix"].endswith(
+        "sr_legacy_food_csv_2018-04/"
+    )
+    for child, child_key, parent, parent_key in spec["relations"]:
+        assert (
+            child_key in spec["tables"][child]["keep"]
+            and parent_key in spec["tables"][parent]["keep"]
+        )
+    assert set(spec["tables"]) == {
+        "food",
+        "food_category",
+        "food_nutrient",
+        "nutrient",
+        "food_nutrient_derivation",
+        "food_portion",
+        "measure_unit",
+    }
+
+
+def test_taxi_view_keeps_the_file_order_of_trips_with_the_same_pickup_time_beyond_a_small_input():
+    rows = [
+        {"tpep_pickup_datetime": "2023-03-07T08:00:00.000", "total_amount": str(i)}
+        for i in range(40)
+    ]
+    out = ev.taxi_trip_view([_tlc_page(rows[:25]), _tlc_page(rows[25:])])
+    assert out["total_amount"].tolist() == [
+        float(i) for i in range(40)
+    ] and out.index.tolist() == list(range(40))
+
+
+def test_the_tlc_builder_counts_a_total_of_exactly_one_dollar_or_less_as_zero_or_negative_only_up_to_zero(  # noqa: E501
+    tmp_path,
+):
+    raw = tmp_path / "acquired" / "nyc_tlc_yellow" / ev.TLC_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    _tlc_page([{"total_amount": "0.5"}, {"total_amount": "1.0"}, {"total_amount": "0.0"}]).to_csv(
+        raw / "yellow_2023-03-07_p0.csv", index=False
+    )
+    manifest: dict = {}
+    ev._build_tlc(tmp_path / "acquired", tmp_path / "o", manifest)
+    assert manifest["nyc_tlc_yellow"]["sampling"]["zero_or_negative_totals"] == 1
+
+
+def test_stats19_spec_keeps_the_join_key_and_drops_police_references_and_home_areas():
+    spec = ev.TABLE_SETS["dft_stats19_2023"]
+    assert spec["snapshot"] == "2026-11-22" and set(spec["tables"]) == {
+        "collision",
+        "vehicle",
+        "casualty",
+    }
+    for rule in spec["tables"].values():
+        assert "collision_index" in rule["keep"] and "collision_ref_no" not in rule["keep"]
+    assert "lsoa_of_driver" not in spec["tables"]["vehicle"]["keep"]
+    assert "lsoa_of_casualty" not in spec["tables"]["casualty"]["keep"]
+    assert [r[:2] + r[2:] for r in spec["relations"]] == [
+        ["vehicle", "collision_index", "collision", "collision_index"],
+        ["casualty", "collision_index", "collision", "collision_index"],
+    ]
+
+
+# --- EPA AQS hourly ozone and USGS continuous discharge --------------------------------------
+
+
+def _aqs_rows(rows):
+    base = {c: "1" for c in ev.AQS_COLUMNS}
+    base.update(
+        {
+            "State Code": "01",
+            "County Code": "003",
+            "Site Num": "0010",
+            "POC": "1",
+            "Date GMT": "2022-03-01",
+            "Time GMT": "07:00",
+            "Sample Measurement": "0.040",
+            "Units of Measure": ev.AQS_UNITS,
+            "MDL": "0.005",
+            "Qualifier": None,
+            "Method Code": "087",
+        }
+    )
+    return pd.DataFrame([{**base, **r} for r in rows], columns=list(ev.AQS_COLUMNS))
+
+
+def test_aqs_pick_takes_an_even_stride_of_the_sorted_list_and_never_more_than_asked():
+    ids = [f"m{n:02d}" for n in range(10)]
+    assert ev.aqs_pick(list(reversed(ids)), 5) == ["m00", "m02", "m04", "m06", "m08"]
+    assert ev.aqs_pick(ids, 3) == ["m00", "m03", "m06"]
+    assert ev.aqs_pick(ids[:2], 5) == ["m00", "m01"]
+    assert ev.aqs_pick(ids, 10) == ids
+
+
+def test_aqs_view_is_in_utc_order_per_monitor_keeps_flags_and_counts_unreadable_times():
+    chunk = _aqs_rows(
+        [
+            {"Time GMT": "09:00", "Qualifier": "IA"},
+            {
+                "Time GMT": "08:00",
+                "Sample Measurement": "x",
+                "MDL": "x",
+                "Latitude": "99",
+            },
+            {"Site Num": "0020", "Time GMT": "07:00"},
+            {"Date GMT": "03/01/2022", "Time GMT": "07:00"},
+            {"Time GMT": "bad"},
+            {"Site Num": "9999"},
+        ]
+    )
+    view, places = ev.aqs_hourly_view(
+        [chunk.iloc[:1], chunk.iloc[1:]], ["01-003-0010-1", "01-003-0020-1"]
+    )
+    assert list(view.columns) == [
+        "monitor", "timestamp", "ozone_ppm", "mdl_ppm", "method_code", "qualifier"
+    ]  # fmt: skip
+    assert view["monitor"].tolist() == ["01-003-0010-1", "01-003-0010-1", "01-003-0020-1"]
+    assert view["timestamp"].astype(str).tolist() == [
+        "2022-03-01 08:00:00",
+        "2022-03-01 09:00:00",
+        "2022-03-01 07:00:00",
+    ]
+    assert view["qualifier"].tolist() == [pd.NA, "IA", pd.NA]
+    assert view["ozone_ppm"].isna().tolist() == [True, False, False]
+    assert pd.isna(view["mdl_ppm"].iloc[0]) and view["mdl_ppm"].tolist()[1:] == [0.005, 0.005]
+    assert view["method_code"].tolist() == ["087"] * 3
+    assert view.attrs["rows_dropped"] == 2
+    assert places["monitor"].tolist() == ["01-003-0010-1", "01-003-0020-1"]
+    assert list(places.columns) == ["monitor", "latitude", "longitude"]
+
+
+def test_aqs_view_refuses_another_unit():
+    with pytest.raises(ev.ViewError) as exc_info:
+        ev.aqs_hourly_view(
+            [_aqs_rows([{"Units of Measure": "Parts per billion"}])], ["01-003-0010-1"]
+        )
+    assert str(exc_info.value) == "unexpected unit of measure"
+
+
+def test_aqs_chunks_passes_exact_columns_and_chunksize(tmp_path, monkeypatch):
+    import zipfile
+
+    zpath = tmp_path / "aqs.zip"
+    with zipfile.ZipFile(zpath, "w") as z:
+        z.writestr("aqs.csv", _aqs_rows([{}]).to_csv(index=False))
+    seen = {}
+    real_read_csv = pd.read_csv
+
+    def spy(handle, *args, **kwargs):
+        seen.update(kwargs)
+        return real_read_csv(handle, *args, **kwargs)
+
+    monkeypatch.setattr(pd, "read_csv", spy)
+    chunks = list(ev._aqs_chunks(zpath, ev.AQS_COLUMNS[:4]))
+    assert len(chunks) == 1
+    assert seen["usecols"] == list(ev.AQS_COLUMNS[:4])
+    assert seen["chunksize"] == 500_000
+
+
+def _aqs_snapshot(root):
+    import zipfile
+
+    raw = root / "epa_aqs_ozone_hourly" / ev.AQS_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    for year in ev.AQS_YEARS:
+        frame = _aqs_rows(
+            [
+                {"Date GMT": f"{year}-03-01"},
+                {"Date GMT": f"{year}-03-01", "Site Num": "0020"},
+                {"Date GMT": f"{year}-03-01", "Site Num": "0030"},
+            ]
+        )
+        if year == ev.AQS_YEARS[0]:
+            extra = frame.iloc[[0]].copy()
+            extra["Site Num"] = "0099"
+            frame = pd.concat([frame, extra], ignore_index=True)
+        with zipfile.ZipFile(raw / f"hourly_44201_{year}.zip", "w") as z:
+            z.writestr(f"hourly_44201_{year}.csv", frame.to_csv(index=False))
+
+
+def test_aqs_builder_selects_monitors_present_in_both_years_and_records_the_sampling(
+    tmp_path, monkeypatch
+):
+    root = tmp_path / "acq"
+    _aqs_snapshot(root)
+    monkeypatch.setattr(ev, "AQS_MONITORS", 2)
+    manifest = {}
+    ev._build_aqs(root, tmp_path / "out", manifest)
+    view = manifest["epa_aqs_ozone_hourly"]
+    assert view["files"]["ozone.csv"]["rows"] == 4 and view["files"]["monitors.csv"]["rows"] == 2
+    sampling = view["sampling"]
+    assert sampling["monitors_in_both_years"] == 3 and sampling["monitors"] == 2
+    assert sampling["hours_by_monitor"] == {"01-003-0010-1": 2, "01-003-0020-1": 2}
+    assert sampling["years"] == [2022, 2023] and sampling["rows_dropped"] == 0
+    assert sampling["missing_value_share"] == 0.0 and sampling["flagged_share"] == 0.0
+    assert view["source_snapshot"] == f"epa_aqs_ozone_hourly/{ev.AQS_SNAPSHOT}"
+
+
+def test_aqs_builder_rounds_shares_and_uses_first_four_columns_for_ids(tmp_path, monkeypatch):
+    import zipfile
+
+    root = tmp_path / "acq"
+    raw = root / "epa_aqs_ozone_hourly" / ev.AQS_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    for year in ev.AQS_YEARS:
+        rows = [
+            {"Date GMT": f"{year}-03-01", "Sample Measurement": "bad", "Qualifier": "IA"},
+            {"Date GMT": f"{year}-03-01", "Time GMT": "08:00"},
+            {"Date GMT": f"{year}-03-01", "Time GMT": "09:00"},
+        ]
+        with zipfile.ZipFile(raw / f"hourly_44201_{year}.zip", "w") as z:
+            z.writestr(f"hourly_44201_{year}.csv", _aqs_rows(rows).to_csv(index=False))
+    monkeypatch.setattr(ev, "AQS_MONITORS", 1)
+    manifest: dict = {}
+    ev._build_aqs(root, tmp_path / "out", manifest)
+    assert manifest["epa_aqs_ozone_hourly"]["sampling"]["missing_value_share"] == 0.3333
+    assert manifest["epa_aqs_ozone_hourly"]["sampling"]["flagged_share"] == 0.3333
+
+
+def _usgs_page(rows):
+    features = [
+        {
+            "properties": {
+                "monitoring_location_id": "USGS-1",
+                "time": "2022-01-01T00:00:00+00:00",
+                "value": "10",
+                "unit_of_measure": "ft^3/s",
+                "approval_status": "Approved",
+                "qualifier": None,
+                **row,
+            }
+        }
+        for row in rows
+    ]
+    return {"features": features}
+
+
+def test_usgs_view_is_in_utc_order_deduplicates_and_keeps_status_and_qualifier():
+    page_a = _usgs_page(
+        [
+            {"time": "2022-01-01T00:30:00+00:00", "value": "x", "approval_status": "Provisional"},
+            {"time": "2022-01-01T00:15:00+00:00", "qualifier": "ICE"},
+            {"monitoring_location_id": "USGS-0", "time": "2022-01-01T05:00:00+01:00"},
+        ]
+    )
+    page_b = _usgs_page([{"time": "2022-01-01T00:15:00+00:00", "value": "99"}, {"time": "bad"}])
+    view = ev.usgs_continuous_view([page_a, page_b])
+    assert list(view.columns) == [
+        "monitor",
+        "timestamp",
+        "discharge_cfs",
+        "approval_status",
+        "qualifier",
+    ]
+    assert view["monitor"].tolist() == ["USGS-0", "USGS-1", "USGS-1"]
+    assert view["timestamp"].astype(str).tolist() == [
+        "2022-01-01 04:00:00",
+        "2022-01-01 00:15:00",
+        "2022-01-01 00:30:00",
+    ]
+    assert view["discharge_cfs"].isna().tolist() == [False, False, True]
+    assert view["discharge_cfs"].tolist()[:2] == [10.0, 10.0]
+    assert view["qualifier"].isna().tolist() == [True, False, True]
+    assert view["qualifier"].iloc[1] == "ICE"
+    assert view["approval_status"].tolist() == ["Approved", "Approved", "Provisional"]
+    assert view.attrs["duplicates"] == 1
+
+
+def test_usgs_view_refuses_another_unit_and_handles_empty_pages():
+    with pytest.raises(ev.ViewError) as exc_info:
+        ev.usgs_continuous_view([_usgs_page([{"unit_of_measure": "m^3/s"}])])
+    assert str(exc_info.value) == "unexpected unit of measure"
+    empty = ev.usgs_continuous_view([{"features": []}])
+    assert list(empty.columns) == [
+        "monitor",
+        "timestamp",
+        "discharge_cfs",
+        "approval_status",
+        "qualifier",
+    ]
+    assert len(empty) == 0
+
+
+def _usgs_snapshot(root):
+    raw = root / "usgs_continuous_discharge" / ev.USGS_SNAPSHOT / "raw"
+    _w(
+        raw / "discharge_1_p0.json",
+        json.dumps(_usgs_page([{}, {"time": "2022-01-01T00:15:00+00:00"}])),
+    )
+    _w(raw / "discharge_1_p1.json", json.dumps(_usgs_page([{"time": "2022-01-01T00:30:00+00:00"}])))
+
+
+def test_usgs_builder_reads_every_page_and_records_cadence_and_status(tmp_path):
+    root = tmp_path / "acq"
+    _usgs_snapshot(root)
+    manifest = {}
+    ev._build_usgs(root, tmp_path / "out", manifest)
+    view = manifest["usgs_continuous_discharge"]
+    assert view["files"]["discharge.csv"]["rows"] == 3
+    sampling = view["sampling"]
+    assert sampling["pages"] == ["discharge_1_p0.json", "discharge_1_p1.json"]
+    assert sampling["median_step_minutes"] == {"USGS-1": 15.0}
+    assert sampling["provisional_share"] == 0.0 and sampling["duplicates"] == 0
+    assert sampling["first_by_monitor"] == {"USGS-1": "2022-01-01 00:00:00"}
+    with pytest.raises(ev.ViewError) as exc_info:
+        ev._build_usgs(tmp_path / "none", tmp_path / "out", {})
+    assert str(exc_info.value) == "no discharge page in the snapshot"
+
+
+def test_usgs_builder_rounds_missing_and_provisional_shares(tmp_path):
+    raw = tmp_path / "acq" / "usgs_continuous_discharge" / ev.USGS_SNAPSHOT / "raw"
+    _w(
+        raw / "discharge_1_p0.json",
+        json.dumps(
+            _usgs_page(
+                [
+                    {},
+                    {
+                        "time": "2022-01-01T00:15:00+00:00",
+                        "value": "bad",
+                        "approval_status": "Provisional",
+                    },
+                    {"time": "2022-01-01T00:30:00+00:00"},
+                ]
+            )
+        ),
+    )
+    manifest: dict = {}
+    ev._build_usgs(tmp_path / "acq", tmp_path / "out", manifest)
+    sampling = manifest["usgs_continuous_discharge"]["sampling"]
+    assert sampling["missing_value_share"] == 0.3333 and sampling["provisional_share"] == 0.3333
+
+
+# --- Wikimedia stub history ---------------------------------------------------------------------
+
+
+def _wiki_revision(rid, parent=None, who="<username>Ann</username><id>7</id>", extra="", ts=None):
+    return (
+        f"    <revision><id>{rid}</id>"
+        + (f"<parentid>{parent}</parentid>" if parent else "")
+        + f"<timestamp>{ts or '2003-03-27T09:24:48Z'}</timestamp>"
+        + f"<contributor>{who}</contributor>{extra}"
+        + '<text bytes="724" sha1="x" /></revision>'
+    )
+
+
+def _wiki_lines(*pages):
+    lines = ['<mediawiki xmlns="http://www.mediawiki.org/xml/export-0.11/">', "  <siteinfo />"]
+    for pid, ns, revisions, closed in pages:
+        lines += [
+            "  <page>",
+            "    <title>Secret</title>",
+            f"    <ns>{ns}</ns>",
+            f"    <id>{pid}</id>",
+        ]
+        lines += revisions + (["  </page>"] if closed else [])
+    return lines
+
+
+def test_wiki_view_hashes_contributors_drops_names_and_keeps_revision_facts():
+    revisions = [
+        _wiki_revision(10, extra="<comment>edit summary</comment>", ts="2003-03-27T11:24:48+02:00"),
+        _wiki_revision(
+            11, parent=10, who="<ip>10.0.0.1</ip>", extra="<minor />", ts="2003-04-01T00:00:00Z"
+        ),
+        _wiki_revision(12, parent=11, who='<username deleted="deleted" />', ts="bad"),
+        "    <revision><id>13</id><parentid>bad</parentid><timestamp>2003-04-02T00:00:00Z</timestamp></revision>",  # noqa: E501
+    ]
+    view = ev.wiki_revision_view(
+        _wiki_lines((1, 0, revisions, True), (2, 4, [_wiki_revision(20)], True))
+    )
+    assert list(view.columns) == list(ev.WIKI_COLUMNS)
+    assert view["page_id"].tolist() == [1, 1, 1, 1, 2]
+    assert view["namespace"].tolist() == [0, 0, 0, 0, 4]
+    assert view["revision_id"].tolist() == [10, 11, 12, 13, 20]
+    assert view["parent_id"].isna().tolist() == [True, False, False, True, True]
+    assert view["timestamp"].astype(str).tolist()[:2] == [
+        "2003-03-27 09:24:48",
+        "2003-04-01 00:00:00",
+    ]
+    assert pd.isna(view["timestamp"].iloc[2])
+    assert view["editor_kind"].tolist() == [
+        "registered",
+        "anonymous",
+        "unknown",
+        "unknown",
+        "registered",
+    ]
+    assert view["editor"].tolist()[0] == ev.pseudonym("user:7") == view["editor"].tolist()[4]
+    assert view["editor"].tolist()[1] == ev.pseudonym("ip:10.0.0.1") and pd.isna(
+        view["editor"].tolist()[2]
+    )
+    assert view["minor"].tolist() == [False, True, False, False, False]
+    assert view["has_comment"].tolist() == [True, False, False, False, False]
+    assert view["text_bytes"].tolist()[:3] == [724, 724, 724]
+    assert pd.isna(view["text_bytes"].iloc[3])
+    assert str(view["parent_id"].dtype) == "Int64"
+    assert (
+        "Ann" not in view.to_csv()
+        and "10.0.0.1" not in view.to_csv()
+        and "Secret" not in view.to_csv()
+    )
+    assert view.attrs["incomplete_pages"] == 0
+    empty_view = ev.wiki_revision_view(_wiki_lines((1, 0, [], True)))
+    assert list(empty_view.columns) == list(ev.WIKI_COLUMNS) and len(empty_view) == 0
+
+
+def test_wiki_view_drops_the_unclosed_last_page_and_counts_it():
+    lines = _wiki_lines(
+        (1, 0, [_wiki_revision(10)], True),
+        (2, 0, [_wiki_revision(20)], True),
+        (3, 0, [_wiki_revision(30)], False),
+    )
+    view = ev.wiki_revision_view(lines)
+    assert view["page_id"].tolist() == [1, 2] and view.attrs["incomplete_pages"] == 1
+    no_tail = ev.wiki_revision_view(["<mediawiki>", "  <page>", "  </page>"])
+    assert no_tail.attrs["incomplete_pages"] == 0 and len(no_tail) == 0
+
+
+def test_wiki_view_refuses_a_stream_without_a_closed_page_and_a_doctype():
+    with pytest.raises(ev.ViewError) as exc_empty:
+        ev.wiki_revision_view(_wiki_lines((1, 0, [_wiki_revision(10)], False)))
+    assert str(exc_empty.value) == "no complete page in the stub history"
+    lines = _wiki_lines((1, 0, [_wiki_revision(10)], True))
+    for decl in ("<!DOCTYPE x>", "<!ENTITY a 'b'>"):
+        with pytest.raises(ev.ViewError) as exc_decl:
+            ev.wiki_revision_view([decl, *lines])
+        assert str(exc_decl.value) == "document type declarations are refused"
+
+
+def test_gzip_members_lines_reads_every_member_and_drops_a_torn_line():
+    import gzip
+
+    assert ev.gzip_members_lines(b"") == ([], True)
+    blob = gzip.compress(b"a 1\nb 2\n") + gzip.compress(b"c\nd")
+    assert ev.gzip_members_lines(blob) == (["a 1", "b 2", "c", "d"], True)
+    import zlib
+
+    packer = zlib.compressobj(wbits=31)
+    second = packer.compress(b"c\nd1\nd2") + packer.flush(zlib.Z_FULL_FLUSH)
+    lines, complete = ev.gzip_members_lines(gzip.compress(b"a\nb\n") + second)
+    assert lines == ["a", "b", "c", "d1"] and complete is False
+    with pytest.raises(zlib.error):
+        ev.gzip_members_lines(zlib.compress(b"plain zlib"))
+
+
+def _wiki_snapshot(root):
+    import gzip
+
+    raw = root / "wikimedia_simplewiki_edits" / ev.WIKI_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    lines = _wiki_lines((1, 0, [_wiki_revision(10), _wiki_revision(11, parent=10)], True))
+    text = "\n".join(lines) + "\n"
+    head, tail = text.split("  <page>", 1)
+    (raw / "stub_meta_history_head.xml.gz").write_bytes(
+        gzip.compress(head.encode()) + gzip.compress(("  <page>" + tail).encode())
+    )
+
+
+def test_wiki_builder_reads_a_multi_member_stream_and_records_the_sampling(tmp_path):
+    root = tmp_path / "acq"
+    _wiki_snapshot(root)
+    manifest = {}
+    ev._build_wiki(root, tmp_path / "out", manifest)
+    view = manifest["wikimedia_simplewiki_edits"]
+    assert view["files"]["revisions.csv"]["rows"] == 2 and view["pseudonymised"] == ["editor"]
+    sampling = view["sampling"]
+    assert sampling["pages"] == 1 and sampling["stream_complete"] is True
+    assert sampling["parents_outside_view"] == 0 and sampling["incomplete_pages"] == 0
+    assert (
+        sampling["first_revision"] == "2003-03-27 09:24:48" and sampling["anonymous_share"] == 0.0
+    )
+    assert view["salt_label"] == ev.SALT
+
+
+def test_wiki_builder_rounds_anonymous_share(tmp_path):
+    import gzip
+
+    raw = tmp_path / "acq" / "wikimedia_simplewiki_edits" / ev.WIKI_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    lines = _wiki_lines(
+        (
+            1,
+            0,
+            [_wiki_revision(10), _wiki_revision(11, who="<ip>10.0.0.2</ip>"), _wiki_revision(12)],
+            True,
+        )
+    )
+    (raw / "stub_meta_history_head.xml.gz").write_bytes(
+        gzip.compress(("\n".join(lines) + "\n").encode())
+    )
+    manifest: dict = {}
+    ev._build_wiki(tmp_path / "acq", tmp_path / "out", manifest)
+    assert manifest["wikimedia_simplewiki_edits"]["sampling"]["anonymous_share"] == 0.3333
+
+
+def _uniprot_snapshot(root):
+    raw = root / "uniprot_kb_reviewed" / ev.UNIPROT_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    p1 = {
+        "results": [
+            {
+                "primaryAccession": "P20000",
+                "comments": [{"texts": [{"value": "Mail user@example.org"}]}],
+                "references": [{"citation": {"authors": ["Doe J."]}}],
+                "sequence": {"value": "MKT", "length": 3},
+            },
+            {
+                "primaryAccession": "P10000",
+                "entryType": "UniProtKB reviewed (Swiss-Prot)",
+                "references": [{"citation": {"authors": ["First"]}}],
+            },
+        ]
+    }
+    p2 = {
+        "results": [
+            {
+                "primaryAccession": "P10000",
+                "entryType": "DUPLICATE_SHOULD_NOT_WIN",
+            }
+        ]
+    }
+    (raw / "uniprot_mouse_10090.json").write_text(json.dumps(p2))
+    (raw / "uniprot_human_9606.json").write_text(json.dumps(p1))
+    (raw / "manifest.json").write_text("{}")
+
+
+def _osv_snapshot(root):
+    import zipfile as _z
+
+    raw = root / "osv_go_advisories" / ev.OSV_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with _z.ZipFile(raw / "osv_go_all.zip", "w") as z:
+        z.writestr(
+            "GO-2024-0002.json",
+            json.dumps(
+                {
+                    "summary": "bug",
+                    "id": "GO-2024-0002",
+                    "credits": [{"name": "Alice"}],
+                    "details": "Report to sec@example.org",
+                }
+            ),
+        )
+        z.writestr(
+            "GO-2024-0001.json",
+            json.dumps({"id": "GO-2024-0001", "summary": "first"}),
+        )
+        z.writestr(
+            "sub/GO-2024-0001.json",
+            json.dumps({"id": "GO-2024-0001", "summary": "dup"}),
+        )
+        z.writestr(
+            "GHSA-1111-2222-3333.json",
+            json.dumps({"id": "GHSA-1111-2222-3333", "summary": "non-go"}),
+        )
+        z.writestr("README.txt", "ignored")
+
+
+def test_uniprot_view_drops_citations_sequence_redacts_emails_and_keeps_first_accession():
+    raw_entries = [
+        {
+            "sequence": {"value": "MK"},
+            "primaryAccession": "P2",
+            "references": [{"citation": "c"}],
+            "comments": [{"note": "ask ops@example.org"}],
+        },
+        {"primaryAccession": "P1", "annotationScore": 5.0},
+        {"primaryAccession": "P1", "annotationScore": 1.0},
+    ]
+    raw_copy = json.loads(json.dumps(raw_entries))
+    out = ev.uniprot_view(raw_entries)
+    assert raw_entries == raw_copy
+    assert [r["primaryAccession"] for r in out] == ["P1", "P2"]
+    assert out[0]["annotationScore"] == 5.0
+    assert "references" not in out[1] and "sequence" not in out[1]
+    assert out[1]["comments"][0]["note"] == "ask [email]"
+
+
+def test_uniprot_builder_writes_sorted_jsonl_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match="no UniProt file"):
+        ev._build_uniprot(tmp_path / "empty", tmp_path / "out_err", {})
+    root = tmp_path / "acq"
+    _uniprot_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_uniprot(root, out, manifest)
+    ev._build_uniprot(root, out, manifest)
+    target = out / "uniprot_kb_reviewed" / "entries.jsonl"
+    lines = target.read_text().splitlines()
+    assert len(lines) == 2 and target.read_text().endswith("\n")
+    assert lines[0] == json.dumps(
+        {"entryType": "UniProtKB reviewed (Swiss-Prot)", "primaryAccession": "P10000"},
+        sort_keys=True,
+    )
+    assert lines[1] == json.dumps(
+        {"comments": [{"texts": [{"value": "Mail [email]"}]}], "primaryAccession": "P20000"},
+        sort_keys=True,
+    )
+    view = manifest["uniprot_kb_reviewed"]
+    assert view["dropped"] == ["references", "sequence"]
+    assert view["pseudonymised"] == []
+    assert view["source_snapshot"] == f"uniprot_kb_reviewed/{ev.UNIPROT_SNAPSHOT}"
+    assert view["files"]["entries.jsonl"]["rows"] == 2
+    assert view["sampling"] == {
+        "entries_in": 3,
+        "files": ["uniprot_human_9606.json", "uniprot_mouse_10090.json"],
+        "method": "250 reviewed Swiss-Prot entries per organism across six model organisms",
+    }
+
+
+def test_osv_go_view_filters_non_go_prefixes_drops_credits_and_redacts_emails():
+    raw_records = [
+        {"id": "GHSA-xxxx", "summary": "skip"},
+        {
+            "summary": "two",
+            "id": "GO-2023-0002",
+            "credits": [{"name": "Bob"}],
+            "details": "b@ex.org",
+        },
+        {"id": "GO-2023-0001", "summary": "first"},
+        {"id": "GO-2023-0001", "summary": "second"},
+    ]
+    out = ev.osv_go_view(raw_records)
+    assert [r["id"] for r in out] == ["GO-2023-0001", "GO-2023-0002"]
+    assert out[0]["summary"] == "first"
+    assert "credits" not in out[1] and out[1]["details"] == "[email]"
+
+
+def test_osv_go_builder_writes_sorted_jsonl_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match="no OSV Go zip"):
+        ev._build_osv_go(tmp_path / "empty", tmp_path / "out_err", {})
+    root = tmp_path / "acq"
+    _osv_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_osv_go(root, out, manifest)
+    ev._build_osv_go(root, out, manifest)
+    target = out / "osv_go_advisories" / "advisories.jsonl"
+    lines = target.read_text().splitlines()
+    assert len(lines) == 2 and target.read_text().endswith("\n")
+    assert lines[0] == json.dumps({"id": "GO-2024-0001", "summary": "first"}, sort_keys=True)
+    assert lines[1] == json.dumps(
+        {"details": "Report to [email]", "id": "GO-2024-0002", "summary": "bug"},
+        sort_keys=True,
+    )
+    view = manifest["osv_go_advisories"]
+    assert view["dropped"] == ["credits"]
+    assert view["pseudonymised"] == []
+    assert view["source_snapshot"] == f"osv_go_advisories/{ev.OSV_SNAPSHOT}"
+    assert view["files"]["advisories.jsonl"]["rows"] == 2
+    assert view["sampling"] == {
+        "archive_records": 4,
+        "go_records": 2,
+        "method": "all GO-* Go Vulnerability Database advisories from Go/all.zip (non-GO prefixes excluded to stay under CC BY 4.0)",  # noqa: E501
+    }
+
+
+def _gfz_snapshot(root):
+    raw = root / "gfz_kp_index" / ev.GFZ_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    lines = [
+        "# LICENSE: CC BY 4.0",
+        "",
+        "2020 01 02 03.0 04.50 1 2 2.333 9 1",
+        "2020 01 01 00.0 01.50 1 2 -1.000 -1 0",
+        "2020 99 01 00.0 01.50 1 2 1.000 4 0",
+    ]
+    (raw / "Kp_ap_since_1932.txt").write_text("\n".join(lines) + "\n")
+
+
+def _dwd_snapshot(root):
+    import zipfile as _z
+
+    raw = root / "dwd_hourly_climate" / ev.DWD_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with _z.ZipFile(raw / "stundenwerte_TU_00044_20070401_20251231_hist.zip", "w") as z:
+        z.writestr("Metadaten_Geographie.txt", "ignored\n")
+        z.writestr(
+            "produkt_tu_stunde_20070401_20251231_00044.txt",
+            (
+                "STATIONS_ID;MESS_DATUM;QN_9;TT_TU;RF_TU;eor\n"
+                "   44;2017123123;3;5.0;80.0;eor\n"
+                "   44;2018010101;3;-999;-999;eor\n"
+                "   44;2018010100;3;4.2;85.0;eor\n"
+                "   44;2018010100;3;9.9;99.0;eor\n"
+                "   44;2018990100;3;1.0;50.0;eor\n"
+            ),
+        )
+        z.writestr("produkt_tu_stunde_readme.info", "ignored\n")
+    (raw / "ignore.zip").write_bytes(b"")
+
+
+def _rte_snapshot(root):
+    raw = root / "rte_eco2mix_national" / ev.RTE_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    csv_text = (
+        "perimetre;nature;date;heure;date_heure;consommation;nucleaire\n"
+        "France;Donnees definitives;2020-03-29;03:00;2020-03-29T01:00:00+00:00;47000;30500\n"
+        "France;Donnees definitives;2020-03-29;02:00;2020-03-29T01:00:00+00:00;46000;30000\n"
+        "France;Donnees definitives;2020-01-01;00:15;2019-12-31T23:15:00+00:00;;\n"
+        "France;Donnees definitives;2020-01-01;00:00;2019-12-31T23:00:00+00:00;63000;49000\n"
+        "France;Donnees definitives;bad;00:00;not-a-date;50000;40000\n"
+    )
+    (raw / "eco2mix_national_2020.csv").write_bytes(csv_text.encode("utf-8-sig"))
+    (raw / "other.csv").write_text("x\n")
+
+
+def test_gfz_kp_view_parses_timestamps_sorts_and_maps_sentinels():
+    lines = [
+        "# header",
+        "   ",
+        "2020 01 02 03.0 04.50 1 2 2.333 9 1",
+        "2020 01 01 00.0 01.50 1 2 -1.000 -1 0",
+        "2020 01 03 06.0 07.50 1 2 bad bad bad",
+        "2020 13 01 00.0 01.50 1 2 1.000 5 1",
+    ]
+    out = ev.gfz_kp_view(lines)
+    assert out.columns.tolist() == ["timestamp", "kp", "ap", "definitive"]
+    assert out["timestamp"].tolist() == [
+        pd.Timestamp("2020-01-01 00:00:00"),
+        pd.Timestamp("2020-01-02 03:00:00"),
+        pd.Timestamp("2020-01-03 06:00:00"),
+    ]
+    assert pd.isna(out["kp"].iloc[0]) and pd.isna(out["ap"].iloc[0])
+    assert out["kp"].iloc[1] == 2.333 and out["ap"].iloc[1] == 9.0
+    assert pd.isna(out["kp"].iloc[2]) and pd.isna(out["ap"].iloc[2])
+    assert pd.isna(out["definitive"].iloc[2])
+    assert out["definitive"].iloc[:2].tolist() == [0, 1]
+    assert str(out["definitive"].dtype) == "Int64"
+
+
+def test_gfz_kp_builder_writes_csv_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no GFZ Kp file in the snapshot$"):
+        ev._build_gfz_kp(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _gfz_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_gfz_kp(root, out, manifest)
+    ev._build_gfz_kp(root, out, manifest)
+    target = out / "gfz_kp_index" / "kp_ap.csv"
+    assert target.read_text().splitlines()[0] == "timestamp,kp,ap,definitive"
+    view = manifest["gfz_kp_index"]
+    assert view["files"]["kp_ap.csv"]["rows"] == 2
+    assert view["dropped"] == ["half_hour_midpoint", "days_since_1932", "midpoint_days"]
+    assert view["pseudonymised"] == []
+    assert view["source_snapshot"] == f"gfz_kp_index/{ev.GFZ_SNAPSHOT}"
+    assert view["sampling"] == {
+        "definitive_rows": 1,
+        "first_timestamp": "2020-01-01 00:00:00",
+        "last_timestamp": "2020-01-02 03:00:00",
+        "method": "complete GFZ Niemegk 3-hourly Kp/ap time series",
+        "missing_kp_rows": 1,
+    }
+
+
+def test_dwd_hourly_view_filters_start_dedupes_sorts_and_maps_missing():
+    f1 = pd.DataFrame(
+        {
+            "STATIONS_ID": ["  44", "  44", "  44", "  44", " 10"],
+            "MESS_DATUM": [2017123123, 2018010101, 2018010100, 2018010100, 2018990100],
+            "QN_9": [3, 3, 3, 9, 1],
+            "TT_TU": [5.0, -999.0, 4.2, 8.8, 1.0],
+            "RF_TU": [80.0, -999.0, 85.0, 99.0, 50.0],
+        }
+    )
+    f2 = pd.DataFrame(
+        {
+            "STATIONS_ID": ["  10"],
+            "MESS_DATUM": [2018010200],
+            "QN_9": ["bad"],
+            "TT_TU": ["bad"],
+            "RF_TU": ["bad"],
+        }
+    )
+    out = ev.dwd_hourly_view([f1, f2])
+    assert out.columns.tolist() == [
+        "station_id",
+        "timestamp",
+        "temp_c",
+        "rel_humidity_pct",
+        "quality_code",
+    ]
+    assert out["station_id"].tolist() == ["10", "44", "44"]
+    assert out["timestamp"].tolist() == [
+        pd.Timestamp("2018-01-02 00:00:00"),
+        pd.Timestamp("2018-01-01 00:00:00"),
+        pd.Timestamp("2018-01-01 01:00:00"),
+    ]
+    assert out["temp_c"].iloc[1] == 4.2 and pd.isna(out["temp_c"].iloc[0])
+    assert pd.isna(out["temp_c"].iloc[2]) and pd.isna(out["rel_humidity_pct"].iloc[0])
+    assert out["rel_humidity_pct"].iloc[1] == 85.0 and pd.isna(out["rel_humidity_pct"].iloc[2])
+    assert pd.isna(out["quality_code"].iloc[0]) and out["quality_code"].iloc[1:].tolist() == [3, 3]
+    assert str(out["quality_code"].dtype) == "Int64"
+    assert out.attrs == {"duplicates": 1}
+
+
+def test_dwd_builder_writes_csv_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no DWD station archive in the snapshot$"):
+        ev._build_dwd(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _dwd_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_dwd(root, out, manifest)
+    ev._build_dwd(root, out, manifest)
+    target = out / "dwd_hourly_climate" / "air_temperature.csv"
+    assert (
+        target.read_text().splitlines()[0]
+        == "station_id,timestamp,temp_c,rel_humidity_pct,quality_code"
+    )  # noqa: E501
+    view = manifest["dwd_hourly_climate"]
+    assert view["files"]["air_temperature.csv"]["rows"] == 2
+    assert view["dropped"] == ["eor_marker"]
+    assert view["pseudonymised"] == []
+    assert view["source_snapshot"] == f"dwd_hourly_climate/{ev.DWD_SNAPSHOT}"
+    assert view["sampling"] == {
+        "archives": 1,
+        "duplicates_dropped": 1,
+        "first_timestamp": "2018-01-01 00:00:00",
+        "last_timestamp": "2018-01-01 01:00:00",
+        "method": "12 strided DWD hourly TU stations filtered from 2018-01-01 onward",
+        "stations": 1,
+    }
+
+
+def test_rte_eco2mix_view_filters_half_hourly_dedupes_dst_and_sorts():
+    df = pd.DataFrame(
+        {
+            "perimetre": ["France"] * 6,
+            "nature": ["Def"] * 6,
+            "date": ["d"] * 6,
+            "heure": ["h"] * 6,
+            "date_heure": [
+                "2020-03-29T01:00:00+00:00",
+                "2020-03-29T01:00:00+00:00",
+                "2020-01-01T00:15:00+00:00",
+                "2020-01-01T00:00:00+00:00",
+                "2020-06-01T02:00:00+02:00",
+                "bad",
+            ],
+            "consommation": [47000, 46000, None, 63000, 41000, 50000],
+            "nucleaire": [30500, 30000, None, 49000, "bad", 40000],
+        }
+    )
+    out = ev.rte_eco2mix_view([df])
+    assert out.columns.tolist() == ["timestamp", "consommation", "nucleaire"]
+    assert out["timestamp"].tolist() == [
+        pd.Timestamp("2020-01-01 00:00:00"),
+        pd.Timestamp("2020-03-29 01:00:00"),
+        pd.Timestamp("2020-06-01 00:00:00"),
+    ]
+    assert out["consommation"].tolist() == [63000.0, 47000.0, 41000.0]
+    assert pd.isna(out["nucleaire"].iloc[2])
+    assert out.attrs == {
+        "duplicates": 1,
+        "quarter_hour_rows_dropped": 1,
+        "unreadable_timestamps": 1,
+    }
+
+
+def test_rte_builder_writes_csv_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no RTE eco2mix file in the snapshot$"):
+        ev._build_rte(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _rte_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_rte(root, out, manifest)
+    ev._build_rte(root, out, manifest)
+    target = out / "rte_eco2mix_national" / "eco2mix.csv"
+    assert target.read_text().splitlines()[0] == "timestamp,consommation,nucleaire"
+    view = manifest["rte_eco2mix_national"]
+    assert view["files"]["eco2mix.csv"]["rows"] == 2
+    assert view["dropped"] == ["perimetre", "nature", "date", "heure"]
+    assert view["pseudonymised"] == []
+    assert view["source_snapshot"] == f"rte_eco2mix_national/{ev.RTE_SNAPSHOT}"
+    assert view["sampling"] == {
+        "duplicates_dropped": 1,
+        "files": ["eco2mix_national_2020.csv"],
+        "first_timestamp": "2019-12-31 23:00:00",
+        "last_timestamp": "2020-03-29 01:00:00",
+        "method": "half-hourly definitive RTE eco2mix national grid series for 2020-2023",
+        "quarter_hour_rows_dropped": 1,
+        "unreadable_timestamps": 1,
+    }
+
+
+def _ademe_row(dpe_id="d1", date="2024-03-15", ges="25.5"):
+    return {
+        "numero_dpe": dpe_id,
+        "date_etablissement_dpe": date,
+        "etiquette_dpe": "C",
+        "annee_construction": "1995",
+        "surface_habitable_logement": "72.0",
+        "conso_5_usages_par_m2_ep": "140",
+        "emission_ges_5_usages par_m2": ges,
+        "qualite_isolation_plancher bas": "bonne",
+    }
+
+
+def _ademe_snapshot(root):
+    raw = root / "ademe_dpe_existant" / ev.ADEME_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    pd.DataFrame([_ademe_row("d2", "2024-06-14", "bad")]).to_csv(
+        raw / "dpe_2024_06_14.csv", index=False
+    )
+    pd.DataFrame([_ademe_row("d1", "2024-03-15", "20.5"), _ademe_row("d1", "2024-09-01")]).to_csv(
+        raw / "dpe_2024_03_15.csv", index=False
+    )
+    (raw / "other.csv").write_text("ignored\n")
+
+
+def _alim_row(ins_id="i1", date="2024-05-01"):
+    row = {col: f"v_{col}" for col in ev.ALIM_KEEP}
+    row["numero_inspection"] = ins_id
+    row["date_inspection"] = date
+    row["enseigne"] = "Secret Cafe"
+    row["siret"] = "12345678900012"
+    return row
+
+
+def _alim_snapshot(root):
+    raw = root / "dgal_alimconfiance" / ev.ALIM_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    pd.DataFrame(
+        [
+            _alim_row("i2", "2024-06-01"),
+            _alim_row("i1", "2024-04-01"),
+            _alim_row("i1", "2024-09-01"),
+        ]
+    ).to_csv(raw / "export_alimconfiance.csv", sep=";", index=False)
+
+
+def test_ademe_dpe_view_normalises_spaces_pseudonymises_dedupes_and_coerces():
+    f1 = pd.DataFrame([_ademe_row("d2", "2024-06-14", "bad")])
+    f2 = pd.DataFrame([_ademe_row("d1", "2024-03-15", "18.5"), _ademe_row("d1", "2024-09-01")])
+    out = ev.ademe_dpe_view([f1, f2])
+    assert "emission_ges_5_usages_par_m2" in out and "qualite_isolation_plancher_bas" in out
+    assert "emission_ges_5_usages par_m2" not in out
+    assert out["numero_dpe"].tolist() == [ev.pseudonym("d1"), ev.pseudonym("d2")]
+    assert out["date_etablissement_dpe"].tolist() == ["2024-03-15", "2024-06-14"]
+    assert out["emission_ges_5_usages_par_m2"].iloc[0] == 18.5
+    assert pd.isna(out["emission_ges_5_usages_par_m2"].iloc[1])
+    assert out["surface_habitable_logement"].iloc[0] == 72.0
+    assert out.attrs == {"duplicates": 1}
+
+
+def test_ademe_dpe_builder_writes_csv_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no ADEME DPE file in the snapshot$"):
+        ev._build_ademe_dpe(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _ademe_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_ademe_dpe(root, out, manifest)
+    ev._build_ademe_dpe(root, out, manifest)
+    target = out / "ademe_dpe_existant" / "dpe.csv"
+    header = target.read_text().splitlines()[0]
+    assert "emission_ges_5_usages_par_m2" in header and "qualite_isolation_plancher_bas" in header
+    view = manifest["ademe_dpe_existant"]
+    assert view["files"]["dpe.csv"]["rows"] == 2 and view["pseudonymised"] == ["numero_dpe"]
+    assert view["salt_label"] == ev.SALT
+    assert view["dropped"] == ["addresses", "ban_identifiers", "rnb_identifiers", "coordinates"]
+    assert view["source_snapshot"] == f"ademe_dpe_existant/{ev.ADEME_SNAPSHOT}"
+    assert view["sampling"] == {
+        "duplicates_dropped": 1,
+        "files": ["dpe_2024_03_15.csv", "dpe_2024_06_14.csv"],
+        "method": "five fixed 2024 dates (10,000 rows per date) with coded attributes only",
+    }
+
+
+def test_alimconfiance_view_projects_columns_pseudonymises_dedupes_and_sorts():
+    df = pd.DataFrame(
+        [
+            _alim_row("i2", "2024-06-01"),
+            _alim_row("i1", "2024-04-01"),
+            _alim_row("i1", "2024-09-01"),
+        ]
+    )
+    out = ev.alimconfiance_view(df)
+    assert out.columns.tolist() == list(ev.ALIM_KEEP)
+    assert "enseigne" not in out and "siret" not in out
+    assert out["date_inspection"].tolist() == ["2024-04-01", "2024-06-01"]
+    assert out["numero_inspection"].tolist() == [ev.pseudonym("i1"), ev.pseudonym("i2")]
+    assert out.attrs == {"duplicates": 1}
+
+
+def test_alimconfiance_builder_writes_csv_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no DGAL AlimConfiance file in the snapshot$"):
+        ev._build_alimconfiance(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _alim_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_alimconfiance(root, out, manifest)
+    ev._build_alimconfiance(root, out, manifest)
+    target = out / "dgal_alimconfiance" / "inspections.csv"
+    assert target.read_text().splitlines()[0] == ",".join(ev.ALIM_KEEP)
+    view = manifest["dgal_alimconfiance"]
+    assert view["files"]["inspections.csv"]["rows"] == 2
+    assert view["pseudonymised"] == ["numero_inspection"]
+    assert view["salt_label"] == ev.SALT
+    assert view["dropped"] == [
+        "establishment_names",
+        "siret",
+        "agrement",
+        "addresses",
+        "communes",
+        "geo",
+    ]
+    assert view["source_snapshot"] == f"dgal_alimconfiance/{ev.ALIM_SNAPSHOT}"
+    assert view["sampling"] == {
+        "duplicates_dropped": 1,
+        "method": "complete Alim'Confiance register projected to coded non-identifying attributes",
+    }
+
+
+def _ev_snapshot(root):
+    raw = root / "zen_ev_charging" / ev.EV_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    text = (
+        '"location";"user_id";"session_id";"plugin_time";"plugout_time";"connection_time";"energy_session"\n'
+        '"ASK";"u1";"s2";2020-01-02 08:00:00;2020-01-02 10:00:00;2,5;10,25\n'
+        '"ASK";"u1";"s1";2020-01-01 07:00:00;;;\n'
+        '"ASK";"u2";"s1";2020-01-03 07:00:00;2020-01-03 08:00:00;1,0;5,0\n'
+        '"ASK";"u1";"s3";bad;2020-01-03 08:00:00;1,0;5,0\n'
+    )
+    (raw / "Dataset1_charging_reports.csv").write_text(text)
+
+
+def _azure_snapshot(root):
+    import sqlite3
+    import tempfile
+    import zipfile as _z
+
+    raw = root / "azure_packing_2020" / ev.AZURE_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with tempfile.TemporaryDirectory() as tmp:
+        db = Path(tmp) / "packing_trace_zone_a_v1.sqlite"
+        con = sqlite3.connect(db)
+        con.execute(
+            "CREATE TABLE vm (vmId INT, tenantId INT, vmTypeId INT, "
+            "priority INT, starttime REAL, endtime REAL)"
+        )
+        con.executemany(
+            "INSERT INTO vm VALUES (?, ?, ?, ?, ?, ?)",
+            [
+                (2, 100, 8, 1, 2.0, 5.0),
+                (1, 100, 4, 0, 1.0, None),
+                (3, 101, 4, 0, 1.0, 2.0),
+                (4, 200, 9, 0, 0.5, 3.0),
+            ],
+        )
+        con.commit()
+        con.close()
+        with _z.ZipFile(raw / "AzurePackingTraceV1.zip", "w") as z:
+            z.write(db, "packing_trace_zone_a_v1.sqlite")
+            z.writestr("readme.txt", "ignored")
+
+
+def _aoe_snapshot(root):
+    import zipfile as _z
+
+    raw = root / "zen_aoe_interactions" / ev.AOE_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    xes = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<log xes.version="1.0">\n'
+        "  <trace>\n"
+        '    <string key="concept:name" value="t2"/>\n'
+        '    <string key="player_id" value="p1"/>\n'
+        '    <string key="match_id" value="m1"/>\n'
+        '    <string key="strategy" value="Rush"/>\n'
+        '    <string key="map_type" value="Arabia"/>\n'
+        '    <string key="civilization" value="Franks"/>\n'
+        '    <string key="civilization_category" value="Cavalry"/>\n'
+        '    <float key="elo" value="1250.5"/>\n'
+        "    <event>\n"
+        '      <string key="concept:name" value="Build"/>\n'
+        '      <date key="time:timestamp" value="2023-01-01T02:00:00+02:00"/>\n'
+        '      <int key="amount" value="2"/>\n'
+        '      <int key="win" value="1"/>\n'
+        "    </event>\n"
+        "  </trace>\n"
+        "  <trace>\n"
+        '    <string key="concept:name" value="t1"/>\n'
+        "    <event>\n"
+        '      <string key="concept:name" value="Queue"/>\n'
+        '      <date key="time:timestamp" value="2023-01-01T00:01:00+00:00"/>\n'
+        "    </event>\n"
+        "  </trace>\n"
+        "</log>\n"
+    )
+    with _z.ZipFile(raw / "aoe_xes_head.zip", "w", _z.ZIP_DEFLATED) as z:
+        z.writestr("aoe_interaction_log_1_of_10.xes", xes)
+
+
+def test_ev_charging_view_parses_comma_decimals_pseudonymises_dedupes_and_sorts():
+    df = pd.DataFrame(
+        {
+            "location": ["ASK", "ASK", "ASK", "ASK"],
+            "user_id": ["u1", "u1", "u2", "u1"],
+            "session_id": ["s2", "s1", "s1", "s3"],
+            "plugin_time": [
+                "2020-01-02 08:00:00",
+                "2020-01-01 07:00:00",
+                "2020-01-03 07:00:00",
+                "bad",
+            ],  # noqa: E501
+            "plugout_time": ["2020-01-02 10:00:00", None, "2020-01-03 08:00:00", None],
+            "connection_time": ["2,5", None, "bad", "1,0"],
+            "energy_session": ["10,25", "bad", "5,0", "1,0"],
+        }
+    )
+    out = ev.ev_charging_view(df)
+    assert out.columns.tolist() == [
+        "session_id",
+        "user_id",
+        "location",
+        "plugin_time",
+        "plugout_time",
+        "connection_hours",
+        "energy_kwh",
+    ]
+    assert out["session_id"].tolist() == [ev.pseudonym("s1"), ev.pseudonym("s2")]
+    assert out["user_id"].tolist() == [ev.pseudonym("u1"), ev.pseudonym("u1")]
+    assert out["location"].tolist() == ["ASK", "ASK"]
+    assert out["plugin_time"].tolist() == [
+        pd.Timestamp("2020-01-01 07:00:00"),
+        pd.Timestamp("2020-01-02 08:00:00"),
+    ]
+    assert out["plugout_time"].iloc[1] == pd.Timestamp("2020-01-02 10:00:00")
+    assert pd.isna(out["connection_hours"].iloc[0]) and out["connection_hours"].iloc[1] == 2.5
+    assert pd.isna(out["energy_kwh"].iloc[0]) and out["energy_kwh"].iloc[1] == 10.25
+    assert pd.isna(out["plugout_time"].iloc[0])
+    assert out.attrs == {"duplicates": 1, "unreadable_timestamps": 1}
+
+
+def test_ev_charging_builder_writes_csv_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no EV charging file in the snapshot$"):
+        ev._build_ev_charging(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _ev_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_ev_charging(root, out, manifest)
+    ev._build_ev_charging(root, out, manifest)
+    target = out / "zen_ev_charging" / "sessions.csv"
+    lines = target.read_text().splitlines()
+    assert lines[0] == (
+        "session_id,user_id,location,plugin_time,plugout_time,connection_hours,energy_kwh"
+    )
+    assert len(lines) == 3
+    view = manifest["zen_ev_charging"]
+    assert view["files"]["sessions.csv"]["rows"] == 2 and view["dropped"] == []
+    assert view["pseudonymised"] == ["session_id", "user_id"] and view["salt_label"] == ev.SALT
+    assert view["source_snapshot"] == f"zen_ev_charging/{ev.EV_SNAPSHOT}"
+    assert view["sampling"] == {
+        "duplicates_dropped": 1,
+        "locations": 1,
+        "method": "complete Dataset1_charging_reports session log across 12 residential sites",
+        "unreadable_timestamps": 1,
+        "users": 1,
+    }
+
+
+def test_azure_packing_view_filters_multi_vm_tenants_orders_and_numbers_positions():
+    df = pd.DataFrame(
+        {
+            "vmId": [20, 10, 30, 5],
+            "tenantId": [100, 100, 200, 100],
+            "vmTypeId": [8, 4, 9, 4],
+            "priority": [1, 0, 0, 1],
+            "starttime": [2.0, 2.0, 1.0, 1.0],
+            "endtime": [5.0, 6.0, 3.0, None],
+        }
+    )
+    out = ev.azure_packing_view(df)
+    assert out.columns.tolist() == [
+        "tenant_id",
+        "position",
+        "starttime",
+        "endtime",
+        "vm_id",
+        "vm_type_id",
+        "priority",
+    ]
+    assert out["tenant_id"].tolist() == [100, 100, 100]
+    assert out["starttime"].tolist() == [1.0, 2.0, 2.0]
+    assert pd.isna(out["endtime"].iloc[0]) and out["endtime"].iloc[1:].tolist() == [6.0, 5.0]
+    assert out["vm_id"].tolist() == [5, 10, 20]
+    assert out["vm_type_id"].tolist() == [4, 4, 8]
+    assert out["priority"].tolist() == [1, 0, 1]
+    assert out["position"].tolist() == [0, 1, 2]
+    assert out.attrs == {"single_vm_rows_dropped": 1}
+
+
+def test_azure_packing_builder_reads_sqlite_zip_and_errors_when_missing(tmp_path, monkeypatch):
+    with pytest.raises(ev.ViewError, match=r"^no Azure packing zip archive in the snapshot$"):
+        ev._build_azure_packing(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _azure_snapshot(root)
+    cwd = tmp_path / "cwd"
+    cwd.mkdir()
+    monkeypatch.chdir(cwd)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_azure_packing(root, out, manifest)
+    ev._build_azure_packing(root, out, manifest)
+    assert list(cwd.iterdir()) == []
+    target = out / "azure_packing_2020" / "allocations.csv"
+    lines = target.read_text().splitlines()
+    assert lines[0] == "tenant_id,position,starttime,endtime,vm_id,vm_type_id,priority"
+    assert len(lines) == 3
+    view = manifest["azure_packing_2020"]
+    assert view["files"]["allocations.csv"]["rows"] == 2
+    assert view["dropped"] == ["vmType hardware dimensions", "single-VM tenants"]
+    assert view["pseudonymised"] == []
+    assert view["source_snapshot"] == f"azure_packing_2020/{ev.AZURE_SNAPSHOT}"
+    assert view["sampling"] == {
+        "method": "deterministic 1-in-100 tenant slice (tenantId % 100 == 0) limited to multi-VM tenants ordered by relative starttime",  # noqa: E501
+        "modulo": ev.AZURE_MODULO,
+        "single_vm_rows_dropped": 1,
+        "tenants": 1,
+    }
+
+
+def test_aoe_interactions_view_pseudonymises_parses_utc_and_coerces_numbers():
+    traces = [
+        {
+            "case": "t2",
+            "attributes": {
+                "player_id": "p1",
+                "match_id": "m1",
+                "strategy": "Rush",
+                "map_type": "Arabia",
+                "civilization": "Franks",
+                "civilization_category": "Cavalry",
+                "elo": "1250.5",
+            },
+            "events": [
+                {
+                    "concept:name": "Build",
+                    "time:timestamp": "2023-01-01T02:00:00+02:00",
+                    "amount": "2",
+                    "win": "1",
+                },
+                {
+                    "concept:name": "Bad",
+                    "time:timestamp": "not-a-date",
+                    "amount": "bad",
+                    "win": "bad",
+                },
+            ],
+        },
+        {
+            "case": "t1",
+            "attributes": {"elo": "bad"},
+            "events": [
+                {
+                    "concept:name": "Queue",
+                    "time:timestamp": "2023-01-01T00:01:00+00:00",
+                }
+            ],
+        },
+    ]
+    out = ev.aoe_interactions_view(traces)
+    assert out.columns.tolist() == list(ev.AOE_COLUMNS)
+    assert out["case_id"].tolist() == sorted(
+        [ev.pseudonym("t1"), ev.pseudonym("t2"), ev.pseudonym("t2")]
+    )
+    t2_rows = out[out["case_id"] == ev.pseudonym("t2")]
+    assert t2_rows["position"].tolist() == [0, 1]
+    assert t2_rows["time"].iloc[0] == pd.Timestamp("2023-01-01 00:00:00")
+    assert pd.isna(t2_rows["time"].iloc[1]) and pd.isna(t2_rows["amount"].iloc[1])
+    assert pd.isna(t2_rows["win"].iloc[1])
+    assert t2_rows["action"].tolist() == ["Build", "Bad"]
+    assert t2_rows["amount"].iloc[0] == 2.0 and t2_rows["win"].iloc[0] == 1.0
+    assert t2_rows["elo"].iloc[0] == 1250.5
+    assert t2_rows["strategy"].tolist() == ["Rush", "Rush"]
+    assert t2_rows["map_type"].tolist() == ["Arabia", "Arabia"]
+    assert t2_rows["civilization"].tolist() == ["Franks", "Franks"]
+    assert t2_rows["civilization_category"].tolist() == ["Cavalry", "Cavalry"]
+    assert t2_rows["player_id"].iloc[0] == ev.pseudonym("p1")
+    assert t2_rows["match_id"].iloc[0] == ev.pseudonym("m1")
+    t1_row = out[out["case_id"] == ev.pseudonym("t1")].iloc[0]
+    assert pd.isna(t1_row["player_id"]) and pd.isna(t1_row["match_id"]) and pd.isna(t1_row["elo"])
+    assert pd.isna(t1_row["win"]) and pd.isna(t1_row["strategy"]) and pd.isna(t1_row["map_type"])
+    assert pd.isna(t1_row["civilization"]) and pd.isna(t1_row["civilization_category"])
+    assert t1_row["action"] == "Queue" and t1_row["position"] == 0
+
+
+def test_aoe_builder_decodes_zip_prefix_writes_csv_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no AoE XES prefix archive in the snapshot$"):
+        ev._build_aoe(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _aoe_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_aoe(root, out, manifest)
+    ev._build_aoe(root, out, manifest)
+    target = out / "zen_aoe_interactions" / "events.csv"
+    lines = target.read_text().splitlines()
+    assert lines[0] == ",".join(ev.AOE_COLUMNS) and len(lines) == 3
+    view = manifest["zen_aoe_interactions"]
+    assert view["files"]["events.csv"]["rows"] == 2
+    assert view["dropped"] == [] and view["salt_label"] == ev.SALT
+    assert view["pseudonymised"] == ["case_id", "player_id", "match_id"]
+    assert view["source_snapshot"] == f"zen_aoe_interactions/{ev.AOE_SNAPSHOT}"
+    assert view["sampling"] == {
+        "member": "aoe_interaction_log_1_of_10.xes",
+        "method": "4 MiB compressed zip-prefix of Age of Empires interaction log decoded via xes_stream",  # noqa: E501
+        "status": {
+            "bytes_in": 866,
+            "bytes_out": 866,
+            "modulo": 1,
+            "stop": "log_closed",
+            "stream_complete": True,
+            "traces_kept": 2,
+            "traces_seen": 2,
+            "traces_without_case": 0,
+        },
+        "traces": 2,
+    }
+
+
+def _charity_raw_tables():
+    tables = {}
+    for name, rule in ev.CHARITY_SPEC["tables"].items():
+        cols = rule["keep"]
+        r1 = {c: f"1_{c}" for c in cols}
+        r2 = {c: f"2_{c}" for c in cols}
+        r1["organisation_number"] = "20"
+        r2["organisation_number"] = "21"
+        rows = [r2, r1]
+        if name != "charity":
+            r3 = {c: f"3_{c}" for c in cols}
+            r3["organisation_number"] = "40"
+            r4 = {c: f"4_{c}" for c in cols}
+            r4["organisation_number"] = "bad"
+            rows = [r2, r3, r1, r4]
+        else:
+            r1["charity_name"] = "Hidden"
+            r1["charity_activities"] = "a," * 30 + 'say "unbalanced'
+            r2["charity_name"] = "Odd"
+            r2["charity_activities"] = "plain"
+        tables[name] = pd.DataFrame(rows)
+    return tables
+
+
+def _charity_snapshot(root):
+    import zipfile as _z
+
+    raw = root / "uk_charity_register" / ev.CHARITY_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    for name, frame in _charity_raw_tables().items():
+        zname = ev.CHARITY_FILES[name]
+        lines = ["\t".join(frame.columns)]
+        for row in frame.to_dict(orient="records"):
+            lines.append("\t".join(str(row[c]) for c in frame.columns))
+        with _z.ZipFile(raw / zname, "w") as z:
+            z.writestr(f"publicextract.{name}.txt", "\n".join(lines) + "\n")
+
+
+def _japan_raw_tables():
+    tables = {}
+    for name, rule in ev.JAPAN_SPEC["tables"].items():
+        cols = rule["keep"]
+        r1 = {c: "010" for c in cols}
+        r2 = {c: "20" for c in cols}
+        if name == "designers":
+            r1["name_ja"] = "Person Name"
+            r2["name_ja"] = "Corp Name"
+        elif name == "sources":
+            r1["authors"] = "Author Name"
+            r2["authors"] = "Editor Name"
+        elif name == "buildings":
+            r1["archaeological_evidence_site_id"] = "010"
+            r2["archaeological_evidence_site_id"] = None
+            r1["rebuild_notes"] = "note"
+            r2["rebuild_notes"] = "note2"
+        tables[name] = pd.DataFrame([r2, r1])
+    return tables
+
+
+def _japan_snapshot(root):
+    import zipfile as _z
+
+    raw = root / "zen_japan_buildings" / ev.JAPAN_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with _z.ZipFile(raw / "reconstructed_buildings_japan_v1.1.zip", "w") as z:
+        for name, frame in _japan_raw_tables().items():
+            z.writestr(f"{ev.JAPAN_PREFIX}{name}.csv", frame.to_csv(index=False))
+
+
+def test_charity_register_view_filters_modulo_drops_pii_sorts_and_counts_orphans():
+    tables = _charity_raw_tables()
+    views, rels = ev.charity_register_view(tables, modulo=20)
+    assert set(views) == set(ev.CHARITY_FILES)
+    assert list(views["charity"].columns) == ev.CHARITY_SPEC["tables"]["charity"]["keep"]
+    assert views["charity"].index.tolist() == [0]
+    assert "charity_name" not in views["charity"]
+    assert "charity_activities" not in views["charity"]
+    assert views["charity"]["organisation_number"].tolist() == ["20"]
+    assert views["classification"]["organisation_number"].tolist() == ["20", "40"]
+    assert rels == [
+        {
+            "child": "annual_return_history.organisation_number",
+            "parent": "charity.organisation_number",
+            "checked": 2,
+            "orphans": 1,
+            "share": 0.5,
+        },
+        {
+            "child": "area_of_operation.organisation_number",
+            "parent": "charity.organisation_number",
+            "checked": 2,
+            "orphans": 1,
+            "share": 0.5,
+        },
+        {
+            "child": "classification.organisation_number",
+            "parent": "charity.organisation_number",
+            "checked": 2,
+            "orphans": 1,
+            "share": 0.5,
+        },
+        {
+            "child": "event_history.organisation_number",
+            "parent": "charity.organisation_number",
+            "checked": 2,
+            "orphans": 1,
+            "share": 0.5,
+        },
+    ]
+
+
+def test_charity_register_builder_reads_zips_writes_csvs_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no UK charity zip "):
+        ev._build_charity_register(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _charity_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_charity_register(root, out, manifest)
+    ev._build_charity_register(root, out, manifest)
+    view = manifest["uk_charity_register"]
+    assert view["files"]["charity.csv"]["rows"] == 1
+    assert view["files"]["classification.csv"]["rows"] == 2
+    assert (out / "uk_charity_register" / "charity.csv").read_text().splitlines()[0] == ",".join(
+        ev.CHARITY_SPEC["tables"]["charity"]["keep"]
+    )
+    assert view["pseudonymised"] == []
+    assert view["dropped"] == [
+        "charity_name",
+        "charity_contact_*",
+        "charity_activities",
+        "reason",
+        "assoc_charity_name",
+        "trustee table (not downloaded)",
+    ]
+    assert view["source_snapshot"] == f"uk_charity_register/{ev.CHARITY_SNAPSHOT}"
+    assert view["sampling"] == {
+        "method": f"deterministic 1-in-{ev.CHARITY_MODULO} slice on organisation_number across 5 non-trustee extracts",  # noqa: E501
+        "modulo": ev.CHARITY_MODULO,
+    }
+    assert len(view["relations"]) == 4 and all(r["orphans"] == 1 for r in view["relations"])
+
+
+def test_japan_buildings_view_drops_pii_sorts_and_audits_six_relations():
+    tables = _japan_raw_tables()
+    tables["building_designers"] = pd.concat(
+        [tables["building_designers"], pd.DataFrame([{"building_id": "010", "designer_id": "999"}])]
+    )
+    views, rels = ev.japan_buildings_view(tables)
+    assert set(views) == set(ev.JAPAN_SPEC["tables"])
+    assert list(views["buildings"].columns) == ev.JAPAN_SPEC["tables"]["buildings"]["keep"]
+    assert views["buildings"].index.tolist() == [0, 1]
+    assert "name_ja" not in views["designers"] and "authors" not in views["sources"]
+    assert "rebuild_notes" not in views["buildings"]
+    assert views["buildings"]["building_id"].tolist() == ["010", "20"]
+    by_child = {r["child"]: r for r in rels}
+    assert by_child["buildings.archaeological_evidence_site_id"]["checked"] == 1
+    assert by_child["buildings.archaeological_evidence_site_id"]["orphans"] == 0
+    assert by_child["building_designers.designer_id"]["checked"] == 3
+    assert by_child["building_designers.designer_id"]["orphans"] == 1
+
+
+def test_japan_buildings_builder_reads_zip_writes_csvs_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Japan buildings zip archive in the snapshot$"):
+        ev._build_japan_buildings(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _japan_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_japan_buildings(root, out, manifest)
+    ev._build_japan_buildings(root, out, manifest)
+    view = manifest["zen_japan_buildings"]
+    assert len(view["files"]) == 7 and view["files"]["buildings.csv"]["rows"] == 2
+    lines = (out / "zen_japan_buildings" / "designers.csv").read_text().splitlines()
+    assert lines[0] == "designer_id,is_individual,primary_designer_type_id"
+    assert lines[1].startswith("010,")
+    assert view["pseudonymised"] == []
+    assert view["dropped"] == [
+        "designer personal/company names, affiliations and URLs",
+        "source authors, titles and URLs",
+        "site street addresses and postal codes",
+        "free-text notes",
+    ]
+    assert view["source_snapshot"] == f"zen_japan_buildings/{ev.JAPAN_SNAPSHOT}"
+    assert view["sampling"] == {
+        "method": "complete core 7-table relational schema (no row sampling)"
+    }
+    assert len(view["relations"]) == 6 and all(r["orphans"] == 0 for r in view["relations"])
+
+
+def _coops_snapshot(root):
+    raw = root / "noaa_coops_tides" / ev.COOPS_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "coops_8518750_2022.json").write_text(
+        json.dumps(
+            {
+                "metadata": {"id": "8518750"},
+                "data": [
+                    {"t": "2022-01-01 01:00", "v": "0.80", "s": "0.02", "f": "1,1"},
+                    {"t": "2022-01-01 00:00", "v": "0.50", "s": "0.01", "f": "0,0"},
+                    {"t": "2022-01-01 00:00", "v": "9.99", "s": "0.01", "f": "0,0"},
+                    {"t": "bad-time", "v": "0.10", "s": "0.01", "f": "0,0"},
+                ],
+            }
+        )
+    )
+    (raw / "coops_9414290_2022.json").write_text(
+        json.dumps(
+            {
+                "metadata": {"id": "9414290"},
+                "data": [{"t": "2022-01-01 00:00", "v": "", "s": "0.0", "f": "1,0"}],
+            }
+        )
+    )
+
+
+def _gml_co2_snapshot(root):
+    raw = root / "noaa_gml_co2_weekly" / ev.GML_CO2_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "co2_weekly_mlo.csv").write_text(
+        "# comment header\n"
+        "year,month,day,decimal,average,ndays,1 year ago,10 years ago,increase since 1800\n"
+        "2020,1,12,2020.0301,-999.99,0,-999.99,-999.99,-999.99\n"
+        "2020,1,5,2020.0110,413.5,6,410.1,390.2,135.4\n"
+        "bad,1,1,2020.0,400.0,1,400.0,400.0,100.0\n"
+    )
+
+
+def _cnc_snapshot(root):
+    raw = root / "zen_cnc_milling" / ev.CNC_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    base = {c: 1.0 for c in ev.CNC_SIGNALS}
+    r1 = {"Unnamed: 0": 0, "DateTime": "2022-04-05 13:06:13", **base, "ToolNumber": 2.0, "Phase": 7}
+    r2 = {"Unnamed: 0": 1, "DateTime": "2022-04-05 13:06:11", **base, "ToolNumber": 1.0, "Phase": 7}
+    r_dup = {
+        "Unnamed: 0": 2,
+        "DateTime": "2022-04-05 13:06:11",
+        **base,
+        "ToolNumber": 9.0,
+        "Phase": 7,
+    }
+    r_bad = {"Unnamed: 0": 3, "DateTime": "bad", **base, "ToolNumber": 3.0, "Phase": 7}
+    pd.DataFrame([r1, r2, r_dup, r_bad]).to_csv(raw / "Data_from_2022-04.csv", index=False)
+    r3 = {"DateTime": "2021-11-26 07:15:36", **base, "ToolNumber": "bad", "PocketTable": 5}
+    pd.DataFrame([r3]).to_csv(raw / "Data_from_2021-11-26.csv", index=False)
+
+
+def test_coops_tides_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no NOAA CO-OPS JSON files in the snapshot$"):
+        ev._build_coops_tides(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _coops_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_coops_tides(root, out, manifest)
+    ev._build_coops_tides(root, out, manifest)
+    df = pd.read_csv(out / "noaa_coops_tides" / "tides.csv", dtype={"station_id": str})
+    assert df.columns.tolist() == ["station_id", "timestamp", "water_level_m", "sigma_m", "flags"]
+    assert df["station_id"].tolist() == ["8518750", "8518750", "9414290"]
+    assert df["water_level_m"].iloc[0] == 0.5
+    assert df["sigma_m"].tolist() == [0.01, 0.02, 0.0]
+    assert pd.isna(df["water_level_m"].iloc[2])
+    empty, dups0 = ev.coops_tides_view([])
+    assert len(empty) == 0 and dups0 == 0
+    assert empty.columns.tolist() == [
+        "station_id",
+        "timestamp",
+        "water_level_m",
+        "sigma_m",
+        "flags",
+    ]
+    bad, _ = ev.coops_tides_view(
+        [
+            {"station_id": "1", "t": "2022/01/01 00:00", "v": "1.0", "s": "0.1", "f": "0,0"},
+            {"station_id": "1", "t": "2022-01-01 00:00", "v": "bad", "s": "bad", "f": "0,0"},
+        ]
+    )
+    assert len(bad) == 1
+    assert pd.isna(bad["water_level_m"].iloc[0]) and pd.isna(bad["sigma_m"].iloc[0])
+    nodata_root = tmp_path / "nodata_acq"
+    _coops_snapshot(nodata_root)
+    (nodata_root / "noaa_coops_tides" / ev.COOPS_SNAPSHOT / "raw" / "coops_0_2022.json").write_text(
+        json.dumps({"metadata": {"id": "0"}})
+    )
+    m_nodata: dict = {}
+    ev._build_coops_tides(nodata_root, tmp_path / "nodata_out", m_nodata)
+    assert m_nodata["noaa_coops_tides"]["files"]["tides.csv"]["rows"] == 3
+    view = manifest["noaa_coops_tides"]
+    assert view["dropped"] == [] and view["pseudonymised"] == []
+    assert view["source_snapshot"] == f"noaa_coops_tides/{ev.COOPS_SNAPSHOT}"
+    assert view["sampling"] == {
+        "duplicates_dropped": 1,
+        "first_timestamp": "2022-01-01 00:00:00",
+        "flagged_rows": 2,
+        "last_timestamp": "2022-01-01 01:00:00",
+        "method": "six US coastal stations hourly water level (2022-2024 GMT)",
+        "missing_value_rows": 1,
+        "stations": 2,
+    }
+
+
+def test_gml_co2_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no NOAA GML CO2 file in the snapshot$"):
+        ev._build_gml_co2(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _gml_co2_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_gml_co2(root, out, manifest)
+    ev._build_gml_co2(root, out, manifest)
+    df = pd.read_csv(out / "noaa_gml_co2_weekly" / "co2_weekly.csv")
+    assert df.columns.tolist() == [
+        "timestamp",
+        "decimal_year",
+        "co2_ppm",
+        "one_year_ago_ppm",
+        "ten_years_ago_ppm",
+        "increase_since_1800_ppm",
+        "ndays",
+    ]
+    assert df["timestamp"].tolist() == ["2020-01-05", "2020-01-12"]
+    assert df["co2_ppm"].iloc[0] == 413.5 and df["ndays"].tolist() == [6, 0]
+    for col in ("co2_ppm", "one_year_ago_ppm", "ten_years_ago_ppm", "increase_since_1800_ppm"):
+        assert pd.isna(df[col].iloc[1])
+    view = manifest["noaa_gml_co2_weekly"]
+    assert view["source_snapshot"] == f"noaa_gml_co2_weekly/{ev.GML_CO2_SNAPSHOT}"
+    assert view["sampling"] == {
+        "first_timestamp": "2020-01-05 00:00:00",
+        "last_timestamp": "2020-01-12 00:00:00",
+        "method": "complete weekly Mauna Loa atmospheric CO2 record (1974-2026)",
+        "missing_co2_rows": 1,
+    }
+
+
+def test_cnc_milling_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no CNC milling CSV files in the snapshot$"):
+        ev._build_cnc_milling(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _cnc_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_cnc_milling(root, out, manifest)
+    ev._build_cnc_milling(root, out, manifest)
+    df = pd.read_csv(out / "zen_cnc_milling" / "cnc_milling.csv", dtype={"series_id": str})
+    assert df.columns.tolist() == ["series_id", "timestamp", *ev.CNC_SIGNALS]
+    assert df["series_id"].tolist() == ["2021-11-26", "2022-04", "2022-04"]
+    assert df["ToolNumber"].iloc[1] == 1.0 and pd.isna(df["ToolNumber"].iloc[0])
+    view = manifest["zen_cnc_milling"]
+    assert view["dropped"] == ["Unnamed: 0", "Phase", "Phase_compressed", "PocketTable"]
+    assert view["pseudonymised"] == []
+    assert view["source_snapshot"] == f"zen_cnc_milling/{ev.CNC_SNAPSHOT}"
+    assert view["sampling"] == {
+        "duplicates_dropped": 1,
+        "first_timestamp": "2021-11-26 07:15:36",
+        "last_timestamp": "2022-04-05 13:06:13",
+        "method": "complete 13-file five-axis CNC production series telemetry (Nov 2021 - Apr 2022)",  # noqa: E501
+        "series_count": 2,
+        "series_files": 2,
+    }
+
+
+def _wb_snapshot(root):
+    raw = root / "wb_lending_projects" / ev.WB_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "wb_projects_p0.json").write_text(
+        json.dumps(
+            {
+                "projects": {
+                    "P2": {
+                        "id": "P2",
+                        "boardapprovaldate": "2024-01-01T00:00:00Z",
+                        "closingdate": None,
+                        "approvalfy": "2024",
+                        "countrycode": ["FR"],
+                        "regionname": "ECA",
+                        "lendinginstr": "IPF",
+                        "lendinginstrtype": "IN",
+                        "prodline": "PE",
+                        "status": "Active",
+                        "curr_total_commitment": "1,500",
+                        "curr_ibrd_commitment": "1000",
+                        "curr_ida_commitment": "500",
+                        "grantamt": None,
+                        "lendprojectcost": "2,000,000",
+                        "sector1": {"Name": "Energy", "Percent": 100},
+                        "teamleadname": "Alice Doe",
+                        "project_name": "Grid",
+                    },
+                    "P1": {
+                        "id": "P1",
+                        "approvalfy": "bad",
+                        "countrycode": [],
+                        "sector1": "bad",
+                    },
+                    "P_DUP": {"id": "P2", "approvalfy": "2020"},
+                    "P_NONE": {"approvalfy": "2020"},
+                }
+            }
+        )
+    )
+    (raw / "wb_projects_p1.json").write_text(json.dumps({}))
+
+
+def _qld_snapshot(root):
+    raw = root / "zen_queensland_petrol" / ev.QLD_PETROL_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    base = {c: "1.5" for c in ev.QLD_NUM_COLS}
+    r1 = {
+        "reporting_period": "2025-12-31",
+        "production_type": "GAS",
+        "authorized_holder": "Corp B",
+        "permit_number": "PL 2",
+        "basin": "BOWEN",
+        "reservoir_unit_name": "U2",
+        "strat_unit_name": "S2",
+        "secondary_strat_unit_name": "",
+        "field_name": "F2",
+        "remark": "note",
+        "field_name_prod_corr": "F2",
+        **base,
+    }
+    r2 = {**r1, "reporting_period": "2025-06-30", "permit_number": "PL 1", "wells_on_prod": "bad"}
+    pd.DataFrame([r1, r2]).to_csv(raw / "data.csv", index=False)
+
+
+def _inpi_snapshot(root):
+    raw = root / "inpi_bce_ratios" / ev.INPI_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    nums = {c: "10.5" for c in ev.INPI_NUM_COLS}
+    r_pub1 = {
+        "siren": "222222222",
+        "date_cloture_exercice": "2024-12-31",
+        "type_bilan": "C",
+        "confidentiality": "Public",
+        **nums,
+    }
+    r_pub2 = {
+        "siren": "111111111",
+        "date_cloture_exercice": "2023-12-31",
+        "type_bilan": "S",
+        "confidentiality": "Public",
+        **nums,
+        "ratio_de_vetuste": "bad",
+    }
+    r_priv = {
+        "siren": "333333333",
+        "date_cloture_exercice": "2024-12-31",
+        "type_bilan": "C",
+        "confidentiality": "Partiellement confidentiel",
+        **nums,
+    }
+    pd.DataFrame([r_pub1, r_priv, r_pub2]).to_csv(
+        raw / "ratios_inpi_bce_30k.csv", sep=";", index=False
+    )
+
+
+def test_wb_projects_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no World Bank project JSON files in the snapshot$"):
+        ev._build_wb_projects(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _wb_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_wb_projects(root, out, manifest)
+    ev._build_wb_projects(root, out, manifest)
+    df = pd.read_csv(out / "wb_lending_projects" / "projects.csv")
+    assert df["project_id"].tolist() == ["P1", "P2"]
+    assert df.columns.tolist() == [
+        "project_id",
+        "board_approval_date",
+        "closing_date",
+        "approval_fy",
+        "country_code",
+        "region_name",
+        "lending_instrument",
+        "lending_instrument_type",
+        "prodline",
+        "status",
+        "curr_total_commitment",
+        "curr_ibrd_commitment",
+        "curr_ida_commitment",
+        "grant_amt",
+        "lend_project_cost",
+        "sector1_name",
+        "sector1_percent",
+    ]
+    assert "teamleadname" not in df and "project_name" not in df
+    row2 = df.iloc[1]
+    assert row2["board_approval_date"] == "2024-01-01T00:00:00Z"
+    assert pd.isna(row2["closing_date"]) and row2["approval_fy"] == 2024
+    assert row2["country_code"] == "FR" and row2["region_name"] == "ECA"
+    assert row2["lending_instrument"] == "IPF" and row2["lending_instrument_type"] == "IN"
+    assert row2["prodline"] == "PE" and row2["status"] == "Active"
+    assert row2["curr_ibrd_commitment"] == 1000.0 and row2["curr_ida_commitment"] == 500.0
+    assert pd.isna(row2["grant_amt"])
+    assert pd.isna(df["country_code"].iloc[0])
+    assert df["lend_project_cost"].iloc[1] == 2000000.0
+    assert df["curr_total_commitment"].iloc[1] == 1500.0
+    assert df["sector1_name"].iloc[1] == "Energy" and df["sector1_percent"].iloc[1] == 100.0
+    assert pd.isna(df["sector1_name"].iloc[0]) and pd.isna(df["approval_fy"].iloc[0])
+    assert pd.isna(ev._num_clean(pd.Series(["bad"])).iloc[0])
+    assert ev.wb_projects_view([]).empty
+    view = manifest["wb_lending_projects"]
+    assert view["dropped"] == ["teamleadname", "project_name", "projectdocs", "url"]
+    assert view["pseudonymised"] == []
+    assert view["sampling"]["pages"] == 2
+    assert view["source_snapshot"] == f"wb_lending_projects/{ev.WB_SNAPSHOT}"
+
+
+def test_queensland_petrol_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Queensland petroleum CSV in the snapshot$"):
+        ev._build_queensland_petrol(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _qld_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_queensland_petrol(root, out, manifest)
+    ev._build_queensland_petrol(root, out, manifest)
+    df = pd.read_csv(out / "zen_queensland_petrol" / "production.csv")
+    assert df.columns.tolist() == [*ev.QLD_TEXT_COLS, *ev.QLD_NUM_COLS]
+    assert df["reporting_period"].tolist() == ["2025-06-30", "2025-12-31"]
+    assert pd.isna(df["wells_on_prod"].iloc[0]) and df["wells_on_prod"].iloc[1] == 1.5
+    assert "authorized_holder" not in df and "remark" not in df
+    lead_root = tmp_path / "lead_acq"
+    lead_raw = lead_root / "zen_queensland_petrol" / ev.QLD_PETROL_SNAPSHOT / "raw"
+    lead_raw.mkdir(parents=True)
+    pd.DataFrame(
+        [
+            {
+                **{c: "007" for c in ev.QLD_TEXT_COLS},
+                **{c: "1.0" for c in ev.QLD_NUM_COLS},
+                "authorized_holder": "X",
+            }
+        ]
+    ).to_csv(lead_raw / "data.csv", index=False)
+    ev._build_queensland_petrol(lead_root, tmp_path / "lead_out", {})
+    assert (
+        (tmp_path / "lead_out" / "zen_queensland_petrol" / "production.csv")
+        .read_text()
+        .splitlines()[1]
+        .startswith("007,007,007,")
+    )
+    view = manifest["zen_queensland_petrol"]
+    assert view["dropped"] == [
+        "authorized_holder",
+        "remark",
+        "secondary_strat_unit_name",
+        "field_name_prod_corr",
+    ]
+    assert view["source_snapshot"] == f"zen_queensland_petrol/{ev.QLD_PETROL_SNAPSHOT}"
+
+
+def test_inpi_ratios_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no INPI BCE ratios CSV in the snapshot$"):
+        ev._build_inpi_ratios(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _inpi_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_inpi_ratios(root, out, manifest)
+    ev._build_inpi_ratios(root, out, manifest)
+    df = pd.read_csv(out / "inpi_bce_ratios" / "ratios.csv")
+    assert df.columns.tolist() == [
+        "siren_id",
+        "date_cloture_exercice",
+        "type_bilan",
+        *ev.INPI_NUM_COLS,
+    ]
+    expected_ids = sorted([ev.pseudonym("111111111"), ev.pseudonym("222222222")])
+    assert df["siren_id"].tolist() == expected_ids
+    assert sorted(df["date_cloture_exercice"].tolist()) == ["2023-12-31", "2024-12-31"]
+    assert sorted(df["type_bilan"].tolist()) == ["C", "S"]
+    assert ev.pseudonym("333333333") not in df["siren_id"].tolist()
+    assert pd.isna(df["ratio_de_vetuste"]).sum() == 1
+    view = manifest["inpi_bce_ratios"]
+    assert view["dropped"] == ["confidentiality"] and view["pseudonymised"] == ["siren"]
+    assert view["salt_label"] == ev.SALT and view["sampling"]["non_public_dropped"] == 1
+    assert view["source_snapshot"] == f"inpi_bce_ratios/{ev.INPI_SNAPSHOT}"
+    edge_root = tmp_path / "edge_acq"
+    edge_raw = edge_root / "inpi_bce_ratios" / ev.INPI_SNAPSHOT / "raw"
+    edge_raw.mkdir(parents=True)
+    nums = {c: "1" for c in ev.INPI_NUM_COLS}
+    cols = ["siren", "date_cloture_exercice", "type_bilan", "confidentiality", *ev.INPI_NUM_COLS]
+    row_a = {
+        "siren": "001",
+        "date_cloture_exercice": "2024-12-31",
+        "type_bilan": "," * 30,
+        "confidentiality": "Public",
+        **nums,
+    }
+    (edge_raw / "ratios_inpi_bce_30k.csv").write_text(
+        ";".join(cols) + "\n" + ";".join(row_a[c] for c in cols) + "\n"
+    )
+    ev._build_inpi_ratios(edge_root, tmp_path / "edge_out", {})
+    assert pd.read_csv(tmp_path / "edge_out" / "inpi_bce_ratios" / "ratios.csv")["siren_id"].iloc[
+        0
+    ] == ev.pseudonym("001")
+    blank, _ = ev.inpi_ratios_view(
+        pd.DataFrame(
+            [
+                {
+                    "siren": None,
+                    "date_cloture_exercice": "2024",
+                    "type_bilan": "C",
+                    "confidentiality": "Public",
+                    **{c: "1" for c in ev.INPI_NUM_COLS},
+                }
+            ]
+        )
+    )
+    assert blank["siren_id"].tolist() == [""]
+
+
+def _ror_snapshot(root):
+    import zipfile
+
+    raw = root / "ror_organizations" / ev.ROR_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    records = [
+        {"id": "https://ror.org/02", "names": [{"value": "Uni B"}], "contact": "a@uni.org"},
+        {"id": "https://ror.org/01", "names": [{"value": "Uni A"}]},
+        {"id": "https://ror.org/01", "names": [{"value": "Uni A dup"}]},
+    ]
+    with zipfile.ZipFile(raw / "ror_data.zip", "w") as zf:
+        zf.writestr("notes.txt", "ignore")
+        zf.writestr("v2-ror.json", json.dumps(records))
+
+
+def _rcsb_snapshot(root):
+    raw = root / "rcsb_pdb_entries" / ev.RCSB_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "entries_b01.json").write_text(
+        json.dumps(
+            {
+                "data": {
+                    "entries": [
+                        {"rcsb_id": "8CMX", "struct": {"title": "Mail x@y.org"}, "b": 1, "a": 2},
+                        {"rcsb_id": "7YBF", "struct": {"title": "Dup entry"}},
+                    ]
+                }
+            }
+        )
+    )
+    (raw / "entries_b00.json").write_text(
+        json.dumps(
+            {
+                "data": {
+                    "entries": [
+                        {"rcsb_id": "7YBF", "struct": {"title": "First entry"}},
+                    ]
+                }
+            }
+        )
+    )
+
+
+def _nws_snapshot(root):
+    raw = root / "nws_weather_alerts" / ev.NWS_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "alerts_p2.json").write_text(
+        json.dumps(
+            {
+                "features": [
+                    {
+                        "id": "u2",
+                        "properties": {
+                            "id": "NWS-2",
+                            "sender": "w-nws.webmaster@noaa.gov",
+                            "description": "Ask ops@noaa.gov",
+                            "references": [{"id": "ref1", "sender": "sub@noaa.gov"}],
+                        },
+                    },
+                    {"id": "u1", "properties": {"id": "NWS-1", "event": "Second"}},
+                ]
+            }
+        )
+    )
+    (raw / "alerts_p1.json").write_text(
+        json.dumps(
+            {
+                "features": [
+                    {
+                        "id": "u1",
+                        "properties": {"id": "NWS-1", "sender": "drop@noaa.gov", "event": "First"},
+                    }
+                ]
+            }
+        )
+    )
+
+
+def test_ror_view_and_builder(tmp_path):
+    import zipfile
+
+    with pytest.raises(ev.ViewError, match=r"^no ROR zip archive in the snapshot$"):
+        ev._build_ror(tmp_path / "empty", tmp_path / "err", {})
+    no_json_root = tmp_path / "no_json"
+    no_json_raw = no_json_root / "ror_organizations" / ev.ROR_SNAPSHOT / "raw"
+    no_json_raw.mkdir(parents=True)
+    with zipfile.ZipFile(no_json_raw / "ror_data.zip", "w") as zf:
+        zf.writestr("readme.txt", "text")
+    with pytest.raises(ev.ViewError, match=r"^no ROR JSON member in the archive$"):
+        ev._build_ror(no_json_root, tmp_path / "err2", {})
+
+    raw_recs = [
+        {"id": "https://ror.org/03", "note": "c@ex.org"},
+        {"id": "https://ror.org/01", "note": "first"},
+        {"id": "https://ror.org/01", "note": "dup"},
+        {"id": "https://ror.org/02", "note": "mid"},
+    ]
+    raw_copy = json.loads(json.dumps(raw_recs))
+    assert [r["id"] for r in ev.ror_view(raw_recs, stride=2)] == [
+        "https://ror.org/01",
+        "https://ror.org/03",
+    ]
+    assert raw_recs == raw_copy
+    default_out = ev.ror_view(raw_recs)
+    assert [r["id"] for r in default_out] == ["https://ror.org/01"] and default_out[0][
+        "note"
+    ] == "first"
+
+    root = tmp_path / "acq"
+    _ror_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_ror(root, out, manifest)
+    ev._build_ror(root, out, manifest)
+    target = out / "ror_organizations" / "organizations.jsonl"
+    raw_txt = target.read_text()
+    assert raw_txt.endswith("\n") and raw_txt.splitlines() == [
+        json.dumps({"id": "https://ror.org/01", "names": [{"value": "Uni A"}]}, sort_keys=True)
+    ]
+    view = manifest["ror_organizations"]
+    assert view["dropped"] == [] and view["pseudonymised"] == []
+    assert view["files"]["organizations.jsonl"]["rows"] == 1
+    assert view["sampling"] == {
+        "method": "every 15th ROR v2 organization record in canonical id order across all statuses",
+        "total_records": 3,
+        "stride": ev.ROR_STRIDE,
+        "kept": 1,
+    }
+    assert view["source_snapshot"] == f"ror_organizations/{ev.ROR_SNAPSHOT}"
+
+
+def test_rcsb_pdb_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no RCSB PDB entry files in the snapshot$"):
+        ev._build_rcsb_pdb(tmp_path / "empty", tmp_path / "err", {})
+    raw_entries = [
+        {"rcsb_id": "8CMX", "note": "mail a@pdb.org"},
+        {"rcsb_id": "7YBF", "title": "keep"},
+        {"rcsb_id": "7YBF", "title": "dup"},
+    ]
+    raw_copy = json.loads(json.dumps(raw_entries))
+    viewed = ev.rcsb_pdb_view(raw_entries)
+    assert raw_entries == raw_copy
+    assert [e["rcsb_id"] for e in viewed] == ["7YBF", "8CMX"]
+    assert viewed[0]["title"] == "keep" and viewed[1]["note"] == "mail [email]"
+
+    root = tmp_path / "acq"
+    _rcsb_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_rcsb_pdb(root, out, manifest)
+    ev._build_rcsb_pdb(root, out, manifest)
+    target = out / "rcsb_pdb_entries" / "entries.jsonl"
+    raw_txt = target.read_text()
+    lines = raw_txt.splitlines()
+    assert raw_txt.endswith("\n") and lines == [
+        json.dumps({"rcsb_id": "7YBF", "struct": {"title": "First entry"}}, sort_keys=True),
+        json.dumps(
+            {"a": 2, "b": 1, "rcsb_id": "8CMX", "struct": {"title": "Mail [email]"}}, sort_keys=True
+        ),
+    ]
+    view = manifest["rcsb_pdb_entries"]
+    assert view["dropped"] == [
+        "audit_author (omitted in GraphQL query)",
+        "citation authors (omitted in GraphQL query)",
+    ]
+    assert view["pseudonymised"] == [] and view["files"]["entries.jsonl"]["rows"] == 2
+    assert view["sampling"] == {
+        "method": (
+            "earliest released structures per calendar year ordered by initial_release_date "
+            "and rcsb_id (2024:350, 2025:350, 2026:300)"
+        ),
+        "entries_in": 3,
+        "files": ["entries_b00.json", "entries_b01.json"],
+    }
+    assert view["source_snapshot"] == f"rcsb_pdb_entries/{ev.RCSB_SNAPSHOT}"
+
+
+def test_nws_alerts_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no NWS alerts JSON in the snapshot$"):
+        ev._build_nws_alerts(tmp_path / "empty", tmp_path / "err", {})
+    raw_features = [
+        {
+            "properties": {
+                "id": "A2",
+                "sender": "drop@noaa.gov",
+                "note": "u@noaa.gov",
+                "references": [{"sender": "x@y.z"}],
+            }
+        },
+        {"properties": {"id": "A1", "event": "keep"}},
+        {"properties": {"id": "A1", "event": "dup"}},
+    ]
+    raw_copy = json.loads(json.dumps(raw_features))
+    viewed = ev.nws_alerts_view(raw_features)
+    assert raw_features == raw_copy
+    assert [f["properties"]["id"] for f in viewed] == ["A1", "A2"]
+    assert viewed[0]["properties"]["event"] == "keep"
+    assert "sender" not in viewed[1]["properties"]
+    assert "sender" not in viewed[1]["properties"]["references"][0]
+    assert viewed[1]["properties"]["note"] == "[email]"
+
+    root = tmp_path / "acq"
+    _nws_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_nws_alerts(root, out, manifest)
+    ev._build_nws_alerts(root, out, manifest)
+    target = out / "nws_weather_alerts" / "alerts.jsonl"
+    raw_txt = target.read_text()
+    lines = raw_txt.splitlines()
+    assert raw_txt.endswith("\n") and lines == [
+        json.dumps({"id": "u1", "properties": {"event": "First", "id": "NWS-1"}}, sort_keys=True),
+        json.dumps(
+            {
+                "id": "u2",
+                "properties": {
+                    "description": "Ask [email]",
+                    "id": "NWS-2",
+                    "references": [{"id": "ref1"}],
+                },
+            },
+            sort_keys=True,
+        ),
+    ]
+    view = manifest["nws_weather_alerts"]
+    assert view["dropped"] == ["sender"] and view["pseudonymised"] == []
+    assert view["files"]["alerts.jsonl"]["rows"] == 2
+    assert view["sampling"] == {
+        "method": "four consecutive 500-alert cursor pages from NWS alerts API",
+        "features_in": 3,
+        "unique_alerts": 2,
+        "files": ["alerts_p1.json", "alerts_p2.json"],
+    }
+    assert view["source_snapshot"] == f"nws_weather_alerts/{ev.NWS_SNAPSHOT}"
+
+
+def _noumea_snapshot(root):
+    raw = root / "zen_port_noumea" / ev.NOUMEA_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    cols = [
+        "id",
+        "year",
+        "voyage_number",
+        "voyage_date",
+        "traffic_type",
+        "shipping_agent",
+        "vessel_operator",
+        "vessel_imo",
+        "vessel_name",
+        "vessel_type",
+        "vessel_type_code",
+        "vessel_flag",
+        "vessel_region",
+        "vessel_tonnage",
+        "nc_port_of_touch",
+        "origin_city_code",
+        "origin_city",
+        "latitude_origine",
+        "longitude_origine",
+        "origin_country_code",
+        "origin_country",
+        "origin_region",
+        "destination_city_code",
+        "destination_city",
+        "latitude_destination",
+        "longitude_destination",
+        "destination_country_code",
+        "destination_country",
+        "destination_region",
+    ]
+    r1 = [
+        "002",
+        "2005",
+        "2",
+        "20050102",
+        "Outside",
+        "AGENT_B",
+        "OP_B",
+        "8024026",
+        "SHIP B",
+        "Passenger",
+        "006",
+        "FRA",
+        "EUROPE",
+        "21617",
+        "NOUMÉA",
+        "BNE",
+        "BRISBANE",
+        "-27.5",
+        "153.0",
+        "800",
+        "AUSTRALIE",
+        "OCEANIE",
+        "AKL",
+        "",
+        "bad",
+        "-174.7",
+        "804",
+        "NZ",
+        "OCEANIE",
+    ]
+    r2 = [
+        "001",
+        "2005",
+        "1",
+        "20050101",
+        "Outside",
+        "AGENT_A",
+        "OP_A",
+        "",
+        "SHIP A",
+        "Cargo",
+        "001",
+        "AUS",
+        "OCEANIE",
+        "1532",
+        "NOUMÉA",
+        "SYD",
+        "",
+        "1.5",
+        "2.5",
+        "800",
+        "AUSTRALIE",
+        "OCEANIE",
+        "NOUM",
+        "NOUMÉA",
+        "-22.2",
+        "166.4",
+        "540",
+        "NC",
+        "OCEANIE",
+    ]
+    r3 = [
+        "003",
+        "2005",
+        "3",
+        "20050102",
+        "Inside",
+        "AGENT_A",
+        "OP_A",
+        "8024026",
+        "SHIP A",
+        "Cargo",
+        "002",
+        "AUS",
+        "OCEANIE",
+        "900",
+        "PINS",
+        "AKL",
+        "AUCKLAND",
+        "3.0",
+        "4.0",
+        "804",
+        "NZ",
+        "OCEANIE",
+        "SYD",
+        "SYDNEY",
+        "-33.8",
+        "151.2",
+        "800",
+        "AU",
+        "OCEANIE",
+    ]
+    text = "\n".join([",".join(cols), ",".join(r1), ",".join(r2), ",".join(r3)]) + "\n"
+    (raw / "stopover_nc_2002_2017.csv").write_bytes(text.encode("latin-1"))
+
+
+def _kanto_snapshot(root):
+    import zipfile
+
+    raw = root / "zen_kanto_landslides" / ev.KANTO_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    cols = [
+        "id",
+        "Watershed",
+        "Mountain",
+        "Area (m2)",
+        "Inferred volume (m3)",
+        "Symbol code",
+        "Lithology category",
+        "Mean slope (degree)",
+        "Note",
+    ]
+    rows = [
+        ["002", "", "Mt B", "200.5", "300.0", "S2", "Litho B", "25.0", " "],
+        ["001", "WS1", "Mt A", "bad", "100.0", "S1", "Litho A", "18.5", "secret note"],
+        ["003", "WS2", "Mt B", "150.0", "250.0", "S3", "Litho A", "20.0", " "],
+    ]
+    csv_text = "\n".join([",".join(cols), *[",".join(r) for r in rows]]) + "\n"
+    with zipfile.ZipFile(raw / "kanto_landslides.zip", "w") as zf:
+        zf.writestr("shape.shp", "ignored")
+        zf.writestr("Landslide.csv", csv_text)
+
+
+def _nhif_snapshot(root):
+    import gzip
+
+    raw = root / "zen_nhif_hospital_cases" / ev.NHIF_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    cols = [
+        "region_num",
+        "region_name",
+        "facility_name",
+        "pathway_code",
+        "diagnosis_primary",
+        "diagnosis_secondary",
+        "n_cases",
+        "n_insured",
+        "period",
+        "period_start",
+        "period_end",
+        "year",
+        "month",
+    ]
+    rows = [
+        [
+            "02",
+            "burgas",
+            "Hospital B",
+            "A19",
+            "H25.1",
+            "",
+            "2",
+            "1",
+            "2024-02-01",
+            "2024-02-01",
+            "2024-02-29",
+            "2024",
+            "2",
+        ],
+        [
+            "01",
+            "blago",
+            "Hospital A",
+            "A10",
+            "J10.0",
+            "Z00",
+            "5",
+            "bad",
+            "2024-01-01",
+            "2024-01-01",
+            "2024-01-31",
+            "2024",
+            "1",
+        ],
+    ]
+    csv_text = "\n".join([",".join(cols), *[",".join(r) for r in rows]]) + "\n"
+    with gzip.open(raw / "nhif_hospital_cases.csv.gz", "wt", encoding="utf-8") as fh:
+        fh.write(csv_text)
+
+
+def test_port_noumea_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Port of Noumea stopover CSV in the snapshot$"):
+        ev._build_port_noumea(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _noumea_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_port_noumea(root, out, manifest)
+    ev._build_port_noumea(root, out, manifest)
+    target = out / "zen_port_noumea" / "stopovers.csv"
+    df = pd.read_csv(target, dtype={c: str for c in ev.NOUMEA_TEXT_COLS} | {"vessel_imo_id": str})
+    expected_cols = [
+        "id",
+        "year",
+        "voyage_number",
+        "voyage_date",
+        "traffic_type",
+        "vessel_imo_id",
+        "vessel_type",
+        "vessel_type_code",
+        "vessel_flag",
+        "vessel_region",
+        "vessel_tonnage",
+        "nc_port_of_touch",
+        "origin_city_code",
+        "origin_city",
+        "latitude_origine",
+        "longitude_origine",
+        "origin_country_code",
+        "origin_country",
+        "origin_region",
+        "destination_city_code",
+        "destination_city",
+        "latitude_destination",
+        "longitude_destination",
+        "destination_country_code",
+        "destination_country",
+        "destination_region",
+    ]
+    assert df.columns.tolist() == expected_cols
+    assert df["id"].tolist() == ["001", "002", "003"]
+    assert df["vessel_type_code"].tolist() == ["001", "006", "002"]
+    assert df["nc_port_of_touch"].tolist() == ["NOUMÉA", "NOUMÉA", "PINS"]
+    assert df["vessel_imo_id"].fillna("").tolist() == [
+        "",
+        ev.pseudonym("8024026"),
+        ev.pseudonym("8024026"),
+    ]
+    assert pd.isna(df.loc[0, "origin_city"]) and pd.isna(df.loc[1, "latitude_destination"])
+    assert df["vessel_tonnage"].tolist() == [1532, 21617, 900]
+    assert pd.api.types.is_numeric_dtype(df["latitude_origine"])
+    view = manifest["zen_port_noumea"]
+    assert view["dropped"] == ["shipping_agent", "vessel_operator", "vessel_name"]
+    assert view["pseudonymised"] == ["vessel_imo"] and view["salt_label"] == ev.SALT
+    assert view["files"]["stopovers.csv"]["rows"] == 3
+    assert view["sampling"] == {
+        "method": "complete New Caledonia international port stopover table",
+        "vessels": 2,
+    }
+    assert view["source_snapshot"] == f"zen_port_noumea/{ev.NOUMEA_SNAPSHOT}"
+    # Raw input immutability & None IMO edge case
+    sample_df = pd.read_csv(
+        root / "zen_port_noumea" / ev.NOUMEA_SNAPSHOT / "raw" / "stopover_nc_2002_2017.csv",
+        dtype=str,
+        encoding="latin-1",
+    )
+    sample_df.loc[0, "vessel_imo"] = None
+    copy_before = sample_df.copy(deep=True)
+    viewed = ev.port_noumea_view(sample_df)
+    pd.testing.assert_frame_equal(sample_df, copy_before)
+    assert "" in viewed["vessel_imo_id"].tolist()
+
+
+def test_kanto_landslides_view_and_builder(tmp_path):
+    import zipfile
+
+    with pytest.raises(ev.ViewError, match=r"^no Kanto landslide zip archive in the snapshot$"):
+        ev._build_kanto_landslides(tmp_path / "empty", tmp_path / "err", {})
+    no_csv = tmp_path / "no_csv"
+    no_csv_raw = no_csv / "zen_kanto_landslides" / ev.KANTO_SNAPSHOT / "raw"
+    no_csv_raw.mkdir(parents=True)
+    with zipfile.ZipFile(no_csv_raw / "kanto_landslides.zip", "w") as zf:
+        zf.writestr("a.shp", "bin")
+    with pytest.raises(ev.ViewError, match=r"^no Kanto landslide CSV in the archive$"):
+        ev._build_kanto_landslides(no_csv, tmp_path / "err2", {})
+    root = tmp_path / "acq"
+    _kanto_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_kanto_landslides(root, out, manifest)
+    ev._build_kanto_landslides(root, out, manifest)
+    df = pd.read_csv(
+        out / "zen_kanto_landslides" / "landslides.csv", dtype={c: str for c in ev.KANTO_TEXT_COLS}
+    )
+    assert df.columns.tolist() == [*ev.KANTO_TEXT_COLS, *ev.KANTO_NUM_COLS]
+    assert df["id"].tolist() == ["001", "003", "002"]
+    assert pd.isna(df.loc[2, "Watershed"]) and df["Mountain"].tolist() == ["Mt A", "Mt B", "Mt B"]
+    assert df["Lithology category"].tolist() == ["Litho A", "Litho A", "Litho B"]
+    assert pd.isna(df.loc[0, "Area (m2)"]) and df.loc[1, "Inferred volume (m3)"] == 250.0
+    assert df["Mean slope (degree)"].tolist() == [18.5, 20.0, 25.0]
+    view = manifest["zen_kanto_landslides"]
+    assert view["dropped"] == ["Note"] and view["pseudonymised"] == []
+    assert view["files"]["landslides.csv"]["rows"] == 3
+    assert view["sampling"] == {
+        "method": "complete 1923 Kanto earthquake landslide CSV attribute table"
+    }
+    assert view["source_snapshot"] == f"zen_kanto_landslides/{ev.KANTO_SNAPSHOT}"
+
+
+def test_nhif_cases_view_and_builder(tmp_path):
+    with pytest.raises(
+        ev.ViewError, match=r"^no NHIF hospital cases gzip archive in the snapshot$"
+    ):
+        ev._build_nhif_cases(tmp_path / "empty", tmp_path / "err", {})
+    raw_df = pd.DataFrame(
+        [
+            {
+                "region_num": "01",
+                "region_name": "r1",
+                "facility_name": "H2",
+                "pathway_code": "P2",
+                "diagnosis_primary": "B",
+                "diagnosis_secondary": None,
+                "n_cases": "2",
+                "n_insured": "2",
+                "period": "2024-02",
+                "period_start": "2024-02-01",
+                "period_end": "2024-02-29",
+                "year": "2024",
+                "month": "2",
+            },
+            {
+                "region_num": "01",
+                "region_name": "r1",
+                "facility_name": "H1",
+                "pathway_code": "P1",
+                "diagnosis_primary": "A",
+                "diagnosis_secondary": "C",
+                "n_cases": "1",
+                "n_insured": "1",
+                "period": "2024-01",
+                "period_start": "2024-01-01",
+                "period_end": "2024-01-31",
+                "year": "2024",
+                "month": "1",
+            },
+            {
+                "region_num": "01",
+                "region_name": "r1",
+                "facility_name": None,
+                "pathway_code": "P1",
+                "diagnosis_primary": "A0",
+                "diagnosis_secondary": None,
+                "n_cases": "3",
+                "n_insured": "bad",
+                "period": "2024-01",
+                "period_start": "2024-01-01",
+                "period_end": "2024-01-31",
+                "year": "2024",
+                "month": "1",
+            },
+        ]
+    )
+    copy_before = raw_df.copy(deep=True)
+    step2 = ev.nhif_cases_view(raw_df, stride=2)
+    pd.testing.assert_frame_equal(raw_df, copy_before)
+    assert step2["facility_id"].tolist() == ["", ev.pseudonym("H2")]
+    assert step2["diagnosis_primary"].tolist() == ["A0", "B"]
+    assert pd.isna(step2.iloc[0]["diagnosis_secondary"]) and pd.isna(step2.iloc[0]["n_insured"])
+    step_default = ev.nhif_cases_view(raw_df)
+    assert step_default["facility_id"].tolist() == [ev.pseudonym("H2")]
+
+    root = tmp_path / "acq"
+    _nhif_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_nhif_cases(root, out, manifest)
+    ev._build_nhif_cases(root, out, manifest)
+    df = pd.read_csv(
+        out / "zen_nhif_hospital_cases" / "hospital_cases.csv",
+        dtype={c: str for c in ev.NHIF_TEXT_COLS} | {"facility_id": str},
+    )
+    assert df.columns.tolist() == [
+        "region_num",
+        "region_name",
+        "facility_id",
+        "pathway_code",
+        "diagnosis_primary",
+        "diagnosis_secondary",
+        "n_cases",
+        "n_insured",
+        "period",
+        "period_start",
+        "period_end",
+        "year",
+        "month",
+    ]
+    assert df["region_num"].tolist() == ["02"] and df["facility_id"].tolist() == [
+        ev.pseudonym("Hospital B")
+    ]
+    assert pd.isna(df.loc[0, "diagnosis_secondary"]) and df["n_cases"].tolist() == [2]
+    assert df["year"].tolist() == [2024] and df["month"].tolist() == [2]
+    view = manifest["zen_nhif_hospital_cases"]
+    assert view["dropped"] == [] and view["pseudonymised"] == ["facility_name"]
+    assert view["salt_label"] == ev.SALT and view["files"]["hospital_cases.csv"]["rows"] == 1
+    assert view["sampling"] == {
+        "method": "every 75th record across the sorted NHIF hospitalisation table",
+        "total_records": 2,
+        "stride": ev.NHIF_STRIDE,
+        "facilities": 1,
+    }
+    assert view["source_snapshot"] == f"zen_nhif_hospital_cases/{ev.NHIF_SNAPSHOT}"
+
+
+def _ingv_snapshot(root):
+    raw = root / "ingv_seismic_events" / ev.INGV_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    header = (
+        "#EventID|Time|Latitude|Longitude|Depth/Km|Author|Catalog|Contributor|"
+        "ContributorID|MagType|Magnitude|MagAuthor|EventLocationName|EventType"
+    )
+    (raw / "ingv_2023.txt").write_text(
+        "\n".join(
+            [
+                header,
+                "003|2023-01-01T12:00:00.000000|42.5|13.2|10.0|AUTH||C||ML|2.1|--|Loc A|earthquake",
+                "002|2022-05-01T01:00:00.000000|41.0|14.0|8.0|AUTH||C||Mw|3.0|--|Dup|quarry blast",
+            ]
+        )
+        + "\n"
+    )
+    (raw / "ingv_2022.txt").write_text(
+        "\n".join(
+            [
+                header,
+                "002|2022-05-01T01:00:00.000000|41.5|14.1|7.5|AUTH||C||ML|2.8|--|Keep|earthquake",
+                "001|2022-05-01T01:00:00.000000|bad|12.0|5.0|AUTH||C||Md|1.9|--|First|explosion",
+            ]
+        )
+        + "\n"
+    )
+
+
+def _gha_snapshot(root):
+    import gzip
+
+    raw = root / "zen_gha_workflows" / ev.GHA_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    header = (
+        "repository,commit_hash,author_name,author_email,committer_name,committer_email,"
+        "committed_date,authored_date,file_path,previous_file_path,file_hash,"
+        "previous_file_hash,git_change_type,valid_yaml,probably_workflow,valid_workflow,uid"
+    )
+    r1 = (
+        "org/alpha,c1,Alice,a@ex.org,Alice,a@ex.org,1700000002,1700000001,"
+        ".github/workflows/ci.yml,.github/workflows/ci.yml,h2,h1,M,True,True,True,u1"
+    )
+    r2 = (
+        "org/alpha,c0,Bob,b@ex.org,Bob,b@ex.org,1700000000,1700000000,"
+        ".github/workflows/ci.yml,.github/workflows/ci.yml,h1,,A,True,True,True,u0"
+    )
+    r3 = (
+        ",c2,Carol,c@ex.org,Carol,c@ex.org,1700000005,1700000005,"
+        ".github/workflows/r.yml,,h3,,A,False,True,False,u2"
+    )
+    csv_blob = "\n".join([header, r1, r2, r3]) + "\n"
+    with gzip.open(raw / "workflows_prefix.csv.gz", "wt", encoding="utf-8") as fh:
+        fh.write(csv_blob)
+
+
+def test_ingv_seismic_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no INGV seismic text files in the snapshot$"):
+        ev._build_ingv_seismic(tmp_path / "empty", tmp_path / "err", {})
+    raw = pd.DataFrame(
+        [
+            {
+                "#EventID": "002",
+                "Time": "2022-05-01T01:00:00",
+                "Latitude": "41.5",
+                "Longitude": "14.1",
+                "Depth/Km": "7.5",
+                "Author": "A",
+                "Catalog": "",
+                "Contributor": "",
+                "ContributorID": "",
+                "MagType": "ML",
+                "Magnitude": "2.8",
+                "MagAuthor": "--",
+                "EventLocationName": "L1",
+                "EventType": "earthquake",
+            },
+            {
+                "#EventID": "002",
+                "Time": "2022-05-01T01:00:00",
+                "Latitude": "99.0",
+                "Longitude": "99.0",
+                "Depth/Km": "99.0",
+                "Author": "A",
+                "Catalog": "",
+                "Contributor": "",
+                "ContributorID": "",
+                "MagType": "Mw",
+                "Magnitude": "9.0",
+                "MagAuthor": "--",
+                "EventLocationName": "Dup",
+                "EventType": "blast",
+            },
+            {
+                "#EventID": "001",
+                "Time": "2022-05-01T01:00:00",
+                "Latitude": "bad",
+                "Longitude": "12.0",
+                "Depth/Km": "bad",
+                "Author": "A",
+                "Catalog": "",
+                "Contributor": "",
+                "ContributorID": "",
+                "MagType": "Md",
+                "Magnitude": "bad",
+                "MagAuthor": "--",
+                "EventLocationName": "L0",
+                "EventType": "explosion",
+            },
+        ]
+    )
+    copy_before = raw.copy(deep=True)
+    viewed = ev.ingv_seismic_view(raw)
+    pd.testing.assert_frame_equal(raw, copy_before)
+    assert viewed.columns.tolist() == [
+        "event_id",
+        "time",
+        "event_date",
+        "latitude",
+        "longitude",
+        "depth_km",
+        "mag_type",
+        "magnitude",
+        "event_type",
+    ]
+    assert viewed["event_id"].tolist() == ["001", "002"]
+    assert viewed["event_date"].tolist() == ["2022-05-01", "2022-05-01"]
+    assert viewed["magnitude"].iloc[1] == 2.8 and pd.isna(viewed["magnitude"].iloc[0])
+    assert pd.isna(viewed["latitude"].iloc[0]) and pd.isna(viewed["depth_km"].iloc[0])
+
+    root = tmp_path / "acq"
+    _ingv_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_ingv_seismic(root, out, manifest)
+    ev._build_ingv_seismic(root, out, manifest)
+    df = pd.read_csv(out / "ingv_seismic_events" / "events.csv", dtype={"event_id": str})
+    assert df["event_id"].tolist() == ["001", "002", "003"]
+    assert df["event_date"].tolist() == ["2022-05-01", "2022-05-01", "2023-01-01"]
+    assert df["mag_type"].tolist() == ["Md", "ML", "ML"]
+    assert df["event_type"].tolist() == ["explosion", "earthquake", "earthquake"]
+    assert pd.isna(df.loc[0, "latitude"]) and df["longitude"].tolist() == [12.0, 14.1, 13.2]
+    assert df["depth_km"].tolist() == [5.0, 7.5, 10.0]
+    view = manifest["ingv_seismic_events"]
+    assert view["dropped"] == [
+        "Author",
+        "Catalog",
+        "Contributor",
+        "ContributorID",
+        "EventLocationName",
+        "MagAuthor",
+    ]
+    assert view["pseudonymised"] == [] and view["files"]["events.csv"]["rows"] == 3
+    assert view["sampling"] == {
+        "method": (
+            "complete INGV ISIDe FDSNWS catalog queries with minmagnitude>=1.5 across 2022-2024"
+        ),
+        "files": ["ingv_2022.txt", "ingv_2023.txt"],
+        "days": 2,
+    }
+    assert view["source_snapshot"] == f"ingv_seismic_events/{ev.INGV_SNAPSHOT}"
+
+
+def test_gha_workflows_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no GHA workflows gzip prefix in the snapshot$"):
+        ev._build_gha_workflows(tmp_path / "empty", tmp_path / "err", {})
+    empty_df, dropped0 = ev.gha_workflows_view(
+        [
+            "repository,committed_date,authored_date,file_path,previous_file_path,"
+            "file_hash,previous_file_hash,git_change_type,valid_yaml,probably_workflow,"
+            "valid_workflow"
+        ],
+        complete=False,
+    )
+    assert empty_df.empty and empty_df.columns.tolist() == list(ev.GHA_COLS) and dropped0 == 0
+    hdr = (
+        "repository,commit_hash,author_name,author_email,committer_name,committer_email,"
+        "committed_date,authored_date,file_path,previous_file_path,file_hash,"
+        "previous_file_hash,git_change_type,valid_yaml,probably_workflow,valid_workflow,uid"
+    )
+    sample_lines = [
+        hdr,
+        "a/b,c1,A,a@x,A,a@x,10,bad,.github/workflows/b.yml,,hb,,M,True,True,True,u1",
+        "a/b,c0,A,a@x,A,a@x,10,9,.github/workflows/b.yml,,ha,,A,True,True,True,u0",
+        ",c2,A,a@x,A,a@x,5,5,.github/workflows/z.yml,,hz,,A,False,False,False,u2",
+        "partial/repo,c3,A,a@x,A,a@x,20,20,.github/workflows/p.yml,,hp,,D,True,True,True,u3",
+    ]
+    trunc_df, dropped_partial = ev.gha_workflows_view(sample_lines)
+    assert dropped_partial == 1 and len(trunc_df) == 3
+    assert trunc_df["repo_id"].fillna("").tolist() == ["", ev.pseudonym("a/b"), ev.pseudonym("a/b")]
+    assert trunc_df["file_hash"].tolist() == ["hz", "ha", "hb"]
+    assert pd.isna(trunc_df.iloc[2]["authored_date"])
+    full_df, dropped_full = ev.gha_workflows_view(sample_lines, complete=True)
+    assert (
+        dropped_full == 0
+        and len(full_df) == 4
+        and ev.pseudonym("partial/repo") in full_df["repo_id"].tolist()
+    )
+
+    root = tmp_path / "acq"
+    _gha_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_gha_workflows(root, out, manifest)
+    ev._build_gha_workflows(root, out, manifest)
+    df = pd.read_csv(
+        out / "zen_gha_workflows" / "workflows.csv",
+        dtype={"previous_file_hash": str, "previous_file_path": str},
+    )
+    assert df.columns.tolist() == list(ev.GHA_COLS) and len(df) == 3
+    assert df["committed_date"].tolist() == [1700000005, 1700000000, 1700000002]
+    assert df["authored_date"].tolist() == [1700000005, 1700000000, 1700000001]
+    assert df["file_path"].tolist() == [
+        ".github/workflows/r.yml",
+        ".github/workflows/ci.yml",
+        ".github/workflows/ci.yml",
+    ]
+    assert df["previous_file_path"].fillna("").tolist() == [
+        "",
+        ".github/workflows/ci.yml",
+        ".github/workflows/ci.yml",
+    ]
+    assert df["previous_file_hash"].fillna("").tolist() == ["", "", "h1"]
+    assert df["git_change_type"].tolist() == ["A", "A", "M"]
+    assert df["valid_yaml"].tolist() == [False, True, True]
+    assert df["probably_workflow"].tolist() == [True, True, True]
+    assert df["valid_workflow"].tolist() == [False, True, True]
+    assert "@" not in (out / "zen_gha_workflows" / "workflows.csv").read_text()
+    view = manifest["zen_gha_workflows"]
+    assert view["dropped"] == list(ev.GHA_DROP)
+    assert view["pseudonymised"] == ["repository"] and view["salt_label"] == ev.SALT
+    assert view["files"]["workflows.csv"]["rows"] == 3
+    assert view["sampling"] == {
+        "method": (
+            "6 MB gzip prefix of Zenodo 20340547 workflows.csv.gz sorted by repository "
+            "with trailing partial repository dropped when stream truncated"
+        ),
+        "stream_complete": True,
+        "partial_repo_rows_dropped": 0,
+        "repos": 2,
+    }
+    assert view["source_snapshot"] == f"zen_gha_workflows/{ev.GHA_SNAPSHOT}"
+
+
+def _wals_raw_tables():
+    return {
+        "languages": pd.DataFrame(
+            [
+                {
+                    "ID": "02",
+                    "Name": "Lang B",
+                    "Macroarea": "Eurasia",
+                    "Latitude": "50.0",
+                    "Longitude": "10.0",
+                    "Glottocode": "abcd1235",
+                    "ISO639P3code": "bbb",
+                    "Family": "FamB",
+                    "Subfamily": "",
+                    "Genus": "GenB",
+                    "Country_ID": "NA 01 NA",
+                    "Parent_ID": "01",
+                    "Source": "Author B",
+                },
+                {
+                    "ID": "01",
+                    "Name": "Lang A",
+                    "Macroarea": "Africa",
+                    "Latitude": "1.0",
+                    "Longitude": "2.0",
+                    "Glottocode": "abcd1234",
+                    "ISO639P3code": "aaa",
+                    "Family": "FamA",
+                    "Subfamily": "SubA",
+                    "Genus": "GenA",
+                    "Country_ID": "NA",
+                    "Parent_ID": "",
+                    "Source": "Author A",
+                },
+            ]
+        ),
+        "parameters": pd.DataFrame(
+            [
+                {
+                    "ID": "1A",
+                    "Name": "Consonants",
+                    "Description": "drop me",
+                    "ColumnSpec": "drop",
+                    "Chapter_ID": "001",
+                }
+            ]
+        ),
+        "codes": pd.DataFrame(
+            [
+                {
+                    "ID": "1A-1",
+                    "Parameter_ID": "1A",
+                    "Name": "Small",
+                    "Description": "D",
+                    "Number": "1",
+                    "icon": "drop",
+                }
+            ]
+        ),
+        "values": pd.DataFrame(
+            [
+                {
+                    "ID": "1A-02",
+                    "Language_ID": "02",
+                    "Parameter_ID": "1A",
+                    "Value": "1",
+                    "Code_ID": "1A-1",
+                    "Source": "S2",
+                    "Comment": "C2",
+                },
+                {
+                    "ID": "1A-01",
+                    "Language_ID": "01",
+                    "Parameter_ID": "1A",
+                    "Value": "1",
+                    "Code_ID": "1A-1",
+                    "Source": "S1",
+                    "Comment": "C1",
+                },
+            ]
+        ),
+        "chapters": pd.DataFrame(
+            [
+                {
+                    "ID": "001",
+                    "Name": "Phonology",
+                    "Contributor": "Jane Doe",
+                    "Citation": "Cit",
+                    "Number": "1",
+                    "Area_ID": "01",
+                    "Contributor_ID": "c1",
+                    "With_Contributor_ID": "c2",
+                }
+            ]
+        ),
+        "areas": pd.DataFrame([{"ID": "01", "Name": "Phonology", "dbpedia_url": "drop"}]),
+        "countries": pd.DataFrame(
+            [{"ID": "NA", "Name": "Namibia"}, {"ID": "01", "Name": "Testland"}]
+        ),
+    }
+
+
+def _wals_snapshot(root):
+    import zipfile
+
+    raw = root / "wals_cldf" / ev.WALS_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with zipfile.ZipFile(raw / "wals_v2020.3.zip", "w") as zf:
+        for name, frame in _wals_raw_tables().items():
+            zf.writestr(f"{ev.WALS_PREFIX}{name}.csv", frame.to_csv(index=False))
+        zf.writestr(f"{ev.WALS_PREFIX}contributors.csv", "ID,Name\nc1,Jane Doe\n")
+
+
+def _cordis_raw_project_text():
+    hdr = (
+        '"id";"acronym";"status";"title";"startDate";"endDate";"totalCost";"ecMaxContribution";'
+        '"topics";"ecSignatureDate";"frameworkProgramme";"masterCall";"subCall";"fundingScheme";'
+        '"nature";"objective";"contentUpdateDate";"rcn";"grantDoi";"keywords";"Human-validated";'
+        '"legalBasis"'
+    )
+    r2_l1 = (
+        '"002";"ACR2";"CLOSED";"Secret Title 2";"2022-01-01";"2025-12-31";"1000,5";"1000,5";'
+        '"T2";"2022-01-01";"HORIZON";"M2";"S2";"CSA";"";""Wrapped objective'
+    )
+    r2_l2 = 'continues ""inside"" here"";"2025-02-01";"200";"10.3030/002";"kw2";"false";""'
+    r1 = (
+        '"001";"ACR1";"SIGNED";"Secret Title 1";"2021-01-01";"2024-12-31";"501";"500";'
+        '"T1";"2021-01-01";"HORIZON";"M1";"S1";"RIA";"NAT1";"Obj 1";"2024-01-01";"100";'
+        '"10.3030/001";"kw1";"true";"HORIZON.1"'
+    )
+    return "\n".join([hdr, r2_l1, r2_l2, r1]) + "\n"
+
+
+def _cordis_raw_tables():
+    return {
+        "project": ev.parse_cordis_projects(_cordis_raw_project_text()),
+        "organization": pd.DataFrame(
+            [
+                {
+                    "projectID": "002",
+                    "projectAcronym": "ACR2",
+                    "organisationID": "",
+                    "vatNumber": "V2",
+                    "name": "Secret Org 2",
+                    "shortName": "SO2",
+                    "SME": "false",
+                    "activityType": "HES",
+                    "street": "1 St",
+                    "postCode": "00",
+                    "city": "Lyon",
+                    "country": "FR",
+                    "nutsCode": "FRK26",
+                    "geolocation": "45,4",
+                    "organizationURL": "https://x.fr",
+                    "contactForm": "a@b.fr",
+                    "contentUpdateDate": "2025-02-01",
+                    "rcn": "2",
+                    "order": "1",
+                    "role": "coordinator",
+                    "ecContribution": "100,5",
+                    "netEcContribution": "100,5",
+                    "totalCost": "100,5",
+                    "endOfParticipation": "false",
+                    "active": "true",
+                },
+                {
+                    "projectID": "001",
+                    "projectAcronym": "ACR1",
+                    "organisationID": "0099",
+                    "vatNumber": "V1",
+                    "name": "Secret Org 1",
+                    "shortName": "SO1",
+                    "SME": "true",
+                    "activityType": "PRC",
+                    "street": "2 St",
+                    "postCode": "01",
+                    "city": "Paris",
+                    "country": "FR",
+                    "nutsCode": "FR101",
+                    "geolocation": "48,2",
+                    "organizationURL": "https://y.fr",
+                    "contactForm": "c@d.fr",
+                    "contentUpdateDate": "2024-01-01",
+                    "rcn": "1",
+                    "order": "1",
+                    "role": "participant",
+                    "ecContribution": "50,25",
+                    "netEcContribution": "50,25",
+                    "totalCost": "50,25",
+                    "endOfParticipation": "false",
+                    "active": "true",
+                },
+            ]
+        ),
+        "euroSciVoc": pd.DataFrame(
+            [
+                {
+                    "euroSciVocCode": "01",
+                    "euroSciVocPath": "/p",
+                    "euroSciVocTitle": "AI",
+                    "euroSciVocDescription": "Desc",
+                    "projectID": "001",
+                }
+            ]
+        ),
+        "topics": pd.DataFrame([{"topic": "T1", "title": "Topic 1", "projectID": "001"}]),
+        "legalBasis": pd.DataFrame(
+            [
+                {
+                    "legalBasis": "HORIZON.1",
+                    "title": "LB",
+                    "uniqueProgrammePart": "P1",
+                    "projectID": "001",
+                }
+            ]
+        ),
+        "policyPriorities": pd.DataFrame(
+            [
+                {
+                    "ai": "1",
+                    "biodiversity": "0",
+                    "cleanAir": "0",
+                    "climate": "1",
+                    "digitalAgenda": "1",
+                    "projectID": "001",
+                }
+            ]
+        ),
+    }
+
+
+def _cordis_snapshot(root):
+    import zipfile
+
+    raw = root / "cordis_horizon_europe" / ev.CORDIS_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    tables = _cordis_raw_tables()
+    with zipfile.ZipFile(raw / "cordis_horizon_csv.zip", "w") as zf:
+        zf.writestr("project.csv", _cordis_raw_project_text())
+        for name, frame in tables.items():
+            if name != "project":
+                zf.writestr(f"{name}.csv", frame.to_csv(sep=";", index=False))
+        zf.writestr("webLink.csv", '"physUrl";"projectID"\n"https://x";"001"\n')
+
+
+def test_wals_cldf_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no WALS CLDF zip archive in the snapshot$"):
+        ev._build_wals_cldf(tmp_path / "empty", tmp_path / "err", {})
+    tables = _wals_raw_tables()
+    tables_none = {**tables, "languages": tables["languages"].copy()}
+    tables_none["languages"].loc[0, "Country_ID"] = None
+    views_none, _ = ev.wals_cldf_view(tables_none)
+    assert views_none["language_countries"].to_dict("records") == [
+        {"Language_ID": "01", "Country_ID": "NA"}
+    ]
+
+    views, rels = ev.wals_cldf_view(tables)
+    assert set(views) == set(ev.WALS_SPEC["tables"])
+    for tbl, rule in ev.WALS_SPEC["tables"].items():
+        assert views[tbl].columns.tolist() == rule["keep"]
+        assert views[tbl].index.tolist() == list(range(len(views[tbl])))
+    assert views["languages"]["ID"].tolist() == ["01", "02"]
+    assert views["values"]["ID"].tolist() == ["1A-01", "1A-02"]
+    assert views["language_countries"].to_dict("records") == [
+        {"Language_ID": "01", "Country_ID": "NA"},
+        {"Language_ID": "02", "Country_ID": "01"},
+        {"Language_ID": "02", "Country_ID": "NA"},
+    ]
+    assert "Source" not in views["languages"] and "Contributor_ID" not in views["chapters"]
+    by_child = {r["child"]: r for r in rels}
+    assert (
+        by_child["values.Language_ID"]["checked"] == 2
+        and by_child["values.Language_ID"]["orphans"] == 0
+    )
+    assert (
+        by_child["languages.Parent_ID"]["checked"] == 1
+        and by_child["languages.Parent_ID"]["orphans"] == 0
+    )
+    assert (
+        by_child["language_countries.Language_ID"]["checked"] == 3
+        and by_child["language_countries.Language_ID"]["orphans"] == 0
+    )
+    assert (
+        by_child["language_countries.Country_ID"]["checked"] == 3
+        and by_child["language_countries.Country_ID"]["orphans"] == 0
+    )
+    assert by_child["chapters.Area_ID"]["orphans"] == 0
+
+    root = tmp_path / "acq"
+    _wals_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_wals_cldf(root, out, manifest)
+    ev._build_wals_cldf(root, out, manifest)
+    assert not (out / "wals_cldf" / "contributors.csv").exists()
+    lang_df = pd.read_csv(out / "wals_cldf" / "languages.csv", dtype=str, keep_default_na=False)
+    country_df = pd.read_csv(out / "wals_cldf" / "countries.csv", dtype=str, keep_default_na=False)
+    assert lang_df["ID"].tolist() == ["01", "02"]
+    assert lang_df["Country_ID"].tolist() == ["NA", "NA 01 NA"]
+    assert country_df["ID"].tolist() == ["01", "NA"]
+    view = manifest["wals_cldf"]
+    assert view["dropped"] == [
+        "contributors.csv",
+        "Contributor_ID",
+        "With_Contributor_ID",
+        "Contributor",
+        "Citation",
+        "Source",
+        "Comment",
+        "Description",
+        "examples.csv",
+        "media.csv",
+        "genealogy.csv",
+        "language_names.csv",
+    ]
+    assert view["pseudonymised"] == [] and len(view["relations"]) == 9
+    assert view["files"]["languages.csv"]["rows"] == 2 and view["files"]["values.csv"]["rows"] == 2
+    assert view["files"]["language_countries.csv"]["rows"] == 3
+    assert view["sampling"] == {
+        "method": "complete 7 core CLDF linguistic typology tables plus normalized language_countries junction table (no row sampling)"  # noqa: E501
+    }
+    assert view["source_snapshot"] == f"wals_cldf/{ev.WALS_SNAPSHOT}"
+
+
+def test_cordis_horizon_view_and_builder(tmp_path):
+    with pytest.raises(
+        ev.ViewError, match=r"^no CORDIS Horizon Europe zip archive in the snapshot$"
+    ):
+        ev._build_cordis_horizon(tmp_path / "empty", tmp_path / "err", {})
+    empty_proj = ev.parse_cordis_projects('"id";"acronym"\norphan line before record\n')
+    assert empty_proj.empty and empty_proj.columns.tolist() == list(ev.CORDIS_PROJECT_COLS)
+
+    tables = _cordis_raw_tables()
+    tables["organization"].loc[0, "organisationID"] = None
+    org_copy = tables["organization"].copy(deep=True)
+    tables["topics"] = pd.concat(
+        [tables["topics"], pd.DataFrame([{"topic": "T2", "title": "Orph", "projectID": "999"}])],
+        ignore_index=True,
+    )
+    views, rels = ev.cordis_horizon_view(tables)
+    pd.testing.assert_frame_equal(tables["organization"], org_copy)
+    assert set(views) == set(ev.CORDIS_SPEC["tables"])
+    for tbl, rule in ev.CORDIS_SPEC["tables"].items():
+        assert views[tbl].columns.tolist() == rule["keep"]
+        assert views[tbl].index.tolist() == list(range(len(views[tbl])))
+    assert views["project"]["id"].tolist() == ["001", "002"]
+    assert views["project"].iloc[0].to_dict() == {
+        "id": "001",
+        "acronym": "ACR1",
+        "status": "SIGNED",
+        "startDate": "2021-01-01",
+        "endDate": "2024-12-31",
+        "totalCost": "501",
+        "ecMaxContribution": "500",
+        "topics": "T1",
+        "ecSignatureDate": "2021-01-01",
+        "frameworkProgramme": "HORIZON",
+        "masterCall": "M1",
+        "subCall": "S1",
+        "fundingScheme": "RIA",
+        "nature": "NAT1",
+        "contentUpdateDate": "2024-01-01",
+        "rcn": "100",
+        "grantDoi": "10.3030/001",
+        "Human-validated": "true",
+        "legalBasis": "HORIZON.1",
+    }
+    assert views["project"]["legalBasis"].fillna("").tolist() == ["HORIZON.1", ""]
+    assert views["organization"]["org_id"].fillna("").tolist() == [ev.pseudonym("0099"), ""]
+    assert views["organization"]["ecContribution"].tolist() == ["50,25", "100,5"]
+    assert "name" not in views["organization"] and "title" not in views["project"]
+    by_child = {r["child"]: r for r in rels}
+    assert by_child["organization.projectID"]["orphans"] == 0
+    assert (
+        by_child["topics.projectID"]["checked"] == 2
+        and by_child["topics.projectID"]["orphans"] == 1
+    )
+
+    root = tmp_path / "acq"
+    _cordis_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_cordis_horizon(root, out, manifest)
+    ev._build_cordis_horizon(root, out, manifest)
+    proj_df = pd.read_csv(out / "cordis_horizon_europe" / "project.csv", dtype=str)
+    org_df = pd.read_csv(out / "cordis_horizon_europe" / "organization.csv", dtype=str)
+    assert proj_df["id"].tolist() == ["001", "002"]
+    assert org_df["org_id"].fillna("").tolist() == [ev.pseudonym("0099"), ""]
+    assert not (out / "cordis_horizon_europe" / "webLink.csv").exists()
+    view = manifest["cordis_horizon_europe"]
+    assert view["pseudonymised"] == ["organisationID"] and view["salt_label"] == ev.SALT
+    assert view["dropped"] == [
+        "project.title",
+        "project.objective",
+        "project.keywords",
+        "organization.name",
+        "organization.shortName",
+        "organization.vatNumber",
+        "organization.street",
+        "organization.postCode",
+        "organization.city",
+        "organization.geolocation",
+        "organization.organizationURL",
+        "organization.contactForm",
+        "webItem.csv",
+        "webLink.csv",
+    ]
+    assert len(view["relations"]) == 5 and all(r["orphans"] == 0 for r in view["relations"])
+    assert (
+        view["files"]["project.csv"]["rows"] == 2 and view["files"]["organization.csv"]["rows"] == 2
+    )
+    assert view["sampling"] == {
+        "method": (
+            "complete 6 core CORDIS Horizon Europe tables (no row sampling); "
+            "projects parsed across wrapped quotes"
+        )
+    }
+    assert view["source_snapshot"] == f"cordis_horizon_europe/{ev.CORDIS_SNAPSHOT}"
+
+
+def _telecom_snapshot(root):
+    import zipfile
+
+    raw = root / "zen_telecom_kpis" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with zipfile.ZipFile(raw / "network_operator_KPIs_time_series_dataset.zip", "w") as zf:
+        zf.writestr("network_operator_KPIs_time_series_dataset/data_series/s1.txt", "0 9.9\n")
+        zf.writestr("network_operator_KPIs_time_series_dataset/data_real/readme.md", "ignore\n")
+        zf.writestr(
+            "network_operator_KPIs_time_series_dataset/data_real/r2.txt",
+            "300 20.5\n0 10.0\n",
+        )
+        zf.writestr(
+            "network_operator_KPIs_time_series_dataset/data_real/r1.txt",
+            "\n0 5.5\n300 6.5\n",
+        )
+
+
+def _dk_heating_snapshot(root):
+    raw = root / "zen_dk_district_heating" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    for dma in ("a", "b", "c"):
+        pd.DataFrame(
+            [
+                {"Unnamed: 0": "2016-01-01 01:00:00+00:00", "cons": 12.5},
+                {"Unnamed: 0": "2016-01-01 00:00:00+00:00", "cons": 10.0},
+            ]
+        ).to_csv(raw / f"dma_{dma}_aggregated.csv", index=False)
+        pd.DataFrame(
+            [
+                {"Unnamed: 0": "2016-01-01 00:00:00+00:00", "contributing_meters": 100},
+                {"Unnamed: 0": "2016-01-01 01:00:00+00:00", "contributing_meters": 101},
+            ]
+        ).to_csv(raw / f"dma_{dma}_contributing_meters.csv", index=False)
+
+
+def _water_demand_snapshot(root):
+    raw = root / "zen_water_demand" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    pd.DataFrame(
+        [
+            {
+                "Date": "10/30/2016",
+                "Time": " 02:00-02:00 ",
+                "Consumption": 647.0,
+                "Temperature": 5.2,
+                "Rain": 0.0,
+                "Sun": 0,
+            },
+            {
+                "Date": "10/30/2016",
+                "Time": " 02:00-03:00 ",
+                "Consumption": 543.0,
+                "Temperature": 4.9,
+                "Rain": 1.0,
+                "Sun": 0,
+            },
+            {
+                "Date": "1/1/2016",
+                "Time": " 00:00-01:00 ",
+                "Consumption": None,
+                "Temperature": 0.6,
+                "Rain": None,
+                "Sun": 0,
+            },
+        ]
+    ).to_csv(raw / "waterconsumption_rawdata.csv", index=False)
+
+
+def _dmsp_snapshot(root):
+    import zipfile
+
+    raw = root / "zen_dmsp_auroral" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    header = (
+        "# comment\n"
+        "UTSecond Pass Start,UTSecond Pass End,hemisphere,UTSec EQ1,UTSec PO1,UTSec PO2,"
+        "UTSec EQ2,FOM,SC_GEOCENTRIC_LAT EQ1,SC_GEOCENTRIC_LAT PO1,SC_GEOCENTRIC_LAT PO2,"
+        "SC_GEOCENTRIC_LAT EQ2,SC_GEOCENTRIC_LON EQ1,SC_GEOCENTRIC_LON PO1,"
+        "SC_GEOCENTRIC_LON PO2,SC_GEOCENTRIC_LON EQ2,mlat EQ1,mlat PO1,mlat PO2,mlat EQ2,"
+        "mlt EQ1,mlt PO1,mlt PO2,mlt EQ2\n"
+    )
+    row1 = (
+        "60,120,1,70,80,90,100,3.1,64.0,67.0,81.0,76.0,260.0,259.0,174.0,136.0,"
+        "74.0,76.0,77.0,71.0,17.0,16.0,9.0,8.0\n"
+    )
+    row2 = (
+        "0,30,-1,5,10,15,20,2.5,-80.0,-77.0,-59.0,-57.0,231.0,184.0,151.0,150.0,"
+        "-72.0,-77.0,-71.0,-69.0,4.0,3.0,2.0,1.0\n"
+    )
+    with zipfile.ZipFile(raw / "fom_boundaries_F16_F17_F18_2010_2014.zip", "w") as zf:
+        zf.writestr("readme.txt", "ignore")
+        zf.writestr(
+            "dmsp-f18_ssj_precipitating-electrons-ions_20140102_v1.1.2_boundaries.csv",
+            header + row2,
+        )  # noqa: E501
+        zf.writestr(
+            "dmsp-f16_ssj_precipitating-electrons-ions_20100101_v1.1.2_boundaries.csv",
+            header + row1,
+        )  # noqa: E501
+        zf.writestr(
+            "dmsp-f17_ssj_precipitating-electrons-ions_20120101_v1.1.2_boundaries.csv", header
+        )  # noqa: E501
+        zf.writestr("other_name_20100101.csv", header + row1)
+
+
+def test_telecom_kpis_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no telecom KPI archive in the snapshot$"):
+        ev._build_telecom_kpis(tmp_path / "empty", tmp_path / "err", {})
+    df = ev.telecom_kpis_view([("r2", "300 2.0\n0 1.0\nbad\n"), ("r1", "0 0.5\n")])
+    assert df["series_id"].tolist() == ["r1", "r2", "r2"]
+    assert df["elapsed_s"].tolist() == [0, 0, 300]
+    assert df["kpi_value"].tolist() == [0.5, 1.0, 2.0]
+
+    root = tmp_path / "acq"
+    _telecom_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_telecom_kpis(root, out, manifest)
+    ev._build_telecom_kpis(root, out, manifest)
+    written = pd.read_csv(out / "zen_telecom_kpis" / "telecom_kpis.csv")
+    assert written["series_id"].tolist() == ["r1", "r1", "r2", "r2"]
+    assert written["elapsed_s"].tolist() == [0, 300, 0, 300]
+    view = manifest["zen_telecom_kpis"]
+    assert view["dropped"] == ["data_series/"] and view["pseudonymised"] == []
+    assert view["sampling"] == {
+        "max_elapsed_s": 300,
+        "method": "complete 14 real telecom operator KPI traces from data_real/ (300s elapsed cadence)",  # noqa: E501
+        "min_elapsed_s": 0,
+        "series_count": 2,
+    }
+    assert view["source_snapshot"] == f"zen_telecom_kpis/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_dk_heating_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Danish district heating CSVs in the snapshot$"):
+        ev._build_dk_heating(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _dk_heating_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_dk_heating(root, out, manifest)
+    ev._build_dk_heating(root, out, manifest)
+    written = pd.read_csv(out / "zen_dk_district_heating" / "district_heating.csv")
+    assert len(written) == 6 and written["dma_id"].tolist()[:2] == ["dma_a", "dma_a"]
+    assert written["consumption_kwh"].tolist()[:2] == [10.0, 12.5]
+    assert written["contributing_meters"].tolist()[:2] == [100, 101]
+    bad = ev.dk_heating_view(
+        [
+            (
+                "dma_x",
+                pd.DataFrame(
+                    [
+                        {"Unnamed: 0": "bad", "cons": "1"},
+                        {"Unnamed: 0": "2016-01-01 00:00:00", "cons": "bad"},
+                    ]
+                ),  # noqa: E501
+                pd.DataFrame(
+                    [
+                        {"Unnamed: 0": "2016-01-01 00:00:00", "contributing_meters": "bad"},
+                    ]
+                ),
+            )
+        ]
+    )
+    assert len(bad) == 1 and str(bad["timestamp"].iloc[0]) == "2016-01-01 00:00:00+00:00"
+    assert pd.isna(bad["consumption_kwh"].iloc[0]) and pd.isna(bad["contributing_meters"].iloc[0])
+    assert bad["contributing_meters"].dtype == "Int64"
+    view = manifest["zen_dk_district_heating"]
+    assert view["dropped"] == ["dma_*_norm_aggregated.csv", "weather.csv"]
+    assert (
+        view["sampling"]["dmas"] == 3
+        and view["sampling"]["first_timestamp"] == "2016-01-01 00:00:00+00:00"
+    )  # noqa: E501
+    assert view["sampling"]["last_timestamp"] == "2016-01-01 01:00:00+00:00"
+    assert view["source_snapshot"] == f"zen_dk_district_heating/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_water_demand_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no water demand CSV in the snapshot$"):
+        ev._build_water_demand(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _water_demand_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_water_demand(root, out, manifest)
+    ev._build_water_demand(root, out, manifest)
+    written = pd.read_csv(out / "zen_water_demand" / "water_demand.csv")
+    assert len(written) == 2
+    assert written["timestamp"].tolist() == ["2016-01-01 00:00:00", "2016-10-30 02:00:00"]
+    assert pd.isna(written["consumption_m3"].iloc[0]) and written["consumption_m3"].iloc[1] == 647.0
+    assert written["temperature_c"].tolist() == [0.6, 5.2] and written["sun_min"].tolist() == [0, 0]
+    unit_df, unit_dups = ev.water_demand_view(
+        pd.DataFrame(
+            [
+                {
+                    "Date": "bad",
+                    "Time": "00:00-01:00",
+                    "Consumption": 1,
+                    "Temperature": 2,
+                    "Rain": 0,
+                    "Sun": 0,
+                },
+                {
+                    "Date": "02/01/2016",
+                    "Time": " 13:00-14:00 ",
+                    "Consumption": "bad",
+                    "Temperature": "bad",
+                    "Rain": "bad",
+                    "Sun": "bad",
+                },
+            ]
+        )
+    )
+    assert unit_dups == 0 and len(unit_df) == 1
+    assert str(unit_df["timestamp"].iloc[0]) == "2016-02-01 13:00:00"
+    assert all(
+        pd.isna(unit_df[c].iloc[0])
+        for c in ("consumption_m3", "temperature_c", "rain_mm", "sun_min")
+    )
+    view = manifest["zen_water_demand"]
+    assert view["sampling"]["duplicates_dropped"] == 1
+    assert (
+        view["sampling"]["missing_consumption_rows"] == 1
+        and view["sampling"]["missing_rain_rows"] == 1
+    )  # noqa: E501
+    assert view["source_snapshot"] == f"zen_water_demand/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_dmsp_auroral_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no DMSP auroral archive in the snapshot$"):
+        ev._build_dmsp_auroral(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _dmsp_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_dmsp_auroral(root, out, manifest)
+    ev._build_dmsp_auroral(root, out, manifest)
+    written = pd.read_csv(out / "zen_dmsp_auroral" / "dmsp_auroral.csv")
+    assert written["spacecraft"].tolist() == ["F16", "F18"]
+    assert written["pass_duration_s"].tolist() == [60, 30]
+    assert written["hemisphere"].tolist() == [1, -1]
+    assert written["fom"].tolist() == [3.1, 2.5] and written["lon_eq2"].tolist() == [136.0, 150.0]
+    assert written["timestamp"].tolist() == [
+        "2010-01-01 00:01:00+00:00",
+        "2014-01-02 00:00:00+00:00",
+    ]
+    bad = ev.dmsp_auroral_view(
+        [
+            (
+                "F16",
+                "20100101",
+                pd.DataFrame(
+                    [
+                        {c: "bad" for _, c in ev.DMSP_NUM_COLS}
+                        | {
+                            "UTSecond Pass Start": "bad",
+                            "UTSecond Pass End": "bad",
+                            "hemisphere": "bad",
+                        },
+                        {c: "bad" for _, c in ev.DMSP_NUM_COLS}
+                        | {
+                            "UTSecond Pass Start": "10",
+                            "UTSecond Pass End": "bad",
+                            "hemisphere": "bad",
+                        },
+                    ]
+                ),
+            )
+        ]
+    )
+    assert len(bad) == 1 and pd.isna(bad["pass_duration_s"].iloc[0])
+    assert pd.isna(bad["hemisphere"].iloc[0]) and bad["hemisphere"].dtype == "Int64"
+    assert pd.isna(bad["fom"].iloc[0])
+    view = manifest["zen_dmsp_auroral"]
+    assert view["sampling"]["files_loaded"] == 2 and view["sampling"]["spacecrafts"] == 2
+    assert view["source_snapshot"] == f"zen_dmsp_auroral/{ev.WAVE24_SNAPSHOT}"
+
+
+def _dts_snapshot(root):
+    raw = root / "us_treasury_dts" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    recs_p0 = [
+        {
+            "record_date": "2024-01-03",
+            "account_type": "TGA",
+            "transaction_type": "Withdrawals",
+            "transaction_catg": "B",
+            "transaction_catg_desc": "drop",
+            "table_nbr": "II",
+            "table_nm": "drop",
+            "transaction_today_amt": "50",
+            "transaction_mtd_amt": "100",
+            "transaction_fytd_amt": "1,500",
+            "record_fiscal_year": "2024",
+            "record_fiscal_quarter": "2",
+            "src_line_nbr": "2",
+        },
+        {
+            "record_date": "2024-01-02",
+            "account_type": "TGA",
+            "transaction_type": "Withdrawals",
+            "transaction_catg": "B",
+            "transaction_today_amt": "20",
+            "transaction_mtd_amt": "30",
+            "transaction_fytd_amt": "40",
+            "record_fiscal_year": "2024",
+            "record_fiscal_quarter": "2",
+            "src_line_nbr": "1",
+        },
+    ]
+    recs_p1 = [
+        {
+            "record_date": None,
+            "account_type": "TGA",
+            "transaction_type": "Deposits",
+            "transaction_catg": "X",
+            "transaction_today_amt": "1",
+            "transaction_mtd_amt": "1",
+            "transaction_fytd_amt": "1",
+            "record_fiscal_year": "2024",
+            "record_fiscal_quarter": "2",
+            "src_line_nbr": "9",
+        },
+        {
+            "record_date": "2024-01-02",
+            "account_type": "TGA",
+            "transaction_type": "Deposits",
+            "transaction_catg": "A",
+            "transaction_today_amt": "10",
+            "transaction_mtd_amt": "10",
+            "transaction_fytd_amt": "10",
+            "record_fiscal_year": "2024",
+            "record_fiscal_quarter": "2",
+            "src_line_nbr": "1",
+        },
+    ]
+    (raw / "dts_2024_2025_p00.json").write_text(json.dumps({"data": recs_p0}))
+    (raw / "dts_2024_2025_p01.json").write_text(json.dumps({"data": recs_p1}))
+
+
+def _fdic_snapshot(root):
+    raw = root / "fdic_bank_financials" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    base = {c: "10.5" for c in ev.FDIC_NUM_COLS}
+    (raw / "fdic_20241231.json").write_text(
+        json.dumps(
+            {
+                "data": [
+                    {
+                        "data": {
+                            "CERT": None,
+                            "REPDTE": "20241231",
+                            "BKCLASS": "N",
+                            "STALP": "NY",
+                            **base,
+                        }
+                    },  # noqa: E501
+                    {
+                        "data": {
+                            "ID": "20_2024",
+                            "CERT": "20",
+                            "REPDTE": "20241231",
+                            "BKCLASS": "NM",
+                            "STALP": "CA",
+                            **base,
+                        }
+                    },  # noqa: E501
+                ]
+            }
+        )
+    )
+    (raw / "fdic_20221231.json").write_text(
+        json.dumps(
+            {
+                "data": [
+                    {
+                        "data": {
+                            "ID": "10_2022",
+                            "CERT": "10",
+                            "REPDTE": "20221231",
+                            "BKCLASS": "N",
+                            "STALP": "NY",
+                            **base,
+                        }
+                    },  # noqa: E501
+                ]
+            }
+        )
+    )
+
+
+def _sncf_snapshot(root):
+    raw = root / "sncf_tgv_regularite" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    cols = [
+        *ev.SNCF_TEXT_COLS,
+        "commentaire_annulation",
+        "commentaire_retards_depart",
+        "commentaires_retard_arrivee",
+        *ev.SNCF_NUM_COLS,
+    ]
+    r1 = ["2024-02", "National", "020", "LYON PART DIEU", "c1", "c2", "c3"] + [
+        "12.5" for _ in ev.SNCF_NUM_COLS
+    ]
+    r2 = ["2024-01", "National", "010", "STRASBOURG", "", "", ""] + [
+        "5.0" for _ in ev.SNCF_NUM_COLS
+    ]
+    text = ";".join(cols) + "\n" + ";".join(r1) + "\n" + ";".join(r2) + "\n"
+    (raw / "sncf_tgv_regularite.csv").write_bytes(text.encode("utf-8-sig"))
+
+
+def _dgccrf_snapshot(root):
+    raw = root / "dgccrf_fuel_prices" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    cols = [
+        "id",
+        "adresse",
+        "ville",
+        "pop",
+        "code_departement",
+        "code_region",
+        "horaires_automate_24_24",
+    ]
+    for fuel in ev.DGCCRF_FUELS:
+        cols.extend([f"{fuel}_prix", f"{fuel}_maj", f"{fuel}_rupture_type"])
+    rows = [
+        {
+            "id": "2000001",
+            "adresse": "1 rue A",
+            "ville": "Ajaccio",
+            "pop": "R",
+            "code_departement": "2A",
+            "code_region": "94",
+            "horaires_automate_24_24": "Oui",
+            "gazole_prix": "1.899",
+            "gazole_maj": "2026-11-22T08:00:00Z",
+            "sp98_prix": "bad",
+            "sp98_maj": "2026-11-22T08:00:00Z",
+            "e10_prix": "1.799",
+            "e10_maj": "2026-11-22T07:00:00Z",
+        },
+        {
+            "id": "0100001",
+            "adresse": "2 rue B",
+            "ville": "Lyon",
+            "pop": "A",
+            "code_departement": "69",
+            "code_region": "84",
+            "horaires_automate_24_24": "Non",
+            "sp95_prix": "1.950",
+            "sp95_maj": "2026-11-22T09:00:00Z",
+            "e85_prix": "0.899",
+            "e85_maj": "2026-11-22T09:00:00Z",
+            "gplc_prix": "1.050",
+            "gplc_maj": "2026-11-22T09:00:00Z",
+        },
+    ]
+    pd.DataFrame(rows, columns=cols).to_csv(
+        raw / "dgccrf_fuel_prices.csv", sep=";", index=False, encoding="utf-8-sig"
+    )
+
+
+def test_treasury_dts_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no US Treasury DTS JSON files in the snapshot$"):
+        ev._build_treasury_dts(tmp_path / "empty", tmp_path / "err", {})
+    empty = ev.treasury_dts_view([])
+    assert empty.empty and empty.columns.tolist() == [*ev.DTS_TEXT_COLS, *ev.DTS_NUM_COLS]
+    df = ev.treasury_dts_view(
+        [
+            {"record_date": None, "src_line_nbr": "1"},
+            {
+                "record_date": "2024-01-02",
+                "account_type": "B",
+                "transaction_type": "W",
+                "transaction_catg": "Y",
+                **{c: "bad" for c in ev.DTS_NUM_COLS},
+                "src_line_nbr": "1",
+            },  # noqa: E501
+            {
+                "record_date": "2024-01-02",
+                "account_type": "A",
+                "transaction_type": "W",
+                "transaction_catg": "Z",
+                **{c: "2" for c in ev.DTS_NUM_COLS},
+                "src_line_nbr": "1",
+            },  # noqa: E501
+            {
+                "record_date": "2024-01-02",
+                "account_type": "A",
+                "transaction_type": "D",
+                "transaction_catg": "Z",
+                **{c: "1" for c in ev.DTS_NUM_COLS},
+                "src_line_nbr": "1",
+            },  # noqa: E501
+            {
+                "record_date": "2024-01-02",
+                "account_type": "A",
+                "transaction_type": "D",
+                "transaction_catg": "A",
+                **{c: "1" for c in ev.DTS_NUM_COLS},
+                "src_line_nbr": "1",
+            },  # noqa: E501
+            {
+                "record_date": "2024-01-02",
+                "account_type": "A",
+                "transaction_type": "D",
+                "transaction_catg": "A",
+                "transaction_today_amt": "1,250",
+                "transaction_mtd_amt": "5",
+                "transaction_fytd_amt": "9",
+                "record_fiscal_year": "2024",
+                "record_fiscal_quarter": "2",
+                "src_line_nbr": "0",
+            },  # noqa: E501
+        ]
+    )
+    assert len(df) == 5
+    assert df["transaction_catg"].tolist() == ["A", "A", "Z", "Z", "Y"]
+    assert df["transaction_type"].tolist() == ["D", "D", "D", "W", "W"]
+    assert df.loc[0, "transaction_today_amt"] == 1250.0 and df.loc[0, "src_line_nbr"] == 0.0
+    assert df.loc[0, "record_fiscal_year"] == 2024.0 and df.loc[0, "record_fiscal_quarter"] == 2.0
+    assert all(pd.isna(df.loc[4, c]) for c in ev.DTS_NUM_COLS if c != "src_line_nbr")
+
+    root = tmp_path / "acq"
+    _dts_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_treasury_dts(root, out, manifest)
+    ev._build_treasury_dts(root, out, manifest)
+    written = pd.read_csv(out / "us_treasury_dts" / "dts_operating_cash.csv")
+    assert len(written) == 3
+    assert written["record_date"].tolist() == ["2024-01-02", "2024-01-02", "2024-01-03"]
+    assert written["transaction_fytd_amt"].tolist() == [10.0, 40.0, 1500.0]
+    view = manifest["us_treasury_dts"]
+    assert view["pseudonymised"] == []
+    assert view["sampling"]["pages"] == 2 and view["sampling"]["first_date"] == "2024-01-02"
+    assert view["sampling"]["last_date"] == "2024-01-03"
+    assert view["source_snapshot"] == f"us_treasury_dts/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_fdic_financials_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no FDIC bank financials JSON files in the snapshot$"):
+        ev._build_fdic_financials(tmp_path / "empty", tmp_path / "err", {})
+    df = ev.fdic_financials_view(
+        [
+            {"REPDTE": "20241231"},
+            {
+                "CERT": "9",
+                "REPDTE": "20251231",
+                "BKCLASS": "N",
+                "STALP": "TX",
+                **{c: "bad" for c in ev.FDIC_NUM_COLS},
+            },  # noqa: E501
+            {
+                "CERT": "1",
+                "REPDTE": "20221231",
+                "BKCLASS": "SM",
+                "STALP": "MA",
+                **{c: "7.5" for c in ev.FDIC_NUM_COLS},
+            },  # noqa: E501
+        ]
+    )
+    assert len(df) == 2
+    assert df["cert_id"].tolist() == [ev.pseudonym("1"), ev.pseudonym("9")]
+    assert df["repdte"].tolist() == ["20221231", "20251231"]
+    assert df["bkclass"].tolist() == ["SM", "N"] and df["stalp"].tolist() == ["MA", "TX"]
+    assert all(df.loc[0, c.lower()] == 7.5 for c in ev.FDIC_NUM_COLS)
+    assert all(pd.isna(df.loc[1, c.lower()]) for c in ev.FDIC_NUM_COLS)
+
+    root = tmp_path / "acq"
+    _fdic_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_fdic_financials(root, out, manifest)
+    ev._build_fdic_financials(root, out, manifest)
+    written = pd.read_csv(out / "fdic_bank_financials" / "bank_financials.csv")
+    assert len(written) == 2 and "ID" not in written and "CERT" not in written
+    assert written["cert_id"].tolist() == [ev.pseudonym("10"), ev.pseudonym("20")]
+    view = manifest["fdic_bank_financials"]
+    assert view["dropped"] == ["ID"] and view["pseudonymised"] == ["CERT"]
+    assert view["salt_label"] == ev.SALT
+    assert view["sampling"]["institutions"] == 2 and view["sampling"]["snapshots"] == 2
+    assert view["source_snapshot"] == f"fdic_bank_financials/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_sncf_tgv_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no SNCF TGV regularity CSV in the snapshot$"):
+        ev._build_sncf_tgv(tmp_path / "empty", tmp_path / "err", {})
+    df = ev.sncf_tgv_view(
+        pd.DataFrame(
+            [
+                {c: "bad" for c in ev.SNCF_NUM_COLS}
+                | {
+                    "date": "2024-02",
+                    "service": "National",
+                    "gare_depart": "A",
+                    "gare_arrivee": "B",
+                    "commentaire_annulation": "drop",
+                },
+                {c: "3.5" for c in ev.SNCF_NUM_COLS}
+                | {
+                    "date": "2024-01",
+                    "service": "International",
+                    "gare_depart": "C",
+                    "gare_arrivee": "D",
+                    "commentaire_annulation": "drop",
+                },
+            ]
+        )
+    )
+    assert df.columns.tolist() == [*ev.SNCF_TEXT_COLS, *ev.SNCF_NUM_COLS]
+    assert df["date"].tolist() == ["2024-01", "2024-02"]
+    assert df["service"].tolist() == ["International", "National"]
+    assert all(df.loc[0, c] == 3.5 for c in ev.SNCF_NUM_COLS)
+    assert all(pd.isna(df.loc[1, c]) for c in ev.SNCF_NUM_COLS)
+
+    root = tmp_path / "acq"
+    _sncf_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_sncf_tgv(root, out, manifest)
+    ev._build_sncf_tgv(root, out, manifest)
+    written = pd.read_csv(out / "sncf_tgv_regularite" / "tgv_regularity.csv", dtype=str)
+    assert written["date"].tolist() == ["2024-01", "2024-02"]
+    assert written["gare_depart"].tolist() == ["010", "020"]
+    assert "commentaire_annulation" not in written
+    view = manifest["sncf_tgv_regularite"]
+    assert view["sampling"] == {
+        "first_month": "2024-01",
+        "last_month": "2024-02",
+        "method": "complete monthly SNCF TGV route punctuality and delay-cause ledger",
+    }
+    assert view["source_snapshot"] == f"sncf_tgv_regularite/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_dgccrf_fuel_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no DGCCRF fuel prices CSV in the snapshot$"):
+        ev._build_dgccrf_fuel(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _dgccrf_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_dgccrf_fuel(root, out, manifest)
+    ev._build_dgccrf_fuel(root, out, manifest)
+    written = pd.read_csv(
+        out / "dgccrf_fuel_prices" / "fuel_prices.csv", dtype={"code_departement": str}
+    )
+    assert written.columns.tolist() == list(ev.DGCCRF_COLS)
+    assert len(written) == 5
+    assert "adresse" not in written and "id" not in written
+    expected_pairs = sorted(
+        [
+            (ev.pseudonym("2000001"), "gazole"),
+            (ev.pseudonym("2000001"), "e10"),
+            (ev.pseudonym("0100001"), "sp95"),
+            (ev.pseudonym("0100001"), "e85"),
+            (ev.pseudonym("0100001"), "gplc"),
+        ]
+    )
+    assert (written["station_id"].tolist(), written["fuel_type"].tolist()) == tuple(
+        map(list, zip(*expected_pairs, strict=True))
+    )
+    assert "2A" in written["code_departement"].tolist()
+    row_2a = written[
+        (written["code_departement"] == "2A") & (written["fuel_type"] == "gazole")
+    ].iloc[0]
+    assert row_2a["price_eur"] == 1.899 and row_2a["automate_24_24"] == "Oui"
+    assert row_2a["pop"] == "R" and row_2a["code_region"] == 94
+    assert row_2a["price_updated_at"] == "2026-11-22T08:00:00Z"
+    view = manifest["dgccrf_fuel_prices"]
+    assert view["pseudonymised"] == ["id"] and view["salt_label"] == ev.SALT
+    assert view["sampling"]["stations"] == 2
+    assert view["source_snapshot"] == f"dgccrf_fuel_prices/{ev.WAVE24_SNAPSHOT}"
+
+
+def _fr_snapshot(root):
+    raw = root / "us_federal_register" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "fr_2025_p01.json").write_text(
+        json.dumps({"results": [{"document_number": "2025-002", "title": "Rule B"}]})
+    )
+    (raw / "fr_2025_p00.json").write_text(
+        json.dumps(
+            {
+                "results": [
+                    {"document_number": "2025-001", "action": "Ask a@fr.gov"},
+                    {"document_number": "2025-001", "action": "dup"},
+                ]
+            }
+        )
+    )
+
+
+def _datacite_snapshot(root):
+    raw = root / "datacite_dois" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "datacite_2025_p01.json").write_text(
+        json.dumps({"data": [{"id": "10.1/b", "attributes": {"titles": [{"title": "B"}]}}]})
+    )
+    (raw / "datacite_2025_p00.json").write_text(
+        json.dumps(
+            {
+                "data": [
+                    {
+                        "id": "10.1/a",
+                        "attributes": {
+                            "creators": [{"name": "Ann"}],
+                            "contributors": [{"name": "Bob"}],
+                            "descriptions": [{"description": "text"}],
+                            "publisher": "Pub c@dc.org",
+                        },
+                    },
+                    {"id": "10.1/a", "attributes": {"publisher": "dup"}},
+                ]
+            }
+        )
+    )
+
+
+def _gbif_snapshot(root):
+    raw = root / "gbif_cc0_occurrences" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "gbif_cc0_2024_p01.json").write_text(
+        json.dumps(
+            {
+                "results": [
+                    {"key": 20, "license": ev.GBIF_LICENSE, "species": "Oak"},
+                    {"key": 30, "license": "http://creativecommons.org/licenses/by/4.0/legalcode"},
+                ]
+            }
+        )
+    )
+    (raw / "gbif_cc0_2024_p00.json").write_text(
+        json.dumps(
+            {
+                "results": [
+                    {
+                        "key": 10,
+                        "license": ev.GBIF_LICENSE,
+                        "recordedBy": "Alice",
+                        "identifiedBy": "Bob",
+                        "locality": "Paris",
+                        "media": [{"creator": "Cam", "rightsHolder": "Org"}],
+                        "note": "x@gbif.org",
+                    },
+                    {"key": 10, "license": ev.GBIF_LICENSE, "note": "dup"},
+                ]
+            }
+        )
+    )
+
+
+def _chembl_snapshot(root):
+    raw = root / "chembl_molecules" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "chembl_mol_p01.json").write_text(
+        json.dumps({"molecules": [{"molecule_chembl_id": "CHEMBL2", "pref_name": "B"}]})
+    )
+    (raw / "chembl_mol_p00.json").write_text(
+        json.dumps(
+            {
+                "molecules": [
+                    {"molecule_chembl_id": "CHEMBL1", "pref_name": "mail x@ebi.ac.uk"},
+                    {"molecule_chembl_id": "CHEMBL1", "pref_name": "dup"},
+                ]
+            }
+        )
+    )
+
+
+def test_federal_register_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Federal Register JSON in the snapshot$"):
+        ev._build_federal_register(tmp_path / "empty", tmp_path / "err", {})
+    raw_recs = [
+        {"document_number": "2025-2", "title": "x@fr.gov"},
+        {"document_number": "2025-1", "title": "keep"},
+        {"document_number": "2025-1", "title": "dup"},
+    ]
+    copy_before = json.loads(json.dumps(raw_recs))
+    viewed = ev.federal_register_view(raw_recs)
+    assert raw_recs == copy_before
+    assert [r["document_number"] for r in viewed] == ["2025-1", "2025-2"]
+    assert viewed[0]["title"] == "keep" and viewed[1]["title"] == "[email]"
+
+    root = tmp_path / "acq"
+    _fr_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_federal_register(root, out, manifest)
+    ev._build_federal_register(root, out, manifest)
+    text = (out / "us_federal_register" / "documents.jsonl").read_text()
+    assert text.endswith("\n") and text.splitlines() == [
+        json.dumps({"action": "Ask [email]", "document_number": "2025-001"}, sort_keys=True),
+        json.dumps({"document_number": "2025-002", "title": "Rule B"}, sort_keys=True),
+    ]
+    view = manifest["us_federal_register"]
+    assert view["dropped"] == [] and view["pseudonymised"] == []
+    assert view["files"]["documents.jsonl"]["rows"] == 2
+    assert view["sampling"] == {
+        "documents_in": 3,
+        "files": ["fr_2025_p00.json", "fr_2025_p01.json"],
+        "method": "oldest 20 pages x 100 published in 2025 from Federal Register API v1",
+        "unique_documents": 2,
+    }
+    assert view["source_snapshot"] == f"us_federal_register/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_datacite_dois_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no DataCite DOI JSON in the snapshot$"):
+        ev._build_datacite_dois(tmp_path / "empty", tmp_path / "err", {})
+    raw_recs = [
+        {
+            "id": "10.1/2",
+            "attributes": {
+                "creators": ["A"],
+                "contributors": ["B"],
+                "descriptions": ["D"],
+                "url": "u@d.org",
+            },  # noqa: E501
+        },
+        {"id": "10.1/1", "attributes": {"publisher": "keep"}},
+        {"id": "10.1/1", "attributes": {"publisher": "dup"}},
+    ]
+    copy_before = json.loads(json.dumps(raw_recs))
+    viewed = ev.datacite_dois_view(raw_recs)
+    assert raw_recs == copy_before
+    assert [r["id"] for r in viewed] == ["10.1/1", "10.1/2"]
+    assert viewed[0]["attributes"]["publisher"] == "keep"
+    assert viewed[1]["attributes"] == {"url": "[email]"}
+
+    root = tmp_path / "acq"
+    _datacite_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_datacite_dois(root, out, manifest)
+    ev._build_datacite_dois(root, out, manifest)
+    text = (out / "datacite_dois" / "dois.jsonl").read_text()
+    assert text.endswith("\n") and text.splitlines() == [
+        json.dumps({"attributes": {"publisher": "Pub [email]"}, "id": "10.1/a"}, sort_keys=True),
+        json.dumps({"attributes": {"titles": [{"title": "B"}]}, "id": "10.1/b"}, sort_keys=True),
+    ]
+    view = manifest["datacite_dois"]
+    assert view["dropped"] == ["contributors", "creators", "descriptions"]
+    assert view["pseudonymised"] == [] and view["files"]["dois.jsonl"]["rows"] == 2
+    assert view["sampling"] == {
+        "dois_in": 3,
+        "files": ["datacite_2025_p00.json", "datacite_2025_p01.json"],
+        "method": "created-ordered first 10 pages x 100 of published=2025 dataset DOIs",
+        "unique_dois": 2,
+    }
+    assert view["source_snapshot"] == f"datacite_dois/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_gbif_cc0_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no GBIF occurrence JSON in the snapshot$"):
+        ev._build_gbif_cc0(tmp_path / "empty", tmp_path / "err", {})
+    raw_recs = [
+        {"key": 9, "license": "cc-by"},
+        {
+            "key": 2,
+            "license": ev.GBIF_LICENSE,
+            "recordedBy": "A",
+            "media": [{"creator": "B"}],
+            "note": "u@g.org",
+        },  # noqa: E501
+        {"key": 1, "license": ev.GBIF_LICENSE, "species": "keep"},
+        {"key": 1, "license": ev.GBIF_LICENSE, "species": "dup"},
+    ]
+    copy_before = json.loads(json.dumps(raw_recs))
+    viewed = ev.gbif_cc0_view(raw_recs)
+    assert raw_recs == copy_before
+    assert [r["key"] for r in viewed] == [1, 2] and viewed[0]["species"] == "keep"
+    assert "recordedBy" not in viewed[1] and viewed[1]["media"] == [{}]
+    assert viewed[1]["note"] == "[email]"
+
+    root = tmp_path / "acq"
+    _gbif_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_gbif_cc0(root, out, manifest)
+    ev._build_gbif_cc0(root, out, manifest)
+    text = (out / "gbif_cc0_occurrences" / "occurrences.jsonl").read_text()
+    assert text.endswith("\n") and len(text.splitlines()) == 2
+    first = json.loads(text.splitlines()[0])
+    assert first == {"key": 10, "license": ev.GBIF_LICENSE, "media": [{}], "note": "[email]"}
+    view = manifest["gbif_cc0_occurrences"]
+    assert view["dropped"] == sorted(ev.GBIF_DROP) and view["pseudonymised"] == []
+    assert view["files"]["occurrences.jsonl"]["rows"] == 2
+    assert view["sampling"] == {
+        "files": ["gbif_cc0_2024_p00.json", "gbif_cc0_2024_p01.json"],
+        "method": "offset prefix 5 pages x 300 of 2024 georeferenced CC0_1_0 occurrences",
+        "records_in": 4,
+        "unique_occurrences": 2,
+    }
+    assert view["source_snapshot"] == f"gbif_cc0_occurrences/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_chembl_molecules_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no ChEMBL molecule JSON in the snapshot$"):
+        ev._build_chembl_molecules(tmp_path / "empty", tmp_path / "err", {})
+    raw_recs = [
+        {"molecule_chembl_id": "CHEMBL2", "pref_name": "c@ebi.ac.uk"},
+        {"molecule_chembl_id": "CHEMBL1", "pref_name": "keep"},
+        {"molecule_chembl_id": "CHEMBL1", "pref_name": "dup"},
+    ]
+    copy_before = json.loads(json.dumps(raw_recs))
+    viewed = ev.chembl_molecules_view(raw_recs)
+    assert raw_recs == copy_before
+    assert [r["molecule_chembl_id"] for r in viewed] == ["CHEMBL1", "CHEMBL2"]
+    assert viewed[0]["pref_name"] == "keep" and viewed[1]["pref_name"] == "[email]"
+
+    root = tmp_path / "acq"
+    _chembl_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_chembl_molecules(root, out, manifest)
+    ev._build_chembl_molecules(root, out, manifest)
+    text = (out / "chembl_molecules" / "molecules.jsonl").read_text()
+    assert text.endswith("\n") and text.splitlines() == [
+        json.dumps({"molecule_chembl_id": "CHEMBL1", "pref_name": "mail [email]"}, sort_keys=True),
+        json.dumps({"molecule_chembl_id": "CHEMBL2", "pref_name": "B"}, sort_keys=True),
+    ]
+    view = manifest["chembl_molecules"]
+    assert view["dropped"] == [] and view["pseudonymised"] == []
+    assert view["files"]["molecules.jsonl"]["rows"] == 2
+    assert view["sampling"] == {
+        "files": ["chembl_mol_p00.json", "chembl_mol_p01.json"],
+        "method": "identifier-ordered prefix 10 pages x 100 of ChEMBL_37 molecules",
+        "molecules_in": 3,
+        "unique_molecules": 2,
+    }
+    assert view["source_snapshot"] == f"chembl_molecules/{ev.WAVE24_SNAPSHOT}"
+
+
+def _florida_bridges_snapshot(root):
+    raw = root / "zen_florida_bridges" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    cols = [
+        "objectid",
+        "bridge_id",
+        "location_009",
+        "fracture_last_date_093a",
+        "undwater_last_date_093b",
+        "spec_last_date_093c",
+        *ev.FL_CAT_COLS,
+        *ev.FL_NUM_COLS,
+    ]
+    r1 = (
+        {
+            "objectid": "1",
+            "bridge_id": "B2",
+            "location_009": "drop",
+            "fracture_last_date_093a": "1",
+            "undwater_last_date_093b": "2",
+            "spec_last_date_093c": "3",
+        }  # noqa: E501
+        | {c: "01" for c in ev.FL_CAT_COLS}
+        | {
+            "deck_cond_058": "N",
+            "superstructure_cond_059": "N",
+            "substructure_cond_060": "N",
+            "bridge_condition": "F",
+            "flood_risk_class": "High",
+            "svi_class": "Low",
+        }  # noqa: E501
+        | {c: "bad" for c in ev.FL_NUM_COLS}
+    )
+    r2 = (
+        {
+            "objectid": "2",
+            "bridge_id": "B1",
+            "location_009": "drop2",
+            "fracture_last_date_093a": "",
+            "undwater_last_date_093b": "",
+            "spec_last_date_093c": "",
+        }  # noqa: E501
+        | {c: "02" for c in ev.FL_CAT_COLS}
+        | {
+            "deck_cond_058": "7",
+            "superstructure_cond_059": "8",
+            "substructure_cond_060": "6",
+            "bridge_condition": "G",
+            "flood_risk_class": "Low",
+            "svi_class": "High",
+        }  # noqa: E501
+        | {c: "5.5" for c in ev.FL_NUM_COLS}
+    )
+    pd.DataFrame([r1, r2], columns=cols).to_csv(
+        raw / "DATA_Florida_BridgeInspection_Version1_0.csv", index=False
+    )
+
+
+def _wri_power_plants_snapshot(root):
+    raw = root / "wri_power_plants" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    cols = ["name", "owner", "url", "wepp_id", *ev.WRI_TEXT_COLS, *ev.WRI_NUM_COLS]
+    r1 = (
+        {"name": "Plant B", "owner": "Owner B", "url": "http://b", "wepp_id": "9"}
+        | {c: "002" for c in ev.WRI_TEXT_COLS}
+        | {
+            "gppd_idnr": "W2",
+            "country": "AFG",
+            "country_long": "Afghanistan",
+            "primary_fuel": "Solar",
+        }  # noqa: E501
+        | {c: "bad" for c in ev.WRI_NUM_COLS}
+    )
+    r2 = (
+        {"name": "Plant A", "owner": "Owner A", "url": "http://a", "wepp_id": "8"}
+        | {c: "001" for c in ev.WRI_TEXT_COLS}
+        | {"gppd_idnr": "W1", "country": "NAM", "country_long": "Namibia", "primary_fuel": "Hydro"}  # noqa: E501
+        | {c: "42.5" for c in ev.WRI_NUM_COLS}
+    )
+    pd.DataFrame([r1, r2], columns=cols).to_csv(
+        raw / "global_power_plant_database.csv", index=False
+    )
+
+
+def _paris_trees_snapshot(root):
+    raw = root / "paris_urban_trees" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    cols = [
+        "typeemplacement",
+        "complementadresse",
+        "adresse",
+        "idemplacement",
+        "varieteoucultivar",
+        "geo_point_2d",
+        *ev.PARIS_TEXT_COLS,
+        *ev.PARIS_NUM_COLS,
+    ]
+    r1 = {
+        "typeemplacement": "Arbre",
+        "complementadresse": "x",
+        "adresse": "1 rue A",
+        "idemplacement": "001",
+        "varieteoucultivar": "v",
+        "geo_point_2d": "48.8,2.3",
+        "idbase": "002",
+        "domanialite": "Jardin",
+        "arrondissement": "PARIS 7E",
+        "libellefrancais": "If",
+        "genre": "Taxus",
+        "espece": "baccata",
+        "stadedeveloppement": "Adulte",
+        "remarquable": "NON",
+        "circonferenceencm": "bad",
+        "hauteurenm": "bad",
+    }
+    r2 = {
+        "typeemplacement": "Arbre",
+        "complementadresse": "",
+        "adresse": "2 rue B",
+        "idemplacement": "002",
+        "varieteoucultivar": "",
+        "geo_point_2d": "48.9,2.4",
+        "idbase": "001",
+        "domanialite": "Alignement",
+        "arrondissement": "PARIS 5E",
+        "libellefrancais": "Tilleul",
+        "genre": "Tilia",
+        "espece": "cordata",
+        "stadedeveloppement": "Mature",
+        "remarquable": "OUI",
+        "circonferenceencm": "120",
+        "hauteurenm": "15",
+    }
+    pd.DataFrame([r1, r2], columns=cols).to_csv(raw / "les_arbres_25k.csv", sep=";", index=False)
+
+
+def test_florida_bridges_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Florida bridge inspection CSV in the snapshot$"):
+        ev._build_florida_bridges(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _florida_bridges_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_florida_bridges(root, out, manifest)
+    ev._build_florida_bridges(root, out, manifest)
+    dtypes = {c: str for c in ev.FL_CAT_COLS} | {"bridge_id": str}
+    written = pd.read_csv(out / "zen_florida_bridges" / "bridges.csv", dtype=dtypes)
+    assert written.columns.tolist() == ["bridge_id", *ev.FL_CAT_COLS, *ev.FL_NUM_COLS]
+    assert "objectid" not in written and "location_009" not in written
+    expected_ids = sorted([ev.pseudonym("B1"), ev.pseudonym("B2")])
+    assert written["bridge_id"].tolist() == expected_ids
+    b2 = written[written["bridge_id"] == ev.pseudonym("B2")].iloc[0]
+    b1 = written[written["bridge_id"] == ev.pseudonym("B1")].iloc[0]
+    assert b2["highway_district_002"] == "01" and b2["deck_cond_058"] == "N"
+    assert b2["superstructure_cond_059"] == "N" and b2["substructure_cond_060"] == "N"
+    assert all(pd.isna(b2[c]) for c in ev.FL_NUM_COLS)
+    assert all(b1[c] == 5.5 for c in ev.FL_NUM_COLS)
+    assert manifest["zen_florida_bridges"]["pseudonymised"] == ["bridge_id"]
+    assert manifest["zen_florida_bridges"]["salt_label"] == ev.SALT
+    assert manifest["zen_florida_bridges"]["source_snapshot"] == (
+        f"zen_florida_bridges/{ev.WAVE24_SNAPSHOT}"
+    )
+
+
+def test_wri_power_plants_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no WRI global power plant CSV in the snapshot$"):
+        ev._build_wri_power_plants(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _wri_power_plants_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_wri_power_plants(root, out, manifest)
+    ev._build_wri_power_plants(root, out, manifest)
+    dtypes = {c: str for c in ev.WRI_TEXT_COLS}
+    written = pd.read_csv(out / "wri_power_plants" / "power_plants.csv", dtype=dtypes)
+    assert written.columns.tolist() == [*ev.WRI_TEXT_COLS, *ev.WRI_NUM_COLS]
+    assert "name" not in written and "owner" not in written and "wepp_id" not in written
+    assert written["gppd_idnr"].tolist() == ["W1", "W2"]
+    assert written["source"].tolist() == ["001", "002"]
+    assert written.loc[0, "country"] == "NAM" and all(
+        written.loc[0, c] == 42.5 for c in ev.WRI_NUM_COLS
+    )
+    assert all(pd.isna(written.loc[1, c]) for c in ev.WRI_NUM_COLS)
+    view = manifest["wri_power_plants"]
+    assert view["sampling"] == {
+        "countries": 2,
+        "method": "complete Global Power Plant Database v1.3.0 CSV release",
+    }
+    assert view["source_snapshot"] == f"wri_power_plants/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_paris_trees_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Paris urban trees CSV in the snapshot$"):
+        ev._build_paris_trees(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _paris_trees_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_paris_trees(root, out, manifest)
+    ev._build_paris_trees(root, out, manifest)
+    written = pd.read_csv(
+        out / "paris_urban_trees" / "trees.csv", dtype={c: str for c in ev.PARIS_TEXT_COLS}
+    )
+    assert written.columns.tolist() == [*ev.PARIS_TEXT_COLS, *ev.PARIS_NUM_COLS]
+    assert "adresse" not in written and "geo_point_2d" not in written
+    assert written["idbase"].tolist() == ["001", "002"]
+    assert written.loc[0, "circonferenceencm"] == 120.0 and written.loc[0, "hauteurenm"] == 15.0
+    assert pd.isna(written.loc[1, "circonferenceencm"]) and pd.isna(written.loc[1, "hauteurenm"])
+    view = manifest["paris_urban_trees"]
+    assert view["sampling"] == {
+        "genera": 2,
+        "method": "first 25,000 trees ordered ascending by idbase",
+    }
+    assert view["source_snapshot"] == f"paris_urban_trees/{ev.WAVE24_SNAPSHOT}"
+
+
+def _moodle_snapshot(root):
+    raw = root / "zen_moodle_events" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    pd.DataFrame(
+        [
+            {
+                "eventname": "\\core\\event\\course_viewed",
+                "userid": "001",
+                "timecreated": "1707343710",
+            },  # noqa: E501
+            {
+                "eventname": "\\core\\event\\custom_event",
+                "userid": "001",
+                "timecreated": "1707343700",
+            },  # noqa: E501
+            {"eventname": "\\core\\event\\course_viewed", "userid": "002", "timecreated": "bad"},
+        ]
+    ).to_csv(raw / "dataset-anon.csv", index=False)
+    (raw / "moodle_activity_mapping_EN.json").write_text(
+        json.dumps({"\\core\\event\\course_viewed": "Course viewed"})
+    )
+
+
+def _norp_snapshot(root):
+    raw = root / "zen_norp_solar_bursts" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    lines = [
+        "EventID, Date, Start, Max, End, F1G, F2G, F3.75G, F9.4G, F17G, F35G, GOES, RHESSI",
+        "u,2025-12-28,00:00:00,(UT),(UT),(SFU),(SFU),(SFU),(SFU),(SFU),(SFU),,",
+        " 20251228_2358 , 2025-12-28 , 23:58:00 , 00:01:00 , 00:05:00 , 5 , 6 , 7 , 8 , 9 , 1 , M1.0 ,007",  # noqa: E501
+        " 20251228_0100 , 2025-12-28 , 01:00:00 , 01:00:00 , 01:00:00 , bad , bad , bad , bad , bad , bad , ,",  # noqa: E501
+        " bad_row , bad , 00:00:00 , 00:00:00 , 00:00:00 , 0 , 0 , 0 , 0 , 0 , 0 , ,",
+    ]
+    (raw / "myNoRP_Event_List_1988-2025.csv").write_text("\n".join(lines) + "\n")
+
+
+def _blazar_snapshot(root):
+    raw = root / "zen_blazar_flares" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    cols = [
+        "Name",
+        "Subclass",
+        "HIndex",
+        "CapToStemR",
+        "CapToStemRUnc",
+        "NumberExtremeEvt",
+        "ClusterMinSize",
+        "ClusterMaxSize",
+        *[src for _, src in ev.BLAZAR_NUM_COLS],
+    ]
+    r1 = (
+        {
+            "Name": "J0002",
+            "Subclass": "001",
+            "HIndex": "1",
+            "CapToStemR": "0",
+            "CapToStemRUnc": "-",
+            "NumberExtremeEvt": "0",
+            "ClusterMinSize": "2",
+            "ClusterMaxSize": "5",
+        }  # noqa: E501
+        | {src: "2.5" for _, src in ev.BLAZAR_NUM_COLS}
+        | {"Start": "200.0"}
+    )
+    r2 = (
+        {
+            "Name": "J0001",
+            "Subclass": "002",
+            "HIndex": "-",
+            "CapToStemR": "0",
+            "CapToStemRUnc": "-",
+            "NumberExtremeEvt": "-",
+            "ClusterMinSize": "-",
+            "ClusterMaxSize": "-",
+        }  # noqa: E501
+        | {src: "-" for _, src in ev.BLAZAR_NUM_COLS}
+        | {"Start": "100.0"}
+    )
+    pd.DataFrame([r1, r2], columns=cols).to_csv(raw / "flareCatalog.csv", index=False)
+
+
+def test_moodle_events_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Moodle event log files in the snapshot$"):
+        ev._build_moodle_events(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _moodle_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_moodle_events(root, out, manifest)
+    ev._build_moodle_events(root, out, manifest)
+    written = pd.read_csv(out / "zen_moodle_events" / "moodle_events.csv", dtype=str)
+    assert written.columns.tolist() == ["user_id", "timestamp", "activity", "event_code"]
+    assert len(written) == 2
+    assert written["user_id"].tolist() == [ev.pseudonym("001"), ev.pseudonym("001")]
+    assert written["activity"].tolist() == ["\\core\\event\\custom_event", "Course viewed"]
+    assert written["timestamp"].tolist() == [
+        "2024-02-07 22:08:20+00:00",
+        "2024-02-07 22:08:30+00:00",
+    ]
+    direct = ev.moodle_events_view(
+        pd.DataFrame([{"eventname": "x", "userid": "1", "timecreated": "1707343700"}]),
+        {"x": "X"},
+    )
+    assert direct.loc[0, "timestamp"] == pd.Timestamp("2024-02-07 22:08:20", tz="UTC")
+    view = manifest["zen_moodle_events"]
+    assert view["pseudonymised"] == ["userid"] and view["salt_label"] == ev.SALT
+    assert view["sampling"] == {
+        "activities": 2,
+        "method": "complete Moodle LMS anonymised clickstream log with English activity labels",
+        "user_days": 1,
+        "users": 1,
+    }
+    assert view["source_snapshot"] == f"zen_moodle_events/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_norp_solar_bursts_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no NoRP solar burst CSV in the snapshot$"):
+        ev._build_norp_solar_bursts(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _norp_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_norp_solar_bursts(root, out, manifest)
+    ev._build_norp_solar_bursts(root, out, manifest)
+    written = pd.read_csv(
+        out / "zen_norp_solar_bursts" / "solar_bursts.csv", dtype={"rhessi_id": str}
+    )
+    assert len(written) == 2
+    assert written["event_id"].tolist() == ["20251228_0100", "20251228_2358"]
+    assert written["year_month"].tolist() == ["2025-12", "2025-12"]
+    assert written["duration_s"].tolist() == [0.0, 420.0]
+    assert written.loc[0, "max_time"] == "2025-12-28 01:00:00+00:00"
+    assert written.loc[0, "end_time"] == "2025-12-28 01:00:00+00:00"
+    assert written.loc[1, "max_time"] == "2025-12-29 00:01:00+00:00"
+    assert written.loc[1, "end_time"] == "2025-12-29 00:05:00+00:00"
+    assert written.loc[1, "goes_class"] == "M1.0" and written.loc[1, "rhessi_id"] == "007"
+    assert pd.isna(written.loc[0, "goes_class"]) and pd.isna(written.loc[0, "rhessi_id"])
+    assert [written.loc[1, c] for c, _ in ev.NORP_FLUX_COLS] == [5.0, 6.0, 7.0, 8.0, 9.0, 1.0]
+    assert all(pd.isna(written.loc[0, c]) for c, _ in ev.NORP_FLUX_COLS)
+    direct = ev.norp_solar_bursts_view(
+        pd.DataFrame(
+            [
+                {
+                    " EventID ": " e1 ",
+                    "Date": "2025-12-28",
+                    "Start": "01:00:00",
+                    "Max": "01:00:00",
+                    "End": "01:00:00",
+                    "F1G": "1",
+                    "F2G": "2",
+                    "F3.75G": "3",
+                    "F9.4G": "4",
+                    "F17G": "5",
+                    "F35G": "6",
+                    "GOES": "",
+                    "RHESSI": "",
+                }
+            ]
+        )
+    )
+    assert pd.isna(direct.loc[0, "goes_class"]) and pd.isna(direct.loc[0, "rhessi_id"])
+    assert direct.loc[0, "duration_s"] == 0.0
+    view = manifest["zen_norp_solar_bursts"]
+    assert view["dropped"] == ["units_row"] and view["sampling"]["year_months"] == 1
+    assert view["source_snapshot"] == f"zen_norp_solar_bursts/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_blazar_flares_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no blazar flare catalog CSV in the snapshot$"):
+        ev._build_blazar_flares(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _blazar_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_blazar_flares(root, out, manifest)
+    ev._build_blazar_flares(root, out, manifest)
+    written = pd.read_csv(out / "zen_blazar_flares" / "blazar_flares.csv", dtype={"subclass": str})
+    assert written.columns.tolist() == [
+        "source_id",
+        "subclass",
+        *[c for c, _ in ev.BLAZAR_NUM_COLS],
+    ]
+    assert "HIndex" not in written and written["source_id"].tolist() == ["J0001", "J0002"]
+    assert written["subclass"].tolist() == ["002", "001"]
+    assert written.loc[0, "start_met"] == 100.0
+    assert all(pd.isna(written.loc[0, c]) for c, _ in ev.BLAZAR_NUM_COLS if c != "start_met")
+    assert all(
+        written.loc[1, c] == (200.0 if c == "start_met" else 2.5) for c, _ in ev.BLAZAR_NUM_COLS
+    )
+    view = manifest["zen_blazar_flares"]
+    assert view["sampling"] == {
+        "method": "complete Fermi-LAT multi-year blazar gamma-ray flare catalog",
+        "sources": 2,
+    }
+    assert view["source_snapshot"] == f"zen_blazar_flares/{ev.WAVE24_SNAPSHOT}"
+
+
+def _wind_fragility_snapshot(root):
+    import zipfile
+
+    raw = root / "zen_wind_fragility" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    curves = pd.DataFrame(
+        [
+            {
+                **{c: f"c_{c}_2" for c in ev.WIND_FRAGILITY_SPEC["tables"]["curves"]["keep"]},
+                "Curve_ID": "002",
+                "Source_ID": "001",
+                "Source_Location": "drop",
+                "Notes": "drop",
+                "Limit_State_Definition": "drop",
+            },
+            {
+                **{c: f"c_{c}_1" for c in ev.WIND_FRAGILITY_SPEC["tables"]["curves"]["keep"]},
+                "Curve_ID": "001",
+                "Source_ID": "001",
+                "Source_Location": "drop",
+                "Notes": "drop",
+                "Limit_State_Definition": "drop",
+            },
+        ]
+    )
+    disc = pd.DataFrame(
+        [
+            {
+                **{c: "0.5" for c in ev.WIND_FRAGILITY_SPEC["tables"]["discretized"]["keep"]},
+                "Curve_ID": "002",
+                "Source_ID": "001",
+                "V1": "0.1",
+            },
+            {
+                **{c: "0.2" for c in ev.WIND_FRAGILITY_SPEC["tables"]["discretized"]["keep"]},
+                "Curve_ID": "001",
+                "Source_ID": "001",
+                "V1": "0.1",
+            },
+        ]
+    )
+    params = pd.DataFrame(
+        [
+            {
+                "Curve_ID": "002",
+                "Param_Name": "mu",
+                "Param_Value": "3.5",
+                "Param_Unit": "mps",
+                "Param_Applies_When": "all",
+            },
+            {
+                "Curve_ID": "001",
+                "Param_Name": "mu",
+                "Param_Value": "3.0",
+                "Param_Unit": "mps",
+                "Param_Applies_When": "all",
+            },
+        ]
+    )
+    points = pd.DataFrame(
+        [
+            {"Curve_ID": "002", "IM_Value": "40", "Probability": "0.5", "Point_Source": "fig1"},
+            {"Curve_ID": "001", "IM_Value": "30", "Probability": "0.2", "Point_Source": "fig1"},
+        ]
+    )
+    sources = pd.DataFrame(
+        [
+            {
+                "Source_ID": "001",
+                "DOI": "10.1000/1",
+                "Authors": "Alice",
+                "Year": "2024",
+                "Title": "Drop Title",
+                "Venue": "J",
+                "Publication_Type": "Article",
+                "N_Curves": "2",
+            }
+        ]
+    )
+    with zipfile.ZipFile(raw / "Wind_Fragility_Database_v2026.10.zip", "w") as zf:
+        for name, df in (
+            ("CURVES", curves),
+            ("DISCRETIZED", disc),
+            ("PARAMETERS", params),
+            ("POINTS", points),
+            ("SOURCES", sources),
+        ):
+            zf.writestr(f"{ev.WIND_FRAGILITY_PREFIX}{name}.csv", df.to_csv(index=False))
+
+
+def _terralore_snapshot(root):
+    import io
+    import tarfile
+
+    raw = root / "zen_terralore_chronicle" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    events = pd.DataFrame(
+        [
+            {
+                "claim_id": "002",
+                "country_code": "FR",
+                "country_name": "France",
+                "year": "1789",
+                "year_label": "1789",
+                "end_year": "1789",
+                "title": "drop",
+                "summary": "drop",
+                "category": "politics",
+                "era_id": "modern",
+                "canonical_url": "https://example.org/2",
+                "history_updated": "2025-01-01",
+            },
+            {
+                "claim_id": "001",
+                "country_code": "NA",
+                "country_name": "Namibia",
+                "year": "1990",
+                "year_label": "1990",
+                "end_year": "1990",
+                "title": "drop",
+                "summary": "drop",
+                "category": "independence",
+                "era_id": "contemporary",
+                "canonical_url": "https://example.org/1",
+                "history_updated": "2025-01-01",
+            },
+        ]
+    )
+    sources = pd.DataFrame(
+        [
+            {
+                "source_key": "001",
+                "country_code": "NA",
+                "source_id": "s1",
+                "label": "drop",
+                "publisher": "Archive",
+                "url": "https://example.org/s1",
+                "kind": "chronicle",
+                "license": "CC-BY-4.0",
+                "accessed": "2025-01-01",
+            }
+        ]
+    )
+    event_sources = pd.DataFrame(
+        [
+            {"claim_id": "002", "source_key": "001"},
+            {"claim_id": "001", "source_key": "001"},
+        ]
+    )
+    with tarfile.open(raw / "terralore-chronicle-events-1.0.0.tar.gz", "w:gz") as tf:
+        for member, df in (
+            ("1.0.0/events.csv", events),
+            ("1.0.0/sources.csv", sources),
+            ("1.0.0/event-sources.csv", event_sources),
+        ):
+            payload = df.to_csv(index=False).encode("utf-8")
+            info = tarfile.TarInfo(name=member)
+            info.size = len(payload)
+            tf.addfile(info, io.BytesIO(payload))
+
+
+def _ncei_storm_snapshot(root):
+    import gzip
+
+    raw = root / "ncei_storm_events_2024" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    details = pd.DataFrame(
+        [
+            {
+                **{c: f"d_{c}_2" for c in ev.NCEI_STORM_SPEC["tables"]["details"]["keep"]},
+                "EVENT_ID": "002",
+                "EPISODE_ID": "001",
+                "EPISODE_NARRATIVE": "drop",
+                "EVENT_NARRATIVE": "drop",
+                "DATA_SOURCE": "CSV",
+            },
+            {
+                **{c: f"d_{c}_1" for c in ev.NCEI_STORM_SPEC["tables"]["details"]["keep"]},
+                "EVENT_ID": "001",
+                "EPISODE_ID": "001",
+                "EPISODE_NARRATIVE": "drop",
+                "EVENT_NARRATIVE": "drop",
+                "DATA_SOURCE": "CSV",
+            },
+        ]
+    )
+    locations = pd.DataFrame(
+        [
+            {
+                **{c: f"l_{c}_2" for c in ev.NCEI_STORM_SPEC["tables"]["locations"]["keep"]},
+                "EVENT_ID": "002",
+                "EPISODE_ID": "001",
+                "LAT2": "0",
+                "LON2": "0",
+            },
+            {
+                **{c: f"l_{c}_1" for c in ev.NCEI_STORM_SPEC["tables"]["locations"]["keep"]},
+                "EVENT_ID": "001",
+                "EPISODE_ID": "001",
+                "LAT2": "0",
+                "LON2": "0",
+            },
+        ]
+    )
+    fatalities = pd.DataFrame(
+        [
+            {
+                **{c: f"f_{c}" for c in ev.NCEI_STORM_SPEC["tables"]["fatalities"]["keep"]},
+                "FATALITY_ID": "001",
+                "EVENT_ID": "001",
+                "FATALITY_AGE": "45",
+                "FATALITY_SEX": "M",
+                "FATALITY_DATE": "01/01/2024",
+            }
+        ]
+    )
+    for key, df in (
+        ("details", details),
+        ("locations", locations),
+        ("fatalities", fatalities),
+    ):
+        (raw / ev.NCEI_STORM_FILES[key]).write_bytes(
+            gzip.compress(df.to_csv(index=False).encode("utf-8"))
+        )
+
+
+def test_wind_fragility_view_and_builder(tmp_path):
+    with pytest.raises(
+        ev.ViewError, match=r"^no Wind Fragility Database zip archive in the snapshot$"
+    ):
+        ev._build_wind_fragility(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _wind_fragility_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_wind_fragility(root, out, manifest)
+    ev._build_wind_fragility(root, out, manifest)
+    curves = pd.read_csv(out / "zen_wind_fragility" / "curves.csv", dtype=str)
+    sources = pd.read_csv(out / "zen_wind_fragility" / "sources.csv", dtype=str)
+    disc = pd.read_csv(out / "zen_wind_fragility" / "discretized.csv", dtype=str)
+    assert curves["Curve_ID"].tolist() == ["001", "002"]
+    assert "Notes" not in curves and "Authors" not in sources and "V1" not in disc
+    assert sources["Source_ID"].tolist() == ["001"]
+    view = manifest["zen_wind_fragility"]
+    assert view["pseudonymised"] == []
+    assert view["dropped"] == [
+        "CURVES.Source_Location",
+        "CURVES.Notes",
+        "CURVES.Limit_State_Definition",
+        "DISCRETIZED.V1..V149_intermediate_grid",
+        "SOURCES.Authors",
+        "SOURCES.Title",
+    ]
+    assert len(view["relations"]) == 5 and all(r["orphans"] == 0 for r in view["relations"])
+    assert view["sampling"] == {
+        "method": (
+            "complete 5-table Wind Fragility Database v2026.10 relational release (no row sampling)"
+        )
+    }
+    assert view["source_snapshot"] == f"zen_wind_fragility/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_terralore_chronicle_view_and_builder(tmp_path):
+    with pytest.raises(
+        ev.ViewError, match=r"^no TerraLore chronicle tar\.gz archive in the snapshot$"
+    ):
+        ev._build_terralore_chronicle(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _terralore_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_terralore_chronicle(root, out, manifest)
+    ev._build_terralore_chronicle(root, out, manifest)
+    events = pd.read_csv(
+        out / "zen_terralore_chronicle" / "events.csv", dtype=str, keep_default_na=False
+    )
+    sources = pd.read_csv(
+        out / "zen_terralore_chronicle" / "sources.csv", dtype=str, keep_default_na=False
+    )
+    assert events["claim_id"].tolist() == ["001", "002"]
+    assert events["country_code"].tolist() == ["NA", "FR"]
+    assert sources["country_code"].tolist() == ["NA"]
+    assert "summary" not in events and "url" not in sources
+    view = manifest["zen_terralore_chronicle"]
+    assert view["pseudonymised"] == []
+    assert view["dropped"] == [
+        "events.title",
+        "events.summary",
+        "events.canonical_url",
+        "sources.label",
+        "sources.url",
+        "events.ndjson",
+    ]
+    assert len(view["relations"]) == 2 and all(r["orphans"] == 0 for r in view["relations"])
+    assert view["sampling"] == {
+        "method": (
+            "complete 3-table TerraLore v1.0.0 historical chronicle relational archive "
+            "(no row sampling)"
+        )
+    }
+    assert view["source_snapshot"] == f"zen_terralore_chronicle/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_ncei_storm_events_view_and_builder(tmp_path):
+    with pytest.raises(
+        ev.ViewError, match=r"^missing NOAA NCEI Storm Events CSV archives in the snapshot$"
+    ):
+        ev._build_ncei_storm_events(tmp_path / "empty", tmp_path / "err", {})
+    partial = tmp_path / "partial"
+    partial_raw = partial / "ncei_storm_events_2024" / ev.WAVE24_SNAPSHOT / "raw"
+    partial_raw.mkdir(parents=True)
+    (partial_raw / ev.NCEI_STORM_FILES["details"]).write_bytes(b"x")
+    with pytest.raises(
+        ev.ViewError, match=r"^missing NOAA NCEI Storm Events CSV archives in the snapshot$"
+    ):
+        ev._build_ncei_storm_events(partial, tmp_path / "err2", {})
+    root = tmp_path / "acq"
+    _ncei_storm_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_ncei_storm_events(root, out, manifest)
+    ev._build_ncei_storm_events(root, out, manifest)
+    details = pd.read_csv(out / "ncei_storm_events_2024" / "details.csv", dtype=str)
+    locations = pd.read_csv(out / "ncei_storm_events_2024" / "locations.csv", dtype=str)
+    fatalities = pd.read_csv(out / "ncei_storm_events_2024" / "fatalities.csv", dtype=str)
+    assert details["EVENT_ID"].tolist() == ["001", "002"]
+    assert locations["EVENT_ID"].tolist() == ["001", "002"]
+    assert fatalities["FATALITY_ID"].tolist() == ["001"]
+    assert (
+        "EVENT_NARRATIVE" not in details
+        and "LAT2" not in locations
+        and "FATALITY_AGE" not in fatalities
+    )
+    view = manifest["ncei_storm_events_2024"]
+    assert view["pseudonymised"] == []
+    assert view["dropped"] == [
+        "details.EPISODE_NARRATIVE",
+        "details.EVENT_NARRATIVE",
+        "details.DATA_SOURCE",
+        "locations.LAT2",
+        "locations.LON2",
+        "fatalities.FATALITY_AGE",
+        "fatalities.FATALITY_SEX",
+        "fatalities.FATALITY_DATE",
+    ]
+    assert len(view["relations"]) == 3 and all(r["orphans"] == 0 for r in view["relations"])
+    assert view["sampling"] == {
+        "method": (
+            "complete 2024 annual NOAA NCEI Storm Events 3-table relational release "
+            "(no row sampling)"
+        )
+    }
+    assert view["source_snapshot"] == f"ncei_storm_events_2024/{ev.WAVE24_SNAPSHOT}"
+
+
+# --- Wave 25 -----------------------------------------------------------------------------------
+
+
+def _wave25_raw(root, source):
+    raw = root / source / ev.WAVE25_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    return raw
+
+
+def _ourairports_snapshot(root):
+    raw = _wave25_raw(root, "ourairports_db")
+    _w(
+        raw / "airports.csv",
+        "id,ident,type,name,latitude_deg,longitude_deg,elevation_ft,continent,iso_country,"
+        "iso_region,municipality,scheduled_service,icao_code,iata_code,gps_code,local_code,"
+        "home_link,wikipedia_link,keywords\n"
+        "2,FYWH,large_airport,Windhoek,-22.4,17.4,5640,AF,NA,NA-KH,Windhoek,yes,FYWH,WDH,FYWH,,"
+        "http://h,http://w,kw\n"
+        "1,KJFK,large_airport,Kennedy,40.6,-73.7,13,NA,US,US-NY,New York,yes,KJFK,JFK,KJFK,"
+        "JFK,,,\n",
+    )
+    _w(
+        raw / "runways.csv",
+        "id,airport_ref,airport_ident,length_ft,width_ft,surface,lighted,closed,le_ident,"
+        "le_latitude_deg,le_longitude_deg,le_elevation_ft,le_heading_degT,"
+        "le_displaced_threshold_ft,he_ident,he_latitude_deg,he_longitude_deg,he_elevation_ft,"
+        "he_heading_degT,he_displaced_threshold_ft\n"
+        "7,1,KJFK,14511,200,ASP,1,0,04L,1,1,1,40,0,22R,1,1,1,220,0\n"
+        "6,9,GONE,100,50,GRS,0,0,01,,,,,,19,,,,,\n",
+    )
+    _w(
+        raw / "airport-frequencies.csv",
+        "id,airport_ref,airport_ident,type,description,frequency_mhz\n3,1,KJFK,TWR,Tower,119.10\n",
+    )
+    _w(
+        raw / "navaids.csv",
+        "id,filename,ident,name,type,frequency_khz,latitude_deg,longitude_deg,elevation_ft,"
+        "iso_country,dme_frequency_khz,dme_channel,dme_latitude_deg,dme_longitude_deg,"
+        "dme_elevation_ft,slaved_variation_deg,magnetic_variation_deg,usageType,power,"
+        "associated_airport\n"
+        "5,f,WDH,Windhoek,VOR,112000,-22,17,5640,NA,112000,57X,,,,,-10,BOTH,HIGH,FYWH\n"
+        "4,f,XXX,Nowhere,NDB,300,0,0,0,US,,,,,,,0,TERMINAL,LOW,\n",
+    )
+    _w(
+        raw / "countries.csv",
+        "id,code,name,continent,wikipedia_link,keywords\n"
+        "1,NA,Namibia,AF,http://w,kw\n2,US,United States,NA,,\n",
+    )
+    _w(
+        raw / "regions.csv",
+        "id,code,local_code,name,continent,iso_country,wikipedia_link,keywords\n"
+        "10,NA-KH,KH,Khomas,AF,NA,,\n11,US-NY,NY,New York,NA,US,,\n",
+    )
+
+
+def test_ourairports_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^missing OurAirports CSV tables in the snapshot$"):
+        ev._build_ourairports(tmp_path / "empty", tmp_path / "err", {})
+    partial_raw = tmp_path / "partial" / "ourairports_db" / ev.WAVE25_SNAPSHOT / "raw"
+    partial_raw.mkdir(parents=True)
+    (partial_raw / "airports.csv").write_text("x")
+    with pytest.raises(ev.ViewError, match=r"^missing OurAirports CSV tables in the snapshot$"):
+        ev._build_ourairports(tmp_path / "partial", tmp_path / "err2", {})
+    root = tmp_path / "acq"
+    _ourairports_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_ourairports(root, out, manifest)
+    ev._build_ourairports(root, out, manifest)
+    folder = out / "ourairports_db"
+    airports = pd.read_csv(folder / "airports.csv", dtype=str, keep_default_na=False)
+    runways = pd.read_csv(folder / "runways.csv", dtype=str, keep_default_na=False)
+    countries = pd.read_csv(folder / "countries.csv", dtype=str, keep_default_na=False)
+    assert airports["ident"].tolist() == ["KJFK", "FYWH"]  # sorted by id as text
+    assert airports["iso_country"].tolist() == ["US", "NA"]  # Namibia stays a value
+    assert countries["code"].tolist() == ["NA", "US"]
+    assert "home_link" not in airports and "le_latitude_deg" not in runways
+    written = (folder / "airport_frequencies.csv").read_text()
+    assert written.splitlines()[1] == "3,1,KJFK,TWR,Tower,119.10"  # text kept as published
+    assert "NA-KH" in (folder / "airports.csv").read_text()  # NA is a value, not a missing cell
+    assert list(pd.read_csv(folder / "airport_frequencies.csv").columns) == [
+        "id",
+        "airport_ref",
+        "airport_ident",
+        "type",
+        "description",
+        "frequency_mhz",
+    ]
+    view = manifest["ourairports_db"]
+    assert {n: f["rows"] for n, f in view["files"].items()} == {
+        "airports.csv": 2,
+        "runways.csv": 2,
+        "airport_frequencies.csv": 1,
+        "navaids.csv": 2,
+        "countries.csv": 2,
+        "regions.csv": 2,
+    }
+    by_child = {r["child"]: r for r in view["relations"]}
+    assert len(view["relations"]) == 9
+    assert by_child["airports.iso_country"]["orphans"] == 0
+    assert by_child["runways.airport_ref"]["orphans"] == 1  # a runway of an unknown airport
+    assert by_child["runways.airport_ident"]["orphans"] == 1
+    assert by_child["navaids.associated_airport"]["checked"] == 1  # the blank key is not checked
+    assert view["dropped"] == ev.OURAIRPORTS_DROPPED and view["pseudonymised"] == []
+    assert view["source_snapshot"] == f"ourairports_db/{ev.WAVE25_SNAPSHOT}"
+    assert "no row sampling" in view["sampling"]["method"]
+
+
+def _cftc_record(rid, date, code, **extra):
+    base = {c: "1" for c in ev.CFTC_NUM_COLS}
+    base.update(
+        id=rid,
+        report_date_as_yyyy_mm_dd=f"{date}T00:00:00.000",
+        market_and_exchange_names=f"M{code}",
+        contract_market_name=f"N{code}",
+        cftc_contract_market_code=code,
+        cftc_market_code="CBT",
+        commodity_name="WHEAT",
+    )
+    base.update(extra)
+    return base
+
+
+def _cftc_snapshot(root):
+    raw = _wave25_raw(root, "cftc_cot_disaggregated")
+    _w(
+        raw / "cftc_cot_2024_2025_p00.json",
+        json.dumps(
+            [
+                _cftc_record("b", "2024-01-09", "002"),
+                _cftc_record("a", "2024-01-02", "001", open_interest_all="12"),
+            ]
+        ),
+    )
+    _w(raw / "cftc_cot_2024_2025_p01.json", json.dumps([_cftc_record("a", "2024-01-02", "001")]))
+
+
+def test_cftc_cot_view_and_builder(tmp_path):
+    records = [
+        _cftc_record("b", "2024-01-09", "002"),
+        _cftc_record("a2", "2024-01-02", "002", open_interest_all="n/a"),
+        _cftc_record("a1", "2024-01-02", "001", open_interest_all="12"),
+        _cftc_record("a1", "2024-01-02", "001", open_interest_all="99"),  # repeated id
+    ]
+    records[2].pop("m_money_positions_spread")  # a missing field is a missing value
+    view = ev.cftc_cot_view(records)
+    assert list(view.columns) == [*ev.CFTC_TEXT_COLS, *ev.CFTC_NUM_COLS]
+    assert view["cftc_contract_market_code"].tolist() == ["001", "002", "002"]
+    assert view["report_date_as_yyyy_mm_dd"].tolist() == ["2024-01-02", "2024-01-02", "2024-01-09"]
+    assert view["open_interest_all"].tolist()[0] == 12  # first record of a repeated id wins
+    assert pd.isna(view["open_interest_all"].tolist()[1])  # not a number
+    assert pd.isna(view["m_money_positions_spread"].iloc[0])
+    empty = ev.cftc_cot_view([])
+    assert list(empty.columns) == [*ev.CFTC_TEXT_COLS, *ev.CFTC_NUM_COLS] and len(empty) == 0
+    with pytest.raises(ev.ViewError, match=r"^no CFTC Commitments of Traders JSON files"):
+        ev._build_cftc_cot(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _cftc_snapshot(root)
+    manifest: dict = {}
+    ev._build_cftc_cot(root, tmp_path / "out", manifest)
+    entry = manifest["cftc_cot_disaggregated"]
+    assert entry["files"]["cot_positions.csv"]["rows"] == 2
+    assert entry["sampling"]["first_date"] == "2024-01-02"
+    assert entry["sampling"]["last_date"] == "2024-01-09"
+    assert entry["sampling"]["pages"] == 2 and entry["pseudonymised"] == []
+    assert entry["source_snapshot"] == f"cftc_cot_disaggregated/{ev.WAVE25_SNAPSHOT}"
+
+
+NDBC_HEAD = (
+    "#YY  MM DD hh mm WDIR WSPD GST  WVHT   DPD   APD MWD   PRES  ATMP  WTMP  DEWP  VIS  TIDE\n"
+    "#yr  mo dy hr mn degT m/s  m/s     m   sec   sec degT   hPa  degC  degC  degC  mi    ft\n"
+)
+
+
+def _ndbc_snapshot(root):
+    import gzip
+
+    raw = _wave25_raw(root, "ndbc_buoys_2023")
+    body = (
+        "2023 01 01 00 10 314 17.2 22.3 99.00 99.00 99.00 999 1001.4 11.9 999.0 999.0 99.0 99.00\n"
+        "2023 01 01 00 00 100  1.0 2.0 1.50 8.00 6.00 200 9999.0 11.9 12.5 3.0 99.0 99.00\n"
+    )
+    for station in ev.NDBC_STATIONS:
+        (raw / f"ndbc_{station}_2023.txt.gz").write_bytes(
+            gzip.compress((NDBC_HEAD + body).encode())
+        )
+
+
+def test_ndbc_buoys_view_and_builder(tmp_path):
+    raw = pd.read_csv(
+        io.StringIO(
+            NDBC_HEAD
+            + "2023 01 01 00 10 314 17.2 22.3 99.00 99.00 99.00 999 1001.4 11.9 999.0 999.0 99.0 99.00\n"  # noqa: E501
+            + "2023 01 01 00 00 100 1.0 2.0 1.50 8.00 6.00 200 9999.0 11.9 12.5 3.0 99.0 99.00\n"
+            + "2023 01 01 00 00 101 1.0 2.0 1.50 8.00 6.00 200 9999.0 11.9 12.5 3.0 99.0 99.00\n"
+            + "2023 01 01 00 20 100 bad 2.0 1.50 8.00 6.00 200 9999.0 11.9 12.5 3.0 99.0 99.00\n"
+        ),
+        sep=r"\s+",
+        skiprows=[1],
+        dtype=str,
+    )
+    view = ev.ndbc_buoys_view({"46042": raw, "41002": raw.iloc[:1]})
+    assert view["station_id"].tolist() == ["41002", "46042", "46042", "46042"]
+    assert view["timestamp"].tolist() == [
+        "2023-01-01 00:10",
+        "2023-01-01 00:00",
+        "2023-01-01 00:10",
+        "2023-01-01 00:20",
+    ]
+    assert view["WSPD"].tolist()[3] != view["WSPD"].tolist()[3]  # text that is no number is NaN
+    first = view.iloc[1]  # 46042 at 00:00: the first of two rows with that time is kept
+    assert first["WDIR"] == 100 and first["PRES"] != first["PRES"]  # 9999.0 is a missing code
+    assert first["WVHT"] == 1.5 and first["WTMP"] == 12.5
+    gust = view.iloc[0]  # a real 17.2 m/s wind stays a value; the 99.0 wave codes become NaN
+    assert gust["WSPD"] == 17.2 and gust["WVHT"] != gust["WVHT"] and gust["WTMP"] != gust["WTMP"]
+    assert "VIS" not in view and "TIDE" not in view
+    with pytest.raises(ev.ViewError, match=r"^missing NDBC standard meteorological files"):
+        ev._build_ndbc_buoys(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _ndbc_snapshot(root)
+    manifest: dict = {}
+    ev._build_ndbc_buoys(root, tmp_path / "out", manifest)
+    entry = manifest["ndbc_buoys_2023"]
+    assert entry["files"]["buoy_observations.csv"]["rows"] == 14
+    assert entry["sampling"]["stations"] == 7 and entry["dropped"] == ["VIS", "TIDE"]
+    written = pd.read_csv(tmp_path / "out" / "ndbc_buoys_2023" / "buoy_observations.csv")
+    first = written[written["station_id"] == 41002]  # runs of spaces are one separator
+    assert first["timestamp"].tolist() == ["2023-01-01 00:00", "2023-01-01 00:10"]
+    assert first["WSPD"].tolist() == [1.0, 17.2]
+
+
+def _daylight_row(pid, start, **extra):
+    row = {c: "" for c in ev.DAYLIGHT_COLS}
+    row.update(
+        participant_id=pid,
+        event_start_local=start.replace("Z", "+02:00"),
+        event_start_utc=start,
+        event_end_utc=start,
+        event_duration_seconds="60",
+        wear_state="Wear",
+    )
+    row.update(extra)
+    return row
+
+
+def _daylight_snapshot(root):
+    raw = _wave25_raw(root, "zen_daylight_events")
+    frame = pd.DataFrame(
+        [
+            _daylight_row("ADID-B", "2025-09-21T10:00:00Z", screen_phone="TRUE"),
+            _daylight_row(
+                "ADID-A",
+                "2025-09-21T11:00:00Z",
+                setting="Indoors",
+                setting_specific="NA",
+                screen_phone="FALSE",
+            ),
+        ]
+    )
+    frame.to_csv(raw / "events.csv", index=False)
+
+
+def test_daylight_events_view_and_builder(tmp_path):
+    frame = pd.DataFrame(
+        [
+            _daylight_row("ADID-B", "2025-09-21T10:00:00Z"),
+            _daylight_row("ADID-A", "2025-09-21T12:00:00Z", setting="Indoors"),
+            _daylight_row("ADID-A", "2025-09-21T09:00:00Z"),
+        ]
+    )
+    view = ev.daylight_events_view(frame)
+    a, b = ev.pseudonym("ADID-A"), ev.pseudonym("ADID-B")
+    assert "event_start_local" not in view and "ADID-A" not in view["participant_id"].tolist()
+    assert view["participant_id"].tolist() == sorted([a, a, b])
+    mine = view[view["participant_id"] == a]
+    assert mine["event_start_utc"].tolist() == ["2025-09-21T09:00:00Z", "2025-09-21T12:00:00Z"]
+    assert list(view.columns) == ["participant_id", *ev.DAYLIGHT_COLS]
+    with pytest.raises(ev.ViewError, match=r"^no Day in Daylight events CSV in the snapshot$"):
+        ev._build_daylight_events(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _daylight_snapshot(root)
+    manifest: dict = {}
+    ev._build_daylight_events(root, tmp_path / "out", manifest)
+    entry = manifest["zen_daylight_events"]
+    assert entry["files"]["context_events.csv"]["rows"] == 2
+    assert entry["pseudonymised"] == ["participant_id"] and entry["salt_label"] == ev.SALT
+    assert entry["sampling"]["participants"] == 2 and entry["dropped"] == ["event_start_local"]
+    written = pd.read_csv(
+        tmp_path / "out" / "zen_daylight_events" / "context_events.csv",
+        dtype=str,
+        keep_default_na=False,
+    )
+    assert sorted(written["screen_phone"]) == ["FALSE", "TRUE"]  # tokens stay text, not booleans
+    assert "NA" in written["setting_specific"].tolist()  # a publisher token is not a missing cell
+
+
+def _cpsc_record(rid, **extra):
+    record = {
+        "RecallID": rid,
+        "RecallNumber": f"N{rid}",
+        "Title": f"Title {rid}",
+        "ConsumerContact": "call 555 or mail a@b.example",
+        "URL": "https://x",
+        "Images": [{"URL": "u", "Caption": "c"}],
+        "Description": "mail us at help@firm.example",
+        "Products": [{"Name": "P"}],
+        "Inconjunctions": [{"URL": "https://other"}],
+    }
+    record.update(extra)
+    return record
+
+
+def _cpsc_snapshot(root):
+    raw = _wave25_raw(root, "cpsc_recalls")
+    _w(raw / "cpsc_recalls_2024_2025.json", json.dumps([_cpsc_record(2), _cpsc_record(1)]))
+
+
+def test_cpsc_recalls_view_and_builder(tmp_path):
+    records = [_cpsc_record(2), _cpsc_record(1), _cpsc_record(2, Title="repeat")]
+    view = ev.cpsc_recalls_view(records)
+    assert [r["RecallID"] for r in view] == [1, 2]
+    assert view[1]["Title"] == "Title 2"  # the first record of a repeated id wins
+    assert all(not ({"ConsumerContact", "Images", "URL"} & set(r)) for r in view)
+    assert view[0]["Inconjunctions"] == [{"URL": "https://other"}]  # only top-level keys dropped
+    assert "help@firm.example" not in view[0]["Description"]
+    assert records[0]["ConsumerContact"]  # the input is untouched
+    with pytest.raises(ev.ViewError, match=r"^no CPSC recall JSON in the snapshot$"):
+        ev._build_cpsc_recalls(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _cpsc_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_cpsc_recalls(root, out, manifest)
+    entry = manifest["cpsc_recalls"]
+    assert entry["files"]["recalls.jsonl"]["rows"] == 2
+    assert entry["dropped"] == ["ConsumerContact", "Images", "URL"]
+    assert entry["sampling"]["recalls_in"] == 2 and entry["sampling"]["unique_recalls"] == 2
+    lines = (out / "cpsc_recalls" / "recalls.jsonl").read_text().splitlines()
+    assert [json.loads(line)["RecallID"] for line in lines] == [1, 2]
+
+
+def _nih_frame(*ids):
+    rows = []
+    for app_id, notice in ids:
+        row = {col: f"v_{col}" for col in ev.NIH_KEEP}
+        row.update({"APPLICATION_ID": app_id, "AWARD_NOTICE_DATE": notice})
+        row.update({"PI_NAMEs": "DOE, JANE", "ORG_NAME": "SECRET UNIVERSITY", "PHR": "text"})
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def _nih_snapshot(root):
+    raw = root / "nih_reporter_projects_fy2024" / ev.WAVE26_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    frame = _nih_frame(("2", "2024-06-01"), ("007", "2024-04-01"), ("007", "2024-09-01"))
+    frame["CFDA_CODE"] = "093.001"
+    frame.to_csv(raw / "RePORTER_PRJ_C_FY2024.zip", index=False, compression="zip")
+
+
+def test_nih_reporter_view_projects_columns_pseudonymises_dedupes_and_sorts():
+    out = ev.nih_reporter_view(_nih_frame(("2", "2024-06-01"), ("1", "2024-04-01"), ("1", "x")))
+    assert out.columns.tolist() == list(ev.NIH_KEEP)
+    assert not ({"PI_NAMEs", "ORG_NAME", "PHR"} & set(out))
+    assert out["APPLICATION_ID"].tolist() == [ev.pseudonym("1"), ev.pseudonym("2")]
+    assert out["AWARD_NOTICE_DATE"].tolist() == ["2024-04-01", "2024-06-01"]
+    assert out.attrs == {"duplicates": 1}
+
+
+def test_nih_reporter_builder_reads_zip_writes_csv_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no NIH RePORTER ExPORTER file in the snapshot$"):
+        ev._build_nih_reporter(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _nih_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_nih_reporter(root, out, manifest)
+    ev._build_nih_reporter(root, out, manifest)
+    target = out / "nih_reporter_projects_fy2024" / "awards.csv"
+    assert target.read_text().splitlines()[0] == ",".join(ev.NIH_KEEP)
+    view = manifest["nih_reporter_projects_fy2024"]
+    assert view["files"]["awards.csv"]["rows"] == 2
+    written = pd.read_csv(target, dtype=str)
+    assert written["APPLICATION_ID"].tolist() == [ev.pseudonym("007"), ev.pseudonym("2")]
+    assert written["CFDA_CODE"].tolist() == ["093.001", "093.001"]  # codes stay text
+    assert written["APPLICATION_ID"].name == "APPLICATION_ID" and len(written.columns) == len(
+        ev.NIH_KEEP
+    )
+    assert "investigator_names_and_ids" in view["dropped"]
+    assert view["sampling"]["duplicates_dropped"] == 1
+    assert view["source_snapshot"] == f"nih_reporter_projects_fy2024/{ev.WAVE26_SNAPSHOT}"
+
+
+ECB_CSV = (
+    "Date,USD,JPY,BGN,CYP,\n"
+    "2024-01-03,1.09,157.0,1.9558,N/A,\n"
+    "1999-01-05,1.179,130.96,N/A,0.5823,\n"
+    "not a date,1.0,1.0,1.0,1.0,\n"
+)
+
+
+def _ecb_snapshot(root):
+    raw = root / "ecb_fx_reference_rates" / ev.WAVE27_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with zipfile.ZipFile(raw / "eurofxref-hist.zip", "w") as archive:
+        archive.writestr("eurofxref-hist.csv", ECB_CSV)
+
+
+def test_ecb_fx_view_masks_publisher_na_drops_the_empty_column_and_sorts_by_date():
+    view = ev.ecb_fx_view(ECB_CSV)
+    assert view.columns.tolist() == ["timestamp", "USD", "JPY", "BGN", "CYP"]
+    assert view["timestamp"].dt.strftime("%Y-%m-%d").tolist() == ["1999-01-05", "2024-01-03"]
+    assert view["USD"].tolist() == [1.179, 1.09]
+    assert pd.isna(view["BGN"].iloc[0]) and pd.isna(view["CYP"].iloc[1])
+    assert view["CYP"].iloc[0] == 0.5823
+
+
+def test_ecb_fx_builder_reads_zip_writes_csv_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no ECB reference rate file in the snapshot$"):
+        ev._build_ecb_fx(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _ecb_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_ecb_fx(root, out, manifest)
+    ev._build_ecb_fx(root, out, manifest)
+    written = pd.read_csv(out / "ecb_fx_reference_rates" / "rates.csv")
+    assert written["timestamp"].tolist() == ["1999-01-05", "2024-01-03"]
+    view = manifest["ecb_fx_reference_rates"]
+    assert view["files"]["rates.csv"]["rows"] == 2
+    assert view["dropped"] == ["empty_trailing_column"]
+    assert view["sampling"] == {
+        "currencies": 4,
+        "first_timestamp": "1999-01-05 00:00:00",
+        "last_timestamp": "2024-01-03 00:00:00",
+        "method": "complete history of the daily euro foreign exchange reference rates",
+        "missing_cells": 2,
+    }
+    assert view["source_snapshot"] == f"ecb_fx_reference_rates/{ev.WAVE27_SNAPSHOT}"
+
+
+FREMONT_CSV = (
+    '"date","fremont_bridge","fremont_bridge_nb","fremont_bridge_sb"\n'
+    '"2020-03-01T01:00:00.000","7","3","4"\n'
+    '"2020-03-01T00:00:00.000","","",""\n'
+    '"garbage","1","1","0"\n'
+    '"2020-03-01T02:00:00.000","oops","2","1"\n'
+)
+
+
+def _fremont_snapshot(root):
+    raw = root / "seattle_fremont_bridge" / ev.WAVE27_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "fremont_bridge_hourly.csv").write_text(FREMONT_CSV)
+
+
+def test_fremont_view_keeps_blank_counts_missing_and_sorts_by_time():
+    view = ev.fremont_view(FREMONT_CSV)
+    assert view["timestamp"].dt.strftime("%Y-%m-%d %H:%M").tolist() == [
+        "2020-03-01 00:00",
+        "2020-03-01 01:00",
+        "2020-03-01 02:00",
+    ]
+    assert view["fremont_bridge"].isna().tolist() == [True, False, True]  # blank and unreadable
+    assert view["fremont_bridge_nb"].tolist() == [pd.NA, 3, 2]
+    assert view["fremont_bridge"].dtype == "Int64"
+    assert view.loc[1, ["fremont_bridge", "fremont_bridge_nb", "fremont_bridge_sb"]].tolist() == [
+        7,
+        3,
+        4,
+    ]
+
+
+def test_fremont_builder_writes_csv_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Fremont Bridge counter file in the snapshot$"):
+        ev._build_fremont(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _fremont_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_fremont(root, out, manifest)
+    ev._build_fremont(root, out, manifest)
+    lines = (out / "seattle_fremont_bridge" / "counts.csv").read_text().splitlines()
+    assert lines == [
+        "timestamp,fremont_bridge,fremont_bridge_nb,fremont_bridge_sb",
+        "2020-03-01 00:00:00,,,",
+        "2020-03-01 01:00:00,7,3,4",
+        "2020-03-01 02:00:00,,2,1",
+    ]
+    view = manifest["seattle_fremont_bridge"]
+    assert view["files"]["counts.csv"]["rows"] == 3
+    assert view["sampling"] == {
+        "first_timestamp": "2020-03-01 00:00:00",
+        "last_timestamp": "2020-03-01 02:00:00",
+        "method": "complete hourly counter export; timestamps are local wall-clock time",
+        "missing_count_rows": 2,
+    }
+    assert view["source_snapshot"] == f"seattle_fremont_bridge/{ev.WAVE27_SNAPSHOT}"
+
+
+SEA_ICE_HEAD = (
+    "Year, Month, Day,     Extent,    Missing, Source Data\n"
+    "YYYY,    MM,  DD, 10^6 sq km, 10^6 sq km, Source\n"
+)
+SEA_ICE_NORTH = SEA_ICE_HEAD + (
+    "1978,    10,  28,     10.420,      0.000, ['/a/b.bin']\n"
+    "1978,    10,  26,     10.231,      0.500, ['/a/c.bin']\n"
+    "1978,    10,  27,        n/a,      0.000,\"['/a/d.bin', '/a/e.bin']\"\n"
+    "1978,    13,  40,     10.000,      0.000, ['/a/f.bin']\n"
+)
+SEA_ICE_SOUTH = SEA_ICE_HEAD + (
+    "1978,    10,  26,     17.624,      0.000, ['/a/d.bin']\n"
+    "1978,    10,  30,     17.900,      0.100, ['/a/e.bin']\n"
+)
+
+
+def _sea_ice_snapshot(root):
+    raw = root / "nsidc_sea_ice_index" / ev.WAVE27_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "N_seaice_extent_daily_v4.0.csv").write_text(SEA_ICE_NORTH)
+    (raw / "S_seaice_extent_daily_v4.0.csv").write_text(SEA_ICE_SOUTH)
+
+
+def test_sea_ice_hemisphere_skips_both_header_rows_and_coerces_unreadable_cells():
+    frame = ev._sea_ice_hemisphere(SEA_ICE_NORTH, "north")
+    assert frame.columns.tolist() == ["timestamp", "north_extent_mkm2", "north_missing_mkm2"]
+    assert len(frame) == 4  # the units row is not data; the quoted source list stays one field
+    assert frame["timestamp"].isna().tolist() == [False, False, False, True]  # month 13 is no date
+    assert frame["north_extent_mkm2"].iloc[:3].tolist()[0:2] == [10.420, 10.231]
+    assert pd.isna(frame["north_extent_mkm2"].iloc[2])  # the publisher's n/a text
+    assert frame["north_missing_mkm2"].tolist() == [0.0, 0.5, 0.0, 0.0]
+
+
+def test_sea_ice_view_joins_hemispheres_on_date_and_keeps_unmatched_days():
+    view = ev.sea_ice_view(SEA_ICE_NORTH, SEA_ICE_SOUTH)
+    assert view.columns.tolist() == [
+        "timestamp",
+        "north_extent_mkm2",
+        "north_missing_mkm2",
+        "south_extent_mkm2",
+        "south_missing_mkm2",
+    ]
+    assert view["timestamp"].dt.strftime("%Y-%m-%d").tolist() == [
+        "1978-10-26",
+        "1978-10-27",
+        "1978-10-28",
+        "1978-10-30",
+    ]
+    assert view["north_extent_mkm2"].iloc[0] == 10.231 and view["north_missing_mkm2"].iloc[0] == 0.5
+    assert view["south_extent_mkm2"].iloc[0] == 17.624
+    assert view["north_extent_mkm2"].isna().tolist() == [False, True, False, True]
+    assert view["south_extent_mkm2"].isna().tolist() == [False, True, True, False]
+    assert view["south_missing_mkm2"].iloc[3] == 0.1
+    assert view.index.tolist() == [0, 1, 2, 3]
+
+
+def test_sea_ice_builder_writes_csv_manifest_and_errors_when_a_file_is_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no NSIDC Sea Ice Index files in the snapshot$"):
+        ev._build_sea_ice(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _sea_ice_snapshot(root)
+    (
+        root / "nsidc_sea_ice_index" / ev.WAVE27_SNAPSHOT / "raw" / "S_seaice_extent_daily_v4.0.csv"
+    ).unlink()
+    with pytest.raises(ev.ViewError, match=r"^no NSIDC Sea Ice Index files in the snapshot$"):
+        ev._build_sea_ice(root, tmp_path / "err", {})
+    (
+        root / "nsidc_sea_ice_index" / ev.WAVE27_SNAPSHOT / "raw" / "S_seaice_extent_daily_v4.0.csv"
+    ).write_text(SEA_ICE_SOUTH)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_sea_ice(root, out, manifest)
+    ev._build_sea_ice(root, out, manifest)
+    lines = (out / "nsidc_sea_ice_index" / "extent.csv").read_text().splitlines()
+    assert lines[0] == (
+        "timestamp,north_extent_mkm2,north_missing_mkm2,south_extent_mkm2,south_missing_mkm2"
+    )
+    assert lines[1] == "1978-10-26,10.231,0.5,17.624,0.0"
+    view = manifest["nsidc_sea_ice_index"]
+    assert view["files"]["extent.csv"]["rows"] == 4
+    assert view["dropped"] == ["source_data_file_paths"]
+    assert view["sampling"]["missing_extent_rows"] == 3
+    assert view["sampling"]["last_timestamp"] == "1978-10-30 00:00:00"
+    assert view["source_snapshot"] == f"nsidc_sea_ice_index/{ev.WAVE27_SNAPSHOT}"
+
+
+OMNI_ROW_A = (
+    "2023   1  1 2583 51 52  55  29   5.6   5.0  -8.4 112.8  -1.9   4.6  -0.7   4.6   0.4"
+    "   0.1   2.3   1.4   0.7   1.7  111138.   2.4  603.  -1.3  -0.9 0.038  1.68   20295."
+    "   0.2   18.   1.6   2.1 0.004  -0.24   0.76   8.3 23 108   -23  132"
+)
+OMNI_FILL = (
+    "99 99 999 999 "
+    + " ".join(["999.9"] * 14)
+    + " 9999999. 999.9 9999. 999.9 999.9 9.999 99.99 9999999."
+)
+OMNI_ROW_FILL = f"2023   1  0 2583 {OMNI_FILL} 99 999 999999.99"
+OMNI_TEXT = OMNI_ROW_A + "\n" + OMNI_ROW_FILL + "\nnot an omni row\n"
+
+
+def _omni_snapshot(root):
+    raw = root / "nasa_omni_solar_wind" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "omni2_2023.dat").write_text(OMNI_TEXT)
+    (raw / "omni2_2022.dat").write_text(OMNI_ROW_A.replace("2023", "2022") + "\n")
+
+
+def test_omni_view_stamps_hours_and_masks_the_fill_values_of_every_field():
+    view = ev.omni_view(OMNI_TEXT)
+    assert view.columns.tolist() == ["timestamp"] + [name for name, _ in ev.OMNI_FIELDS]
+    assert view["timestamp"].dt.strftime("%Y-%m-%d %H").tolist() == [
+        "2023-01-01 01",
+        "2023-01-01 00",
+    ]
+    hour = view.iloc[0]
+    assert hour["imf_spacecraft_id"] == 51 and hour["plasma_points"] == 29
+    assert hour["b_magnitude_nt"] == 5.6 and hour["bz_gsm_nt"] == 0.4
+    assert hour["proton_temperature_k"] == 111138.0 and hour["flow_speed_kms"] == 603.0
+    assert hour["alpha_proton_ratio"] == 0.038 and hour["flow_pressure_npa"] == 1.68
+    assert hour["sigma_temperature_k"] == 20295.0
+    gap = view.iloc[1]
+    assert gap.drop("timestamp").isna().all()
+    assert str(view["imf_points"].dtype) == "Int64"
+
+
+def test_omni_view_counts_days_from_the_start_of_the_year_and_needs_thirty_fields():
+    thirty = " ".join(OMNI_ROW_A.split()[:30])
+    short = " ".join(OMNI_ROW_A.split()[:29])
+    late = thirty.replace("2023   1  1", "2024  40  5").replace("2023 1 1", "2024 40 5")
+    assert late.split()[:3] == ["2024", "40", "5"]
+    view = ev.omni_view(late + "\n" + short + "\n")
+    assert view["timestamp"].tolist() == [pd.Timestamp("2024-02-09 05:00:00")]
+    assert view["flow_pressure_npa"].iloc[0] == 1.68
+    bad_year = ev.omni_view(thirty.replace("2023", "abc", 1))
+    assert bad_year["timestamp"].isna().tolist() == [True]
+    odd = thirty.split()
+    odd[8] = "abc"
+    assert pd.isna(ev.omni_view(" ".join(odd))["b_magnitude_nt"].iloc[0])
+
+
+def test_omni_view_keeps_values_that_only_resemble_a_fill_value():
+    near = OMNI_ROW_A.replace("   5.6   5.0", " 999.8  99.99")
+    view = ev.omni_view(near)
+    assert (
+        view["b_magnitude_nt"].iloc[0] == 999.8 and view["b_vector_magnitude_nt"].iloc[0] == 99.99
+    )
+
+
+def test_omni_builder_concatenates_years_in_time_order_writes_csv_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no OMNI2 files in the snapshot$"):
+        ev._build_omni(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _omni_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_omni(root, out, manifest)
+    ev._build_omni(root, out, manifest)
+    written = pd.read_csv(out / "nasa_omni_solar_wind" / "solar_wind.csv")
+    assert written["timestamp"].tolist() == [
+        "2022-01-01 01:00:00",
+        "2023-01-01 00:00:00",
+        "2023-01-01 01:00:00",
+    ]
+    view = manifest["nasa_omni_solar_wind"]
+    assert view["files"]["solar_wind.csv"]["rows"] == 3
+    assert view["dropped"] == [
+        "bartels_rotation",
+        "geomagnetic_and_solar_indices",
+        "energetic_proton_fluxes",
+    ]
+    assert view["sampling"] == {
+        "files": 2,
+        "first_timestamp": "2022-01-01 01:00:00",
+        "last_timestamp": "2023-01-01 01:00:00",
+        "method": "complete calendar-year files of the hourly OMNI2 data",
+        "all_missing_hours": 1,
+    }
+    assert view["source_snapshot"] == f"nasa_omni_solar_wind/{ev.WAVE28_SNAPSHOT}"
+
+
+def _socrata_csv(spec, rows=2):
+    """A synthetic export with the columns of the spec: one typed row and one fully blank row."""
+    header = ",".join(spec["columns"])
+    typed = []
+    for column in spec["columns"]:
+        if column in spec["numbers"]:
+            typed.append("1.5")
+        elif column in spec["dates"]:
+            typed.append("2023-05-06T07:08:09.000")
+        else:
+            typed.append(f"{column}-x")
+    lines = [header, ",".join(typed), ",".join([""] * len(spec["columns"]))]
+    return "\n".join(lines[: rows + 1]) + "\n"
+
+
+def _socrata_snapshots_one(root, view):
+    spec = ev.SOCRATA_TABLES[view]
+    raw = root / view / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / spec["file"]).write_text(_socrata_csv(spec))
+
+
+def _socrata_snapshots(root):
+    for view in ev.SOCRATA_TABLES:
+        _socrata_snapshots_one(root, view)
+
+
+SOCRATA_SPEC = {
+    "label": "demo",
+    "columns": ["key", "when", "amount", "kind", "secret", "code"],
+    "numbers": ["amount"],
+    "dates": ["when"],
+    "drop": ["secret"],
+    "pseudonymise": ["key"],
+}
+SOCRATA_DEMO = (
+    "key,when,amount,kind,secret,code,extra\n"
+    "a1,2023-05-06T07:08:09.000,2.5,NA,s1,007,e1\n"
+    ",not a date,n/a,,s2,12,e2\n"
+)
+
+
+def test_socrata_table_types_columns_hashes_identifiers_and_keeps_blanks_missing():
+    view = ev.socrata_table(SOCRATA_DEMO, SOCRATA_SPEC)
+    assert view.columns.tolist() == ["key", "when", "amount", "kind", "code"]  # no drop or extra
+    assert view["key"].iloc[0] == ev.pseudonym("a1") and pd.isna(view["key"].iloc[1])
+    assert view["when"].iloc[0] == pd.Timestamp("2023-05-06 07:08:09") and pd.isna(
+        view["when"].iloc[1]
+    )
+    assert view["amount"].iloc[0] == 2.5 and pd.isna(view["amount"].iloc[1])
+    assert view["kind"].iloc[0] == "NA" and pd.isna(view["kind"].iloc[1])  # NA is a value
+    assert view["code"].iloc[0] == "007"  # identifiers keep their leading zeros
+    assert pd.api.types.is_numeric_dtype(view["amount"])
+
+
+def test_socrata_table_names_the_missing_columns_of_a_changed_export():
+    with pytest.raises(ev.ViewError, match=r"^demo export lacks the columns \['amount'\]$"):
+        ev.socrata_table("key,when,kind,secret,code\na,b,c,d,e\n", SOCRATA_SPEC)
+
+
+def test_socrata_table_reads_a_number_with_a_decimal_comma_free_of_text():
+    view = ev.socrata_table(
+        "key,when,amount,kind,secret,code\na,2023-01-01,10,k,s,c\n", SOCRATA_SPEC
+    )
+    assert view["amount"].tolist() == [10.0]
+
+
+@pytest.mark.parametrize("view", sorted(ev.SOCRATA_TABLES))
+def test_socrata_builder_writes_the_documented_view_and_manifest(view, tmp_path):
+    spec = ev.SOCRATA_TABLES[view]
+    step = ev.SOCRATA_STEPS[list(ev.SOCRATA_TABLES).index(view)]
+    with pytest.raises(ev.ViewError, match=rf"^no {spec['label']} file in the snapshot$"):
+        step(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _socrata_snapshots(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    step(root, out, manifest)
+    step(root, out, manifest)
+    written = pd.read_csv(out / view / spec["table"])
+    expected = [c for c in spec["columns"] if c not in spec["drop"]]
+    assert written.columns.tolist() == expected
+    assert len(written) == 2 and written.iloc[1].isna().all()
+    entry = manifest[view]
+    assert entry["files"][spec["table"]]["rows"] == 2
+    assert entry["dropped"] == spec["drop"] and entry["pseudonymised"] == spec["pseudonymise"]
+    assert ("salt_label" in entry) == bool(spec["pseudonymise"])
+    assert entry["source_snapshot"] == f"{view}/{ev.WAVE28_SNAPSHOT}"
+    assert entry["sampling"]["method"] == spec["method"] and entry["sampling"]["columns"] == len(
+        expected
+    )
+    for column in spec["pseudonymise"]:
+        assert written[column].iloc[0] == ev.pseudonym(f"{column}-x")
+    window = spec.get("window")
+    if window:
+        assert entry["sampling"][f"first_{window}"] == "2023-05-06 07:08:09"
+        assert entry["sampling"][f"last_{window}"] == "2023-05-06 07:08:09"
+    else:
+        assert not any(k.startswith("first_") for k in entry["sampling"])
+
+
+def _seattle_fire_911_snapshot(root):
+    raw = root / "seattle_fire_911_calls" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "fire_911_2023.csv").write_text(
+        "\n".join(
+            [
+                '"type","datetime","incident_number"',
+                '"Medic Response","2023-01-02T00:05:00.000","0003"',
+                '"Aid Response","2023-01-01T23:59:00.000","0002"',
+                '"NA","2023-01-01T23:58:00.000","007"',
+                '"Dup","2023-01-01T23:58:00.000","007"',
+                '"No time","","0009"',
+                '"Bad time","soon","0008"',
+                '"","2023-01-02T01:00:00.000","0004"',
+            ]
+        )
+        + "\n"
+    )
+
+
+def test_seattle_fire_911_view_orders_keys_by_day_and_hashes_the_incident(tmp_path):
+    raw = pd.read_csv(
+        io.StringIO(
+            "type,datetime,incident_number\n"
+            "B,2023-01-02T00:05:00.000,F3\n"
+            "A,2023-01-01T23:59:00.000,F2\n"
+            "A,2023-01-01T23:59:00.000,F1\n"
+            "Z,2023-01-01T23:59:00.000,F1\n"
+            "N,,F9\n"
+            "T,soon,F8\n"
+            ",2023-01-02T01:00:00.000,F4\n"
+        ),
+        dtype=str,
+        keep_default_na=False,
+    )
+    raw.loc[len(raw)] = [None, "2023-01-02T02:00:00.000", "F5"]  # a missing type is not a drop
+    view = ev.seattle_fire_911_view(raw)
+    assert view.columns.tolist() == ["event_date", "time", "type", "incident"]
+    assert view["incident"].tolist() == [ev.pseudonym(f"F{n}") for n in (1, 2, 3, 4, 5)]
+    assert view["event_date"].tolist() == ["2023-01-01"] * 2 + ["2023-01-02"] * 3
+    assert view["time"].tolist() == [
+        pd.Timestamp("2023-01-01 23:59:00"),
+        pd.Timestamp("2023-01-01 23:59:00"),
+        pd.Timestamp("2023-01-02 00:05:00"),
+        pd.Timestamp("2023-01-02 01:00:00"),
+        pd.Timestamp("2023-01-02 02:00:00"),
+    ]
+    assert view["type"].iloc[:3].tolist() == ["A", "A", "B"]
+    assert view["type"].isna().tolist() == [False, False, False, True, True]
+    assert view.index.tolist() == [0, 1, 2, 3, 4]
+
+
+def test_seattle_fire_911_builder_writes_the_view_and_manifest(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Seattle fire 911 file in the snapshot$"):
+        ev._build_seattle_fire_911(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _seattle_fire_911_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_seattle_fire_911(root, out, manifest)
+    ev._build_seattle_fire_911(root, out, manifest)
+    df = pd.read_csv(out / "seattle_fire_911_calls" / "events.csv", keep_default_na=False)
+    assert df["event_date"].tolist() == ["2023-01-01"] * 2 + ["2023-01-02"] * 2
+    assert df["incident"].iloc[0] == ev.pseudonym("007") and df["type"].iloc[0] == "NA"
+    entry = manifest["seattle_fire_911_calls"]
+    assert entry["files"]["events.csv"]["rows"] == 4
+    assert entry["dropped"] == ["address", "latitude", "longitude", "report_location", "regions"]
+    assert entry["pseudonymised"] == ["incident_number"] and entry["salt_label"] == ev.SALT
+    assert entry["sampling"] == {
+        "method": "dispatches of calendar year 2023 ordered by time and incident number",
+        "days": 2,
+        "first_time": "2023-01-01 23:58:00",
+        "last_time": "2023-01-02 01:00:00",
+    }
+    assert entry["source_snapshot"] == f"seattle_fire_911_calls/{ev.WAVE28_SNAPSHOT}"
+
+
+def _baac_tables():
+    def table(text):
+        return pd.read_csv(io.StringIO(text), sep=";", dtype=str, keep_default_na=False)
+
+    return {
+        "caracteristiques": table(
+            "Num_Acc;jour;mois;an;hrmn;lum;dep;com;agg;int;atm;col;adr;lat;long\n"
+            "A1;01;02;2024;07:40;2;01;70285;1;1;5;1;D438;47,5;6,7\n"
+            "A2;03;02;2024;08:00;1;21;21054;2;3;7;6;RUE;47,0;4,8\n"
+            "A3;04;02;2024;09:00;1;21;21054;2;3;7;6;RUE;47,0;4,8\n"
+        ),
+        "lieux": table(
+            "Num_Acc;catr;voie;v1;v2;circ;nbv;vosp;prof;pr;pr1;plan;lartpc;larrout;surf;infra;situ;vma\n"
+            "A1;3;D438, RUE;0;N/A;2;2;0;1;1;260;2;;7;1;0;1;90\n"
+            "A1;3;D439;0;N/A;2;2;0;1;1;260;2;;7;1;0;1;90\n"
+            "A2;4;RUE;0;N/A;2;2;0;1; -1; -1;1;; -1;9;0;1;30\n"
+            "A9;4;RUE;0;N/A;2;2;0;1; -1; -1;1;; -1;9;0;1;30\n"
+        ),
+        "vehicules": table(
+            "Num_Acc;id_vehicule;num_veh;senc;catv;obs;obsm;choc;manv;motor;occutc\n"
+            "A1;V1;A01;1;7;0;2;1;13;1;\n"
+            "A1;V2;B01;2;14;0;2;2;21;1;\n"
+            "A2;V3;A01;1;7;0;2;1;13;1;\n"
+            "A2;V4;A01;1;7;0;2;1;13;1;\n"
+        ),
+        "usagers": table(
+            "Num_Acc;id_usager;id_vehicule;num_veh;place;catu;grav;sexe;an_nais;trajet;secu1;secu2;secu3;locp;actp;etatp\n"
+            "A1;U1;V1;A01;1;1;3;1;2003;2;1; -1; -1; -1; -1; -1\n"
+            "A1;U2;V2;B01;1;1;1;1;1997;4;1; -1; -1; -1; -1; -1\n"
+            "A1;U6;V1;A01;2;2;4;2;1980;0;0; -1; -1;1;1;1\n"
+            "A2;U3;V9;C01;1;3;4;2;1980;0;0; -1; -1;1;1;1\n"
+            "A2;U4;;;1;3;4;2;1980;0;0; -1; -1;1;1;1\n"
+            "A8;U5;V1;A01;1;1;4;2;1980;0;0; -1; -1;1;1;1\n"
+        ),
+    }
+
+
+def test_baac_view_keeps_the_published_rows_and_reports_every_key_fact():
+    views, relations, facts = ev.baac_view(_baac_tables())
+    assert list(views) == ["caracteristiques", "lieux", "vehicules", "usagers"]
+    assert views["caracteristiques"].columns.tolist() == [
+        "Num_Acc", "jour", "mois", "an", "hrmn", "lum", "dep", "com", "agg", "int", "atm", "col",
+    ]  # fmt: skip
+    assert views["lieux"].columns.tolist() == [
+        "Num_Acc", "catr", "v1", "v2", "circ", "nbv", "vosp", "prof", "plan", "lartpc",
+        "larrout", "surf", "infra", "situ", "vma",
+    ]  # fmt: skip
+    assert views["vehicules"].columns.tolist() == list(_baac_tables()["vehicules"].columns)
+    assert views["usagers"].columns.tolist() == [
+        "Num_Acc", "id_usager", "id_vehicule", "num_veh", "place", "catu", "grav", "sexe",
+        "trajet", "secu1", "secu2", "secu3", "locp", "actp", "etatp",
+    ]  # fmt: skip
+    assert views["lieux"]["Num_Acc"].tolist() == ["A1", "A1", "A2", "A9"]  # published order
+    assert views["usagers"]["secu2"].iloc[0] == " -1"  # the coded missing value is kept
+    by_pair = {(r["child"], r["parent"]): r for r in relations}
+    assert len(relations) == 4
+    lieux = by_pair[("lieux.Num_Acc", "caracteristiques.Num_Acc")]
+    assert (lieux["checked"], lieux["orphans"]) == (4, 1)
+    assert by_pair[("vehicules.Num_Acc", "caracteristiques.Num_Acc")]["orphans"] == 0
+    assert by_pair[("usagers.Num_Acc", "caracteristiques.Num_Acc")]["orphans"] == 1
+    vehicle = by_pair[("usagers.id_vehicule", "vehicules.id_vehicule")]
+    assert (vehicle["checked"], vehicle["orphans"]) == (5, 1)  # a blank id is missing, not dangling
+    assert facts == {
+        "usagers_num_veh_without_vehicle": 2,  # (A2, C01) and (A8, A01); blank num_veh is missing
+        "usagers_num_veh_checked": 5,
+        "vehicules_duplicate_num_veh": 1,
+        "max_rows_per_accident": {"lieux": 2, "vehicules": 2, "usagers": 3},
+        "accidents_without_child": {"lieux": 1, "vehicules": 1, "usagers": 1},
+    }
+
+
+def _baac_snapshot(root):
+    raw = root / "france_baac_road_accidents" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    names = {
+        "caracteristiques": "caract-2024.csv",
+        "lieux": "lieux-2024.csv",
+        "vehicules": "vehicules-2024.csv",
+        "usagers": "usagers-2024.csv",
+    }
+    for name, frame in _baac_tables().items():
+        frame.to_csv(raw / names[name], sep=";", index=False)
+
+
+def test_baac_builder_writes_four_tables_and_the_relation_facts(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^missing BAAC tables in the snapshot$"):
+        ev._build_baac(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _baac_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_baac(root, out, manifest)
+    ev._build_baac(root, out, manifest)
+    entry = manifest["france_baac_road_accidents"]
+    assert {n: f["rows"] for n, f in entry["files"].items()} == {
+        "caracteristiques.csv": 3,
+        "lieux.csv": 4,
+        "vehicules.csv": 4,
+        "usagers.csv": 6,
+    }
+    folder = out / "france_baac_road_accidents"
+
+    def written(name):
+        return pd.read_csv(folder / f"{name}.csv", dtype=str, keep_default_na=False)
+
+    assert written("usagers")["Num_Acc"].tolist() == ["A1", "A1", "A1", "A2", "A2", "A8"]
+    assert written("caracteristiques")["dep"].tolist() == ["01", "21", "21"]  # text, not numbers
+    assert written("lieux")["v2"].iloc[0] == "N/A"  # the publisher's text is not a missing cell
+    assert entry["dropped"] == ev.BAAC_DROPPED and entry["pseudonymised"] == []
+    assert len(entry["relations"]) == 4
+    assert entry["sampling"]["method"] == (
+        "complete 2024 annual release of the four BAAC tables, no row sampling"
+    )
+    assert entry["sampling"]["usagers_num_veh_without_vehicle"] == 2
+    assert entry["source_snapshot"] == f"france_baac_road_accidents/{ev.WAVE28_SNAPSHOT}"
+
+
+def _attack_bundle():
+    return {
+        "type": "bundle",
+        "id": "bundle--x",
+        "objects": [
+            {
+                "type": "relationship",
+                "id": "relationship--b",
+                "relationship_type": "uses",
+                "source_ref": "intrusion-set--a",
+                "target_ref": "attack-pattern--c",
+            },
+            {
+                "type": "attack-pattern",
+                "id": "attack-pattern--c",
+                "name": "T1",
+                "kill_chain_phases": [{"kill_chain_name": "mitre-attack", "phase_name": "x"}],
+                "external_references": [{"source_name": "mitre-attack", "external_id": "T1"}],
+                "x_mitre_contributors": ["Someone"],
+            },
+            {
+                "type": "intrusion-set",
+                "id": "intrusion-set--a",
+                "name": "G1",
+                "x_mitre_contributors": ["Another"],
+                "aliases": ["G1", "Group"],
+            },
+            {"type": "intrusion-set", "id": "intrusion-set--a", "name": "repeated"},
+            {"type": "relationship", "id": "relationship--b", "relationship_type": "again"},
+            {"type": "attack-pattern", "id": "attack-pattern--d", "name": "T2"},
+        ],
+    }
+
+
+def test_attack_stix_view_orders_by_id_drops_contributor_names_and_keeps_the_nesting():
+    view, repeated = ev.attack_stix_view(_attack_bundle())
+    assert [r["id"] for r in view] == [
+        "attack-pattern--c",
+        "attack-pattern--d",
+        "intrusion-set--a",
+        "relationship--b",
+    ]
+    assert repeated == 2
+    assert view[0] == {
+        "type": "attack-pattern",
+        "id": "attack-pattern--c",
+        "name": "T1",
+        "kill_chain_phases": [{"kill_chain_name": "mitre-attack", "phase_name": "x"}],
+        "external_references": [{"source_name": "mitre-attack", "external_id": "T1"}],
+    }
+    assert view[2]["aliases"] == ["G1", "Group"] and view[2]["name"] == "G1"  # first one kept
+    assert "x_mitre_contributors" not in view[2]
+    with pytest.raises(ev.ViewError, match=r"^not a STIX bundle$"):
+        ev.attack_stix_view({"type": "indicator", "objects": []})
+    with pytest.raises(ev.ViewError, match=r"^not a STIX bundle$"):
+        ev.attack_stix_view({"type": "bundle"})
+
+
+def _attack_snapshot(root):
+    raw = root / "mitre_attack_enterprise_stix" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "enterprise-attack-20.1.json").write_text(json.dumps(_attack_bundle()))
+    (raw / "LICENSE.txt").write_text("The licence text\n")
+
+
+def test_attack_stix_builder_writes_jsonl_notice_and_manifest(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no ATT&CK STIX bundle or licence in the snapshot$"):
+        ev._build_attack_stix(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _attack_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_attack_stix(root, out, manifest)
+    ev._build_attack_stix(root, out, manifest)
+    folder = out / "mitre_attack_enterprise_stix"
+    lines = (folder / "objects.jsonl").read_text().splitlines()
+    assert [json.loads(line)["id"] for line in lines] == [
+        "attack-pattern--c",
+        "attack-pattern--d",
+        "intrusion-set--a",
+        "relationship--b",
+    ]
+    notice = (folder / "NOTICE.txt").read_text()
+    assert notice == ev.ATTACK_NOTICE + "\n\nThe licence text\n"
+    assert "The MITRE Corporation" in ev.ATTACK_NOTICE
+    entry = manifest["mitre_attack_enterprise_stix"]
+    assert entry["files"]["objects.jsonl"]["rows"] == 4
+    assert entry["dropped"] == ["x_mitre_contributors"] and entry["pseudonymised"] == []
+    assert entry["sampling"] == {
+        "method": "complete Enterprise STIX 2.1 bundle of ATT&CK release v20.1",
+        "release": "v20.1",
+        "repeated_ids": 2,
+        "object_types": {"attack-pattern": 2, "intrusion-set": 1, "relationship": 1},
+    }
+    assert entry["source_snapshot"] == f"mitre_attack_enterprise_stix/{ev.WAVE28_SNAPSHOT}"
+    (root / "mitre_attack_enterprise_stix" / ev.WAVE28_SNAPSHOT / "raw" / "LICENSE.txt").unlink()
+    with pytest.raises(ev.ViewError, match=r"^no ATT&CK STIX bundle or licence in the snapshot$"):
+        ev._build_attack_stix(root, tmp_path / "err2", {})  # the bundle alone is not enough
+
+
+def _eia_line(series_id, name, freq, data, units="Dollars per Barrel"):
+    return json.dumps(
+        {"series_id": series_id, "name": name, "units": units, "f": freq, "data": data}
+    )
+
+
+EIA_LINES = [
+    _eia_line(
+        "PET.RCLC1.D", "Cushing, OK Crude Oil Future Contract 1, Daily", "D", [["20200102", 1.0]]
+    ),  # fmt: skip
+    _eia_line("PET.RWTC.W", "Cushing, OK WTI Spot Price FOB, Weekly", "W", [["20200103", 9.0]]),
+    "",
+    json.dumps({"category_id": "1", "name": "not a series"}),
+    _eia_line(
+        "PET.RWTC.D",
+        "Cushing, OK WTI Spot Price FOB, Daily",
+        "D",
+        [["20200103", 63.0], ["20200102", 61.5], ["20200101", None], ["20200104", "NA"]],
+    ),  # fmt: skip
+    _eia_line(
+        "PET.RBRTE.D",
+        "Europe Brent Spot Price FOB, Daily",
+        "D",
+        [["20200103", 68.0], ["20200102", 66.0]],
+    ),  # fmt: skip
+]
+
+
+def test_eia_spot_view_keeps_daily_spot_series_only_and_aligns_on_the_date():
+    view = ev.eia_spot_view(EIA_LINES)
+    assert view.columns.tolist() == ["timestamp", "pet_rwtc_d", "pet_rbrte_d"]
+    assert view["timestamp"].tolist() == [
+        pd.Timestamp("2020-01-01"),
+        pd.Timestamp("2020-01-02"),
+        pd.Timestamp("2020-01-03"),
+        pd.Timestamp("2020-01-04"),
+    ]
+    assert pd.isna(view["pet_rwtc_d"].iloc[0]) and view["pet_rwtc_d"].iloc[2] == 63.0
+    assert pd.isna(view["pet_rwtc_d"].iloc[3])  # a text cell is a missing value
+    assert pd.isna(view["pet_rbrte_d"].iloc[0]) and view["pet_rbrte_d"].tolist()[1:3] == [
+        66.0,
+        68.0,
+    ]
+    with pytest.raises(ev.ViewError, match=r"^no daily spot price series in the EIA file$"):
+        ev.eia_spot_view([EIA_LINES[1]])
+
+
+def _eia_snapshot(root):
+    raw = root / "eia_petroleum_spot_prices" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with zipfile.ZipFile(raw / "PET.zip", "w") as z:
+        z.writestr("PET.txt", "\n".join(EIA_LINES) + "\n")
+    (raw / "copyrights_reuse.html").write_text("Public domain")
+
+
+def test_eia_builder_writes_the_wide_table_and_manifest(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no EIA petroleum bulk file in the snapshot$"):
+        ev._build_eia_spot(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _eia_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_eia_spot(root, out, manifest)
+    ev._build_eia_spot(root, out, manifest)
+    lines = (out / "eia_petroleum_spot_prices" / "spot_prices.csv").read_text().splitlines()
+    assert lines[0] == "timestamp,pet_rwtc_d,pet_rbrte_d"
+    assert lines[1] == "2020-01-01,,"
+    entry = manifest["eia_petroleum_spot_prices"]
+    assert entry["files"]["spot_prices.csv"]["rows"] == 4
+    assert entry["dropped"] == ["futures contracts", "weekly, monthly and annual series"]
+    assert entry["sampling"] == {
+        "method": "daily spot price series of the EIA petroleum bulk file, joined on the date",
+        "series": ["pet_rbrte_d", "pet_rwtc_d"],
+        "first_timestamp": "2020-01-01 00:00:00",
+        "last_timestamp": "2020-01-04 00:00:00",
+    }
+    assert entry["source_snapshot"] == f"eia_petroleum_spot_prices/{ev.WAVE28_SNAPSHOT}"
+
+
+HURDAT_TEXT = (
+    "AL011851,            UNNAMED,      3,\n"
+    "18510625, 0000,  , HU, 28.0N,  94.8W,  80, -999, -999, -999, -999, -999, -999, -999, "
+    "-999, -999, -999, -999, -999, -999,\n"
+    "18510625, 0600,  , HU, 28.0N,  95.4W,  80, -999, -999, -999, -999, -999, -999, -999, "
+    "-999, -999, -999, -999, -999, -999,\n"
+    "18510625, 1800, L, TS, 28.5S,   1.0E,  70,  990,   50,   60,   70,   80,   20,   30,   "
+    "40,   50,   10,   11,   12,   13,\n"
+    "AL021852,            ALPHA,      1,\n"
+    "18520822, 0000,  , TS, 27.0N,  95.0W,  50, 1000,    0,    0,    0,    0,    0,    0,    "
+    "0,    0,    0,    0,    0,    0,\n"
+)
+
+
+def test_hurdat2_view_parses_storm_blocks_signs_and_missing_codes():
+    view = ev.hurdat2_view(HURDAT_TEXT)
+    assert view.columns.tolist() == [
+        "storm_id", "storm_name", "timestamp", "record_identifier", "status", "latitude",
+        "longitude", "max_wind_kt", "min_pressure_mb",
+        "r34_ne_nmi", "r34_se_nmi", "r34_sw_nmi", "r34_nw_nmi",
+        "r50_ne_nmi", "r50_se_nmi", "r50_sw_nmi", "r50_nw_nmi",
+        "r64_ne_nmi", "r64_se_nmi", "r64_sw_nmi", "r64_nw_nmi",
+    ]  # fmt: skip
+    assert view["storm_id"].tolist() == ["AL011851"] * 3 + ["AL021852"]
+    assert view["storm_name"].tolist() == ["UNNAMED"] * 3 + ["ALPHA"]
+    assert view["timestamp"].tolist() == [
+        pd.Timestamp("1851-06-25 00:00"),
+        pd.Timestamp("1851-06-25 06:00"),
+        pd.Timestamp("1851-06-25 18:00"),
+        pd.Timestamp("1852-08-22 00:00"),
+    ]
+    assert view["record_identifier"].tolist() == ["", "", "L", ""]
+    assert view["status"].tolist() == ["HU", "HU", "TS", "TS"]
+    assert view["latitude"].tolist() == [28.0, 28.0, -28.5, 27.0]  # S is negative
+    assert view["longitude"].tolist() == [-94.8, -95.4, 1.0, -95.0]  # W negative, E positive
+    assert view["max_wind_kt"].tolist() == [80, 80, 70, 50]
+    assert pd.isna(view["min_pressure_mb"].iloc[0]) and view["min_pressure_mb"].iloc[2] == 990
+    assert pd.isna(view["r34_ne_nmi"].iloc[0]) and view["r34_ne_nmi"].iloc[2] == 50
+    assert view["r64_nw_nmi"].iloc[2] == 13 and view["r34_ne_nmi"].iloc[3] == 0
+
+
+def test_hurdat2_view_refuses_a_storm_with_a_different_number_of_records():
+    broken = HURDAT_TEXT.replace("UNNAMED,      3,", "UNNAMED,      4,")
+    with pytest.raises(ev.ViewError, match=r"^storm AL011851 declares 4 records but has 3$"):
+        ev.hurdat2_view(broken)
+    with pytest.raises(ev.ViewError, match=r"^no storm in the HURDAT2 file$"):
+        ev.hurdat2_view("\n")
+
+
+def _hurdat_snapshot(root):
+    raw = root / "nhc_hurdat2_atlantic" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "hurdat2-atlantic.txt").write_text(HURDAT_TEXT)
+
+
+def test_hurdat2_builder_writes_the_storm_event_view_and_manifest(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no HURDAT2 file in the snapshot$"):
+        ev._build_hurdat2(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _hurdat_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_hurdat2(root, out, manifest)
+    ev._build_hurdat2(root, out, manifest)
+    df = pd.read_csv(out / "nhc_hurdat2_atlantic" / "events.csv", keep_default_na=False)
+    assert df["storm_id"].tolist() == ["AL011851"] * 3 + ["AL021852"]
+    assert df["timestamp"].iloc[0] == "1851-06-25 00:00:00"
+    entry = manifest["nhc_hurdat2_atlantic"]
+    assert entry["files"]["events.csv"]["rows"] == 4
+    assert entry["dropped"] == [] and entry["pseudonymised"] == []
+    assert entry["sampling"] == {
+        "method": "complete HURDAT2 Atlantic best-track file, every storm and record",
+        "storms": 2,
+        "first_timestamp": "1851-06-25 00:00:00",
+        "last_timestamp": "1852-08-22 00:00:00",
+    }
+    assert entry["source_snapshot"] == f"nhc_hurdat2_atlantic/{ev.WAVE28_SNAPSHOT}"
+
+
+def _ipeds_tables():
+    def table(text):
+        return pd.read_csv(io.StringIO(text), dtype=str, keep_default_na=False)
+
+    return {
+        "hd": table(
+            "UNITID,INSTNM,IALIAS,ADDR,CITY,STABBR,ZIP,CHFNM,CHFTITLE,GENTELE,EIN,UEIS,WEBADDR,"
+            "ADMINURL,FAIDURL,APPLURL,NPRICURL,VETURL,ATHURL,DISAURL,F1SYSNAM,LONGITUD,LATITUDE,"
+            "SECTOR\n"
+            "1,Name A,,1 Rd,Town,NA,00001,Chief,Pres,555,E1,U1,w,a,f,p,n,v,t,d,Sys,1.5,2.5,1\n"
+            "2,Name B,,2 Rd,Town,CA,00002,Chief,Pres,556,E2,U2,w,a,f,p,n,v,t,d,Sys,1.6,2.6,2\n"
+        ),
+        "ic": table("UNITID,LEVEL1,TUITPL\n1,1,2\n2,1,\n9,0,0\n"),
+        "adm": table("UNITID,ADMCON1\n1,5\n"),
+        "effy": table(
+            "UNITID,EFFYALEV,EFFYLEV,EFYTOTLT\n1,1,1,10\n1,1,1,11\n1,2,2,5\n2,1,1,\n8,1,1,3\n"
+        ),
+        "c": table(
+            "UNITID,CIPCODE,MAJORNUM,AWLEVEL,CTOTALT\n"
+            "1,01.0101,1,5,4\n2,01.0101,1,5,3\n2,01.0101,1,5,2\n"
+        ),
+    }
+
+
+def test_ipeds_view_drops_names_and_contacts_and_reports_keys_without_repairing():
+    views, relations, facts = ev.ipeds_view(_ipeds_tables())
+    assert list(views) == ["hd", "ic", "adm", "effy", "c"]
+    assert views["hd"].columns.tolist() == ["UNITID", "STABBR", "SECTOR"]
+    assert views["hd"]["STABBR"].tolist() == ["NA", "CA"]  # the state code NA is a value
+    assert views["ic"].columns.tolist() == ["UNITID", "LEVEL1", "TUITPL"]
+    assert views["ic"]["UNITID"].tolist() == ["1", "2", "9"]  # the orphan row stays
+    assert views["effy"]["EFYTOTLT"].tolist() == ["10", "11", "5", "", "3"]
+    by_child = {r["child"]: r for r in relations}
+    assert [r["child"] for r in relations] == [
+        "ic.UNITID", "adm.UNITID", "effy.UNITID", "c.UNITID",
+    ]  # fmt: skip
+    assert all(r["parent"] == "hd.UNITID" for r in relations)
+    assert (by_child["ic.UNITID"]["checked"], by_child["ic.UNITID"]["orphans"]) == (3, 1)
+    assert by_child["adm.UNITID"]["orphans"] == 0 and by_child["c.UNITID"]["orphans"] == 0
+    assert (by_child["effy.UNITID"]["checked"], by_child["effy.UNITID"]["orphans"]) == (5, 1)
+    assert facts == {
+        "duplicate_keys": {"hd": 0, "ic": 0, "adm": 0, "effy": 1, "c": 1},
+        "institutions_without_child": {"ic": 0, "adm": 1, "effy": 0, "c": 0},
+    }
+
+
+def _ipeds_snapshot(root):
+    raw = root / "nces_ipeds_2023" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    members = {
+        "hd": ("HD2023.zip", "HD2023.csv"),
+        "ic": ("IC2023.zip", "IC2023_RV.csv"),
+        "adm": ("ADM2023.zip", "adm2023.csv"),
+        "effy": ("EFFY2023.zip", "EFFY2023_RV.csv"),
+        "c": ("C2023_A.zip", "C2023_a_RV.csv"),
+    }
+    for name, frame in _ipeds_tables().items():
+        archive, member = members[name]
+        body = ("\ufeff" + frame.to_csv(index=False)).encode("utf-8")
+        body = body.replace(b"Name A", b"Name \xe9")  # a latin-1 byte in a dropped name column
+        with zipfile.ZipFile(raw / archive, "w") as z:
+            z.writestr(member, body)
+            z.writestr(member.replace(".csv", "_other.csv"), "UNITID\nignored\n")
+
+
+def test_ipeds_builder_reads_the_revised_member_of_each_zip(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^missing IPEDS tables in the snapshot$"):
+        ev._build_ipeds(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _ipeds_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_ipeds(root, out, manifest)
+    ev._build_ipeds(root, out, manifest)
+    entry = manifest["nces_ipeds_2023"]
+    assert {n: f["rows"] for n, f in entry["files"].items()} == {
+        "hd.csv": 2, "ic.csv": 3, "adm.csv": 1, "effy.csv": 5, "c.csv": 3,
+    }  # fmt: skip
+    for name, frame in _ipeds_tables().items():
+        kept = [c for c in frame.columns if c not in ev.IPEDS_DROP.get(name, [])]
+        written = pd.read_csv(
+            out / "nces_ipeds_2023" / f"{name}.csv", dtype=str, keep_default_na=False
+        )
+        pd.testing.assert_frame_equal(written, frame[kept])  # text, blanks and NA stay as they were
+    header = (out / "nces_ipeds_2023" / "hd.csv").read_bytes()
+    assert header.startswith(b"UNITID,")  # the byte order mark of the source is not a column name
+    assert entry["dropped"] == ev.IPEDS_DROPPED and entry["pseudonymised"] == []
+    assert len(entry["relations"]) == 4
+    assert entry["sampling"]["method"] == (
+        "complete 2023 IPEDS institutional characteristics, admissions, enrolment and "
+        "completions tables (revised files where published)"
+    )
+    assert entry["sampling"]["duplicate_keys"]["effy"] == 1
+    assert entry["source_snapshot"] == f"nces_ipeds_2023/{ev.WAVE28_SNAPSHOT}"
+
+
+def _apis_guru_directory():
+    return {
+        "b.example": {
+            "added": "2020-01-01",
+            "preferred": "2.0",
+            "versions": {
+                "2.0": {
+                    "info": {
+                        "title": "B",
+                        "contact": {"email": "b@example.org", "name": "B Corp", "url": "https://b"},
+                        "x-apisguru-categories": ["cloud"],
+                    },
+                    "swaggerUrl": "https://b/swagger.json",
+                }
+            },
+        },
+        "a.example": {
+            "added": "2019-01-01",
+            "preferred": "1.0",
+            "versions": {"1.0": {"info": {"title": "A"}, "openapiVer": "3.0.0"}},
+        },
+    }
+
+
+def test_apis_guru_view_orders_by_api_and_drops_contacts_at_every_depth():
+    view = ev.apis_guru_view(_apis_guru_directory())
+    assert [r["api"] for r in view] == ["a.example", "b.example"]
+    assert view[0] == {
+        "api": "a.example",
+        "added": "2019-01-01",
+        "preferred": "1.0",
+        "versions": {"1.0": {"info": {"title": "A"}, "openapiVer": "3.0.0"}},
+    }
+    second = view[1]["versions"]["2.0"]
+    assert second["info"] == {"title": "B", "x-apisguru-categories": ["cloud"]}  # no contact
+    assert second["swaggerUrl"] == "https://b/swagger.json"
+    with pytest.raises(ev.ViewError, match=r"^not an API directory$"):
+        ev.apis_guru_view([])
+
+
+def _apis_guru_snapshot(root):
+    raw = root / "apis_guru_openapi_directory" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "list.json").write_text(json.dumps(_apis_guru_directory()))
+
+
+def test_apis_guru_builder_writes_jsonl_and_manifest(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no API directory in the snapshot$"):
+        ev._build_apis_guru(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _apis_guru_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_apis_guru(root, out, manifest)
+    ev._build_apis_guru(root, out, manifest)
+    lines = (out / "apis_guru_openapi_directory" / "apis.jsonl").read_text().splitlines()
+    assert [json.loads(line)["api"] for line in lines] == ["a.example", "b.example"]
+    entry = manifest["apis_guru_openapi_directory"]
+    assert entry["files"]["apis.jsonl"]["rows"] == 2
+    assert entry["dropped"] == ["contact"] and entry["pseudonymised"] == []
+    assert entry["sampling"] == {
+        "method": "complete APIs.guru directory list, one record per API",
+        "versions": 2,
+    }
+    assert entry["source_snapshot"] == f"apis_guru_openapi_directory/{ev.WAVE28_SNAPSHOT}"
+
+
+def _zenodo_hit(record_id, **extra):
+    return {
+        "id": record_id,
+        "created": "2023-03-01",
+        "metadata": {
+            "title": f"T{record_id}",
+            "description": "free text",
+            "creators": [{"name": "Person", "orcid": "0000"}],
+            "license": {"id": "cc-by-4.0"},
+            "relations": {"version": [{"index": 0, "is_last": True}]},
+        },
+        "files": [{"key": "a.csv", "size": 3, "checksum": "md5:x", "links": {"self": "u"}}],
+        "links": {"self": "u"},
+        "owners": [{"id": 1}],
+        **extra,
+    }
+
+
+def _zenodo_pages():
+    return [
+        {"hits": {"total": 3, "hits": [_zenodo_hit(5), _zenodo_hit(2, swh={"x": 1})]}},
+        {"hits": {"total": 3, "hits": [_zenodo_hit(5), _zenodo_hit(9), _zenodo_hit(9)]}},
+    ]
+
+
+def test_zenodo_records_view_dedupes_orders_and_drops_people_text_and_links():
+    view, repeated = ev.zenodo_records_view(_zenodo_pages())
+    assert [r["id"] for r in view] == [2, 5, 9]
+    assert repeated == 2
+    assert view[0] == {
+        "id": 2,
+        "created": "2023-03-01",
+        "metadata": {
+            "title": "T2",
+            "license": {"id": "cc-by-4.0"},
+            "relations": {"version": [{"index": 0, "is_last": True}]},
+        },
+        "files": [{"key": "a.csv", "size": 3, "checksum": "md5:x"}],
+    }
+    with pytest.raises(ev.ViewError, match=r"^no Zenodo record page$"):
+        ev.zenodo_records_view([{"nothing": 1}])
+
+
+def _zenodo_snapshot(root):
+    raw = root / "zenodo_dataset_records_2023_03" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    for n, page in zip((2, 10), _zenodo_pages(), strict=True):  # 10 sorts after 2 only numerically
+        (raw / f"records_{n}.json").write_text(json.dumps(page))
+
+
+def test_zenodo_builder_writes_jsonl_and_manifest(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Zenodo record page in the snapshot$"):
+        ev._build_zenodo_records(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _zenodo_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_zenodo_records(root, out, manifest)
+    ev._build_zenodo_records(root, out, manifest)
+    lines = (out / "zenodo_dataset_records_2023_03" / "records.jsonl").read_text().splitlines()
+    assert [json.loads(line)["id"] for line in lines] == [2, 5, 9]
+    entry = manifest["zenodo_dataset_records_2023_03"]
+    assert entry["files"]["records.jsonl"]["rows"] == 3
+    assert entry["dropped"] == sorted(ev.ZENODO_DROP) and entry["pseudonymised"] == []
+    assert entry["sampling"] == {
+        "method": "dataset records published in March 2023, sorted by recency, paged by 25",
+        "pages": ["records_2.json", "records_10.json"],
+        "total_results": [3, 3],
+        "repeated_ids": 2,
+    }
+    assert entry["source_snapshot"] == f"zenodo_dataset_records_2023_03/{ev.WAVE28_SNAPSHOT}"
+
+
+LIFECYCLE_SPEC = {
+    "label": "demo dispatch",
+    "file": "demo.csv",
+    "case": "id",
+    "type": "kind",
+    "activities": {"t_create": "created", "t_arrive": "arrived", "t_close": "closed"},
+    "method": "demo method",
+}
+LIFECYCLE_RAW = (
+    "id,kind,t_create,t_arrive,t_close\n"
+    "B2,fire,2023-01-01T10:00:00.000,2023-01-01T10:05:00.000,2023-01-01T10:30:00.000\n"
+    "A1,,2023-01-01T09:00:00.000,,2023-01-01T09:00:00.000\n"
+    "A1,,2023-01-01T09:00:00.000,not a time,\n"
+    "C3,aid,,,\n"
+)
+
+
+def test_lifecycle_events_view_melts_timestamps_into_ordered_events_and_hashes_the_case():
+    raw = pd.read_csv(io.StringIO(LIFECYCLE_RAW), dtype=str, keep_default_na=False)
+    view, facts = ev.lifecycle_events_view(raw, LIFECYCLE_SPEC)
+    assert view.columns.tolist() == ["case", "activity", "timestamp", "type"]
+    assert view["case"].tolist() == [ev.pseudonym(c) for c in ["A1"] * 3 + ["B2"] * 3]
+    assert view["activity"].tolist() == [
+        "created", "created", "closed", "created", "arrived", "closed",
+    ]  # fmt: skip
+    assert view["timestamp"].iloc[3] == pd.Timestamp("2023-01-01 10:00:00")
+    assert view["type"].isna().tolist()[:3] == [True, True, True] and view["type"].iloc[3] == "fire"
+    assert facts == {
+        "rows": 4,
+        "cases": 2,
+        "events": 6,
+        "unusable_timestamps": {"created": 1, "arrived": 3, "closed": 2},
+    }
+    only_tie = pd.DataFrame(
+        {"id": ["Z"], "kind": ["x"], "t_create": ["2023-01-01"], "t_arrive": ["2023-01-01"],
+         "t_close": ["2023-01-01"]}
+    )  # fmt: skip
+    tied, _ = ev.lifecycle_events_view(only_tie, LIFECYCLE_SPEC)
+    assert tied["activity"].tolist() == ["created", "arrived", "closed"]  # tie keeps spec order
+
+
+def _lifecycle_snapshot_one(root, view):
+    spec = ev.LIFECYCLE_STREAMS[view]
+    raw = root / view / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    columns = [spec["case"], spec["type"], *spec["activities"]]
+    rows = [
+        ["007", "NA", *["2023-01-01T00:00:00.000"] * len(spec["activities"])],
+        ["008", "", *["2023-01-02T00:00:00.000"] * len(spec["activities"])],
+    ]
+    (raw / spec["file"]).write_text(pd.DataFrame(rows, columns=columns).to_csv(index=False))
+
+
+def _lifecycle_snapshot(root):
+    for view in ev.LIFECYCLE_STREAMS:
+        _lifecycle_snapshot_one(root, view)
+
+
+@pytest.mark.parametrize("view", sorted(ev.LIFECYCLE_STREAMS))
+def test_lifecycle_builder_writes_the_event_view_and_manifest(view, tmp_path):
+    spec = ev.LIFECYCLE_STREAMS[view]
+    step = ev.LIFECYCLE_STEPS[list(ev.LIFECYCLE_STREAMS).index(view)]
+    with pytest.raises(ev.ViewError, match=rf"^no {spec['label']} file in the snapshot$"):
+        step(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _lifecycle_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    step(root, out, manifest)
+    step(root, out, manifest)
+    n = len(spec["activities"])
+    df = pd.read_csv(out / view / "events.csv", keep_default_na=False)
+    assert len(df) == 2 * n and df["activity"].iloc[:n].tolist() == list(
+        spec["activities"].values()
+    )
+    assert df["case"].iloc[0] == ev.pseudonym("007")  # the identifier keeps its leading zeros
+    assert df["type"].iloc[0] == "NA" and df["type"].iloc[n] == ""  # NA is a value
+    entry = manifest[view]
+    assert entry["files"]["events.csv"]["rows"] == 2 * n
+    assert entry["dropped"] == spec["dropped"] and entry["pseudonymised"] == [spec["case"]]
+    assert entry["salt_label"] == ev.SALT
+    assert entry["sampling"]["method"] == spec["method"]
+    assert entry["sampling"]["cases"] == 2 and entry["sampling"]["events"] == 2 * n
+    assert entry["sampling"]["first_timestamp"] == "2023-01-01 00:00:00"
+    assert entry["sampling"]["last_timestamp"] == "2023-01-02 00:00:00"
+    assert entry["source_snapshot"] == f"{view}/{ev.WAVE28_SNAPSHOT}"
+
+
+def _fec_tables():
+    def table(text):
+        return pd.read_csv(
+            io.StringIO(text), sep="|", dtype=str, keep_default_na=False, quoting=csv.QUOTE_NONE
+        )
+
+    return {
+        "cn": table(
+            "CAND_ID|CAND_NAME|CAND_PTY_AFFILIATION|CAND_ELECTION_YR|CAND_OFFICE|CAND_ST1|CAND_ZIP\n"
+            "H1|DOE, JANE|NA|2024|H|1 Rd|00001\nS2|ROE, RICHARD|REP|2024|S|2 Rd|00002\n"
+        ),
+        "cm": table(
+            "CMTE_ID|CMTE_NM|TRES_NM|CMTE_ST1|CMTE_CITY|CMTE_ZIP|CMTE_TP|CAND_ID\n"
+            'C1|"PAC ONE|TREAS, A|3 Rd|Town|1|Q|\nC2|PAC TWO|TREAS, B|4 Rd|Town|2|H|H1\n'
+            "C3|PAC THREE|TREAS, C|5 Rd|Town|3|H|X9\n"
+        ),
+        "ccl": table(
+            "CAND_ID|CAND_ELECTION_YR|FEC_ELECTION_YR|CMTE_ID|CMTE_TP|CMTE_DSGN|LINKAGE_ID\n"
+            "H1|2024|2024|C2|H|P|10\nH1|2024|2024|C2|H|P|11\nS2|2024|2024|C9|S|P|12\n"
+        ),
+        "pas2": table(
+            "CMTE_ID|TRANSACTION_TP|NAME|CITY|STATE|ZIP_CODE|EMPLOYER|OCCUPATION|MEMO_TEXT|"
+            "TRANSACTION_DT|TRANSACTION_AMT|OTHER_ID|CAND_ID|SUB_ID\n"
+            "C1|24K|X PAC|Town|TX|1|||note|01012024|500|C2|H1|7\n"
+            "C1|24K|Y|Town|TX|1|||note|01022024|||S2|8\n"
+            "C7|24K|Z|Town|TX|1|||note|01032024|100|C8|H5|8\n"
+        ),
+    }
+
+
+def test_fec_view_drops_names_addresses_and_free_text_and_reports_every_key_fact():
+    views, relations, facts = ev.fec_view(_fec_tables())
+    assert list(views) == ["cn", "cm", "ccl", "pas2"]
+    assert views["cn"].columns.tolist() == [
+        "CAND_ID", "CAND_PTY_AFFILIATION", "CAND_ELECTION_YR", "CAND_OFFICE",
+    ]  # fmt: skip
+    assert views["cn"]["CAND_PTY_AFFILIATION"].tolist() == ["NA", "REP"]  # NA is a value
+    assert views["cm"].columns.tolist() == ["CMTE_ID", "CMTE_TP", "CAND_ID"]
+    assert views["ccl"].columns.tolist() == _fec_tables()["ccl"].columns.tolist()
+    assert views["pas2"].columns.tolist() == [
+        "CMTE_ID", "TRANSACTION_TP", "TRANSACTION_DT", "TRANSACTION_AMT", "OTHER_ID", "CAND_ID",
+        "SUB_ID",
+    ]  # fmt: skip
+    got = {(r["child"], r["parent"]): (r["checked"], r["orphans"]) for r in relations}
+    assert got == {
+        ("cm.CAND_ID", "cn.CAND_ID"): (2, 1),
+        ("ccl.CAND_ID", "cn.CAND_ID"): (3, 0),
+        ("ccl.CMTE_ID", "cm.CMTE_ID"): (3, 1),
+        ("pas2.CMTE_ID", "cm.CMTE_ID"): (3, 1),
+        ("pas2.OTHER_ID", "cm.CMTE_ID"): (2, 1),
+        ("pas2.CAND_ID", "cn.CAND_ID"): (3, 1),
+    }
+    assert facts == {"duplicate_keys": {"cn": 0, "cm": 0, "ccl": 1, "pas2": 1}}
+
+
+def _fec_snapshot(root):
+    raw = root / "fec_federal_campaign_finance_2024" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    members = {"cn": "cn.txt", "cm": "cm.txt", "ccl": "ccl.txt", "pas2": "itpas2.txt"}
+    for name, frame in _fec_tables().items():
+        with zipfile.ZipFile(raw / ev.FEC_ARCHIVES[name], "w") as z:
+            body = frame.to_csv(sep="|", index=False, header=False, quoting=csv.QUOTE_NONE)
+            z.writestr(members[name], body)
+        (raw / f"{name}_header_file.csv").write_text(",".join(frame.columns) + "\n")
+
+
+def test_fec_builder_applies_the_published_headers_to_the_headerless_files(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^missing FEC tables in the snapshot$"):
+        ev._build_fec(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _fec_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_fec(root, out, manifest)
+    ev._build_fec(root, out, manifest)
+    entry = manifest["fec_federal_campaign_finance_2024"]
+    assert {n: f["rows"] for n, f in entry["files"].items()} == {
+        "cn.csv": 2, "cm.csv": 3, "ccl.csv": 3, "pas2.csv": 3,
+    }  # fmt: skip
+    for name, frame in _fec_tables().items():
+        kept = [c for c in frame.columns if c not in ev.FEC_DROP.get(name, [])]
+        written = pd.read_csv(
+            out / "fec_federal_campaign_finance_2024" / f"{name}.csv",
+            dtype=str,
+            keep_default_na=False,
+        )
+        pd.testing.assert_frame_equal(written, frame[kept])  # text, blanks and NA stay as they were
+    assert entry["dropped"] == ev.FEC_DROPPED and entry["pseudonymised"] == []
+    assert len(entry["relations"]) == 6
+    assert entry["sampling"]["method"] == (
+        "complete 2023-2024 cycle candidate, committee, linkage and committee-to-candidate "
+        "contribution files"
+    )
+    assert entry["sampling"]["duplicate_keys"]["ccl"] == 1
+    assert entry["source_snapshot"] == f"fec_federal_campaign_finance_2024/{ev.WAVE28_SNAPSHOT}"
+
+
+def _reactome_tables():
+    def table(text, names):
+        return pd.read_csv(
+            io.StringIO(text),
+            sep="\t",
+            header=None,
+            names=names,
+            dtype=str,
+            keep_default_na=False,
+            quoting=csv.QUOTE_NONE,
+        )
+
+    return {
+        "pathways": table(
+            'R-A-1\tPathway "one", first; part\tHomo sapiens\nR-A-2\tPathway two\tNA\n',
+            ["pathway_id", "pathway_name", "species"],
+        ),
+        "relations": table(
+            "R-A-1\tR-A-2\nR-A-1\tR-A-9\nR-A-1\tR-A-2\n",
+            ["parent_id", "child_id"],
+        ),
+        "uniprot": table(
+            "P1\tR-A-1\thttps://x/R-A-1\tPathway one\tIEA\tHomo sapiens\n"
+            "P1\tR-A-7\thttps://x/R-A-7\tGone\tTAS\tHomo sapiens\n"
+            "P1\tR-A-1\thttps://x/R-A-1\tPathway one\tTAS\tHomo sapiens\n"
+            "007\tR-A-2\thttps://x/R-A-2\tPathway two\tTAS\tNA\n",
+            ["uniprot_id", "pathway_id", "url", "pathway_name", "evidence", "species"],
+        ),
+        "chebi": table(
+            "01\tR-A-2\thttps://x/R-A-2\tPathway two\tTAS\tNA\n",
+            ["chebi_id", "pathway_id", "url", "pathway_name", "evidence", "species"],
+        ),
+    }
+
+
+def test_reactome_view_drops_links_and_reports_hierarchy_and_mapping_keys():
+    views, relations, facts = ev.reactome_view(_reactome_tables())
+    assert list(views) == ["pathways", "relations", "uniprot", "chebi"]
+    assert views["uniprot"].columns.tolist() == [
+        "uniprot_id", "pathway_id", "pathway_name", "evidence", "species",
+    ]  # fmt: skip
+    assert views["chebi"].columns.tolist() == [
+        "chebi_id", "pathway_id", "pathway_name", "evidence", "species",
+    ]  # fmt: skip
+    assert views["pathways"].columns.tolist() == ["pathway_id", "pathway_name", "species"]
+    got = {(r["child"], r["parent"]): (r["checked"], r["orphans"]) for r in relations}
+    assert got == {
+        ("relations.parent_id", "pathways.pathway_id"): (3, 0),
+        ("relations.child_id", "pathways.pathway_id"): (3, 1),
+        ("uniprot.pathway_id", "pathways.pathway_id"): (4, 1),
+        ("chebi.pathway_id", "pathways.pathway_id"): (1, 0),
+    }
+    assert facts == {
+        "duplicate_keys": {"pathways": 0, "relations": 1, "uniprot": 1, "chebi": 0},
+        "pathways_without_relation": 0,
+    }
+
+
+def _reactome_snapshot(root):
+    raw = root / "reactome_pathway_knowledgebase" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    for name, frame in _reactome_tables().items():
+        (raw / ev.REACTOME_FILES[name]).write_text(
+            frame.to_csv(sep="\t", index=False, header=False, quoting=csv.QUOTE_NONE)
+        )
+    (raw / "reactome_version.txt").write_text("98\n")
+
+
+def test_reactome_builder_reads_headerless_files_and_records_the_release(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^missing Reactome files in the snapshot$"):
+        ev._build_reactome(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _reactome_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_reactome(root, out, manifest)
+    ev._build_reactome(root, out, manifest)
+    entry = manifest["reactome_pathway_knowledgebase"]
+    assert {n: f["rows"] for n, f in entry["files"].items()} == {
+        "pathways.csv": 2, "relations.csv": 3, "uniprot.csv": 4, "chebi.csv": 1,
+    }  # fmt: skip
+    for name, frame in _reactome_tables().items():
+        kept = [c for c in frame.columns if c != "url"]
+        written = pd.read_csv(
+            out / "reactome_pathway_knowledgebase" / f"{name}.csv",
+            dtype=str,
+            keep_default_na=False,
+        )
+        pd.testing.assert_frame_equal(written, frame[kept])  # text, NA and quotes stay as they were
+    assert entry["dropped"] == ["uniprot.url", "chebi.url"] and entry["pseudonymised"] == []
+    assert len(entry["relations"]) == 4
+    assert entry["sampling"]["method"] == (
+        "complete Reactome current release files: pathways, pathway hierarchy, UniProt and "
+        "ChEBI mappings"
+    )
+    assert entry["sampling"]["release"] == "98"
+    assert entry["sampling"]["duplicate_keys"]["relations"] == 1
+    assert entry["source_snapshot"] == f"reactome_pathway_knowledgebase/{ev.WAVE28_SNAPSHOT}"
+
+
+NESTED_SPEC = {
+    "label": "demo nested",
+    "glob": "demo_*.json",
+    "path": ["outer", "items"],
+    "id": ["meta", "uid"],
+    "drop": ["secret"],
+    "method": "demo method",
+}
+
+
+def _nested_page(*uids, secret="s"):
+    items = [
+        {"meta": {"uid": u, "secret": secret}, "tags": [{"k": u, "secret": secret}]} for u in uids
+    ]
+    return {"outer": {"items": items}}
+
+
+def test_nested_pages_view_follows_the_path_dedupes_orders_and_drops_keys_at_every_depth():
+    view, repeated = ev.nested_pages_view([_nested_page(5, 2, 2), _nested_page(2, 9)], NESTED_SPEC)
+    assert [r["meta"]["uid"] for r in view] == [2, 5, 9]
+    assert repeated == 2
+    assert view[0] == {"meta": {"uid": 2}, "tags": [{"k": 2}]}
+    top = ev.nested_pages_view([[{"id": 1}, {"id": 0}]], {"path": [], "id": ["id"], "drop": []})
+    assert top == ([{"id": 0}, {"id": 1}], 0)
+    with pytest.raises(ev.ViewError, match=r"^no records at outer/items$"):
+        ev.nested_pages_view([{"outer": {}}], NESTED_SPEC)
+
+
+def _nested_record(spec, uid):
+    record: dict = {}
+    cursor = record
+    for key in spec["id"][:-1]:
+        cursor[key] = {}
+        cursor = cursor[key]
+    cursor[spec["id"][-1]] = uid
+    record.update({"zeta": 1, "alpha": [{"b": 1, "a": 2}]})  # keys out of order on purpose
+    record.update({key: "drop me" for key in spec["drop"]})
+    return record
+
+
+def _nested_page_for(spec, *uids):
+    page: object = [_nested_record(spec, uid) for uid in uids]
+    for key in reversed(spec["path"]):
+        page = {key: page}
+    return page
+
+
+def _nested_snapshot_one(root, view):
+    spec = ev.NESTED_SOURCES[view]
+    raw = root / view / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    for n, uids in ((2, (3, 1, 1)), (10, (1, 2))):  # page 10 sorts after 2 only numerically
+        name = spec["glob"].replace("*", str(n))
+        (raw / name).write_text(json.dumps(_nested_page_for(spec, *uids)))
+
+
+def _nested_snapshots(root):
+    for view in ev.NESTED_SOURCES:
+        _nested_snapshot_one(root, view)
+
+
+@pytest.mark.parametrize("view", sorted(ev.NESTED_SOURCES))
+def test_nested_builder_writes_jsonl_and_manifest(view, tmp_path):
+    spec = ev.NESTED_SOURCES[view]
+    step = ev.NESTED_STEPS[list(ev.NESTED_SOURCES).index(view)]
+    with pytest.raises(ev.ViewError, match=rf"^no {spec['label']} page in the snapshot$"):
+        step(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _nested_snapshot_one(root, view)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    step(root, out, manifest)
+    step(root, out, manifest)
+    lines = (out / view / "records.jsonl").read_text().splitlines()
+    assert len(lines) == 3
+    assert "drop me" not in "".join(lines)
+    parsed = [json.loads(line) for line in lines]
+    assert [ev._path_get(r, spec["id"]) for r in parsed] == [1, 2, 3]
+    for key in spec["drop"]:
+        assert all(key not in r for r in parsed)
+    assert lines[0].index('"alpha": [{"a": 2, "b": 1}]') < lines[0].index('"zeta"')  # sorted keys
+    expected = [ev._path_get(_nested_record(spec, uid), spec["id"]) for uid in (1, 2, 3)]
+    parsed = [json.loads(line) for line in lines]
+    assert [ev._path_get(r, spec["id"]) for r in parsed] == expected
+    for key in spec["drop"]:
+        assert all(key not in r for r in parsed)
+    assert lines[0].index('"alpha": [{"a": 2, "b": 1}]') < lines[0].index('"zeta"')  # sorted keys
+    entry = manifest[view]
+    assert entry["files"]["records.jsonl"]["rows"] == 3
+    assert entry["dropped"] == sorted(spec["drop"]) and entry["pseudonymised"] == []
+    assert entry["sampling"] == {
+        "method": spec["method"],
+        "pages": [spec["glob"].replace("*", "2"), spec["glob"].replace("*", "10")],
+        "repeated_ids": 2,
+    }
+    assert entry["source_snapshot"] == f"{view}/{ev.WAVE28_SNAPSHOT}"
+
+
+GO_OBO = """format-version: 1.2
+data-version: releases/2026-07-26
+ontology: go
+
+[Term]
+id: GO:0000001
+name: root process: the first
+namespace: biological_process
+
+[Term]
+id: GO:0000002
+name: child process
+namespace: biological_process
+is_a: GO:0000001 ! root process
+relationship: part_of GO:0000001 ! root process
+relationship: regulates GO:0000009 ! missing parent
+alt_id: GO:0000099
+
+[Term]
+id: GO:0000003
+name: old thing
+namespace: cellular_component
+is_obsolete: true
+
+[Term]
+id: GO:0000004
+
+[Typedef]
+id: part_of
+name: part of
+"""
+GO_GAF = (
+    "!gaf-version: 2.2\n"
+    "!go-version: http://x/releases/2026-07-26/go.owl\n"
+    "UniProtKB\tP1\tSYM1\t\tGO:0000002\tPMID:1\tIDA\t\tP\tName one\tSyn\tprotein\ttaxon:9606"
+    "\t20240101\tUniProt\t\t\n"
+    "UniProtKB\tP1\tSYM1\tenables\tGO:0000099\tPMID:2\tIEA\tX\tF\tName one\tSyn\tprotein"
+    "\ttaxon:9606\t20240102\tUniProt\tpart_of(GO:1)\t\n"
+    "UniProtKB\tP1\tSYM1\t\tGO:0000002\tPMID:1\tIDA\t\tP\tName one\tSyn\tprotein\ttaxon:9606"
+    "\t20240101\tUniProt\t\t\n"
+)
+
+
+def test_go_view_parses_terms_relations_and_annotations_and_reports_keys():
+    views, relations, facts = ev.go_view(GO_OBO, GO_GAF)
+    assert list(views) == ["terms", "relations", "annotations"]
+    assert views["terms"].to_dict("list") == {
+        "id": ["GO:0000001", "GO:0000002", "GO:0000003", "GO:0000004"],
+        "name": ["root process: the first", "child process", "old thing", ""],
+        "namespace": ["biological_process", "biological_process", "cellular_component", ""],
+        "is_obsolete": ["false", "false", "true", "false"],
+    }
+    assert views["relations"].to_dict("list") == {
+        "child_id": ["GO:0000002", "GO:0000002", "GO:0000002"],
+        "parent_id": ["GO:0000001", "GO:0000001", "GO:0000009"],
+        "relation": ["is_a", "part_of", "regulates"],
+    }
+    assert views["annotations"].columns.tolist() == [
+        "db", "db_object_id", "symbol", "qualifier", "go_id", "reference", "evidence_code",
+        "with_from", "aspect", "object_type", "taxon", "date", "assigned_by",
+        "annotation_extension", "gene_product_form_id",
+    ]  # fmt: skip
+    assert views["annotations"]["with_from"].tolist() == ["", "X", ""]
+    got = {(r["child"], r["parent"]): (r["checked"], r["orphans"]) for r in relations}
+    assert got == {
+        ("relations.child_id", "terms.id"): (3, 0),
+        ("relations.parent_id", "terms.id"): (3, 1),
+        ("annotations.go_id", "terms.id"): (3, 1),  # an alternative id is not a term id
+    }
+    assert facts == {
+        "gaf_go_version": "http://x/releases/2026-07-26/go.owl",
+        "ontology_release": "releases/2026-07-26",
+        "duplicate_annotation_rows": 1,
+    }
+    bare_gaf = "\t".join(["x"] * 17) + "\n"
+    _, _, bare = ev.go_view("[Term]\nid: GO:1\n", bare_gaf)
+    assert bare == {"ontology_release": "", "gaf_go_version": "", "duplicate_annotation_rows": 0}
+    colon = GO_GAF.replace("go.owl", "go.owl: tail")
+    assert (
+        ev.go_view(GO_OBO, colon)[2]["gaf_go_version"]
+        == "http://x/releases/2026-07-26/go.owl: tail"
+    )
+    with pytest.raises(ev.ViewError, match=r"^no GO term in the ontology file$"):
+        ev.go_view("format-version: 1.2\n", GO_GAF)
+    with pytest.raises(ev.ViewError, match=r"^no annotation in the GAF file$"):
+        ev.go_view(GO_OBO, "!gaf-version: 2.2\n")
+
+
+def _go_snapshot(root):
+    import gzip
+
+    raw = root / "gene_ontology_annotations" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "go-basic.obo").write_text(GO_OBO)
+    with gzip.open(raw / "goa_human.gaf.gz", "wt") as handle:
+        handle.write(GO_GAF)
+    (raw / "go_citation_policy.html").write_text("CC BY 4.0")
+
+
+def test_go_builder_writes_three_tables_and_records_both_releases(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^missing Gene Ontology files in the snapshot$"):
+        ev._build_go(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _go_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_go(root, out, manifest)
+    ev._build_go(root, out, manifest)
+    entry = manifest["gene_ontology_annotations"]
+    assert {n: f["rows"] for n, f in entry["files"].items()} == {
+        "terms.csv": 4, "relations.csv": 3, "annotations.csv": 3,
+    }  # fmt: skip
+    folder = out / "gene_ontology_annotations"
+    for name, columns in {
+        "terms": ["id", "name", "namespace", "is_obsolete"],
+        "relations": ["child_id", "parent_id", "relation"],
+    }.items():
+        written = pd.read_csv(folder / f"{name}.csv", dtype=str, keep_default_na=False)
+        assert written.columns.tolist() == columns
+    annotations = pd.read_csv(folder / "annotations.csv", dtype=str, keep_default_na=False)
+    assert annotations.columns.tolist() == ev.GO_SPEC["tables"]["annotations"]["keep"]
+    assert annotations["with_from"].tolist() == ["", "X", ""]
+    for hidden in ("obo", "gaf"):  # one file alone is not enough
+        gone = root / "gene_ontology_annotations" / ev.WAVE28_SNAPSHOT / "raw"
+        gone = gone / ("go-basic.obo" if hidden == "obo" else "goa_human.gaf.gz")
+        keep = gone.read_bytes()
+        gone.unlink()
+        with pytest.raises(ev.ViewError, match=r"^missing Gene Ontology files in the snapshot$"):
+            ev._build_go(root, tmp_path / "err", {})
+        gone.write_bytes(keep)
+    assert entry["dropped"] == ["annotations.object_name", "annotations.synonym"]
+    assert entry["pseudonymised"] == [] and len(entry["relations"]) == 3
+    assert entry["sampling"]["method"] == (
+        "complete go-basic ontology and the UniProt human GAF annotation file"
+    )
+    assert entry["sampling"]["ontology_release"] == "releases/2026-07-26"
+    assert entry["source_snapshot"] == f"gene_ontology_annotations/{ev.WAVE28_SNAPSHOT}"
+    notice = (out / "gene_ontology_annotations" / "NOTICE.txt").read_text()
+    assert notice == ev.GO_NOTICE + "\n"
+
+
+CPC_AO = "year,month,day,ao_index_cdas\n1950,1,2,-1.5\n1950,1,1,-2.25\n1950,2,30,0.5\n1950,1,3,\n"
+
+
+def test_cpc_ao_view_builds_dates_sorts_and_drops_impossible_days():
+    view, invalid = ev.cpc_ao_view(CPC_AO)
+    assert view.columns.tolist() == ["timestamp", "ao_index_cdas"]
+    assert view["timestamp"].tolist() == [
+        pd.Timestamp("1950-01-01"),
+        pd.Timestamp("1950-01-02"),
+        pd.Timestamp("1950-01-03"),
+    ]
+    assert view["ao_index_cdas"].iloc[:2].tolist() == [-2.25, -1.5]
+    assert pd.isna(view["ao_index_cdas"].iloc[2])  # a blank value is a missing day, not a drop
+    assert invalid == 1  # 30 February
+    with pytest.raises(ev.ViewError, match=r"^not a CPC daily AO index file$"):
+        ev.cpc_ao_view("year,month,day\n1950,1,1\n")
+
+
+def _cpc_ao_snapshot(root):
+    raw = root / "noaa_cpc_daily_ao_index" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "ao_daily.csv").write_text(CPC_AO)
+    (raw / "nws_disclaimer.html").write_text("public domain")
+
+
+def test_cpc_ao_builder_writes_the_series_and_manifest(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no CPC AO index file in the snapshot$"):
+        ev._build_cpc_ao(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _cpc_ao_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_cpc_ao(root, out, manifest)
+    ev._build_cpc_ao(root, out, manifest)
+    lines = (out / "noaa_cpc_daily_ao_index" / "ao_index.csv").read_text().splitlines()
+    assert lines == [
+        "timestamp,ao_index_cdas",
+        "1950-01-01,-2.25",
+        "1950-01-02,-1.5",
+        "1950-01-03,",
+    ]
+    entry = manifest["noaa_cpc_daily_ao_index"]
+    assert entry["files"]["ao_index.csv"]["rows"] == 3
+    assert entry["dropped"] == [] and entry["pseudonymised"] == []
+    assert entry["sampling"] == {
+        "method": "complete daily Arctic Oscillation index file, impossible dates removed",
+        "first_timestamp": "1950-01-01 00:00:00",
+        "last_timestamp": "1950-01-03 00:00:00",
+        "impossible_dates_dropped": 1,
+        "missing_values": 1,
+    }
+    assert entry["source_snapshot"] == f"noaa_cpc_daily_ao_index/{ev.WAVE28_SNAPSHOT}"
+
+
+def _zip_with(names):
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w") as z:
+        for name in names:
+            z.writestr(name, "UNITID\n1\n")
+    return zipfile.ZipFile(buffer)
+
+
+def test_ipeds_member_prefers_the_first_revised_file_and_otherwise_the_shortest_csv():
+    assert ev._ipeds_member(_zip_with(["IC2023.csv", "IC2023_RV.csv"])) == "IC2023_RV.csv"
+    assert ev._ipeds_member(_zip_with(["a_rv.CSV", "b_rv.csv", "a.csv"])) == "a_rv.CSV"  # first
+    assert ev._ipeds_member(_zip_with(["README.txt", "Longer_name.csv", "A.CSV"])) == "A.CSV"
+    assert ev._ipeds_member(_zip_with(["notes_rv.txt", "x.csv", "x.csv.bak"])) == "x.csv"
+    assert (
+        ev._ipeds_member(_zip_with(["A_long_name.csv", "Z.csv"])) == "Z.csv"
+    )  # shortest, not first
+
+
+def test_hurdat_coordinate_signs_follow_the_hemisphere_letter():
+    assert ev._hurdat_coordinate("28.5N") == 28.5
+    assert ev._hurdat_coordinate("28.5S") == -28.5
+    assert ev._hurdat_coordinate("94.8W") == -94.8
+    assert ev._hurdat_coordinate("94.8E") == 94.8
+    assert ev._hurdat_coordinate("0.1W") == -0.1 and ev._hurdat_coordinate("10.0E") == 10.0
+
+
+def test_hurdat2_view_treats_minus_99_and_minus_999_as_missing_and_keeps_zero():
+    text = (
+        "AL011851,            UNNAMED,      2,\n"
+        "18510625, 0000,  , HU, 28.0N,  94.8W,  -99, -98,    0, -999, -999, -999, -999, -999, "
+        "-999, -999, -999, -999, -999, -999,\n"
+        "18510625, 0600,  , HU, 28.0N,  95.4W,  80, 990, -100, -999, -999, -999, -999, -999, "
+        "-999, -999, -999, -999, -999, -999,\n"
+    )
+    view = ev.hurdat2_view(text)
+    assert pd.isna(view["max_wind_kt"].iloc[0]) and view["min_pressure_mb"].iloc[0] == -98.0
+    assert view["r34_ne_nmi"].iloc[0] == 0.0 and pd.isna(view["r34_se_nmi"].iloc[0])
+    assert view["max_wind_kt"].iloc[1] == 80.0 and pd.isna(view["r34_ne_nmi"].iloc[1])

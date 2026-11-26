@@ -1,0 +1,17 @@
+{
+ "end": "2013-10-13 23:55:00+00:00",
+ "excluded": "0 anomalies in the test partition (at least 20)",
+ "features": [
+  "value",
+  "diff",
+  "deviation",
+  "spread"
+ ],
+ "file_in_time_order": true,
+ "group": "nab_aws",
+ "id": "nab/realAWSCloudwatch/iio_us-east-1_i-a2eb1cd9_NetworkIn",
+ "rows": 1219,
+ "rows_dropped": 24,
+ "source": "nab",
+ "start": "2013-10-09 18:25:00+00:00"
+}

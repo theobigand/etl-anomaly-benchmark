@@ -1,0 +1,338 @@
+{
+ "errors": {},
+ "features": 57,
+ "metrics": {
+  "copod": [
+   {
+    "f1": 0.4,
+    "flagged_pct": 8.333333333333332,
+    "pr_auc": 1.0,
+    "precision": 0.25,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 4.166666666666666,
+    "pr_auc": 0.021739130434782608,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.04255319148936165
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 4.166666666666666,
+    "pr_auc": 1.0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   }
+  ],
+  "ecod": [
+   {
+    "f1": 0.3333333333333333,
+    "flagged_pct": 10.416666666666668,
+    "pr_auc": 1.0,
+    "precision": 0.2,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 2.083333333333333,
+    "pr_auc": 0.022222222222222223,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.06382978723404253
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 4.166666666666666,
+    "pr_auc": 1.0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   }
+  ],
+  "great_expectations": [
+   {
+    "f1": 0.16666666666666666,
+    "flagged_pct": 22.916666666666664,
+    "pr_auc": 0.3333333333333333,
+    "precision": 0.09090909090909091,
+    "recall": 1.0,
+    "roc_auc": 0.9787234042553192
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 22.916666666666664,
+    "pr_auc": 0.020833333333333332,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3829787234042553
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 16.666666666666664,
+    "pr_auc": 0.020833333333333332,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4148936170212766
+   }
+  ],
+  "hbos": [
+   {
+    "f1": 0.5,
+    "flagged_pct": 6.25,
+    "pr_auc": 0.5,
+    "precision": 0.3333333333333333,
+    "recall": 1.0,
+    "roc_auc": 0.9787234042553191
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 4.166666666666666,
+    "pr_auc": 0.022727272727272728,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.08510638297872342
+   },
+   {
+    "f1": 0.5,
+    "flagged_pct": 6.25,
+    "pr_auc": 0.5,
+    "precision": 0.3333333333333333,
+    "recall": 1.0,
+    "roc_auc": 0.9787234042553191
+   }
+  ],
+  "iqr": [
+   {
+    "f1": 0.05263157894736842,
+    "flagged_pct": 77.08333333333334,
+    "pr_auc": 0.16666666666666666,
+    "precision": 0.02702702702702703,
+    "recall": 1.0,
+    "roc_auc": 0.8936170212765957
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 68.75,
+    "pr_auc": 0.020833333333333332,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.14893617021276595
+   },
+   {
+    "f1": 0.05555555555555555,
+    "flagged_pct": 72.91666666666666,
+    "pr_auc": 0.125,
+    "precision": 0.02857142857142857,
+    "recall": 1.0,
+    "roc_auc": 0.851063829787234
+   }
+  ],
+  "isolation_forest": [
+   {
+    "f1": 0.3333333333333333,
+    "flagged_pct": 10.416666666666668,
+    "pr_auc": 0.3333333333333333,
+    "precision": 0.2,
+    "recall": 1.0,
+    "roc_auc": 0.9574468085106383
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 2.083333333333333,
+    "pr_auc": 0.023809523809523808,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.12765957446808507
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 4.166666666666666,
+    "pr_auc": 1.0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   }
+  ],
+  "knn": [
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 4.166666666666666,
+    "pr_auc": 1.0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.25,
+    "pr_auc": 0.024390243902439025,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.14893617021276595
+   },
+   {
+    "f1": 1.0,
+    "flagged_pct": 2.083333333333333,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   }
+  ],
+  "lof": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 1.0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 4.166666666666666,
+    "pr_auc": 0.03125,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.34042553191489366
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 1.0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 1.0
+   }
+  ],
+  "ocsvm": [
+   {
+    "f1": 0.5,
+    "flagged_pct": 6.25,
+    "pr_auc": 1.0,
+    "precision": 0.3333333333333333,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.25,
+    "pr_auc": 0.025,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.17021276595744683
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 4.166666666666666,
+    "pr_auc": 1.0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   }
+  ],
+  "pca": [
+   {
+    "f1": 0.13333333333333333,
+    "flagged_pct": 29.166666666666668,
+    "pr_auc": 0.25,
+    "precision": 0.07142857142857142,
+    "recall": 1.0,
+    "roc_auc": 0.9361702127659575
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 12.5,
+    "pr_auc": 0.023255813953488372,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.1063829787234043
+   },
+   {
+    "f1": 0.3333333333333333,
+    "flagged_pct": 10.416666666666668,
+    "pr_auc": 1.0,
+    "precision": 0.2,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   }
+  ],
+  "zscore": [
+   {
+    "f1": 0.125,
+    "flagged_pct": 31.25,
+    "pr_auc": 0.5,
+    "precision": 0.06666666666666667,
+    "recall": 1.0,
+    "roc_auc": 0.9893617021276595
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 47.91666666666667,
+    "pr_auc": 0.025,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.18085106382978727
+   },
+   {
+    "f1": 0.13333333333333333,
+    "flagged_pct": 29.166666666666668,
+    "pr_auc": 0.5,
+    "precision": 0.07142857142857142,
+    "recall": 1.0,
+    "roc_auc": 0.9787234042553191
+   }
+  ]
+ },
+ "name": "Cylinder Bands",
+ "prevalence": 0.018867924528301886,
+ "problem": "uci:32",
+ "report": {
+  "anomalies": 6,
+  "anomaly_class": "band",
+  "conflicting_rows_removed": 0,
+  "dropped_constant": [
+   "cylinder division"
+  ],
+  "dropped_high_cardinality": [
+   "cylinder number",
+   "customer"
+  ],
+  "dropped_missing": [],
+  "duplicates_removed": 0,
+  "encoded": [
+   "grain screened",
+   "ink color",
+   "proof on ctd ink",
+   "blade mfg",
+   "paper type",
+   "ink type",
+   "direct steam",
+   "solvent type",
+   "type on cylinder",
+   "press type",
+   "cylinder size",
+   "paper mill location"
+  ],
+  "features_out": 57,
+  "kind": "downsampled",
+  "natural_rate": 0.42115027829313545,
+  "rows": 318,
+  "rows_in": 318,
+  "rows_out": 318,
+  "rule": "R1"
+ },
+ "rows": 318,
+ "rule": "R1",
+ "seeds": [
+  42,
+  1,
+  2
+ ],
+ "skipped": []
+}

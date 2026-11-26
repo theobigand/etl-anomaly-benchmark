@@ -1,0 +1,41 @@
+{
+ "available_after_exposure": 42,
+ "clusters": 46,
+ "eligible_groups": 47,
+ "exposed": [
+  "airquality_italy",
+  "candanedo_umons",
+  "seoul_bike",
+  "steel_korea",
+  "tetouan_power"
+ ],
+ "factors": {
+  "curator": {
+   "largest": 13,
+   "largest_level": "zenodo",
+   "levels": 27,
+   "singletons": 23
+  },
+  "domain": {
+   "largest": 3,
+   "largest_level": "wind energy generation",
+   "levels": 44,
+   "singletons": 42
+  },
+  "schema_family": {
+   "largest": 6,
+   "largest_level": "uci time series",
+   "levels": 41,
+   "singletons": 39
+  }
+ },
+ "per_category": {
+  "C1": 1,
+  "C2a": 6,
+  "C2b": 8,
+  "C3": 21,
+  "C4": 5,
+  "C5": 6,
+  "C6": 0
+ }
+}

@@ -1,0 +1,58 @@
+{
+ "uci:172": {
+  "column": "Date",
+  "distinct": 2536,
+  "file_in_time_order": false,
+  "parsed_share": 1.0,
+  "span_days": 2556.0,
+  "verified": true
+ },
+ "uci:352": {
+  "column": "InvoiceDate",
+  "distinct": 23260,
+  "file_in_time_order": true,
+  "parsed_share": 1.0,
+  "span_days": 373.0,
+  "verified": true
+ },
+ "uci:488": {
+  "column": "status_published",
+  "distinct": 6913,
+  "file_in_time_order": false,
+  "parsed_share": 1.0,
+  "span_days": 2158.0,
+  "verified": true
+ },
+ "uci:492": {
+  "column": "date_time",
+  "distinct": 40575,
+  "file_in_time_order": true,
+  "parsed_share": 1.0,
+  "span_days": 2189.0,
+  "verified": true
+ },
+ "uci:536": {
+  "column": "timestamp",
+  "distinct": 318,
+  "file_in_time_order": false,
+  "parsed_share": 1.0,
+  "span_days": 0.0,
+  "verified": false
+ },
+ "uci:755": {
+  "column": "timestamp",
+  "distinct": 60,
+  "file_in_time_order": false,
+  "parsed_share": 1.0,
+  "span_days": 0.0,
+  "verified": false
+ },
+ "uci:760": {
+  "column": "time",
+  "distinct": 101,
+  "file_in_time_order": false,
+  "parsed_share": 1.0,
+  "span_days": 0.0,
+  "verified": false
+ }
+}

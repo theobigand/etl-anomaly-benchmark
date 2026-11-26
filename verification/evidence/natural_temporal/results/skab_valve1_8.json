@@ -1,0 +1,21 @@
+{
+ "end": "2020-03-09 13:14:37+00:00",
+ "excluded": "0 anomalies in the test partition (at least 20)",
+ "features": [
+  "Accelerometer1RMS",
+  "Accelerometer2RMS",
+  "Current",
+  "Pressure",
+  "Temperature",
+  "Thermocouple",
+  "Voltage",
+  "Volume Flow RateRMS"
+ ],
+ "file_in_time_order": true,
+ "group": "skab",
+ "id": "skab/valve1/8",
+ "rows": 1144,
+ "rows_dropped": 0,
+ "source": "skab",
+ "start": "2020-03-09 12:54:39+00:00"
+}

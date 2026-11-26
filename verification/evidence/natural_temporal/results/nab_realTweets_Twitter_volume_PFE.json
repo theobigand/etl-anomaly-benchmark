@@ -1,0 +1,17 @@
+{
+ "end": "2015-04-22 23:07:53+00:00",
+ "excluded": "0 anomalies in the test partition (at least 20)",
+ "features": [
+  "value",
+  "diff",
+  "deviation",
+  "spread"
+ ],
+ "file_in_time_order": true,
+ "group": "nab_tweets",
+ "id": "nab/realTweets/Twitter_volume_PFE",
+ "rows": 15834,
+ "rows_dropped": 24,
+ "source": "nab",
+ "start": "2015-02-26 23:42:53+00:00"
+}

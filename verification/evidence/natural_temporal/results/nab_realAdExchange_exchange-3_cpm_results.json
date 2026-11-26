@@ -1,0 +1,17 @@
+{
+ "end": "2011-09-07 14:15:01+00:00",
+ "excluded": "0 anomalies in the test partition (at least 20)",
+ "features": [
+  "value",
+  "diff",
+  "deviation",
+  "spread"
+ ],
+ "file_in_time_order": true,
+ "group": "nab_adexchange",
+ "id": "nab/realAdExchange/exchange-3_cpm_results",
+ "rows": 1514,
+ "rows_dropped": 24,
+ "source": "nab",
+ "start": "2011-07-02 00:15:01+00:00"
+}

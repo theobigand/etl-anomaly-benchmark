@@ -1,0 +1,3585 @@
+{
+ "candidates": [
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "clinicaltrials_v2",
+   "licence": "terms read in an archived copy: free use with conditions",
+   "name": "ClinicalTrials.gov study records (2023 starts)",
+   "next_step": "none",
+   "notes": "",
+   "publisher": "US National Library of Medicine",
+   "reason": "depth 12, 336+ paths, about 90 percent optional",
+   "size": null,
+   "source_url": "https://clinicaltrials.gov/data-api/api",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "crossref_works",
+   "licence": "Crossref REST API open metadata ('almost none of the metadata is subject to copyright, and you may use it for any purpose'; abstracts omitted)",
+   "name": "Crossref works (random sample)",
+   "next_step": "none",
+   "notes": "literal REST API rights text verified 2026-11-22; 0 abstract keys confirmed in raw snapshot and view",
+   "publisher": "Crossref",
+   "reason": "depth 6 nested; references leave the sample",
+   "size": null,
+   "source_url": "https://api.crossref.org/works",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "uci:357",
+   "licence": "CC BY 4.0 on the UCI page",
+   "name": "UCI time-series table",
+   "next_step": "none",
+   "notes": "",
+   "publisher": "UCI repository donors",
+   "reason": "time column verified, exact format view",
+   "size": null,
+   "source_url": "",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "uci:360",
+   "licence": "CC BY 4.0 on the UCI page",
+   "name": "UCI time-series table",
+   "next_step": "none",
+   "notes": "",
+   "publisher": "UCI repository donors",
+   "reason": "time column verified, exact format view",
+   "size": null,
+   "source_url": "",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "uci:374",
+   "licence": "CC BY 4.0 on the UCI page",
+   "name": "UCI time-series table",
+   "next_step": "none",
+   "notes": "",
+   "publisher": "UCI repository donors",
+   "reason": "time column verified, exact format view",
+   "size": null,
+   "source_url": "",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "uci:560",
+   "licence": "CC BY 4.0 on the UCI page",
+   "name": "UCI time-series table",
+   "next_step": "none",
+   "notes": "",
+   "publisher": "UCI repository donors",
+   "reason": "time column verified, exact format view",
+   "size": null,
+   "source_url": "",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "uci:799",
+   "licence": "CC BY 4.0 on the UCI page",
+   "name": "UCI time-series table",
+   "next_step": "none",
+   "notes": "",
+   "publisher": "UCI repository donors",
+   "reason": "time column verified, exact format view",
+   "size": null,
+   "source_url": "",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "uci:849",
+   "licence": "CC BY 4.0 on the UCI page",
+   "name": "UCI time-series table",
+   "next_step": "none",
+   "notes": "",
+   "publisher": "UCI repository donors",
+   "reason": "time column verified, exact format view",
+   "size": null,
+   "source_url": "",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "uci:851",
+   "licence": "CC BY 4.0 on the UCI page",
+   "name": "UCI time-series table",
+   "next_step": "none",
+   "notes": "",
+   "publisher": "UCI repository donors",
+   "reason": "time column verified, exact format view",
+   "size": null,
+   "source_url": "",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "uci:172",
+   "licence": "CC BY 4.0 (UCI page)",
+   "name": "Ozone Level Detection",
+   "next_step": "split by the Dataset column into separate series",
+   "notes": "",
+   "publisher": "UCI",
+   "reason": "several series share one file (repeated timestamps)",
+   "size": null,
+   "source_url": "",
+   "status": "structurally_unsuitable"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "uci:492",
+   "licence": "CC BY 4.0 (UCI page)",
+   "name": "Metro Interstate Traffic Volume",
+   "next_step": "aggregate per hour with a documented rule",
+   "notes": "",
+   "publisher": "UCI",
+   "reason": "repeated timestamps per hour",
+   "size": null,
+   "source_url": "",
+   "status": "structurally_unsuitable"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "uci:275",
+   "licence": "CC BY 4.0 (UCI page)",
+   "name": "Bike Sharing (Capital Bikeshare 2011-12)",
+   "next_step": "keep only if grouped with lyft_bikeshare",
+   "notes": "",
+   "publisher": "UCI / Capital Bikeshare",
+   "reason": "same operator as the Lyft trips already counted",
+   "size": null,
+   "source_url": "",
+   "status": "redundant"
+  },
+  {
+   "categories": [
+    "C3",
+    "C4"
+   ],
+   "id": "zenodo:14564935",
+   "licence": "cc-by-4.0 (Zenodo record)",
+   "name": "DataCenter-Traces-Datasets (VM CPU readings)",
+   "next_step": "keep as derived views only if the originals are acquired under their own terms",
+   "notes": "aggregated 300 s views of the Alibaba 2018, Google 2019 and Azure traces; the lineage is the original traces, so it is not a new generating system; no event continuity",
+   "publisher": "Zenodo depositor",
+   "reason": "small (1 MB) data-centre VM telemetry",
+   "size": null,
+   "source_url": "",
+   "status": "derived_aggregates"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:24396501",
+   "licence": "cc-by-4.0 (Zenodo record by the institute)",
+   "name": "Notaufnahmesurveillance (emergency departments)",
+   "next_step": "acquire with the other RKI surveillance series as one family",
+   "notes": "panel view; group rki_surveillance",
+   "publisher": "Robert Koch-Institut",
+   "reason": "German public-health surveillance series (29 MB); one publisher",
+   "size": null,
+   "source_url": "",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:24388435",
+   "licence": "cc-by-4.0",
+   "name": "COVID-19 hospitalisations in Germany",
+   "next_step": "same family as the other RKI series",
+   "notes": "panel view; same group as 24396501",
+   "publisher": "Robert Koch-Institut",
+   "reason": "RKI daily series",
+   "size": null,
+   "source_url": "",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:12697471",
+   "licence": "cc-by-4.0",
+   "name": "COVID-19 vaccinations in Germany",
+   "next_step": "same family",
+   "notes": "",
+   "publisher": "Robert Koch-Institut",
+   "reason": "RKI daily series",
+   "size": null,
+   "source_url": "",
+   "status": "accessible_eligible"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:24397792",
+   "licence": "cc-by-4.0",
+   "name": "Intensive-care capacity register",
+   "next_step": "check producer independence",
+   "notes": "",
+   "publisher": "RKI / DIVI",
+   "reason": "hospital reporting register, another producer inside the RKI deposit",
+   "size": null,
+   "source_url": "",
+   "status": "accessible_eligible"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:820576",
+   "licence": "cc-by-4.0",
+   "name": "Automotive sensor data (AEGIS)",
+   "next_step": "inspect structure",
+   "notes": "OBD view only (relative time, no positions or dates); single driver and vehicle",
+   "publisher": "AEGIS Big Data Project",
+   "reason": "37 MB vehicle sensor series",
+   "size": null,
+   "source_url": "",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:7766691",
+   "licence": "cc-by-4.0",
+   "name": "MetroPT2 predictive maintenance (metro compressor sensors)",
+   "next_step": "range or chunked read of a bounded window",
+   "notes": "range prefix of 60 MiB; GPS dropped; first 4.5 days",
+   "publisher": "Porto metro researchers",
+   "reason": "2.8 GB CSV",
+   "size": null,
+   "source_url": "",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:7224854",
+   "licence": "cc-by-4.0 (Zenodo)",
+   "name": "ENTSO-E PECD in Parquet",
+   "next_step": "add an optional parquet dependency only if justified",
+   "notes": "Parquet reader now available. Files are 32 to 390 MB; the record repackages ENTSO-E ERAA inputs, so the ENTSO-E and Copernicus terms must be read at the publishers before any acquisition",
+   "publisher": "ENTSO-E",
+   "reason": "2.9 GB parquet; upstream terms to read",
+   "size": null,
+   "source_url": "",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C3",
+    "C2b"
+   ],
+   "id": "zenodo:6647220",
+   "licence": "cc-by-4.0",
+   "name": "NYC telematics with asynchronous sampling",
+   "next_step": "inspect structure and provenance",
+   "notes": "acquired; headerless OBD and GPS lines with undocumented columns; blocked on documentation",
+   "publisher": "Zenodo depositors",
+   "reason": "vehicle telemetry (25 MB)",
+   "size": null,
+   "source_url": "",
+   "status": "accessible_privacy_review"
+  },
+  {
+   "categories": [
+    "C2b",
+    "C3"
+   ],
+   "id": "zenodo:6723265",
+   "licence": "cc-by-4.0 (Zenodo)",
+   "name": "Bristol ANPR data",
+   "next_step": "privacy review before any acquisition",
+   "notes": "",
+   "publisher": "Bristol City Council",
+   "reason": "933 MB plate-recognition events; personal data risk (vehicle identifiers)",
+   "size": null,
+   "source_url": "",
+   "status": "accessible_privacy_review"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "zenodo:19691950",
+   "licence": "cc-by-4.0",
+   "name": "Global Transnational Mobility Dataset 2.0",
+   "next_step": "bounded extraction",
+   "notes": "Global Transnational Mobility (migration flows), not transactions; not processed",
+   "publisher": "Zenodo authors",
+   "reason": "trip records (279 MB)",
+   "size": null,
+   "source_url": "",
+   "status": "accessible_eligible"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "zenodo:16947276",
+   "licence": "odc-odbl",
+   "name": "Idling positions and trips of shared mobility vehicles",
+   "next_step": "parquet reader decision",
+   "notes": "Parquet reader available. Scraped provider positions of Munich shared vehicles (ODbL by the authors): provider terms unread and idling positions are location data; blocked on rights and privacy, no acquisition",
+   "publisher": "Zenodo authors",
+   "reason": "706 MB parquet",
+   "size": null,
+   "source_url": "",
+   "status": "accessible_privacy_review"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "zenodo:3549604",
+   "licence": "cc-by-4.0",
+   "name": "Multi-source distributed system data for AI analytics",
+   "next_step": "check whether real or generated",
+   "notes": "Nedelkoski et al. multi-source distributed-system data: an instrumented OpenStack test bed with injected faults, not production; kept as complementary testbed evidence only",
+   "publisher": "Zenodo authors",
+   "reason": "650 MB logs and traces of a testbed",
+   "size": null,
+   "source_url": "",
+   "status": "synthetic_testbed"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "zenodo:7119953",
+   "licence": "cc-by-4.0",
+   "name": "CLUE cloud user-entity behaviour logs",
+   "next_step": "check real or synthetic",
+   "notes": "real user events (AIT); 40 MiB zip prefix read with deflate prefix decoding; view built (1M events, pseudonymised); blocked on the operator's permission statement",
+   "publisher": "Zenodo authors",
+   "reason": "635 MB Azure AD style logs",
+   "size": null,
+   "source_url": "",
+   "status": "acquired_rights_pending"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "zenodo:8263181",
+   "licence": "cc-by-4.0",
+   "name": "AIT Alert Data Set",
+   "next_step": "keep as simulated complement, outside natural counts",
+   "notes": "",
+   "publisher": "Austrian Institute of Technology",
+   "reason": "simulated attacks on a testbed, labelled",
+   "size": null,
+   "source_url": "",
+   "status": "synthetic_testbed"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "zenodo:3746129",
+   "licence": "cc-by-4.0",
+   "name": "Traffic and log data from a cyber defence exercise",
+   "next_step": "keep outside natural counts",
+   "notes": "",
+   "publisher": "CSIRT Masaryk University",
+   "reason": "exercise traffic, not production",
+   "size": null,
+   "source_url": "",
+   "status": "synthetic_exercise"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "zenodo:10462796",
+   "licence": "cc-by-4.0",
+   "name": "ROAD CAN intrusion dataset",
+   "next_step": "keep as injected-attack complement",
+   "notes": "",
+   "publisher": "ORNL",
+   "reason": "real car traffic with staged attacks",
+   "size": null,
+   "source_url": "",
+   "status": "synthetic_attacks"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "zenodo:7108614",
+   "licence": "cc-by-4.0",
+   "name": "IEC 60870-5-104 intrusion detection dataset",
+   "next_step": "outside natural counts",
+   "notes": "",
+   "publisher": "University of Western Macedonia",
+   "reason": "testbed traffic 1 GB",
+   "size": null,
+   "source_url": "",
+   "status": "synthetic_testbed"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "zenodo:3369582",
+   "licence": "cc-by-4.0",
+   "name": "3PFL patents and publications with public-funding linkage",
+   "next_step": "acquire, measure foreign keys",
+   "notes": "C5 via seven federal tables; PATSTAT-derived patent table excluded; orphans measured",
+   "publisher": "Zenodo authors",
+   "reason": "multi-table CSV (38 MB), procurement links; relation completeness unknown",
+   "size": null,
+   "source_url": "",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "zenodo:24274793",
+   "licence": "CC0 stated by the PBDB data service; cc-by-4.0 on the Zenodo archive record",
+   "name": "Paleobiology Database denormalised tables",
+   "next_step": "none",
+   "notes": "occurrence table sampled one in ten; the taxon table is downloaded and could support a C5 view of the same provenance group",
+   "publisher": "PBDB",
+   "reason": "736 MB; denormalised tables are not native relations",
+   "size": null,
+   "source_url": "",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C5",
+    "C6"
+   ],
+   "id": "zenodo:7788422",
+   "licence": "cc-by-4.0",
+   "name": "Swiss Dwellings",
+   "next_step": "inspect structure",
+   "notes": "zip central directory read by range: geometries.csv 1.1 GB and simulations.csv 1.6 GB are single wide tables keyed by hierarchy ids; locations.csv (5.5 MB) and location_ratings.csv are the only separate tables; no multi-table relational structure worth C5; not acquired",
+   "publisher": "EPFL authors",
+   "reason": "932 MB apartment models with relations",
+   "size": null,
+   "source_url": "",
+   "status": "structurally_unsuitable"
+  },
+  {
+   "categories": [
+    "C6",
+    "C4"
+   ],
+   "id": "zenodo:3758705",
+   "licence": "cc-by-3.0",
+   "name": "BPMAI process model collection",
+   "next_step": "sample, then structure check",
+   "notes": "",
+   "publisher": "BPM Academic Initiative",
+   "reason": "388 MB of XML and JSON process models",
+   "size": null,
+   "source_url": "",
+   "status": "needs_bounded_extraction"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "zenodo:7118517",
+   "licence": "cc-by-4.0",
+   "name": "PURE public requirements documents",
+   "next_step": "structure check; text-heavy",
+   "notes": "acquired; PDF requirements documents, not data records",
+   "publisher": "Zenodo authors",
+   "reason": "XML documents of public requirements (34 MB)",
+   "size": null,
+   "source_url": "",
+   "status": "structurally_unsuitable"
+  },
+  {
+   "categories": [
+    "C2b",
+    "C4"
+   ],
+   "id": "zenodo:18668107",
+   "licence": "cc-by-4.0",
+   "name": "CC-IN2P3 SLURM jobs",
+   "next_step": "taxonomy review: C4-like operational events, kept in C2b until decided",
+   "notes": "",
+   "publisher": "CC-IN2P3",
+   "reason": "counted in C2b; operational job events",
+   "size": null,
+   "source_url": "",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3",
+    "C4"
+   ],
+   "id": "zenodo:13625495",
+   "licence": "cc-by-4.0",
+   "name": "SURF Lisa HPC traces",
+   "next_step": "parquet reader decision",
+   "notes": "job table only (C4 operational events, like CC-IN2P3); Prometheus archives (7 and 10 GB) not fetched; view is a one-in-8 file-order sample",
+   "publisher": "SURF",
+   "reason": "SLURM table 16 MB parquet; monitoring 10 GB",
+   "size": null,
+   "source_url": "",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4",
+    "C2b"
+   ],
+   "id": "zenodo:11467483",
+   "licence": "cc-by-4.0",
+   "name": "F-DATA Fugaku job dataset",
+   "next_step": "one month, parquet",
+   "notes": "one monthly file (2021-04) of 37; job records, C4 operational events",
+   "publisher": "RIKEN-related authors",
+   "reason": "27 GB parquet",
+   "size": null,
+   "source_url": "",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "ncei:ghcn-daily",
+   "licence": "US Government data; the readme states conditions to be read",
+   "name": "GHCN-Daily station files",
+   "next_step": "read the NCEI use statement literally; choose stations as one family",
+   "notes": "README asks for citation only; no licence statement located at the publisher in this session; not acquired",
+   "publisher": "NOAA NCEI",
+   "reason": "one network aggregating many national services; stations are not independent families",
+   "size": null,
+   "source_url": "",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "opsd:time_series",
+   "licence": "CC BY 4.0 for the package; upstream ENTSO-E and others",
+   "name": "Open Power System Data time series",
+   "next_step": "read the ENTSO-E transparency terms",
+   "notes": "",
+   "publisher": "OPSD (compiler)",
+   "reason": "compiler's licence does not replace upstream terms",
+   "size": null,
+   "source_url": "",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "google:clusterdata2019",
+   "licence": "CC BY 4.0 (README of google/cluster-data)",
+   "name": "Google ClusterData2019 (Borg cells a to h)",
+   "next_step": "add Range-bounded reads or a parquet reader",
+   "notes": "range prefix acquired (206); prefix holds 284 of 299716 collections with two events, so no event sequences",
+   "publisher": "Google",
+   "reason": "json.gz shards are 60 to 465 MB; a parquet shard of 11 MB needs a parquet reader",
+   "size": null,
+   "source_url": "",
+   "status": "structurally_unsuitable"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "pwa:logs",
+   "licence": "free for researchers, cite the archive (archive page)",
+   "name": "Parallel Workloads Archive (30 job logs from different sites)",
+   "next_step": "retry politely later with one request per minute; per-log terms to read; each site is a separate machine",
+   "notes": "",
+   "publisher": "Feitelson / HUJI curator; original sites",
+   "reason": "the host's web firewall blocked automated requests after a burst; not bypassed",
+   "size": null,
+   "source_url": "",
+   "status": "temporarily_inaccessible"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "chicago:taxi-trips-2024",
+   "licence": "portal licence field reads 'See Terms of Use'",
+   "name": "Chicago taxi trips 2024",
+   "next_step": "read the City of Chicago data terms literally",
+   "notes": "terms read literally on 2026-11-21: no licence grant and a user indemnification clause; portal licence field 'See Terms of Use'; not acquired",
+   "publisher": "City of Chicago",
+   "reason": "real trip events with fares and tips",
+   "size": null,
+   "source_url": "https://data.cityofchicago.org/api/views/ajtu-isnz.json",
+   "status": "unclear"
+  },
+  {
+   "categories": [
+    "C5",
+    "C6"
+   ],
+   "id": "openlibrary:dumps",
+   "licence": "public domain and CC0 stated in the Open Library FAQ",
+   "name": "Open Library data dumps",
+   "next_step": "stream the first part of a dump and record the cut",
+   "notes": "C6 only (editions nested records). C5 not supported: key-text order makes prefixes of the three dumps cover unrelated ranges (12 of 192930 editions have a fully resolved work)",
+   "publisher": "Internet Archive",
+   "reason": "multi-GB dumps; works, authors, editions relations",
+   "size": null,
+   "source_url": "",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "clinicaltrials:aact",
+   "licence": "requires registration; separate terms",
+   "name": "AACT relational database of ClinicalTrials.gov",
+   "next_step": "read AACT terms; same provenance family as clinicaltrials_gov",
+   "notes": "",
+   "publisher": "CTTI",
+   "reason": "relational view of the same registry as ClinicalTrials.gov",
+   "size": null,
+   "source_url": "",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C2b",
+    "C6"
+   ],
+   "id": "tenderned:ocds",
+   "licence": "no licence stated at the publisher",
+   "name": "TenderNed OCDS",
+   "next_step": "write to the publisher or find a licence statement",
+   "notes": "",
+   "publisher": "TenderNed",
+   "reason": "public availability is not permission",
+   "size": null,
+   "source_url": "",
+   "status": "unclear"
+  },
+  {
+   "categories": [
+    "C2b",
+    "C6"
+   ],
+   "id": "usaspending:contracts",
+   "licence": "public domain by law",
+   "name": "USAspending contract archives",
+   "next_step": "decide on a trust-store option, never disable verification",
+   "notes": "",
+   "publisher": "US Treasury",
+   "reason": "archive host chain does not verify with the Python trust store",
+   "size": null,
+   "source_url": "",
+   "status": "blocked_tls"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "nyc:tlc",
+   "licence": "NYC Open Data: Local Law 11 of 2012 (no registration, licence requirement or usage restriction); portal Terms of Use (source, version and modification identified on republication; no warranty); read 2026-11-22",
+   "name": "NYC TLC trip records",
+   "next_step": "none; green taxi and other months would be the same provenance group",
+   "notes": "acquired through the NYC Open Data SODA API (dataset 4b4i-vvec) because the TLC page denies automated access; TLC-specific extra terms cannot be excluded and are recorded; fetched with TLS verification against the macOS system root store (the Python certificate bundle lacks the GlobalSign R46 root)",
+   "publisher": "NYC TLC",
+   "reason": "403 to automated requests",
+   "size": null,
+   "source_url": "",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2b",
+    "C5"
+   ],
+   "id": "kaggle:olist",
+   "licence": "CC BY-NC-SA 4.0 per a secondary source",
+   "name": "Olist Brazilian e-commerce orders",
+   "next_step": "read the Kaggle terms with an authorised account, if the owner allows",
+   "notes": "",
+   "publisher": "Olist via Kaggle",
+   "reason": "login required",
+   "size": null,
+   "source_url": "",
+   "status": "authentication_required"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "relbench:upstreams",
+   "licence": "tooling Apache-2.0; each database has its own upstream terms",
+   "name": "RelBench upstream databases",
+   "next_step": "read Kaggle, Stack Exchange, Ergast and AACT terms",
+   "notes": "",
+   "publisher": "Stanford and upstream owners",
+   "reason": "per-database terms unread",
+   "size": null,
+   "source_url": "",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "ctu:relational",
+   "licence": "no licence on the about page",
+   "name": "CTU Prague relational repository",
+   "next_step": "ask the maintainers or read each database's origin",
+   "notes": "2026-11-22: the CTU catalogue (and the ReDeLEx copies used by RelBench v2) republish databases whose origins differ; no licence statement for the collection; each database needs its own origin check. Not investigated further this round.",
+   "publisher": "CTU Prague",
+   "reason": "148 databases, rights unclear",
+   "size": null,
+   "source_url": "",
+   "status": "unclear"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "monash:12-families",
+   "licence": "compiler CC BY 4.0; upstream mostly unread",
+   "name": "Remaining Monash families",
+   "next_step": "read each upstream publisher",
+   "notes": "",
+   "publisher": "Monash compilation and originals",
+   "reason": "AEMO, Saugeen, US births unresolved; KDD Cup, NN5, Tourism not read",
+   "size": null,
+   "source_url": "",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "4tu:bpic12",
+   "licence": "4TU terms of use state CC0 unless another licence is given",
+   "name": "BPI Challenge 2012",
+   "next_step": "none",
+   "notes": "found by identifier on 4TU after searching its API",
+   "publisher": "4TU.ResearchData",
+   "reason": "real event log of an organisation",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "4tu:bpic13",
+   "licence": "4TU terms of use state CC0 unless another licence is given",
+   "name": "BPI Challenge 2013 incidents",
+   "next_step": "none",
+   "notes": "found by identifier on 4TU after searching its API",
+   "publisher": "4TU.ResearchData",
+   "reason": "real event log of an organisation",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "4tu:bpic15",
+   "licence": "4TU terms of use state CC0 unless another licence is given",
+   "name": "BPI Challenge 2015 municipality 5",
+   "next_step": "none",
+   "notes": "found by identifier on 4TU after searching its API",
+   "publisher": "4TU.ResearchData",
+   "reason": "real event log of an organisation",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4",
+    "C2b"
+   ],
+   "id": "4tu:road-fines",
+   "licence": "4TU terms of use state CC0 unless another licence is given",
+   "name": "Road Traffic Fine Management",
+   "next_step": "none",
+   "notes": "found by identifier on 4TU after searching its API",
+   "publisher": "4TU.ResearchData",
+   "reason": "real event log of an organisation",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4",
+    "C2b"
+   ],
+   "id": "4tu:bpic19",
+   "licence": "CC BY 4.0 on the record",
+   "name": "BPI Challenge 2019",
+   "next_step": "none",
+   "notes": "found by identifier on 4TU after searching its API",
+   "publisher": "4TU.ResearchData",
+   "reason": "real event log of an organisation",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4",
+    "C2b"
+   ],
+   "id": "4tu:more-bpic",
+   "licence": "4TU terms (CC0) or per record",
+   "name": "BPIC 2014, 2016, 2017, 2018, 2020 and other 4TU event logs",
+   "next_step": "locate the 4TU ids of BPIC 2014, 2018 and 2020 and the Rabobank logs; one group per organisation",
+   "notes": "",
+   "publisher": "4TU.ResearchData",
+   "reason": "same repository; BPIC17 shares the provenance of BPIC12; BPIC16 is CSV; 2018 and 2020 ids not yet located",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "accessible_eligible"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "4tu:bpic20",
+   "licence": "CC BY-NC 4.0 (research_only)",
+   "name": "BPI Challenge 2020 travel expense logs (domestic and international)",
+   "next_step": "prepaid costs, request for payment and permit logs are the same group",
+   "notes": "one group",
+   "publisher": "4TU.ResearchData",
+   "reason": "real event logs of one university",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "4tu:sepsis",
+   "licence": "4TU terms (CC0)",
+   "name": "Sepsis Cases Event Log",
+   "next_step": "none",
+   "notes": "1050 cases",
+   "publisher": "4TU.ResearchData",
+   "reason": "real hospital pathways",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4",
+    "C2b"
+   ],
+   "id": "4tu:bpic18",
+   "licence": "CC0 on the record",
+   "name": "BPI Challenge 2018 (EU agricultural subsidies)",
+   "next_step": "gzip prefix decoding to bytes then XES parse (needs a gunzip-prefix-to-bytes helper)",
+   "notes": "processed with the streaming XES reader / CSV event adapter",
+   "publisher": "4TU.ResearchData",
+   "reason": "158 MB gzip XES; direct payments of the Common Agricultural Policy",
+   "size": null,
+   "source_url": "https://data.4tu.nl/articles/_/12688355",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "4tu:bpic14",
+   "licence": "4TU terms (CC0)",
+   "name": "BPI Challenge 2014 (Rabobank ICT incidents)",
+   "next_step": "CSV event-log reader",
+   "notes": "processed with the streaming XES reader / CSV event adapter",
+   "publisher": "4TU.ResearchData",
+   "reason": "CSV activity log of 39 MB",
+   "size": null,
+   "source_url": "https://data.4tu.nl/articles/_/12706424",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "grouplens:movielens",
+   "licence": "non-commercial research licence in the archive README",
+   "name": "MovieLens ml-latest-small",
+   "next_step": "none",
+   "notes": "found while looking for relational research datasets",
+   "publisher": "GroupLens",
+   "reason": "four linked tables of a recommender service",
+   "size": null,
+   "source_url": "https://grouplens.org/datasets/movielens/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "4tu:bpic16",
+   "licence": "4TU terms (CC0)",
+   "name": "BPI Challenge 2016 (UWV complaints, clicks, questions, messages)",
+   "next_step": "none unless a click log is shown to be non-identifying",
+   "notes": "same producer UWV for all five files",
+   "publisher": "4TU.ResearchData",
+   "reason": "complaints file has one row per complaint with customer attributes (an aggregate, not events); the click logs relate to identifiable web sessions",
+   "size": null,
+   "source_url": "https://data.4tu.nl/articles/_/12717647",
+   "status": "structurally_unsuitable"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "4tu:bpic17",
+   "licence": "4TU terms (CC0)",
+   "name": "BPI Challenge 2017 (loan applications and offers)",
+   "next_step": "none",
+   "notes": "",
+   "publisher": "4TU.ResearchData",
+   "reason": "same financial institution and application process as BPIC 2012, one provenance group",
+   "size": null,
+   "source_url": "https://data.4tu.nl/articles/_/12696884",
+   "status": "redundant"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "4tu:bpic11",
+   "licence": "4TU terms (CC0)",
+   "name": "BPI Challenge 2011 (hospital)",
+   "next_step": "locate the 4TU id and acquire with the streaming reader",
+   "notes": "",
+   "publisher": "4TU.ResearchData",
+   "reason": "real hospital gynecology pathway log",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "accessible_eligible"
+  },
+  {
+   "categories": [
+    "C4",
+    "C2b"
+   ],
+   "id": "4tu:hospital-billing",
+   "licence": "4TU terms (CC0)",
+   "name": "Hospital Billing event log",
+   "next_step": "locate the 4TU id and acquire",
+   "notes": "",
+   "publisher": "4TU.ResearchData",
+   "reason": "real billing process of a hospital",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "accessible_eligible"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "met:openaccess",
+   "licence": "CC0",
+   "name": "Met Museum Open Access catalogue",
+   "next_step": "none",
+   "notes": "403 at 5 requests per second respected",
+   "publisher": "Metropolitan Museum of Art",
+   "reason": "nested catalogue records",
+   "size": null,
+   "source_url": "https://metmuseum.github.io/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "ea:hydrology",
+   "licence": "OGL v3.0",
+   "name": "Environment Agency Hydrology API",
+   "next_step": "more stations are the same group",
+   "notes": "",
+   "publisher": "Environment Agency",
+   "reason": "river gauge time series",
+   "size": null,
+   "source_url": "https://environment.data.gov.uk/hydrology/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "dgfip:dvf",
+   "licence": "Licence Ouverte 2.0",
+   "name": "DVF French property transactions",
+   "next_step": "other departments and years are the same group",
+   "notes": "",
+   "publisher": "DGFiP",
+   "reason": "real sales with prices",
+   "size": null,
+   "source_url": "https://www.data.gouv.fr/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "transport:gtfs-fr",
+   "licence": "lov2 or odbl per feed",
+   "name": "French GTFS feeds (transport.data.gouv.fr)",
+   "next_step": "stop adding feeds: the schema family is saturated for independence purposes",
+   "notes": "shared schema family",
+   "publisher": "various authorities",
+   "reason": "12 feeds taken; about 190 more open feeds exist in the national access point",
+   "size": null,
+   "source_url": "https://transport.data.gouv.fr/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "physionet:mimic-iv-demo",
+   "licence": "ODbL v1.0 on the project page",
+   "name": "MIMIC-IV Clinical Database Demo",
+   "next_step": "full MIMIC-IV and eICU need credentialing and are not used",
+   "notes": "demo subsets only",
+   "publisher": "MIT LCP (PhysioNet)",
+   "reason": "real hospital relational tables",
+   "size": null,
+   "source_url": "https://physionet.org/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "physionet:eicu-demo",
+   "licence": "ODbL v1.0 on the project page",
+   "name": "eICU Collaborative Research Database Demo",
+   "next_step": "full MIMIC-IV and eICU need credentialing and are not used",
+   "notes": "demo subsets only",
+   "publisher": "MIT LCP (PhysioNet)",
+   "reason": "real hospital relational tables",
+   "size": null,
+   "source_url": "https://physionet.org/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "hmlr:price-paid",
+   "licence": "OGL v3 on gov.uk",
+   "name": "HM Land Registry Price Paid Data",
+   "next_step": "other years are the same group",
+   "notes": "fragment of the 2024 file",
+   "publisher": "HM Land Registry",
+   "reason": "real property sales",
+   "size": null,
+   "source_url": "https://www.gov.uk/guidance/about-the-price-paid-data",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:16807551",
+   "licence": "CC BY 4.0 released by the operator Cubico",
+   "name": "Kelmarsh wind farm SCADA",
+   "next_step": "none",
+   "notes": "2016 archive only; 2017 to 2024 and the Penmanshiel farm of the same operator would be the same provenance group",
+   "publisher": "Cubico Sustainable Investments",
+   "reason": "ten-minute turbine signals from an operating wind farm",
+   "size": null,
+   "source_url": "https://zenodo.org/records/16807551",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "wikidata:items",
+   "licence": "CC0 (Wikidata:Licensing)",
+   "name": "Wikidata items",
+   "next_step": "none",
+   "notes": "",
+   "publisher": "Wikimedia Foundation",
+   "reason": "deep optional-path nested records from a community knowledge base",
+   "size": null,
+   "source_url": "https://www.wikidata.org/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:22947521",
+   "licence": "CC BY 4.0, released by the data collectors",
+   "name": "Grid-scale BESS operational datasets (OPALCO and ENW)",
+   "next_step": "none",
+   "notes": "ten further systems of the same release are the same provenance group",
+   "publisher": "PNNL and EPRI",
+   "reason": "battery storage meter readings",
+   "size": null,
+   "source_url": "https://zenodo.org/records/22947521",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "nvd:cve",
+   "licence": "NVD Terms of Use and FAQ (public domain, attribution notice); CVE Terms of Use (MITRE licence, notice must accompany copies)",
+   "name": "NVD CVE records (API 2.0)",
+   "next_step": "none",
+   "notes": "read in a headless browser on 2026-11-22; 4,194 records in four windows; CVE content is MITRE and CNA text, NIST enrichment is public domain",
+   "publisher": "NIST",
+   "reason": "security vulnerability records with arrays and optional paths",
+   "size": null,
+   "source_url": "https://nvd.nist.gov/developers/vulnerabilities",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "zenodo:7492814",
+   "licence": "cc-by-4.0 on the record; the depositor is an INFINITECH project member and the bank's own release statement was not found",
+   "name": "NBG deposit account transactions",
+   "next_step": "find the bank's or the project's release statement, then acquire (7z, 1.8 MB)",
+   "notes": "real bank transactions with masked customer ids",
+   "publisher": "National Bank of Greece via INFINITECH",
+   "reason": "financial payments, a new transaction mechanism",
+   "size": null,
+   "source_url": "https://zenodo.org/records/7492814",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "zenodo:13254389",
+   "licence": "cc-by-4.0 on the record; the operator that supplied the calls is not named",
+   "name": "Anonymised phone call dataset (blacklisted calls)",
+   "next_step": "confirm the operator's release, then range-read a prefix of dataset_1.zip",
+   "notes": "83 million records with a natural blacklisted label; hashed numbers",
+   "publisher": "INESC TEC authors",
+   "reason": "telecommunications usage records",
+   "size": null,
+   "source_url": "https://zenodo.org/records/13254389",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:15846963",
+   "licence": "cc-by-sa-4.0 (Fraunhofer IEE); Wind Farm A derives from EDP open data whose terms were unreadable",
+   "name": "CARE to Compare, Wind Farm B",
+   "next_step": "Wind Farm C (58 datasets, 79 to 99 MB each) is the same provenance group; Wind Farm A needs the EDP open data terms",
+   "notes": "record 14004425 named in a request is the enzyme CARE benchmark, unrelated; wind farm B (Fraunhofer IEE, 5 datasets) and wind farm A (EDP, 8 datasets, rights verified at edp.com on 2026-11-22) are experiment-ready as separate provenance groups; wind farm C (58 datasets, German offshore) belongs with B's publisher and is not fetched",
+   "publisher": "Fraunhofer IEE",
+   "reason": "real equipment-fault labelled turbine SCADA",
+   "size": null,
+   "source_url": "https://zenodo.org/records/15846963",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:14004425",
+   "licence": "cc-by-4.0",
+   "name": "CARE (enzyme classification) datasets",
+   "next_step": "none",
+   "notes": "protein and reaction tables for enzyme classification; not time series, not wind turbines; unrelated to CARE to Compare",
+   "publisher": "Yang et al.",
+   "reason": "not relevant to the thesis categories",
+   "size": null,
+   "source_url": "https://zenodo.org/records/14004425",
+   "status": "structurally_unsuitable"
+  },
+  {
+   "categories": [
+    "C3",
+    "C4"
+   ],
+   "id": "unisg:smart-factory",
+   "licence": "cc-by-4.0 on three Zenodo records (7440490, 14441997, 14998532), all by R. Seiger at the University of St.Gallen",
+   "name": "Fischertechnik smart factory model, University of St.Gallen",
+   "next_step": "none",
+   "notes": "record 14441997: 10 Hz training log and Camunda logs; records 7440490 (UTF-16 line-protocol logs) and 14998532 are the same installation and were not used; instrumented testbed",
+   "publisher": "University of St.Gallen",
+   "reason": "actuator and sensor streams with workflow-engine events",
+   "size": null,
+   "source_url": "https://zenodo.org/records/14441997",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2a",
+    "C3"
+   ],
+   "id": "opensky:flightlist-2020",
+   "licence": "research_only; owner-contractual-acceptance blocker",
+   "name": "OpenSky Network flight lists 2019 to 2022",
+   "next_step": "blocked by an owner decision: the thesis owner declined to accept the OpenSky Data License Agreement; do not acquire, create an account or accept terms",
+   "notes": "owner decision of 2026-11-22: not accepted at this stage; kept in the ledger as research_only with a contractual-acceptance blocker; not promotable",
+   "publisher": "OpenSky Network association",
+   "reason": "ADS-B network flight list",
+   "size": null,
+   "source_url": "https://zenodo.org/records/7923702",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "jolpica:f1",
+   "licence": "CC BY-NC-SA 4.0 (Jolpica TERMS.md), non-commercial",
+   "name": "Jolpica Formula One database",
+   "next_step": "none",
+   "notes": "the free dump lags 14 days; the Ergast lineage is the same group",
+   "publisher": "Jolpica F1 project",
+   "reason": "multi-table sports competition database",
+   "size": null,
+   "source_url": "https://github.com/jolpica/jolpica-f1",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "backblaze:drive-stats",
+   "licence": "free with citation (Backblaze Drive Stats page)",
+   "name": "Backblaze Drive Stats",
+   "next_step": "none; later years are the same provenance group",
+   "notes": "2014 archive; the server ignores range requests so the whole 588 MB archive is stored locally",
+   "publisher": "Backblaze",
+   "reason": "production data-centre drive telemetry with real failures",
+   "size": null,
+   "source_url": "https://www.backblaze.com/cloud-storage/resources/hard-drive-test-data",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C5",
+    "C6"
+   ],
+   "id": "openalex:graph",
+   "licence": "CC0 (OpenAlex documentation)",
+   "name": "OpenAlex scholarly graph",
+   "next_step": "none: already represented by the group openalex with a C5 and a C6 view",
+   "notes": "checked 2026-11-22 against readiness: openalex:relational (C5) and openalex:nested (C6) are experiment-ready under one group",
+   "publisher": "OurResearch",
+   "reason": "already represented",
+   "size": null,
+   "source_url": "https://openalex.org/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "relbench:rel-f1",
+   "licence": "Ergast lineage, CC BY-NC-SA through Jolpica",
+   "name": "RelBench rel-f1",
+   "next_step": "none",
+   "notes": "the same underlying Formula One data as the Jolpica group; not a new system",
+   "publisher": "Stanford STAR (processing) from Ergast",
+   "reason": "duplicate lineage",
+   "size": null,
+   "source_url": "https://github.com/stanford-star/relbench",
+   "status": "redundant"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "relbench:rel-stack",
+   "licence": "upstream",
+   "name": "rel-stack",
+   "next_step": "none",
+   "notes": "Stack Exchange is already represented by the group stackexchange",
+   "publisher": "Stanford STAR (processing)",
+   "reason": "duplicate lineage",
+   "size": null,
+   "source_url": "https://github.com/stanford-star/relbench/tree/main/provenance",
+   "status": "redundant"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "relbench:rel-trial",
+   "licence": "upstream",
+   "name": "rel-trial",
+   "next_step": "none",
+   "notes": "AACT derives from ClinicalTrials.gov, already represented by clinicaltrials_gov",
+   "publisher": "Stanford STAR (processing)",
+   "reason": "duplicate lineage",
+   "size": null,
+   "source_url": "https://github.com/stanford-star/relbench/tree/main/provenance",
+   "status": "redundant"
+  },
+  {
+   "categories": [
+    "C5",
+    "C2b"
+   ],
+   "id": "relbench:rel-salt",
+   "licence": "CC BY-NC-SA 4.0 on the SAP/SALT card, but the dataset is gated: Hugging Face states access is restricted and requires an authenticated account that has been granted access",
+   "name": "SAP SALT sales documents (ERP)",
+   "next_step": "blocked: needs an account and acceptance of SAP's access conditions, which only the owner can give; the RelBench raw mirror is not used to avoid bypassing the gate",
+   "notes": "a real anonymised ERP sales database (sales documents, items, customers, addresses; 10 to 100 million rows) would add both a C5 and a C2b mechanism",
+   "publisher": "SAP",
+   "reason": "enterprise sales transactions with relational structure",
+   "size": null,
+   "source_url": "https://huggingface.co/datasets/SAP/SALT",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "relbench:rel-avito",
+   "licence": "unverified",
+   "name": "rel-avito",
+   "next_step": "verify the originating publisher's terms; do not use the RelBench Apache-2.0 licence as proof",
+   "notes": "Kaggle competition data (Avito); rules need an account and acceptance",
+   "publisher": "originating publisher",
+   "reason": "rights not verified",
+   "size": null,
+   "source_url": "https://github.com/stanford-star/relbench/tree/main/provenance",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "relbench:rel-event",
+   "licence": "unverified",
+   "name": "rel-event",
+   "next_step": "verify the originating publisher's terms; do not use the RelBench Apache-2.0 licence as proof",
+   "notes": "Kaggle Event Recommendation challenge; account and acceptance",
+   "publisher": "originating publisher",
+   "reason": "rights not verified",
+   "size": null,
+   "source_url": "https://github.com/stanford-star/relbench/tree/main/provenance",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "relbench:rel-hm",
+   "licence": "unverified",
+   "name": "rel-hm",
+   "next_step": "verify the originating publisher's terms; do not use the RelBench Apache-2.0 licence as proof",
+   "notes": "Kaggle H&M competition; account and acceptance",
+   "publisher": "originating publisher",
+   "reason": "rights not verified",
+   "size": null,
+   "source_url": "https://github.com/stanford-star/relbench/tree/main/provenance",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "relbench:rel-amazon",
+   "licence": "unverified",
+   "name": "rel-amazon",
+   "next_step": "verify the originating publisher's terms; do not use the RelBench Apache-2.0 licence as proof",
+   "notes": "McAuley Amazon reviews; academic terms not read in this round",
+   "publisher": "originating publisher",
+   "reason": "rights not verified",
+   "size": null,
+   "source_url": "https://github.com/stanford-star/relbench/tree/main/provenance",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "relbench:rel-ratebeer",
+   "licence": "unverified",
+   "name": "rel-ratebeer",
+   "next_step": "verify the originating publisher's terms; do not use the RelBench Apache-2.0 licence as proof",
+   "notes": "scraped RateBeer dump of unclear rights",
+   "publisher": "originating publisher",
+   "reason": "rights not verified",
+   "size": null,
+   "source_url": "https://github.com/stanford-star/relbench/tree/main/provenance",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "loghub:lineage",
+   "licence": "per original system",
+   "name": "Loghub and Loghub-2.0",
+   "next_step": "none unless a new original producer outside the 16 systems appears",
+   "notes": "the existing group loghub_collection already holds the 16 systems (counted once for conservatism); Loghub-2.0 re-annotates the same logs and is not a new generating system",
+   "publisher": "LogPAI",
+   "reason": "already represented",
+   "size": null,
+   "source_url": "https://github.com/logpai/loghub",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "openfda:device-event",
+   "licence": "openFDA Terms of Service: CC0 1.0 unless marked; attribution requested",
+   "name": "openFDA device adverse events (MAUDE)",
+   "next_step": "none; other days are the same group",
+   "notes": "limit above 500 per request needs an API key (not requested); the food and drug enforcement endpoints are shallower (depth 2) and the UDI endpoint carries GMDN fields (excluded)",
+   "publisher": "FDA",
+   "reason": "nested device reports",
+   "size": null,
+   "source_url": "https://open.fda.gov/apis/device/event/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4",
+    "C6"
+   ],
+   "id": "lanl:cyber1",
+   "licence": "LANL waived all copyright and related rights (CC0-style statement on csr.lanl.gov/data/cyber1/); approved for public release LA-UR-15-23810",
+   "name": "LANL Comprehensive Multi-Source Cyber-Security Events",
+   "next_step": "owner action: the official download interface requires an email address and an intended-use statement; I will not submit personal details; once the owner provides the files or authorises the form, acquire complete time windows of auth, proc, dns and flows and keep redteam labels separate",
+   "notes": "58 days, 1.65 billion events, 12 GB compressed; real enterprise authentication, process, DNS and flow events; red-team labels are cybersecurity events, not ETL faults; the five files are one generating system",
+   "publisher": "Los Alamos National Laboratory",
+   "reason": "real enterprise event logs outside business-process mining",
+   "size": null,
+   "source_url": "https://csr.lanl.gov/data/cyber1/",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "lanl:unified-2017",
+   "licence": "LANL waived all copyright and related rights (statement on csr.lanl.gov/data/2017/); approved for public release LA-UR-17-20763",
+   "name": "LANL Unified Host and Network Data Set",
+   "next_step": "same access form as cyber1 (email and intended use); one provenance group with cyber1 (the same enterprise network); host events are flat JSON lines, so no C6 claim",
+   "notes": "about 90 days of Windows host events and network flows, deidentified",
+   "publisher": "Los Alamos National Laboratory",
+   "reason": "enterprise host and network events",
+   "size": null,
+   "source_url": "https://csr.lanl.gov/data/2017/",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "usda:fdc-sr-legacy",
+   "licence": "CC0 1.0 (USDA FoodData Central)",
+   "name": "USDA FoodData Central SR Legacy",
+   "next_step": "none; Foundation Foods and Branded releases are the same provenance family",
+   "notes": "the branded food release is 3 GB and would add a C2a view of labels, not acquired",
+   "publisher": "USDA ARS",
+   "reason": "laboratory food composition database",
+   "size": null,
+   "source_url": "https://fdc.nal.usda.gov/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "openfoodfacts:product",
+   "licence": "ODbL (Open Food Facts)",
+   "name": "Open Food Facts",
+   "next_step": "none: already represented by the group openfoodfacts (C6)",
+   "notes": "checked against readiness 2026-11-22; not re-acquired",
+   "publisher": "Open Food Facts association",
+   "reason": "already represented",
+   "size": null,
+   "source_url": "https://world.openfoodfacts.org/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "nhtsa:fars",
+   "licence": "not verified: the NHTSA page returns Access Denied to headless access (not bypassed) and the data.gov metadata query failed",
+   "name": "NHTSA Fatality Analysis Reporting System",
+   "next_step": "read the NHTSA data statement in a browser or data.gov metadata, then acquire the National CSV zip (about 35 MB per year; static.nhtsa.gov answers HEAD requests)",
+   "notes": "real police crash reports with many categorical codes and high-cardinality state, county and vehicle fields: a strong C2a candidate; 2026-11-22: www.nhtsa.gov answers 403 to automated clients (not bypassed) and the data.gov records give conflicting rights metadata (public domain mark, CC0, one 'other restrictions' and one 'non-public'); the primary NHTSA statement was not read",
+   "publisher": "NHTSA",
+   "reason": "categorical mixed-schema operational records",
+   "size": null,
+   "source_url": "https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "dft:stats19-2023",
+   "licence": "Open Government Licence v3.0",
+   "name": "UK DfT STATS19 road safety data 2023",
+   "next_step": "none; other years are the same provenance group",
+   "notes": "codebook (data guide) kept beside the files; an optional C5 participation was not claimed",
+   "publisher": "UK Department for Transport",
+   "reason": "police-reported injury collisions with coded categorical fields",
+   "size": "52 MB",
+   "source_url": "https://www.gov.uk/government/statistical-data-sets/road-safety-open-data",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "usgs:continuous-discharge",
+   "licence": "U.S. public domain (USGS)",
+   "name": "USGS continuous discharge, four gauges, 2022-2023",
+   "next_step": "none; other gauges and parameters are the same provenance group",
+   "notes": "no API key requested; 7 requests",
+   "publisher": "U.S. Geological Survey",
+   "reason": "instrument time series with quality flags",
+   "size": "about 100 MB JSON",
+   "source_url": "https://api.waterdata.usgs.gov/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "epa:aqs-hourly-ozone",
+   "licence": "public domain (EPA AirData FAQ)",
+   "name": "EPA AQS hourly ozone 2022-2023",
+   "next_step": "none; other pollutants and years are the same provenance group",
+   "notes": "pre-generated files, no API key",
+   "publisher": "U.S. EPA",
+   "reason": "instrument time series with quality flags",
+   "size": "138 MB compressed",
+   "source_url": "https://aqs.epa.gov/aqsweb/airdata/download_files.html",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "wikimedia:simplewiki-stub-history",
+   "licence": "free licences (CC BY-SA 4.0 and GFDL; Wikimedia Terms of Use)",
+   "name": "Simple English Wikipedia revision metadata (stub history prefix)",
+   "next_step": "none; other wikis share the platform and publisher",
+   "notes": "the live recent-changes stream was not used: a short live capture would be an artificial history",
+   "publisher": "Wikimedia Foundation",
+   "reason": "operational edit event log",
+   "size": "24 MB range",
+   "source_url": "https://dumps.wikimedia.org/simplewiki/20261101/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "lbl:nasa-http-1995",
+   "licence": "traces may be freely redistributed; the page asks for no analysis beyond general traffic patterns",
+   "name": "NASA Kennedy Space Center HTTP logs, July-August 1995",
+   "next_step": "owner decision: whether anomaly-fault injection and detection on the request log stays within 'general traffic patterns'; the logs preserve originating hosts",
+   "notes": "web-server access log, 3.46 million requests; not downloaded",
+   "publisher": "Internet Traffic Archive (Arlitt and Williamson)",
+   "reason": "analysis restriction and host identifiers",
+   "size": "42 MB compressed",
+   "source_url": "https://ita.ee.lbl.gov/html/contrib/NASA-HTTP.html",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "ncei:ghcnh",
+   "licence": "no explicit licence found; the metadata record carries a liability disclaimer only",
+   "name": "NOAA GHCN-hourly",
+   "next_step": "read the NCEI use statement in a browser; GHCNh integrates many national upstream sources, so independence and international terms need a per-source check",
+   "notes": "files are reachable (PSV, parquet); not downloaded",
+   "publisher": "NOAA NCEI",
+   "reason": "rights not established and compiled from many upstream sources",
+   "size": null,
+   "source_url": "https://www.ncei.noaa.gov/products/global-historical-climatology-network-hourly",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "uniprot_kb_reviewed",
+   "licence": "CC BY 4.0",
+   "name": "UniProtKB/Swiss-Prot reviewed protein entries (6 model organisms)",
+   "next_step": "none",
+   "notes": "acquired via REST API 2026-11-22 (1,500 unique entries, depth 11, 370 optional paths); references and sequence dropped",
+   "publisher": "UniProt Consortium",
+   "reason": "deep curated protein annotations with diverse optional substructure",
+   "size": "57.2 MB JSON (42.9 MB view)",
+   "source_url": "https://rest.uniprot.org/uniprotkb/search",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "osv_go_advisories",
+   "licence": "CC BY 4.0",
+   "name": "Go Vulnerability Database (OSV JSON)",
+   "next_step": "none",
+   "notes": "acquired Go/all.zip 2026-11-22; filtered to 4,820 GO-* advisories under CC BY 4.0; credits dropped and emails redacted",
+   "publisher": "Go Security Team / OSV.dev",
+   "reason": "OSV vulnerability advisories with optional ranges, CWEs and ecosystem metadata",
+   "size": "13.0 MB zip (7.65 MB view)",
+   "source_url": "https://osv-vulnerabilities.storage.googleapis.com/Go/all.zip",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "gfz_kp_index",
+   "licence": "CC BY 4.0",
+   "name": "GFZ Niemegk geomagnetic Kp and ap index (1932-2026)",
+   "next_step": "none",
+   "notes": "277,272 three-hourly UTC rows, 0 missing sentinels; solar-flux file excluded due to CC BY-NC",
+   "publisher": "GFZ Helmholtz Centre for Geosciences",
+   "reason": "94-year three-hourly geomagnetic activity series with natural storm bursts",
+   "size": "16.6 MB text (8.3 MB view)",
+   "source_url": "https://kp.gfz.de/app/files/Kp_ap_since_1932.txt",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "dwd_hourly_climate",
+   "licence": "CC BY 4.0",
+   "name": "DWD CDC hourly air temperature and humidity (12 stations, 2018-2025)",
+   "next_step": "none",
+   "notes": "838,605 hourly rows across 12 strided German synoptic stations ending 2025-12-31",
+   "publisher": "Deutscher Wetterdienst (DWD)",
+   "reason": "multi-year hourly meteorological station observations with QC flags and -999 sentinel handling",
+   "size": "24.1 MB zip (35 MB view)",
+   "source_url": "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "rte_eco2mix_national",
+   "licence": "Licence Ouverte v2.0 (Etalab)",
+   "name": "RTE eco2mix definitive national electricity grid telemetry (2020-2023)",
+   "next_step": "none",
+   "notes": "70,120 half-hourly multivariate UTC rows across 32 power/demand/CO2/exchange series (DST duplicates and empty 15-min rows removed)",
+   "publisher": "RTE (Reseau de Transport d'Electricite)",
+   "reason": "four-year national transmission grid telemetry with multi-channel generation mix",
+   "size": "32.1 MB CSV (12.8 MB view)",
+   "source_url": "https://odre.opendatasoft.com/api/explore/v2.1/catalog/datasets/eco2mix-national-cons-def",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "ademe_dpe_existant",
+   "licence": "Licence Ouverte / Open Licence v2.0",
+   "name": "ADEME DPE existing residential dwellings (5 fixed 2024 dates)",
+   "next_step": "none",
+   "notes": "50,000 rows x 21 coded/numeric cols (3.74% missing, 0% dupes); addresses excluded and numero_dpe pseudonymised",
+   "publisher": "ADEME",
+   "reason": "non-UCI mixed categorical and numeric French energy performance certificate register",
+   "size": "8.6 MB CSV (8.5 MB view)",
+   "source_url": "https://data.ademe.fr/data-fair/api/v1/datasets/dpe03existant",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "dgal_alimconfiance",
+   "licence": "Licence Ouverte (Etalab)",
+   "name": "DGAL Alim'Confiance food-safety inspections",
+   "next_step": "none",
+   "notes": "71,228 rows x 16 coded cols (2.92% missing); establishment names/SIRET/addresses/geo dropped, numero_inspection pseudonymised",
+   "publisher": "DGAL (Ministere de l'Agriculture, France)",
+   "reason": "non-UCI administrative food-hygiene inspection register",
+   "size": "28.9 MB CSV (12.8 MB view)",
+   "source_url": "https://dgal.opendatasoft.com/api/explore/v2.1/catalog/datasets/export_alimconfiance",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "zen_ev_charging",
+   "licence": "CC BY 4.0",
+   "name": "Norwegian residential EV charging reports (Zenodo 13896176)",
+   "next_step": "none",
+   "notes": "35,377 charging session events across 267 pseudonymised users and 12 sites; comma decimals normalised",
+   "publisher": "Sorensen et al. (NTNU / SINTEF)",
+   "reason": "transactional electric vehicle charging session event log",
+   "size": "3.1 MB CSV (2.9 MB view)",
+   "source_url": "https://zenodo.org/api/records/13896176",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "azure_packing_2020",
+   "licence": "CC BY 4.0",
+   "name": "Microsoft Azure VM Allocation Packing Trace 2020",
+   "next_step": "none",
+   "notes": "tenantId % 100 == 0 multi-VM slice yields 6,086 tenants and 38,995 VM allocation sequence steps",
+   "publisher": "Microsoft Azure",
+   "reason": "cloud compute VM allocation sequence (non-business-process mechanism)",
+   "size": "53.4 MB zip (1.7 MB view)",
+   "source_url": "https://github.com/Azure/AzurePublicDataset/blob/master/AzureTracesForPacking2020.md",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "zen_aoe_interactions",
+   "licence": "CC BY 4.0",
+   "name": "Age of Empires gameplay interaction event log (Zenodo 11060884)",
+   "next_step": "none",
+   "notes": "4 MiB compressed zip prefix yields 2,881 complete traces and 290,046 gameplay actions; non-business-process mechanism",
+   "publisher": "Zenodo record 11060884 authors",
+   "reason": "real-time strategy game interaction trace (non-business-process mechanism)",
+   "size": "4.0 MiB range (29.8 MB view)",
+   "source_url": "https://zenodo.org/api/records/11060884",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "uk_charity_register",
+   "licence": "UK Open Government Licence v3.0",
+   "name": "UK Charity Commission Public Register (5 non-trustee tables)",
+   "next_step": "none",
+   "notes": "1-in-20 organisation_number slice: 19,952 charities + 214,580 linked child rows, 0 orphans across 4 FKs; trustee extract excluded",
+   "publisher": "Charity Commission for England and Wales",
+   "reason": "non-timetable statutory 5-table relational database with 0 FK orphans",
+   "size": "91.7 MB zips (23 MB views)",
+   "source_url": "https://www.gov.uk/government/organisations/charity-commission",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "zen_japan_buildings",
+   "licence": "CC BY 4.0",
+   "name": "Reconstructed Prehistoric and Ancient Buildings in Japan (Zenodo 23166842)",
+   "next_step": "none",
+   "notes": "complete 7-table schema: 1,014 buildings, 0 orphans across 6 FKs; designer/source names and addresses removed",
+   "publisher": "Zenodo record 23166842 authors",
+   "reason": "non-timetable 7-table archaeological relational database with 0 FK orphans",
+   "size": "2.3 MB zip (0.4 MB views)",
+   "source_url": "https://zenodo.org/api/records/23166842",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "noaa_coops_tides",
+   "licence": "U.S. Public Domain (17 U.S.C. 403 attribution)",
+   "name": "NOAA CO-OPS hourly coastal water levels (6 stations, 2022-2024)",
+   "next_step": "none",
+   "notes": "157,823 hourly GMT water levels with quality flags across three full annual cycles",
+   "publisher": "NOAA CO-OPS",
+   "reason": "Hourly tidal sea-level physics and storm-surge domain absent from C3",
+   "size": "157,823 rows (~8 MB raw)",
+   "source_url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "noaa_gml_co2_weekly",
+   "licence": "U.S. Public Domain (17 U.S.C. 403 attribution)",
+   "name": "NOAA GML Mauna Loa weekly atmospheric CO2 record (1974-2026)",
+   "next_step": "none",
+   "notes": "2,740 weekly observations over 52+ years; 20 masked missing weeks",
+   "publisher": "NOAA Global Monitoring Laboratory",
+   "reason": "Long-horizon atmospheric CO2 spectroscopy time series absent from C3",
+   "size": "137 KB raw CSV",
+   "source_url": "https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_weekly_mlo.csv",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zen_cnc_milling",
+   "licence": "CC BY 4.0",
+   "name": "Series production data set for 5-axis CNC milling (Zenodo 10853254)",
+   "next_step": "none",
+   "notes": "189,089 rows across 13 setups (20 common controller signals); 957 duplicate polls dropped",
+   "publisher": "Zenodo record 10853254 authors",
+   "reason": "Industrial CNC machine-control telemetry absent from C3",
+   "size": "21.16 MB across 13 CSVs",
+   "source_url": "https://zenodo.org/api/records/10853254",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "wb_lending_projects",
+   "licence": "CC BY 4.0",
+   "name": "World Bank Projects & Operations Lending API",
+   "next_step": "none",
+   "notes": "5,000 projects across 10 pagination pages; teamleadname/projectdocs dropped",
+   "publisher": "The World Bank Group",
+   "reason": "Sovereign lending commitment mechanism absent from C2b",
+   "size": "5,000 rows",
+   "source_url": "https://search.worldbank.org/api/v2/projects",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "zen_queensland_petrol",
+   "licence": "CC BY 4.0 (Queensland Government upstream)",
+   "name": "Petroleum and gas production by field, Queensland (Zenodo 23122560)",
+   "next_step": "none",
+   "notes": "1,028 rows x 21 kept cols (14 numeric extraction volumes); authorized_holder/remark dropped",
+   "publisher": "Queensland Department of Natural Resources",
+   "reason": "Resource extraction production ledger mechanism absent from C2b",
+   "size": "300 KB CSV",
+   "source_url": "https://zenodo.org/api/records/23122560",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "inpi_bce_ratios",
+   "licence": "Licence Ouverte v2.0 (Etalab)",
+   "name": "INPI / BCE corporate financial ratios (data.economie.gouv.fr)",
+   "next_step": "none",
+   "notes": "23,012 Public corporate filings (6,988 partial/confidential dropped); SIREN pseudonymised",
+   "publisher": "INPI / Ministere de l Economie (France)",
+   "reason": "Corporate statutory accounting mechanism absent from C2b",
+   "size": "23,012 rows",
+   "source_url": "https://data.economie.gouv.fr/explore/dataset/ratios_inpi_bce/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "openfema:nfip-v3",
+   "licence": "Contractual OpenFEMA Terms & Conditions (HTTP 403 on terms endpoint; revocable access clause noted)",
+   "name": "OpenFEMA NFIP Redacted Claims v3",
+   "next_step": "skip",
+   "notes": "Excluded during rights screening: Terms & Conditions impose contractual re-identification and revocation clauses and terms URL returned HTTP 403",
+   "publisher": "U.S. FEMA",
+   "reason": "Excluded during rights screening",
+   "size": "2.73M rows",
+   "source_url": "https://www.fema.gov/api/open/v3/NfipClaims",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "chicago:vendor-payments",
+   "licence": "SEE_TERMS_OF_USE (no explicit open licence verified on Socrata metadata)",
+   "name": "City of Chicago Vendor Payments (s4vu-giwb)",
+   "next_step": "skip",
+   "notes": "Excluded: dataset metadata specifies SEE_TERMS_OF_USE rather than an explicit open licence and exposes individual payees",
+   "publisher": "City of Chicago",
+   "reason": "Excluded during rights screening",
+   "size": "unknown",
+   "source_url": "https://data.cityofchicago.org/resource/s4vu-giwb.json",
+   "status": "unclear"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "zenodo:11259259-auctions",
+   "licence": "Zenodo cc-by-4.0 wrapper over historical eBay auction scrapes with raw bidder usernames",
+   "name": "Online Auctions Dataset (Zenodo 11259259)",
+   "next_step": "skip",
+   "notes": "Excluded: contains unverified third-party eBay scrapes with raw bidder usernames",
+   "publisher": "Third-party compiler (Zenodo 11259259)",
+   "reason": "Upstream rights and raw usernames not verified",
+   "size": "140 KB zip",
+   "source_url": "https://zenodo.org/api/records/11259259",
+   "status": "redundant"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "zenodo:24378467-ror",
+   "licence": "CC0 1.0 Universal",
+   "name": "ROR Data Dump v2.16",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as ror_organizations (10,154 deterministic stride-15 records sorted by ROR id, depth 5, 35 paths, 8 optional paths)",
+   "publisher": "Research Organization Registry (Zenodo 24378467)",
+   "reason": "Independent CC0 v2 organization identifier registry JSON",
+   "size": "152,297 total / 10,154 view rows",
+   "source_url": "https://zenodo.org/api/records/24378467",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "rcsb:pdb-entries",
+   "licence": "CC0 1.0 Universal",
+   "name": "RCSB PDB Macromolecular Entries (2024-2026)",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as rcsb_pdb_entries (1,000 entries across 2024-2026, depth 6, 38 paths, 15 optional paths)",
+   "publisher": "RCSB PDB / wwPDB",
+   "reason": "Independent CC0 structural biology JSON archive with optional method-specific subtrees",
+   "size": "1,000 entries",
+   "source_url": "https://www.rcsb.org/pages/usage-policy",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "noaa:nws-alerts",
+   "licence": "U.S. Federal Public Domain (17 U.S.C. 105)",
+   "name": "NOAA NWS CAP Weather Alerts GeoJSON",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as nws_weather_alerts (2,000 unique CAP alerts, depth 5, 62 paths, 25 optional paths, sender dropped & emails redacted)",
+   "publisher": "NOAA National Weather Service",
+   "reason": "Independent operational weather hazard CAP GeoJSON feed",
+   "size": "2,000 alerts",
+   "source_url": "https://api.weather.gov/alerts?limit=500",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "zenodo:17275425-noumea",
+   "licence": "CC BY 4.0",
+   "name": "Port of Noumea Vessel Stopovers 2005-2013",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as zen_port_noumea (7,335 rows x 26 cols; shipping_agent/vessel_operator/vessel_name dropped, vessel_imo pseudonymised)",
+   "publisher": "Autonomous Port of Noumea (Zenodo 17275425)",
+   "reason": "Independent non-UCI mixed categorical/coordinate maritime dataset",
+   "size": "7,335 rows",
+   "source_url": "https://zenodo.org/api/records/17275425",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "zenodo:19047350-kanto",
+   "licence": "CC BY 4.0",
+   "name": "1923 Kanto Earthquake Landslide Dataset",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as zen_kanto_landslides (21,814 rows x 8 cols; sparse Note dropped)",
+   "publisher": "Kanto Earthquake Landslide Survey Authors (Zenodo 19047350)",
+   "reason": "Independent non-UCI earth science mixed categorical/morphometric dataset",
+   "size": "21,814 rows",
+   "source_url": "https://zenodo.org/api/records/19047350",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "zenodo:22213249-nhif",
+   "licence": "CC BY 4.0",
+   "name": "NHIF Inpatient Hospitalisation Cases (Bulgaria)",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as zen_nhif_hospital_cases (43,503 stride-75 rows x 13 cols; facility_name pseudonymised, 22.5% natural secondary-diagnosis missingness)",
+   "publisher": "Bulgarian NHIF Compilation (Zenodo 22213249)",
+   "reason": "Independent non-UCI clinical pathway/ICD-10 mixed administrative table",
+   "size": "3.26M total / 43,503 view rows",
+   "source_url": "https://zenodo.org/api/records/22213249",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "ingv:iside-seismic",
+   "licence": "CC BY 4.0",
+   "name": "INGV ISIDe Seismic Catalog (2022-2024)",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as ingv_seismic_events (17,755 events across 1,096 UTC days, minmagnitude>=1.5; non-BP natural geophysical event sequences)",
+   "publisher": "INGV",
+   "reason": "Independent CC BY 4.0 non-BP geophysical monitoring event stream",
+   "size": "17,755 events / 1,096 daily sequences",
+   "source_url": "https://terremoti.ingv.it/en/iside",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "zenodo:20340547-gha",
+   "licence": "CC BY 4.0",
+   "name": "GitHub Actions Workflows Change History",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as zen_gha_workflows (6 MB gzip prefix = 85,430 events across 1,272 complete repos, trailing partial dropped, author/committer stripped)",
+   "publisher": "Zenodo 20340547 Authors",
+   "reason": "Independent CC BY 4.0 software CI/CD event sequences (non-BP)",
+   "size": "85,430 kept events / 1,272 complete repos",
+   "source_url": "https://zenodo.org/api/records/20340547",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "cldf:wals-v2020.3",
+   "licence": "CC BY 4.0",
+   "name": "World Atlas of Language Structures (WALS CLDF v2020.3)",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as wals_cldf (8 tables, 9 scalar FKs via normalized language_countries junction table and languages.Parent_ID -> languages.ID, 0 orphans across 162,796 checked references; read with keep_default_na=False to preserve ISO-2 Namibia code NA; contributors omitted)",
+   "publisher": "Max Planck Institute for Evolutionary Anthropology",
+   "reason": "Independent CC BY 4.0 non-GTFS linguistic typology relational schema",
+   "size": "3,573 languages / 76,475 feature values across 7 tables",
+   "source_url": "https://github.com/cldf-datasets/wals",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "cordis:horizon-europe",
+   "licence": "EC Decision 2011/833/EU (CC BY 4.0)",
+   "name": "CORDIS Horizon Europe Projects Database",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as cordis_horizon_europe (6 tables, 24,419 projects, 379,605 child rows, 0 FK orphans, organisationID pseudonymised)",
+   "publisher": "European Commission / CORDIS",
+   "reason": "Independent open EU research funding relational database (non-GTFS)",
+   "size": "24,419 projects / 151,382 participations across 6 tables",
+   "source_url": "https://cordis.europa.eu/data/cordis-HORIZONprojects-csv.zip",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:8147768-telecom-kpis",
+   "licence": "CC BY 4.0",
+   "name": "Real Network Operator KPIs Time-Series Dataset (Zenodo 8147768)",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as zen_telecom_kpis (150,332 5-min KPI rows across 14 real operator series in data_real/; synthetic data_series/ excluded)",
+   "publisher": "Telecom Operator KPI Authors (Zenodo 8147768)",
+   "reason": "Independent CC BY 4.0 telecommunications network operator KPI telemetry",
+   "size": "150,332 rows across 14 series",
+   "source_url": "https://zenodo.org/api/records/8147768",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:17398331-dk-heating",
+   "licence": "CC BY 4.0",
+   "name": "Danish District Heating Smart-Meter DMA Time Series (Zenodo 17398331)",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as zen_dk_district_heating (105,192 hourly UTC rows across 3 Danish DMAs, 2016-2019, 10 joined meter/weather variables)",
+   "publisher": "Aalborg District Heating Utility / Zenodo 17398331 Authors",
+   "reason": "Independent CC BY 4.0 thermal district-heating distribution telemetry",
+   "size": "105,192 hourly rows across 3 DMAs",
+   "source_url": "https://zenodo.org/api/records/17398331",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:11045013-water-demand",
+   "licence": "CC BY 4.0",
+   "name": "Southern Germany Municipal Water Demand & Meteorology (Zenodo 11045013)",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as zen_water_demand (46,026 raw un-imputed hourly rows 2016-2021 preserving natural sensor NaNs; 5 spring-DST invalid local-hour rows dropped)",
+   "publisher": "Southern Germany Municipal Water Utility / Zenodo 11045013 Authors",
+   "reason": "Independent CC BY 4.0 potable water utility SCADA inflow telemetry",
+   "size": "46,026 hourly rows",
+   "source_url": "https://zenodo.org/api/records/11045013",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:3373812-dmsp-auroral",
+   "licence": "CC BY 4.0",
+   "name": "DMSP SSJ Auroral Boundary & Energy Flux Catalog 2010-2014 (Zenodo 3373812)",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as zen_dmsp_auroral (68,034 polar-pass events across 4,594 daily CSVs from DMSP F16, F17 and F18 spacecraft, 2010-2014)",
+   "publisher": "DMSP SSJ Auroral Boundary Authors (Zenodo 3373812)",
+   "reason": "Independent CC BY 4.0 space-instrument particle spectrometer time series",
+   "size": "68,034 orbital pass rows",
+   "source_url": "https://zenodo.org/api/records/3373812",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "ustreasury:dts-operating-cash",
+   "licence": "U.S. Federal Public Domain (17 U.S.C. 105)",
+   "name": "U.S. Treasury Daily Treasury Statement (Deposits & Withdrawals of Operating Cash)",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as us_treasury_dts (91,119 daily federal cash transaction lines across 2024-2025 from 19 API pages)",
+   "publisher": "U.S. Department of the Treasury / Fiscal Data",
+   "reason": "Independent public-domain sovereign cash-ledger numeric records",
+   "size": "91,119 rows",
+   "source_url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/dts/deposits_withdrawals_operating_cash",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "fdic:bank-financials",
+   "licence": "U.S. Federal Public Domain (17 U.S.C. 105)",
+   "name": "FDIC Call Report Quarterly Bank Financials (2022-2025 Year-End)",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as fdic_bank_financials (18,402 balance-sheet and income filings across 4,798 salted-pseudonymised institutions, 2022-2025 Q4)",
+   "publisher": "Federal Deposit Insurance Corporation (FDIC)",
+   "reason": "Independent public-domain banking prudential call-report numeric records",
+   "size": "18,402 rows across 4,798 banks",
+   "source_url": "https://api.fdic.gov/banks/financials",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "sncf:tgv-regularite",
+   "licence": "ODbL 1.0 (SNCF Open Data; raw & view kept local)",
+   "name": "SNCF Monthly High-Speed TGV Route Regularity & Delay Causes (2018-2026)",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as sncf_tgv_regularite (12,907 station-pair month rows 2018-01..2026-09 x 18 cols; commentaire* dropped; stays local under ODbL)",
+   "publisher": "SNCF Voyageurs",
+   "reason": "Independent rail operations numeric traffic, delay-volume and delay-cause share records",
+   "size": "12,907 route-month rows",
+   "source_url": "https://ressources.data.sncf.com/api/explore/v2.1/catalog/datasets/regularite-mensuelle-tgv-aqst/exports/csv",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "dgccrf:fuel-prices",
+   "licence": "Licence Ouverte / Open Licence v2.0 (Etalab)",
+   "name": "DGCCRF French Retail Motor-Fuel Station Price Ledger",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as dgccrf_fuel_prices (32,699 melted active fuel price postings across 9,593 salted-pseudonymised stations and 6 fuel types; addresses and coordinates dropped)",
+   "publisher": "French Ministry of Economy / DGCCRF",
+   "reason": "Independent retail energy pricing transactional ledger",
+   "size": "32,699 active fuel price postings",
+   "source_url": "https://donnees.roulez-eco.fr/opendata/instantane",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "nara:federal-register",
+   "licence": "U.S. Federal Public Domain (17 U.S.C. 105 / 44 U.S.C. 1507)",
+   "name": "U.S. Federal Register 2025 Documents JSON Archive",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as us_federal_register (2,000 2025 regulatory documents across 20 pages, depth 6, 1,145 paths, 1,120 optional paths, redact_emails applied, 0 emails)",
+   "publisher": "Office of the Federal Register (NARA) & GPO",
+   "reason": "Independent public-domain multi-agency regulatory document nested JSON",
+   "size": "2,000 documents",
+   "source_url": "https://www.federalregister.gov/api/v1/documents.json",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "datacite:dataset-dois",
+   "licence": "CC0 1.0 Universal (DataCite Metadata Policy)",
+   "name": "DataCite 2025 Dataset DOI Registration Metadata JSON",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as datacite_dois (1,000 2025 dataset DOIs across 10 pages, depth 8, 91 paths, 45 optional paths; creators, contributors and descriptions stripped; shares domain scholarly metadata with Crossref/OpenAlex)",
+   "publisher": "DataCite e.V.",
+   "reason": "Independent CC0 research dataset identifier registration nested JSON",
+   "size": "1,000 dataset DOIs",
+   "source_url": "https://api.datacite.org/dois",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "gbif:cc0-occurrences",
+   "licence": "CC0 1.0 Universal (per-record license filter verified)",
+   "name": "GBIF CC0-Licensed Biodiversity Occurrence Records (2024)",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as gbif_cc0_occurrences (1,500 2024 CC0 records across 5 pages, depth 6, 189 paths, 85 optional paths; recordedBy/identifiedBy/verbatimLocality/media-creator PII stripped; 0 emails)",
+   "publisher": "Global Biodiversity Information Facility (GBIF)",
+   "reason": "Independent CC0 Darwin Core biodiversity occurrence nested JSON with extensions",
+   "size": "1,500 occurrence records",
+   "source_url": "https://api.gbif.org/v1/occurrence/search",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "ebi:chembl-molecules",
+   "licence": "CC BY-SA 3.0 (EMBL-EBI ChEMBL; raw & view kept local)",
+   "name": "EMBL-EBI ChEMBL_37 Bioactive Small-Molecule Hierarchy JSON",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as chembl_molecules (1,000 molecules across 10 pages, depth 5, 71 paths, 26 optional paths; 0 emails; stays local under CC BY-SA 3.0)",
+   "publisher": "EMBL-EBI ChEMBL Group",
+   "reason": "Independent chemical biology small-molecule hierarchy nested JSON",
+   "size": "1,000 molecules",
+   "source_url": "https://www.ebi.ac.uk/chembl/api/data/molecule.json",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "zenodo:18142339-florida-bridges",
+   "licence": "CC BY 4.0 & U.S. Federal Public Domain (FHWA NBI)",
+   "name": "Florida National Bridge Inventory Structural Inspection Records (Zenodo 18142339)",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as zen_florida_bridges (12,986 bridges x 33 cols; FHWA N not-applicable codes preserved as categorical tokens; bridge_id salted-pseudonymised; flat_readiness C2a=[])",
+   "publisher": "FHWA / Florida DOT (Zenodo 18142339)",
+   "reason": "Independent civil-infrastructure coded structural inspection mixed table",
+   "size": "12,986 bridges x 33 columns",
+   "source_url": "https://zenodo.org/api/records/18142339",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "wri:global-power-plants",
+   "licence": "CC BY 4.0",
+   "name": "World Resources Institute Global Power Plant Database v1.3.0",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as wri_power_plants (34,936 plants across 167 countries x 16 cols; name/owner/url/wepp_id and >50%-missing secondary-fuel/year cols dropped; flat_readiness C2a=[])",
+   "publisher": "World Resources Institute (WRI)",
+   "reason": "Independent global energy generation infrastructure mixed categorical/numeric registry",
+   "size": "34,936 power plants x 16 columns",
+   "source_url": "https://raw.githubusercontent.com/wri/global-power-plant-database/master/output_database/global_power_plant_database.csv",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "paris:urban-trees",
+   "licence": "ODbL 1.0 (Ville de Paris Open Data; raw & view kept local)",
+   "name": "City of Paris Municipal Urban Tree Inventory (Les arbres)",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as paris_urban_trees (25,000 idbase-ordered prefix rows of 220,279 municipal trees x 10 cols across 150 genera; addresses/coordinates/>50%-missing cols dropped; flat_readiness C2a=[]; approved replacement for stalled data.nasa.gov endpoint)",
+   "publisher": "Ville de Paris \u2014 Direction des Espaces Verts et de l Environnement (DEVE)",
+   "reason": "Independent municipal forestry mixed taxonomic/dendrometric inventory",
+   "size": "25,000 trees x 10 columns",
+   "source_url": "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/les-arbres/exports/csv",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "zenodo:21410580-moodle-events",
+   "licence": "CC BY 4.0",
+   "name": "Moodle Learning Management System Anonymised Clickstream Event Log (Zenodo 21410580)",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as zen_moodle_events (182,114 events across 8,940 user-day sessions, 147 salted-pseudonymised users and 54 English-mapped activity types; non-BP)",
+   "publisher": "Zenodo 21410580 Authors",
+   "reason": "Independent CC BY 4.0 educational LMS clickstream event sequences (non-BP)",
+   "size": "182,114 events / 8,940 user-day sessions",
+   "source_url": "https://zenodo.org/api/records/21410580",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "zenodo:21300266-norp-solar-bursts",
+   "licence": "CC BY 4.0",
+   "name": "NAOJ Nobeyama Radio Polarimeters Solar Radio Burst Catalog 1988-2025 (Zenodo 21300266)",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as zen_norp_solar_bursts (4,239 solar radio bursts across 326 active year-months 1988-2025; 124 UTC midnight-rollover bursts adjusted +1 day; non-BP)",
+   "publisher": "National Astronomical Observatory of Japan (NAOJ) / Zenodo 21300266",
+   "reason": "Independent CC BY 4.0 multi-frequency solar radio observatory burst event stream (non-BP)",
+   "size": "4,239 burst events / 326 year-months",
+   "source_url": "https://zenodo.org/api/records/21300266",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "zenodo:23039054-blazar-flares",
+   "licence": "CC BY 4.0",
+   "name": "Fermi-LAT Blazar Gamma-Ray Flare Point-Process Catalog (Zenodo 23039054)",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as zen_blazar_flares (3,598 gamma-ray flares across 565 blazar sources ordered by source_id and start_met; - parsed as NaN; non-BP)",
+   "publisher": "Fermi-LAT Blazar Flare Catalog Authors (Zenodo 23039054)",
+   "reason": "Independent CC BY 4.0 space-telescope extragalactic gamma-ray flare event sequences (non-BP)",
+   "size": "3,598 flare events / 565 blazar sources",
+   "source_url": "https://zenodo.org/api/records/23039054",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "zenodo:23399966-wind-fragility",
+   "licence": "CC BY 4.0",
+   "name": "Wind Fragility Database for Power Infrastructure Assets v2026.10 (Zenodo 23399966)",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as zen_wind_fragility (5 relational tables: 507 curves, 507 discretized curves, 1,988 parameters, 45,608 points, 52 sources = 48,662 rows; 0 orphans across all 5 FKs; author names/titles/notes dropped; non-GTFS)",
+   "publisher": "Wind Fragility Database Consortium (Zenodo 23399966)",
+   "reason": "Independent CC BY 4.0 structural engineering fragility curve relational schema (non-GTFS)",
+   "size": "48,662 rows across 5 tables",
+   "source_url": "https://zenodo.org/api/records/23399966",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "zenodo:22059347-terralore-chronicle",
+   "licence": "CC BY 4.0",
+   "name": "TerraLore Historical Chronicle Events and Sources Relational Archive v1.0.0 (Zenodo 22059347)",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as zen_terralore_chronicle (3 relational tables: 4,564 events, 3,922 sources, 8,268 event_sources junction rows = 16,754 rows; 0 orphans across 2 FKs; read with keep_default_na=False; summaries/titles/URLs dropped; non-GTFS)",
+   "publisher": "TerraLore Historical Chronicle Project (Zenodo 22059347)",
+   "reason": "Independent CC BY 4.0 historical chronicle event-source relational schema (non-GTFS)",
+   "size": "16,754 rows across 3 tables",
+   "source_url": "https://zenodo.org/api/records/22059347",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "noaa:ncei-storm-events-2024",
+   "licence": "U.S. Federal Public Domain (17 U.S.C. 105)",
+   "name": "NOAA NCEI Storm Events Database 2024 Relational Release (c20261119)",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as ncei_storm_events_2024 (3 relational tables: 69,802 details, 40,258 locations, 1,142 fatalities = 111,202 rows; 0 orphans across 3 FKs; narratives and fatality age/sex dropped; non-GTFS)",
+   "publisher": "NOAA National Centers for Environmental Information (NCEI)",
+   "reason": "Independent public-domain severe weather episode-event-location-fatality relational schema (non-GTFS)",
+   "size": "111,202 rows across 3 tables",
+   "source_url": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "zenodo:23927968-ntsb-scrape",
+   "licence": "CC BY 4.0 wrapper over third-party scrape",
+   "name": "Aviation Safety Records Scrape (Zenodo 23927968)",
+   "next_step": "skip",
+   "notes": "Excluded: third-party compilation scraping NTSB/Wiki/FAA sources without clean first-party relational provenance",
+   "publisher": "Third-party compiler (Zenodo 23927968)",
+   "reason": "Third-party multi-source scrape",
+   "size": "unknown",
+   "source_url": "https://zenodo.org/api/records/23927968",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "zenodo:23936968-acai",
+   "licence": "CC BY 4.0",
+   "name": "ACAI Relational Benchmark (Zenodo 23936968)",
+   "next_step": "skip",
+   "notes": "Excluded: 1.54 GB archive exceeds bounded reproducible acquisition budget",
+   "publisher": "Zenodo 23936968 Authors",
+   "reason": "Archive size 1.54 GB exceeds acquisition budget",
+   "size": "1.54 GB",
+   "source_url": "https://zenodo.org/api/records/23936968",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:20818296-polish-electricity",
+   "licence": "CC BY 4.0",
+   "name": "Polish Household Electricity Series (Zenodo 20818296)",
+   "next_step": "skip",
+   "notes": "Excluded: single-column 300-row series below minimum experimental richness and unit count",
+   "publisher": "Zenodo 20818296 Authors",
+   "reason": "Too small (300 rows, 1 column)",
+   "size": "300 rows",
+   "source_url": "https://zenodo.org/api/records/20818296",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:24080064-aemo-nem",
+   "licence": "CC BY 4.0 wrapper over AEMO NEM market data",
+   "name": "AEMO NEM Electricity Market Compilation (Zenodo 24080064)",
+   "next_step": "skip",
+   "notes": "Excluded: third-party redistribution without verified upstream AEMO copyright waiver",
+   "publisher": "Third-party compiler (Zenodo 24080064)",
+   "reason": "Upstream AEMO licence terms not verified",
+   "size": "unknown",
+   "source_url": "https://zenodo.org/api/records/24080064",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "sec:edgar-financial-statements",
+   "licence": "U.S. Federal Public Domain",
+   "name": "SEC EDGAR Financial Statement Data Sets",
+   "next_step": "skip",
+   "notes": "Excluded: www.sec.gov returns HTTP 403 Forbidden to automated requests without bespoke registered User-Agent bypass",
+   "publisher": "U.S. Securities and Exchange Commission",
+   "reason": "HTTP 403 access block",
+   "size": "unknown",
+   "source_url": "https://www.sec.gov/dera/data/financial-statement-data-sets",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "fda:drugsatfda",
+   "licence": "U.S. Federal Public Domain",
+   "name": "FDA Drugs@FDA Relational Tables",
+   "next_step": "skip",
+   "notes": "Excluded: shares FDA CDER agency/platform lineage with already-integrated openfda_faers and fda_maude",
+   "publisher": "U.S. Food and Drug Administration",
+   "reason": "Shared producer/agency lineage with existing FDA groups",
+   "size": "unknown",
+   "source_url": "https://www.fda.gov/drugs/drug-approvals-and-databases/drugsfda-data-files",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "eurostat:sdmx",
+   "licence": "CC BY 4.0 (Eurostat copyright notice)",
+   "name": "Eurostat SDMX Energy & Economic Series",
+   "next_step": "skip",
+   "notes": "Excluded: low-frequency monthly/quarterly macroeconomic aggregates rather than high-cadence operational or physical telemetry",
+   "publisher": "Eurostat",
+   "reason": "Low-frequency aggregate series",
+   "size": "unknown",
+   "source_url": "https://ec.europa.eu/eurostat",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "energinet:dk",
+   "licence": "Energinet Open Data terms",
+   "name": "Energinet Energi Data Service API",
+   "next_step": "skip",
+   "notes": "Excluded: transmission-grid electricity series overlapping existing RTE eco2mix grid telemetry family",
+   "publisher": "Energinet",
+   "reason": "Mechanism overlap with existing electricity grid telemetry",
+   "size": "unknown",
+   "source_url": "https://api.energidataservice.dk",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "artic:chicago",
+   "licence": "CC0 1.0 (Art Institute of Chicago API)",
+   "name": "Art Institute of Chicago Artworks API",
+   "next_step": "skip",
+   "notes": "Excluded: museum collection JSON schema family already represented by met_museum_objects",
+   "publisher": "Art Institute of Chicago",
+   "reason": "Museum collection schema family already represented by Met Museum",
+   "size": "unknown",
+   "source_url": "https://api.artic.edu/api/v1/artworks",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "musicbrainz:api",
+   "licence": "CC0 1.0 (MusicBrainz core data)",
+   "name": "MusicBrainz REST API",
+   "next_step": "skip",
+   "notes": "Excluded: strict 1 req/sec rate limit and artist personal birth/death/alias fields",
+   "publisher": "MetaBrainz Foundation",
+   "reason": "Strict rate limit and living-person biographical fields",
+   "size": "unknown",
+   "source_url": "https://musicbrainz.org/ws/2/",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "nasa:donki",
+   "licence": "U.S. Federal Public Domain",
+   "name": "NASA DONKI Space Weather Notifications",
+   "next_step": "skip",
+   "notes": "Excluded: space/solar burst mechanism covered with higher completeness and 37-year span by NAOJ NoRP (zen_norp_solar_bursts)",
+   "publisher": "NASA CCMC",
+   "reason": "Covered by NAOJ NoRP 1988-2025 solar burst catalog",
+   "size": "unknown",
+   "source_url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "zenodo:22028206-openrail",
+   "licence": "CC BY 4.0",
+   "name": "OpenRail Europe Network Dataset (Zenodo 22028206)",
+   "next_step": "skip",
+   "notes": "Excluded: single flat GeoPackage/CSV layer without multi-table foreign-key relationships required for C5",
+   "publisher": "Zenodo 22028206 Authors",
+   "reason": "Single table (does not satisfy C5 multi-table FK contract)",
+   "size": "unknown",
+   "source_url": "https://zenodo.org/api/records/22028206",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "nasa:meteorite-landings",
+   "licence": "U.S. Federal Public Domain",
+   "name": "NASA Meteorite Landings (data.nasa.gov gh4g-9sfh)",
+   "next_step": "skip",
+   "notes": "Excluded: data.nasa.gov Socrata endpoint stalled >3 minutes without response across two acquisition attempts; replaced by City of Paris Urban Tree Inventory (paris_urban_trees)",
+   "publisher": "NASA / The Meteoritical Society",
+   "reason": "Upstream endpoint hung >3 minutes twice during acquisition",
+   "size": "45,716 rows",
+   "source_url": "https://data.nasa.gov/resource/gh4g-9sfh.csv",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "ourairports:database",
+   "licence": "Public Domain (Unlicense repository LICENSE; producer data page)",
+   "name": "OurAirports aviation infrastructure database (daily dump 2026-11-22)",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as ourairports_db (86,377 airports, 48,437 runways, 30,400 frequencies, 11,008 navaids, 249 countries, 3,987 regions; 0 orphans across 9 FKs; link and keyword text dropped; volunteer-curated, completeness varies by country)",
+   "publisher": "OurAirports",
+   "reason": "Aviation infrastructure relational schema outside timetable networks",
+   "size": "180,458 rows across 6 tables",
+   "source_url": "https://davidmegginson.github.io/ourairports-data/",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "cftc:cot-disaggregated",
+   "licence": "U.S. Public Domain (CFTC web policy, Copyright)",
+   "name": "CFTC Commitments of Traders, Disaggregated Futures Only (2024-2025)",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as cftc_cot_disaggregated (21 of 194 columns, 346 contract names, all-period positions only)",
+   "publisher": "U.S. Commodity Futures Trading Commission",
+   "reason": "Derivatives market positioning mechanism absent from C2b",
+   "size": "27,231 weekly contract rows",
+   "source_url": "https://publicreporting.cftc.gov/resource/72hh-3qpy.json",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "noaa:ndbc-stdmet-2023",
+   "licence": "U.S. Public Domain (NWS disclaimer; NDBC page unreachable)",
+   "name": "NOAA NDBC standard meteorological data, 7 moored buoys, 2023",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as ndbc_buoys_2023 (fixed-station selection of NDBC-operated buoys; publisher missing codes mapped to NaN; wave columns missing in about 68% of rows; VIS and TIDE empty and dropped)",
+   "publisher": "NOAA National Data Buoy Center",
+   "reason": "Open-ocean buoy meteorology and sea-state mechanism distinct from coastal tide gauges",
+   "size": "360,156 ten-minute rows",
+   "source_url": "https://www.ndbc.noaa.gov/data/historical/stdmet/",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "zenodo:24164071-daylight-events",
+   "licence": "CC BY 4.0",
+   "name": "A Day in Daylight 2025 contextual event logs (Zenodo 24164071)",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as zen_daylight_events (events.csv only; participant ids re-pseudonymised; short single-campaign convenience sample)",
+   "publisher": "TUM and TUMCREATE A Day in Daylight 2025 organisers",
+   "reason": "Participatory human-behaviour diary event mechanism, non-business-process",
+   "size": "1,763 event intervals, 47 participants",
+   "source_url": "https://zenodo.org/api/records/24164071",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "cpsc:recalls-2024-2025",
+   "licence": "CPSC policy permits free copying and distribution of recall notices; 17 U.S.C. 105",
+   "name": "CPSC Recall Retrieval API, 2024-2025 recall notices",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as cpsc_recalls (depth 4, 12 optional paths, 13 object-array fields; contact line, images and page link dropped; rights rest on the CPSC copyright policy for recall notices and 17 U.S.C. 105; photographs, image captions, page link and contact line are not retained)",
+   "publisher": "U.S. Consumer Product Safety Commission",
+   "reason": "Consumer product safety recall notices with array-of-object structure",
+   "size": "725 nested recall notices",
+   "source_url": "https://www.saferproducts.gov/RestWebServices/Recall?format=json",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:19370391-jirau-hydro",
+   "licence": "CC BY 4.0",
+   "name": "Jirau hydroelectric generating-unit electro-thermal measurements and trip events (Zenodo 19370391)",
+   "next_step": "skip",
+   "notes": "Excluded: only seven event-centred windows of 130 to 769 rows (1.4 to 8 days each) with 10 events, so no chronological 70/15/15 split per series is meaningful; trip events dated 2026-06 after the 2026-04 publication date; raw data fetched and discarded",
+   "publisher": "SMARTUG project authors (Zenodo 19370391)",
+   "reason": "Event-centred excerpts too short and internally inconsistent for P-TS",
+   "size": "3,207 rows, 7 units, 10 events",
+   "source_url": "https://zenodo.org/api/records/19370391",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "chicago:food-inspections",
+   "licence": "Portal licence field 'See Terms of Use'; terms page contains a disclaimer only",
+   "name": "City of Chicago Food Inspections (4ijn-s7e5)",
+   "next_step": "skip",
+   "notes": "Excluded: no explicit reuse grant in the portal terms, consistent with the other unclassified City of Chicago candidates; food inspection mechanism already covered by dgal_alimconfiance",
+   "publisher": "City of Chicago",
+   "reason": "Reuse rights not verifiable",
+   "size": "318,725 rows",
+   "source_url": "https://data.cityofchicago.org/resource/4ijn-s7e5.json",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "noaa:ibtracs",
+   "licence": "NOAA NCEI",
+   "name": "IBTrACS tropical cyclone best tracks",
+   "next_step": "skip",
+   "notes": "Excluded: merges track records of several agencies (JTWC, RSMC, national centres), so independence of the generating system is not established, as for GHCNh",
+   "publisher": "NOAA NCEI",
+   "reason": "Mixed upstream agencies",
+   "size": "about 20 MB per basin",
+   "source_url": "https://www.ncei.noaa.gov/products/international-best-track-archive",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "datagouv:catalogue-api",
+   "licence": "not verified",
+   "name": "data.gouv.fr dataset catalogue API",
+   "next_step": "skip",
+   "notes": "Excluded: terms-of-use page not retrievable by automated clients and no licence statement for catalogue metadata found; user objects in records carry personal names",
+   "publisher": "data.gouv.fr (Etalab)",
+   "reason": "Reuse rights not verifiable",
+   "size": "unknown",
+   "source_url": "https://www.data.gouv.fr/api/1/datasets/",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "nih:reporter",
+   "licence": "No licence text retrievable; NIH-generated administrative records, 17 U.S.C. 105",
+   "name": "NIH RePORTER ExPORTER projects, fiscal year 2024",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "The API search needs POST, but the official ExPORTER bulk file is a GET download (redirect to public.era.nih.gov), so the framework was not extended; coded administrative fields only, names and grantee text dropped; no licence text retrievable, rights rest on 17 U.S.C. 105 for NIH-generated records",
+   "publisher": "U.S. National Institutes of Health",
+   "reason": "Coded categorical grant award records",
+   "size": "83,314 award records (67 MB zip)",
+   "source_url": "https://reporter.nih.gov/exporter/projects/download/2024",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "ecb:euro-fx-reference-rates",
+   "licence": "ECB copyright page: free use with source citation and statement of modifications",
+   "name": "ECB euro foreign exchange reference rates, daily history",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as ecb_fx_reference_rates (complete history, N/A kept as NaN, empty trailing column dropped)",
+   "publisher": "European Central Bank",
+   "reason": "Central-bank daily rate-fixing mechanism, financial but not transactional, absent from the other C3 groups",
+   "size": "7,141 daily rows, 41 currencies",
+   "source_url": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.zip",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "seattle:fremont-bridge",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Seattle Fremont Bridge bicycle and scooter counter, hourly",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as seattle_fremont_bridge (complete export; blank hours kept missing)",
+   "publisher": "City of Seattle (Seattle Department of Transportation)",
+   "reason": "Inductive-loop urban cycling counts, distinct from the Melbourne pedestrian sensor series",
+   "size": "122,675 hourly rows",
+   "source_url": "https://data.seattle.gov/resource/65db-xm6k",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "nsidc:sea-ice-index-v4",
+   "licence": "NSIDC citation policies: free use with NSIDC credit and data citation",
+   "name": "NOAA at NSIDC Sea Ice Index v4, daily extent",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as nsidc_sea_ice_index (both hemispheres joined on date; source file paths dropped)",
+   "publisher": "NOAA at NSIDC",
+   "reason": "Satellite passive-microwave cryosphere series, distinct from in-situ and atmospheric C3 groups",
+   "size": "15,908 daily rows",
+   "source_url": "https://noaadata.apps.nsidc.org/NOAA/G02135/",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "nasa:omni2-hourly",
+   "licence": "SPDF OMNI2 description: open distribution, acknowledgement of SPDF requested",
+   "name": "NASA SPDF OMNI2 hourly near-Earth solar wind, 2010-2024",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as nasa_omni_solar_wind (fifteen complete yearly files; fill values masked; geomagnetic, solar and proton-flux columns dropped)",
+   "publisher": "NASA Goddard Space Flight Center, Space Physics Data Facility",
+   "reason": "In-situ spacecraft solar wind plasma physics, distinct from the ground-based geomagnetic index and the auroral particle series",
+   "size": "131,496 hourly rows",
+   "source_url": "https://spdf.gsfc.nasa.gov/pub/data/omni/low_res_omni/",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "austin:water-quality",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "City of Austin water quality sampling results, 2023",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as austin_water_quality (Socrata export; identifying and free-text columns dropped)",
+   "publisher": "City of Austin Watershed Protection Department",
+   "reason": "Scientific water chemistry measurement records with units and censoring qualifiers",
+   "size": "22,887 rows",
+   "source_url": "https://data.austintexas.gov/resource/5tye-7ray",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "co:dam-safety",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Colorado jurisdictional dam safety registry",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as colorado_dam_safety (Socrata export; identifying and free-text columns dropped)",
+   "publisher": "Colorado Division of Water Resources (DNR)",
+   "reason": "Regulated civil water infrastructure inventory with hazard classes and structural dimensions",
+   "size": "2,737 rows",
+   "source_url": "https://data.colorado.gov/resource/mgjv-xmr5",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "co:storage-tanks",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Colorado regulated storage tank registry",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as colorado_storage_tanks (Socrata export; identifying and free-text columns dropped)",
+   "publisher": "Colorado Division of Oil and Public Safety (CDLE)",
+   "reason": "Environmental regulation registry of fuel storage tanks, categorical and mixed",
+   "size": "52,111 rows",
+   "source_url": "https://data.colorado.gov/resource/qszy-xfii",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "sf:fire-incidents",
+   "licence": "ODC PDDL (DataSF view metadata)",
+   "name": "San Francisco Fire Department incidents, 2023",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as sffd_fire_incidents (Socrata export; identifying and free-text columns dropped)",
+   "publisher": "San Francisco Fire Department (City and County of San Francisco)",
+   "reason": "Municipal fire and rescue operations, coded categorical incident records absent from C2a",
+   "size": "37,906 rows",
+   "source_url": "https://data.sf.gov/resource/wr8u-xric",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "sf:sfo-passengers",
+   "licence": "ODC PDDL (DataSF view metadata)",
+   "name": "San Francisco International Airport passenger statistics",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as sfo_air_traffic (Socrata export; identifying and free-text columns dropped)",
+   "publisher": "San Francisco International Airport (City and County of San Francisco)",
+   "reason": "Airport traffic counting with airline and terminal dimensions",
+   "size": "40,803 rows",
+   "source_url": "https://data.sf.gov/resource/rkru-6vcg",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "tx:hhsc-child-care",
+   "licence": "CC0 1.0 (Socrata view metadata)",
+   "name": "Texas HHSC child care operations",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as tx_hhsc_child_care (Socrata export; identifying and free-text columns dropped)",
+   "publisher": "Texas Health and Human Services Commission (Child Care Regulation)",
+   "reason": "Social-care licensing register with regulator inspection and deficiency counts",
+   "size": "14,966 rows",
+   "source_url": "https://data.texas.gov/resource/bc5r-88dy",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "tx:hot-revenue",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Texas local hotel occupancy tax revenue",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as tx_hotel_occupancy_tax (Socrata export; identifying and free-text columns dropped)",
+   "publisher": "Texas Comptroller of Public Accounts",
+   "reason": "Public revenue ledger by tax use category, numeric",
+   "size": "2,395 rows",
+   "source_url": "https://data.texas.gov/resource/vmy5-jctb",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "wa:ev-population",
+   "licence": "ODbL (Socrata view metadata)",
+   "name": "Washington electric vehicle population",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as wa_ev_population (Socrata export; identifying and free-text columns dropped)",
+   "publisher": "Washington State Department of Licensing",
+   "reason": "Vehicle registration records, categorical and mixed, distinct from the EV charging sessions",
+   "size": "30,000 rows",
+   "source_url": "https://data.wa.gov/resource/f6w7-q2d2",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "wa:ghg-reporting",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Washington Ecology greenhouse gas reporting program",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as wa_ghg_reporting (Socrata export; identifying and free-text columns dropped)",
+   "publisher": "Washington State Department of Ecology",
+   "reason": "Industrial operations emissions accounting in tonnes of CO2 equivalent",
+   "size": "2,521 rows",
+   "source_url": "https://data.wa.gov/resource/idhm-59de",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "seattle:fire-911",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Seattle Real Time Fire 911 Calls, 2023",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as seattle_fire_911_calls (per-day dispatch sequences; addresses and coordinates never downloaded)",
+   "publisher": "City of Seattle (Seattle Fire Department)",
+   "reason": "Emergency-dispatch event stream outside business-process execution, distinct from police calls and the transport counter",
+   "size": "125,678 dispatch rows",
+   "source_url": "https://data.seattle.gov/resource/kzjm-xkqj",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "fr:baac-2024",
+   "licence": "Licence Ouverte (data.gouv.fr dataset metadata)",
+   "name": "French BAAC road injury accidents 2024 (four tables)",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as france_baac_road_accidents (complete 2024 tables; addresses, coordinates, street names and birth years dropped); shares the police-reported road-injury mechanism with STATS19 but is a separate national system",
+   "publisher": "Ministere de l'Interieur (Observatoire national interministeriel de la securite routiere)",
+   "reason": "Relational system outside timetable networks; a second police-reporting road-safety group with its own producer",
+   "size": "54,402 accidents, 70,248 places, 92,678 vehicles, 125,187 users",
+   "source_url": "https://www.data.gouv.fr/datasets/bases-de-donnees-annuelles-des-accidents-corporels-de-la-circulation-routiere-annees-de-2005-a-2025",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "mitre:attack-enterprise-v20.1",
+   "licence": "MITRE ATT&CK licence (reproduce copyright and licence)",
+   "name": "MITRE ATT&CK Enterprise STIX 2.1 bundle v20.1",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as mitre_attack_enterprise_stix (pinned v20.1; Enterprise only: Mobile and ICS are the same curation system); MITRE also administers the CVE programme, a separate generating system recorded under nist_nvd",
+   "publisher": "The MITRE Corporation (ATT&CK)",
+   "reason": "Curated threat-knowledge graph with heterogeneous STIX objects and nested references",
+   "size": "STIX objects of the Enterprise bundle",
+   "source_url": "https://github.com/mitre-attack/attack-stix-data",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "seattle:building-permits",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Seattle building permits, applications of 2023",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as seattle_building_permits (Socrata export; descriptions, addresses, contractor names, links and coordinates dropped)",
+   "publisher": "City of Seattle (Seattle Department of Construction and Inspections)",
+   "reason": "Municipal construction permitting workflow, distinct from registries of facilities or vehicles",
+   "size": "5,603 rows",
+   "source_url": "https://cos-data.seattle.gov/resource/76t5-zqzr",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "delaware:well-permits",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Delaware water well permits, applications 2018 to 2022",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as delaware_well_permits (Socrata export; owners, addresses, tax ids, comments, contractors and coordinates dropped)",
+   "publisher": "State of Delaware (Department of Natural Resources and Environmental Control, Division of Water)",
+   "reason": "Groundwater well permitting with engineering attributes, a mechanism outside facility registers",
+   "size": "20,123 rows",
+   "source_url": "https://data.delaware.gov/resource/2655-qn8j",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "austin:campaign-finance",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "City of Austin campaign finance transactions, 2022",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as austin_campaign_finance (Socrata export; names, addresses, employers, occupations and free text dropped)",
+   "publisher": "City of Austin (City Clerk)",
+   "reason": "Political finance disclosure ledger, a transactional mechanism outside procurement and payments",
+   "size": "3,654 rows",
+   "source_url": "https://datahub.austintexas.gov/resource/g4yx-aw9r",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "delaware:credit-card-transactions",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "State of Delaware employee credit card transactions, fiscal year 2023",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as delaware_state_credit_cards (Socrata export; merchant names hashed)",
+   "publisher": "State of Delaware (Department of Finance, Division of Accounting)",
+   "reason": "Card-payment ledger of a state government, distinct from checkbook payments and procurement awards",
+   "size": "188,670 rows",
+   "source_url": "https://data.delaware.gov/resource/nurt-5rqw",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "montgomery-md:dlc-sales",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Montgomery County MD warehouse and retail sales, 2019",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as montgomery_dlc_sales (Socrata export; item descriptions kept as published product names)",
+   "publisher": "Montgomery County, Maryland (Department of Liquor Control)",
+   "reason": "Wholesale and retail inventory movement of a county alcohol monopoly, a sales mechanism outside government payments",
+   "size": "138,638 rows",
+   "source_url": "https://data.montgomerycountymd.gov/resource/v76h-r7br",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "fta:ntd-monthly",
+   "licence": "Public Domain U.S. Government (Socrata view metadata)",
+   "name": "FTA National Transit Database monthly ridership, from 2022",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as fta_ntd_monthly_ridership (Socrata export; the concatenated key and legacy id dropped)",
+   "publisher": "U.S. Department of Transportation (Federal Transit Administration, National Transit Database)",
+   "reason": "Federally compiled operational counts reported by hundreds of transit agencies, distinct from airport and bridge counters",
+   "size": "74,173 rows",
+   "source_url": "https://datahub.transportation.gov/resource/8bui-9xvu",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "bloomington:mwtp-daily",
+   "licence": "Open Data Commons Public Domain Dedication and License (Socrata view metadata)",
+   "name": "Bloomington Monroe Water Treatment Plant daily electricity and water, 2010 onward",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as bloomington_water_plant_energy (complete Socrata export)",
+   "publisher": "City of Bloomington Utilities (Monroe Water Treatment Plant)",
+   "reason": "Industrial utility process meters of a water plant, outside grid, weather and hydrology series",
+   "size": "6,109 rows",
+   "source_url": "https://data.bloomington.in.gov/resource/rzw5-gzjt",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "bloomington:solar-sites",
+   "licence": "Open Data Commons Public Domain Dedication and License (Socrata view metadata)",
+   "name": "Bloomington municipal solar installations, daily generation",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as bloomington_solar_sites (complete Socrata export; site names, addresses and coordinates dropped)",
+   "publisher": "Locus Energy (monitoring) for the City of Bloomington",
+   "reason": "Photovoltaic generation monitoring panel with expected-energy model, outside grid telemetry and wind SCADA",
+   "size": "91,437 rows",
+   "source_url": "https://data.bloomington.in.gov/resource/9t63-jmjk",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "bts:daily-mobility-national",
+   "licence": "Public Domain U.S. Government (Socrata view metadata)",
+   "name": "BTS Daily Mobility Statistics, national level",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as bts_daily_mobility_national (national rows only; the state and county levels are the same system)",
+   "publisher": "U.S. Department of Transportation (Bureau of Transportation Statistics) with the University of Maryland (MTI and CATT Laboratory)",
+   "reason": "Aggregated mobile-device mobility indicators with a pandemic regime change",
+   "size": "1,923 rows",
+   "source_url": "https://data.bts.gov/resource/w96p-f2qv",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "eia:petroleum-spot",
+   "licence": "EIA public domain (Copyrights and Reuse page)",
+   "name": "EIA petroleum spot prices, daily",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as eia_petroleum_spot_prices (daily spot series of the PET bulk file; futures and non-daily series left out)",
+   "publisher": "U.S. Energy Information Administration",
+   "reason": "Commodity spot price market series, distinct from retail fuel prices and the electricity grid",
+   "size": "10,473 daily rows, 11 series",
+   "source_url": "https://www.eia.gov/opendata/bulk/PET.zip",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "nhc:hurdat2-atlantic",
+   "licence": "NHC disclaimer: public domain",
+   "name": "NHC HURDAT2 Atlantic best-track database, 1851-2025",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as nhc_hurdat2_atlantic (complete file; the Northeast Pacific file is the same system and not acquired)",
+   "publisher": "NOAA National Hurricane Center",
+   "reason": "Tropical cyclone life-cycle sequences from a post-season analysis system",
+   "size": "complete Atlantic file",
+   "source_url": "https://www.nhc.noaa.gov/data/hurdat/",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "nces:ipeds-2023",
+   "licence": "NCES disclaimer: public domain",
+   "name": "NCES IPEDS 2023 institutional characteristics, admissions, enrolment and completions",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as nces_ipeds_2023 (five tables; names, addresses, contacts, links and coordinates dropped; revised files used where published)",
+   "publisher": "U.S. Department of Education, NCES (IPEDS)",
+   "reason": "Relational postsecondary survey database keyed by institution id",
+   "size": "6,163 institutions; 303k completion rows",
+   "source_url": "https://nces.ed.gov/ipeds/datacenter/DataFiles.aspx",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "apis-guru:openapi-directory",
+   "licence": "CC0 1.0 (repository LICENSE and README)",
+   "name": "APIs.guru OpenAPI directory list",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as apis_guru_openapi_directory (complete list.json; contact objects dropped; the per-API specification files are not acquired)",
+   "publisher": "APIs.guru (openapi-directory)",
+   "reason": "Curated registry of API descriptions with nested versions and vendor extensions",
+   "size": "2,529 API entries",
+   "source_url": "https://api.apis.guru/v2/list.json",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "zenodo:records-2023-03",
+   "licence": "Zenodo metadata CC0 (Terms of Use)",
+   "name": "Zenodo dataset records published in March 2023",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as zenodo_dataset_records_2023_03 (API pages; people, descriptions and links dropped); the DOI registry DataCite is a separate generating system; record files are not acquired",
+   "publisher": "CERN (Zenodo)",
+   "reason": "Repository record objects with nested relations and file lists",
+   "size": "about 4,100 records",
+   "source_url": "https://zenodo.org/api/records",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "cincinnati:fire-cad-2023",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Cincinnati Fire Incidents (CAD), 2023",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as cincinnati_fire_cad (lifecycle timestamps melted into events; locations never downloaded)",
+   "publisher": "City of Cincinnati (Cincinnati Fire Department)",
+   "reason": "Per-incident emergency response lifecycle outside business-process execution",
+   "size": "96,072 incident rows",
+   "source_url": "https://data.cincinnati-oh.gov/resource/vnsz-a3wp",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "austin:apd-cad-2023q1",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Austin APD Computer Aided Dispatch incidents, 2023 Q1",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as austin_apd_cad (lifecycle timestamps melted into events; locations and counts never downloaded)",
+   "publisher": "City of Austin (Austin Police Department)",
+   "reason": "Per-incident police response lifecycle outside business-process execution",
+   "size": "88,817 incident rows",
+   "source_url": "https://datahub.austintexas.gov/resource/22de-7rzg",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "fec:bulk-2024",
+   "licence": "FEC public records; sale-or-use restriction on contributor information (not used)",
+   "name": "FEC bulk data 2024 cycle: candidates, committees, linkages, committee contributions",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as fec_federal_campaign_finance_2024 (four tables; names, addresses and payee text dropped; individual contribution files not acquired)",
+   "publisher": "U.S. Federal Election Commission",
+   "reason": "Relational federal campaign finance filing database keyed by candidate and committee ids",
+   "size": "9,796 candidates, 20,937 committees, 8,619 linkages, 703k contributions",
+   "source_url": "https://www.fec.gov/data/browse-data/?tab=bulk-data",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "reactome:release-98",
+   "licence": "CC0 (Reactome licence page)",
+   "name": "Reactome pathways, hierarchy and UniProt and ChEBI mappings, release 98",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as reactome_pathway_knowledgebase (four files; mapping URLs dropped)",
+   "publisher": "Reactome (OICR, EMBL-EBI, NYULMC and CSHL)",
+   "reason": "Curated pathway hierarchy with identifier mappings, a relational knowledge base outside timetable networks",
+   "size": "23,652 pathways; 439k mappings",
+   "source_url": "https://reactome.org/download-data",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "github:advisories-reviewed",
+   "licence": "CC BY 4.0 (repository LICENSE.md)",
+   "name": "GitHub reviewed security advisories, first 100 of each year 2017 to 2026",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as github_reviewed_advisories (ten API requests, one per publication year; credits dropped); the OSV-schema Go advisories are a separate generating system",
+   "publisher": "GitHub, Inc. (GitHub Advisory Database)",
+   "reason": "Nested advisory records with vulnerability, package and scoring arrays",
+   "size": "1,000 advisories",
+   "source_url": "https://github.com/advisories",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "pubchem:cid-1-1000",
+   "licence": "NCBI policies: no NCBI restrictions",
+   "name": "PubChem compound records CID 1 to 1000",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as pubchem_compounds (ten PUG REST requests; computed records only)",
+   "publisher": "National Center for Biotechnology Information (PubChem)",
+   "reason": "Nested chemical structure records with typed property arrays",
+   "size": "1,000 compounds",
+   "source_url": "https://pubchem.ncbi.nlm.nih.gov/",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "nasa:cmr-collections",
+   "licence": "NASA full and open data policy",
+   "name": "NASA CMR collection records, first 100 of nine providers",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as nasa_cmr_collections (nine provider requests; contacts dropped)",
+   "publisher": "NASA (Earth Science Data and Information System, CMR)",
+   "reason": "Nested UMM-C collection metadata with provider-specific optional sections",
+   "size": "900 collection records",
+   "source_url": "https://cmr.earthdata.nasa.gov/search/collections.umm_json",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "doaj:journals",
+   "licence": "CC0 for journal-level metadata (DOAJ terms)",
+   "name": "DOAJ journal records, first 999 by creation date",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as doaj_journals (ten API pages)",
+   "publisher": "Directory of Open Access Journals",
+   "reason": "Curated journal registry with nested policy and licence sub-objects",
+   "size": "999 of about 23,800 journals",
+   "source_url": "https://doaj.org/api/search/journals",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "go:ontology-and-goa-human",
+   "licence": "CC BY 4.0 (GO citation policy)",
+   "name": "Gene Ontology go-basic and UniProt-GOA human annotations",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as gene_ontology_annotations (complete files; object names and synonyms dropped; NOTICE with CC BY 4.0 attribution)",
+   "publisher": "Gene Ontology Consortium; EMBL-EBI (UniProt-GOA)",
+   "reason": "Curated ontology hierarchy with protein annotations, a relational knowledge base outside timetable networks",
+   "size": "about 40k terms and 700k annotations",
+   "source_url": "https://geneontology.org/docs/download-ontology/",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "cincinnati:ecc-calls-2023",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Cincinnati Emergency Communications Center calls, January and February 2023",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as cincinnati_ecc_calls (telephony timestamps melted into events; caller data never downloaded)",
+   "publisher": "City of Cincinnati (Emergency Communications Center)",
+   "reason": "Call-handling telephony records, an event mechanism outside business processes and incident dispatch",
+   "size": "164,525 call rows",
+   "source_url": "https://data.cincinnati-oh.gov/resource/5f3f-hgt9",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "cdc:covid-vaccination-trends-us",
+   "licence": "Public Domain U.S. Government (Socrata view metadata)",
+   "name": "CDC COVID-19 vaccination trends, national rows",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as cdc_covid_vaccination_trends_us (national rows only; the jurisdiction rows are the same reporting system)",
+   "publisher": "U.S. Centers for Disease Control and Prevention (IISInfo)",
+   "reason": "Immunization reporting counts with administration-date and report-date views, distinct from environmental sensors",
+   "size": "1,476 rows",
+   "source_url": "https://data.cdc.gov/resource/rh2h-3yt2",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "noaa-cpc:daily-ao-index",
+   "licence": "NWS disclaimer: public domain",
+   "name": "NOAA CPC daily Arctic Oscillation index, 1950 onward",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as noaa_cpc_daily_ao_index (complete daily file)",
+   "publisher": "NOAA National Weather Service, Climate Prediction Center",
+   "reason": "Daily atmospheric circulation index, derived from reanalysis rather than a station or instrument series",
+   "size": "about 28,000 daily rows",
+   "source_url": "https://www.cpc.ncep.noaa.gov/products/precip/CWlink/daily_ao_index/ao.shtml",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "sec:companyfacts",
+   "licence": "public domain (U.S. government work), fair-access policy",
+   "name": "SEC EDGAR XBRL company facts",
+   "next_step": "owner decision: provide a contact for the SEC User-Agent, or leave blocked",
+   "notes": "The fair-access policy rejected the generic client (HTTP 403, request rate threshold) and asks for a declared contact in the User-Agent; no contact was supplied on the owner's behalf",
+   "publisher": "U.S. Securities and Exchange Commission",
+   "reason": "The fair-access policy rejected the generic client (HTTP 403, request rate threshold) and asks for a declared contact in the User-Agent; no contact was supplied on the owner's behalf",
+   "size": null,
+   "source_url": "https://data.sec.gov/api/xbrl/companyfacts/",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "encode:experiments",
+   "licence": "ENCODE data use policy: no restrictions",
+   "name": "ENCODE portal experiment objects",
+   "next_step": "retry later with one request per minute if still needed",
+   "notes": "The portal answered one search with HTTP 200 and then returned 403 to the same searches; not retried to avoid evading a block",
+   "publisher": "ENCODE Data Coordination Center",
+   "reason": "The portal answered one search with HTTP 200 and then returned 403 to the same searches; not retried to avoid evading a block",
+   "size": null,
+   "source_url": "https://www.encodeproject.org/search/?type=Experiment",
+   "status": "temporarily_inaccessible"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "homebrew:formulae",
+   "licence": "no data-specific licence found (the license page is 404)",
+   "name": "Homebrew formulae API",
+   "next_step": "find the data licence before any download",
+   "notes": "Package metadata is served with 8,741 nested formulae, but no licence statement for the API data was found",
+   "publisher": "Homebrew",
+   "reason": "Package metadata is served with 8,741 nested formulae, but no licence statement for the API data was found",
+   "size": null,
+   "source_url": "https://formulae.brew.sh/api/formula.json",
+   "status": "unclear"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "wikimedia:pageviews",
+   "licence": "only the CC BY-SA licence of the documentation page was found",
+   "name": "Wikimedia pageviews REST API",
+   "next_step": "read the REST API terms in a browser",
+   "notes": "No licence statement for the returned data was found",
+   "publisher": "Wikimedia Foundation",
+   "reason": "No licence statement for the returned data was found",
+   "size": null,
+   "source_url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/",
+   "status": "unclear"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "treasury:par-yield-curve",
+   "licence": "U.S. government work expected, no data-specific statement retrievable",
+   "name": "U.S. Treasury daily par yield curve",
+   "next_step": "find a rights statement for the interest-rate statistics",
+   "notes": "The downloadable CSV works but the site notice pages returned 404 to the client",
+   "publisher": "U.S. Department of the Treasury",
+   "reason": "The downloadable CSV works but the site notice pages returned 404 to the client",
+   "size": null,
+   "source_url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/",
+   "status": "unclear"
+  },
+  {
+   "categories": [
+    "C2b",
+    "C3"
+   ],
+   "id": "mta:subway-hourly-ridership",
+   "licence": "portal licence field empty",
+   "name": "MTA subway hourly ridership",
+   "next_step": "read the New York State open data terms",
+   "notes": "The Socrata metadata has no licence and the NY open data terms were not retrievable",
+   "publisher": "Metropolitan Transportation Authority",
+   "reason": "The Socrata metadata has no licence and the NY open data terms were not retrievable",
+   "size": null,
+   "source_url": "https://data.ny.gov/resource/5wq4-mkjj",
+   "status": "unclear"
+  },
+  {
+   "categories": [
+    "C2b",
+    "C3"
+   ],
+   "id": "nys:thruway-od",
+   "licence": "portal licence field empty",
+   "name": "NYS Thruway origin and destination counts",
+   "next_step": "read the New York State open data terms",
+   "notes": "Same portal terms question as the MTA datasets",
+   "publisher": "New York State Thruway Authority",
+   "reason": "Same portal terms question as the MTA datasets",
+   "size": null,
+   "source_url": "https://data.ny.gov/resource/4dbf-24u2",
+   "status": "unclear"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "cdc:nwss-wastewater",
+   "licence": "portal licence field empty",
+   "name": "CDC NWSS public SARS-CoV-2 wastewater metrics",
+   "next_step": "read the CDC data use statement",
+   "notes": "No licence field in the portal metadata; the RKI emergency department series already covers the surveillance mechanism",
+   "publisher": "U.S. Centers for Disease Control and Prevention",
+   "reason": "No licence field in the portal metadata; the RKI emergency department series already covers the surveillance mechanism",
+   "size": null,
+   "source_url": "https://data.cdc.gov/resource/2ew6-ywp6",
+   "status": "unclear"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "bdg2:electricity",
+   "licence": "Zenodo record CC BY 4.0, repository LICENSE CC BY-SA 4.0",
+   "name": "Building Data Genome Project 2 hourly electricity meters",
+   "next_step": "decide which licence governs the data",
+   "notes": "The repository file is a Git LFS object of 175 MB and the two licence statements differ",
+   "publisher": "Building Data Genome Project 2",
+   "reason": "The repository file is a Git LFS object of 175 MB and the two licence statements differ",
+   "size": null,
+   "source_url": "https://zenodo.org/records/3887306",
+   "status": "unclear"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "crates:db-dump",
+   "licence": "crates.io data access policy",
+   "name": "crates.io database dump",
+   "next_step": "none unless a bounded extraction is justified",
+   "notes": "The 2.3 GB gzip tar cannot be read as a bounded prefix with relational completeness",
+   "publisher": "crates.io (Rust Foundation)",
+   "reason": "The 2.3 GB gzip tar cannot be read as a bounded prefix with relational completeness",
+   "size": null,
+   "source_url": "https://static.crates.io/db-dump.tar.gz",
+   "status": "structurally_unsuitable"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "lichess:standard-games",
+   "licence": "CC0",
+   "name": "Lichess standard rated games",
+   "next_step": "add an optional zstd reader only if justified",
+   "notes": "The monthly files are zstd streams and no zstd reader is installed; a new dependency was not added as a side effect",
+   "publisher": "Lichess",
+   "reason": "The monthly files are zstd streams and no zstd reader is installed; a new dependency was not added as a side effect",
+   "size": null,
+   "source_url": "https://database.lichess.org/",
+   "status": "needs_bounded_extraction"
+  }
+ ],
+ "date": "2026-11-22",
+ "note": "candidates discovered by Zenodo keyword search (queries recorded in the report) and by publisher probes; discovery is not acquisition; counts per status are in the report"
+}

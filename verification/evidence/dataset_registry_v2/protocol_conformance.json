@@ -1,0 +1,36 @@
+{
+ "P-NEST": {
+  "input_unmodified": true,
+  "only_named_path_changed": true,
+  "only_truth_records_changed": true
+ },
+ "P-REL": {
+  "baseline_orphan_count": 2219,
+  "baseline_orphans_reported_not_labelled": true,
+  "baseline_unchanged": true,
+  "deterministic": true,
+  "ocds_baseline_not_labelled": true,
+  "ocds_baseline_orphans": 7,
+  "ocds_unaffected_rows_unchanged": true,
+  "truth_rows_now_orphans": true,
+  "unaffected_rows_unchanged": true
+ },
+ "P-SEQ": {
+  "drop_shortens_by_one": true,
+  "swap_changes_two_positions_only": true,
+  "swap_keeps_length_and_multiset": true,
+  "truth_is_the_position": true
+ },
+ "P-TAB": {
+  "duplicates_appended_after_originals": true,
+  "faults_only_in_test_partition": true,
+  "reference_untouched": true,
+  "scale_changes_only_truth": true
+ },
+ "P-TS": {
+  "other_series_untouched": true,
+  "outside_window_untouched": true,
+  "time_index_monotonic_and_unchanged": true,
+  "window_is_the_truth": true
+ }
+}

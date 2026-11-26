@@ -256,9 +256,11 @@ class _Serial:
 def cli(tmp_path, monkeypatch):
     reg, metas, names = _registry(tmp_path)
     ran = []
+    seen_seeds = []
 
-    def run_job(job, methods=None):
+    def run_job(job, methods=None, seeds=None):
         ran.append((job["problem"], methods))
+        seen_seeds.append(seeds)
         return {
             "problem": job["problem"],
             "z": 1,
@@ -286,6 +288,7 @@ def cli(tmp_path, monkeypatch):
             ]
         )
 
+    invoke.seen_seeds = seen_seeds
     return invoke, ran, out, names
 
 
@@ -294,6 +297,9 @@ def test_main_writes_every_problem_counts_the_failures_and_flushes_progress(cli,
     assert invoke() == 0
     assert [r[0] for r in ran] == [*(f"adbench:{n}" for n in sorted(names)), "uci:3", "uci:2"]
     assert all(r[1] == list(lb.METHODS) for r in ran)
+    assert set(invoke.seen_seeds) == {
+        tuple(lb.config.BENCHMARK_SEEDS)
+    }  # the archived five by default
     first = out / f"adbench_{sorted(names)[0]}.json"
     assert (
         first.read_text()
@@ -385,3 +391,9 @@ def test_the_default_method_set_is_classical(monkeypatch, tmp_path):
     monkeypatch.setattr(lb, "ProcessPoolExecutor", _Serial)
     lb.main(["--output", str(tmp_path / "o")])
     assert seen[-1].methods == "classical"
+
+
+def test_the_seeds_option_reaches_every_job(cli):
+    invoke, _, _, _ = cli
+    assert invoke("--seeds", "7", "8", "9") == 0
+    assert set(invoke.seen_seeds) == {(7, 8, 9)}

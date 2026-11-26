@@ -1,0 +1,334 @@
+{
+ "errors": {},
+ "features": 37,
+ "metrics": {
+  "copod": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 4.6875,
+    "pr_auc": 0.1511111111111111,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.7978142076502733
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.125,
+    "pr_auc": 0.06184086184086185,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.45901639344262296
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 4.6875,
+    "pr_auc": 0.08387921022067363,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4972677595628415
+   }
+  ],
+  "ecod": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.125,
+    "pr_auc": 0.17592592592592593,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.8087431693989071
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 4.6875,
+    "pr_auc": 0.06743393009377664,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.44808743169398907
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.125,
+    "pr_auc": 0.0846938775510204,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5081967213114754
+   }
+  ],
+  "great_expectations": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.046875,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 7.8125,
+    "pr_auc": 0.046875,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.45901639344262296
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.125,
+    "pr_auc": 0.046875,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.48360655737704916
+   }
+  ],
+  "hbos": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.25,
+    "pr_auc": 0.17199074074074072,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.7814207650273224
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.125,
+    "pr_auc": 0.08182957393483709,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.46448087431693985
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.125,
+    "pr_auc": 0.12246216315983757,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.546448087431694
+   }
+  ],
+  "iqr": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.25,
+    "pr_auc": 0.046875,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4672131147540984
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 4.6875,
+    "pr_auc": 0.046875,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.47540983606557374
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 4.6875,
+    "pr_auc": 0.046875,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.47540983606557374
+   }
+  ],
+  "isolation_forest": [
+   {
+    "f1": 0.25,
+    "flagged_pct": 7.8125,
+    "pr_auc": 0.1717948717948718,
+    "precision": 0.2,
+    "recall": 0.3333333333333333,
+    "roc_auc": 0.8087431693989071
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.125,
+    "pr_auc": 0.10103846716396081,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4808743169398907
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.125,
+    "pr_auc": 0.1603942652329749,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.6502732240437158
+   }
+  ],
+  "knn": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.125,
+    "pr_auc": 0.148109243697479,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.819672131147541
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.125,
+    "pr_auc": 0.09613200471445409,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.39344262295081966
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 4.6875,
+    "pr_auc": 0.10551813777620228,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.6830601092896175
+   }
+  ],
+  "lof": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 4.6875,
+    "pr_auc": 0.16666666666666669,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.7814207650273224
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 1.5625,
+    "pr_auc": 0.04858041064937617,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3333333333333333
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.125,
+    "pr_auc": 0.12465608465608466,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.7704918032786886
+   }
+  ],
+  "ocsvm": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.125,
+    "pr_auc": 0.1703703703703704,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.8469945355191257
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.125,
+    "pr_auc": 0.10220125786163523,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4972677595628415
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 7.8125,
+    "pr_auc": 0.0865009746588694,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5846994535519126
+   }
+  ],
+  "pca": [
+   {
+    "f1": 0.2,
+    "flagged_pct": 10.9375,
+    "pr_auc": 0.20833333333333331,
+    "precision": 0.14285714285714285,
+    "recall": 0.3333333333333333,
+    "roc_auc": 0.819672131147541
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 7.8125,
+    "pr_auc": 0.08390188434048082,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5300546448087431
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 10.9375,
+    "pr_auc": 0.05343915343915344,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4426229508196721
+   }
+  ],
+  "zscore": [
+   {
+    "f1": 0.2727272727272727,
+    "flagged_pct": 29.6875,
+    "pr_auc": 0.1558061821219716,
+    "precision": 0.15789473684210525,
+    "recall": 1.0,
+    "roc_auc": 0.8415300546448088
+   },
+   {
+    "f1": 0.10526315789473684,
+    "flagged_pct": 25.0,
+    "pr_auc": 0.05324074074074074,
+    "precision": 0.0625,
+    "recall": 0.3333333333333333,
+    "roc_auc": 0.40163934426229503
+   },
+   {
+    "f1": 0.08695652173913043,
+    "flagged_pct": 31.25,
+    "pr_auc": 0.0827838827838828,
+    "precision": 0.05,
+    "recall": 0.3333333333333333,
+    "roc_auc": 0.6803278688524589
+   }
+  ]
+ },
+ "name": "Thoracic Surgery Data",
+ "prevalence": 0.0498812351543943,
+ "problem": "uci:277",
+ "report": {
+  "anomalies": 21,
+  "anomaly_class": "T",
+  "conflicting_rows_removed": 0,
+  "dropped_constant": [],
+  "dropped_high_cardinality": [],
+  "dropped_missing": [],
+  "duplicates_removed": 0,
+  "encoded": [
+   "DGN",
+   "PRE6",
+   "PRE7",
+   "PRE8",
+   "PRE9",
+   "PRE10",
+   "PRE11",
+   "PRE14",
+   "PRE17",
+   "PRE19",
+   "PRE25",
+   "PRE30",
+   "PRE32"
+  ],
+  "features_out": 37,
+  "kind": "downsampled",
+  "natural_rate": 0.14893617021276595,
+  "rows": 421,
+  "rows_in": 421,
+  "rows_out": 421,
+  "rule": "R2"
+ },
+ "rows": 421,
+ "rule": "R2",
+ "seeds": [
+  42,
+  1,
+  2
+ ],
+ "skipped": []
+}

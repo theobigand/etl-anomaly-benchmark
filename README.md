@@ -38,6 +38,17 @@ The question it tries to answer: does adding machine learning to an ETL pipeline
 - [ ] Coverage gaps of the pool studies (ineligible tables, more datasets with a time variable, failed pipeline measures, fit-size and tuning ablation, isolated timings, archive replay, labelling sensitivity, independent attestation): issues #77 to #84
 - [ ] More imbalanced real datasets
 
+
+## Datasets
+
+One logical catalog covers every dataset (`data/README.md`, `research/dataset_catalog.py`): the 152 UCI
+and ADBench tables of the pool, the naturally labelled time series (SKAB, NAB), and the four historical
+files. General comparisons rest on the pool and on independent sources, not on the three worked examples.
+`cardio.csv` and `creditcard.csv` are duplicate representations of the pool tables `adbench:cardio` and
+`adbench:fraud` (same rows, verified) and add no independent source. `water_quality.csv` is a supplementary
+dataset outside the rare-anomaly regime. `synthetic.csv` is generated and is not a real-world source.
+`python research/coverage_matrix.py` reports the populations without double counting.
+
 ## Install
 
 ```bash
@@ -46,6 +57,8 @@ conda activate etl-benchmark
 ```
 
 `environment.yml` installs the package in editable mode (`pip install -e .`), so code changes are picked up without reinstalling. It also installs PyTorch (conda-forge `pytorch`), which only the six neural detectors need; it is imported when one of them is fitted. Install PyTorch from conda in this environment: a pip wheel brings its own OpenMP runtime, which clashes with the conda one. In CI, `pip install -e ".[dev]"` gets the CPU build from the PyTorch index.
+
+`research/` (acquisition and experimental views) also needs `pyarrow>=21,<27` for parquet and feather files. It is declared in the `research` dependency group of `pyproject.toml`, not in `[project]`, because that table is part of the scientific fingerprint of the archived runs. Install it with `conda install -n etl-benchmark "pyarrow>=21,<27"` or `pip install --group research`; the hash locks in `verification/environment/` already include it.
 
 ## Data
 

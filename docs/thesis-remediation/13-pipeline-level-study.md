@@ -1,0 +1,63 @@
+# 13. Mandatory batch-level ETL pipeline study
+
+**Scope:** T381-T387 (promoted from optional) and T416-T430 (new). **Priority:** P0. **Milestone:** Thesis 03.
+**Protocol:** [pipeline_batch_faults.md](../../verification/pipeline_batch_faults.md). **Decision record:**
+[DESIGN_DECISION_2026-11-21.md](DESIGN_DECISION_2026-11-21.md).
+
+The thesis claims to be about ETL pipelines, so a study at the unit where pipelines fail, the load
+(batch), is required, not optional. T001-T415 keep their identifiers; tasks T381-T387 keep theirs and
+are tracked here as mandatory instead of in the optional list of `12-extensions-and-gates.md`.
+
+## Promoted from the optional list (same identifiers)
+
+- [ ] T381 Build a semi-realistic ETL dataset with complete business constraints.
+- [ ] T382 Integrate anonymized real ETL incidents if lawful data is available (see T426).
+- [ ] T383 Add collective batch-level anomalies.
+- [ ] T384 Add conditional anomalies.
+- [ ] T385 Test cross-table inconsistencies.
+- [ ] T386 Test schema evolution.
+- [ ] T387 Test ordinary seasonal changes to estimate false alarms.
+
+## New tasks
+
+- [x] T416 Preregister the batch-level protocol before any result (`verification/pipeline_batch_faults.md`).
+- [x] T417 Define the batch as the unit of detection and its profile features; keep row-level and batch-level estimands separate.
+- [x] T418 Implement the eight batch fault operators with per-batch ground truth and three severities.
+- [x] T419 Provide a competent constraint-based batch rule baseline (schema, volume, freshness, null, duplicate) built without labels.
+- [x] T420 Run learned detectors on batch profiles; record not-applicable cases (too few reference batches) as such.
+- [x] T421 Use a label-free alert-budget operating point; report false alerts per clean batch; no oracle thresholds.
+- [x] T422 Add the contaminated-reference sensitivity arm.
+- [ ] T423 Run the plumbing pilot on the eight real series (descriptive, no ranking claim). Status 2026-11-25: six series have results; UCI 247 is excluded (536 rows, recorded); UCI 799 is eligible and not run (the experiment freeze).
+- [ ] T424 Run a variance pilot of 24 to 48 sources at batch level; estimate the between-source SD, the source-by-detector variance and the within-source ICC; then fix the sample size in a dated addendum before the confirmatory run. Status 2026-11-25: design addendum proposed in `verification/batch_pilot_addendum_proposal.md` (not approved); estimators implemented and tested on synthetic data; pilot not run.
+- [ ] T425 Add relational sources (two or more tables with keys) and the referential-integrity operator. Status 2026-11-25: the operator (`research/relational_faults.py`) and the key declarations are done (139 foreign keys of 32 relational views verified on the local tables, `relational_keys.json`); a provisional relational load rule exists (`research/relational_units.py`); the unit itself needs the owner's approval before it can be run.
+- [ ] T426 Search for real ETL incident data or a partner; check the licence before any download; record the outcome even if none exists.
+- [ ] T427 Tie the title, abstract and conclusion to the evidence tier: "ETL pipelines" without qualification only with real incident evidence; otherwise "controlled batch-level data-quality faults in ETL-style loads".
+- [ ] T428 Check realism where natural labels exist: natural chronological series aggregated to batches against injected faults of the same mechanism; report agreement and the families it cannot cover.
+- [ ] T429 Update the manuscript, slides, coverage generator and evidence index together once results exist.
+- [ ] T430 Account for source families (lineage) in the coverage matrix for the batch study; never count batches, seeds or injected variants as sources. Status 2026-11-25: per-group coverage of both studies with linked clusters and exposure is generated (`research/study_coverage.py`, `study_coverage.json`); the manuscript coverage matrix (`research/coverage_matrix.py`) is not yet linked to it and is updated with the results (T429).
+
+## Acceptance criteria
+
+- [ ] Protocol dated before the first result; the variance-pilot addendum dated before the confirmatory run.
+- [ ] Every mechanism of the protocol has a measured result or a justified not-applicable record.
+- [ ] Unit of inference stated beside every claim, with the number of independent sources.
+- [ ] Claim wording follows the evidence tier of T427.
+- [ ] Original protocols, hypotheses and sealed evidence remain intact.
+
+## Dataset strata (added 2026-11-21)
+
+Targets per structural stratum (independent source families; minimum, recommended, ambitious):
+C1 flat tabular 15/36/50, C2 transactional and categorical 15/30/45, C3 time series 15/40/55,
+C4 logs and event sequences 15/28/40, C5 relational 15/36/55, C6 nested 15/30/45. The counts are
+planning figures conditional on an assumed variance; the variance pilot (T424) fixes them. The
+state against these targets is generated by `python research/dataset_catalog.py gap` into
+`verification/evidence/dataset_registry_v2/stratum_gap.md` (protocol of the second UCI wave:
+`verification/dataset_wave2.md`).
+
+- [x] T431 Run a second UCI acquisition wave for the strata the first pool does not cover: 21 of 690 tables qualify (open licence on the page, not already pooled, serves an uncovered stratum); 19 are pinned by checksum, 2 exceed the 100 MB download limit.
+- [x] T432 Verify the time column of the seven wave-2 tables that have a candidate: four are verified (Ozone Level, Online Retail, Facebook Live Sellers, Metro Interstate Traffic) and join C3; three are not (Pedestrians in Traffic, Accelerometer Gyro and Multivariate Gait span less than a week).
+- [x] T433 Reach the C3 target: 40 ready independent provenance groups against 40 recommended (met 2026-11-23).
+- [x] T434 C4 logs and event sequences: 28 ready independent provenance groups against 28 recommended (met 2026-11-23; business-process execution share 28.57% [8/28]); the terms of each collection were read before any download.
+- [x] T435 C5 relational: 36 ready independent provenance groups against 36 recommended (met 2026-11-23; GTFS timetable share 33.33% [12/36]); the terms were read per database and each view has at least two keyed tables.
+- [x] T436 C6 nested: 30 ready independent provenance groups against 30 recommended (met 2026-11-23); every source has a verified open licence.
+- [x] T437 Refine the operational stratum rule: C2 is split into C2a (categorical and mixed tables, 30/30 ready groups; verified by `research/flat_readiness.py`) and C2b (numeric and transactional records, 30/30 ready groups; audited in `verification/evidence/dataset_registry_v2/transactional_audit.json` and `research/provenance_audit.py`), separating categorical/game tables from numeric transactional evidence (documented in `verification/dataset_acquisition_report.md` Update 3 and Update 26).

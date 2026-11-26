@@ -467,6 +467,114 @@
     "research/coverage_paper.py": {
       "level": "L3",
       "reason": "Generated manuscript blocks must agree with the archived coverage and extension results."
+    },
+    "research/dataset_catalog.py": {
+      "level": "L3",
+      "reason": "Catalog identities, duplicate-representation checks and independent-source counts are reported as experimental denominators."
+    },
+    "research/label_sensitivity.py": {
+      "level": "L4",
+      "reason": "Alternative anomaly-class mapping and downsampling define the ground truth of the label-rule sensitivity study."
+    },
+    "research/natural_temporal.py": {
+      "level": "L4",
+      "reason": "Timestamp ordering, window-to-row labels, causal features and test-partition eligibility govern the validity of the natural chronological study."
+    },
+    "research/natural_temporal_summary.py": {
+      "level": "L4",
+      "reason": "Source-group aggregation, paired differences and hypothesis decisions govern reported chronological findings."
+    },
+    "research/paired_inference.py": {
+      "level": "L4",
+      "reason": "Holm correction, paired effects, bootstrap intervals and rank statistics are critical statistical calculations."
+    },
+    "research/schema_rules.py": {
+      "level": "L4",
+      "reason": "Constraints learned from the training partition define the rule baseline; a leak or a wrong rule changes the rules-versus-models conclusion."
+    },
+    "research/schema_rules_summary.py": {
+      "level": "L3",
+      "reason": "Per-type comparison of the rule baseline with archived detectors is reported but derives from archived results."
+    },
+    "research/validity_summary.py": {
+      "level": "L4",
+      "reason": "Source-grouped ranks, tests and label-rule rank agreement govern the restated claims about detector winners."
+    },
+    "research/pipeline_batch.py": {
+      "level": "L4",
+      "reason": "Batch ground truth from fault operators, reference-only profiles and the label-free alert budget define the validity of the pipeline-level study."
+    },
+    "research/pipeline_batch_summary.py": {
+      "level": "L4",
+      "reason": "Source-level aggregation and the decisions on hypotheses B1 to B4 govern the reported pipeline-level findings."
+    },
+    "research/batch_panel.py": {
+      "level": "L3",
+      "reason": "The audit applies the batch-unit definition to the registry and states how many independent groups the preregistered pipeline-level study can use, which constrains its sample size and panel; it selects no panel and reads no detector output."
+    },
+    "research/relational_units.py": {
+      "level": "L3",
+      "reason": "It verifies the declared foreign keys of the relational sources against the data and defines the provisional relational-load detection rule, so a defect changes which references count as natural orphans and the recall reported for that unit."
+    },
+    "research/study_coverage.py": {
+      "level": "L2",
+      "reason": "It joins existing evidence into the per-group coverage that states which population supports which claim; it reads no detector output and selects no panel."
+    },
+    "research/registry_units.py": {
+      "level": "L3",
+      "reason": "It resolves registry groups to the registered batch unit and gates detector runs behind an authorization record, so it decides which groups the pipeline-level study can run; it reads no detector output."
+    },
+    "research/relational_faults.py": {
+      "level": "L4",
+      "reason": "It defines the referential-integrity fault of T425 and its labels like the other pipeline-level fault operators, so a defect changes the injected population and the recall that is reported."
+    },
+    "research/batch_statistics.py": {
+      "level": "L3",
+      "reason": "Linked-group clustering, the clustered pilot draw, the cluster bootstrap and the variance components fix the pilot and confirmatory partitions and the sample size of the pipeline-level study."
+    },
+    "research/uci_wave2.py": {
+      "level": "L3",
+      "reason": "Licence verification, exclusion of already-pooled tables and checksum pinning define which sources enter the corpus."
+    },
+    "research/acquisition.py": {
+      "level": "L3",
+      "reason": "Licence-class gating, host allow-list, size bounds, snapshot immutability and checksums decide which external data enters the corpus."
+    },
+    "research/fault_protocols.py": {
+      "level": "L3",
+      "reason": "Injection preconditions, ground-truth generation and matching rules define the labels of every later fault experiment."
+    },
+    "research/readiness.py": {
+      "level": "L3",
+      "reason": "The status contract decides which acquired datasets may be reported as eligible or experiment-ready."
+    },
+    "research/experimental_views.py": {
+      "level": "L3",
+      "reason": "Minimisation and pseudonymisation of personal fields and the checksummed views define what experiments may read."
+    },
+    "research/acquisition_validate.py": {
+      "level": "L3",
+      "reason": "Structural checks (series content, nesting shape, referential integrity) decide the stratum eligibility of acquired sources."
+    },
+    "research/parquet_reader.py": {
+      "level": "L3",
+      "reason": "Bounded Parquet reading decides which rows of large sources enter experimental views and records the sampling boundaries."
+    },
+    "research/xes_stream.py": {
+      "level": "L3",
+      "reason": "Complete-trace extraction, limits and prefix labelling of event logs decide which sequences enter the process-mining views."
+    },
+    "research/target_framework.py": {
+      "level": "L3",
+      "reason": "Design-only sample-size and coverage calculations decide which dataset counts are proposed as scientifically sufficient."
+    },
+    "research/provenance_audit.py": {
+      "level": "L3",
+      "reason": "The provenance grouping decides how many independent source groups the flat tabular and categorical strata are credited with."
+    },
+    "research/flat_readiness.py": {
+      "level": "L3",
+      "reason": "The eligibility rules and group representation decide which flat tabular and categorical sources are credited as experiment-ready."
     }
   }
 }

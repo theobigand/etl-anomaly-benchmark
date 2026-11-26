@@ -217,7 +217,7 @@ def test_result_files_use_sorted_keys_and_the_documented_layout(
     job = {"problem": "uci:1", "source": "uci", "meta": {}, "path": "x"}
     result = {"problem": "uci:1", "b": 1, "a": {"z": 1, "y": 2}}
     monkeypatch.setattr(lb, "jobs", lambda *a: [job])
-    monkeypatch.setattr(module, "run_job", lambda job, methods=None: dict(result))
+    monkeypatch.setattr(module, "run_job", lambda job, methods=None, seeds=None: dict(result))
     monkeypatch.setattr(module, "ProcessPoolExecutor", _Serial)
     module.main(["--output", str(tmp_path)])
     text = (tmp_path / "uci_1.json").read_text()

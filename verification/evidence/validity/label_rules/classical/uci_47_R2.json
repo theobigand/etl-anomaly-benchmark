@@ -1,0 +1,323 @@
+{
+ "errors": {},
+ "features": 25,
+ "metrics": {
+  "copod": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.1285714285714286,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4714285714285714
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 16.216216216216218,
+    "pr_auc": 0.12692307692307692,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.7142857142857143
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 10.81081081081081,
+    "pr_auc": 0.07857142857142857,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4
+   }
+  ],
+  "ecod": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.5303030303030303,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5571428571428572
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 5.405405405405405,
+    "pr_auc": 0.17692307692307693,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.7857142857142857
+   },
+   {
+    "f1": 0.3333333333333333,
+    "flagged_pct": 10.81081081081081,
+    "pr_auc": 0.19696969696969696,
+    "precision": 0.25,
+    "recall": 0.5,
+    "roc_auc": 0.5285714285714286
+   }
+  ],
+  "great_expectations": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 2.7027027027027026,
+    "pr_auc": 0.05405405405405406,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4857142857142857
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 10.81081081081081,
+    "pr_auc": 0.05405405405405406,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.44285714285714284
+   },
+   {
+    "f1": 0.2857142857142857,
+    "flagged_pct": 13.513513513513514,
+    "pr_auc": 0.12702702702702703,
+    "precision": 0.2,
+    "recall": 0.5,
+    "roc_auc": 0.6928571428571428
+   }
+  ],
+  "hbos": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 2.7027027027027026,
+    "pr_auc": 0.09027777777777778,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.41428571428571426
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 8.108108108108109,
+    "pr_auc": 0.09307359307359307,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5857142857142857
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 5.405405405405405,
+    "pr_auc": 0.06274131274131274,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3142857142857143
+   }
+  ],
+  "iqr": [
+   {
+    "f1": 0.08,
+    "flagged_pct": 62.16216216216216,
+    "pr_auc": 0.07702702702702703,
+    "precision": 0.043478260869565216,
+    "recall": 0.5,
+    "roc_auc": 0.4642857142857143
+   },
+   {
+    "f1": 0.14814814814814814,
+    "flagged_pct": 67.56756756756756,
+    "pr_auc": 0.09307359307359307,
+    "precision": 0.08,
+    "recall": 1.0,
+    "roc_auc": 0.6000000000000001
+   },
+   {
+    "f1": 0.07407407407407407,
+    "flagged_pct": 67.56756756756756,
+    "pr_auc": 0.06274131274131274,
+    "precision": 0.04,
+    "recall": 0.5,
+    "roc_auc": 0.39285714285714285
+   }
+  ],
+  "isolation_forest": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 5.405405405405405,
+    "pr_auc": 0.0992063492063492,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4285714285714286
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.24285714285714285,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.8714285714285714
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 10.81081081081081,
+    "pr_auc": 0.08412698412698412,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4142857142857143
+   }
+  ],
+  "knn": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 10.81081081081081,
+    "pr_auc": 0.05718954248366013,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2857142857142857
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 5.405405405405405,
+    "pr_auc": 0.1625,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.7857142857142857
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 2.7027027027027026,
+    "pr_auc": 0.0458128078817734,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.12857142857142856
+   }
+  ],
+  "lof": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 16.216216216216218,
+    "pr_auc": 0.06066176470588235,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3285714285714286
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 10.81081081081081,
+    "pr_auc": 0.10512820512820513,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.6428571428571428
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.0512987012987013,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2285714285714286
+   }
+  ],
+  "ocsvm": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 10.81081081081081,
+    "pr_auc": 0.07023809523809524,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.37142857142857144
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 10.81081081081081,
+    "pr_auc": 0.12692307692307692,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.7142857142857143
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 8.108108108108109,
+    "pr_auc": 0.06703296703296703,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.35714285714285715
+   }
+  ],
+  "pca": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 32.432432432432435,
+    "pr_auc": 0.05507246376811594,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2857142857142857
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 21.62162162162162,
+    "pr_auc": 0.06944444444444445,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.35714285714285715
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 24.324324324324326,
+    "pr_auc": 0.043156059285091544,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.07142857142857145
+   }
+  ],
+  "zscore": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 29.72972972972973,
+    "pr_auc": 0.075,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.44999999999999996
+   },
+   {
+    "f1": 0.15384615384615385,
+    "flagged_pct": 29.72972972972973,
+    "pr_auc": 0.12692307692307692,
+    "precision": 0.09090909090909091,
+    "recall": 0.5,
+    "roc_auc": 0.7285714285714286
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 24.324324324324326,
+    "pr_auc": 0.06363636363636363,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3642857142857143
+   }
+  ]
+ },
+ "name": "Horse Colic",
+ "prevalence": 0.04918032786885246,
+ "problem": "uci:47",
+ "report": {
+  "anomalies": 12,
+  "anomaly_class": "2",
+  "conflicting_rows_removed": 0,
+  "dropped_constant": [],
+  "dropped_high_cardinality": [],
+  "dropped_missing": [
+   "nasogastric_reflux_ph",
+   "abdominocentesis_total_protein"
+  ],
+  "duplicates_removed": 0,
+  "encoded": [],
+  "features_out": 25,
+  "kind": "downsampled",
+  "natural_rate": 0.3695652173913043,
+  "rows": 244,
+  "rows_in": 244,
+  "rows_out": 244,
+  "rule": "R2"
+ },
+ "rows": 244,
+ "rule": "R2",
+ "seeds": [
+  42,
+  1,
+  2
+ ],
+ "skipped": []
+}

@@ -1,0 +1,325 @@
+{
+ "failed": [
+  {
+   "name": "US Census Data (1990)",
+   "reason": "RegistryError('the download is larger than 104857600 bytes')",
+   "uci_id": 116
+  },
+  {
+   "name": "Individual Household Electric Power Consumption",
+   "reason": "RegistryError('the download is larger than 104857600 bytes')",
+   "uci_id": 235
+  }
+ ],
+ "tables": [
+  {
+   "area": "Social Science",
+   "columns": 5,
+   "licence": "CC BY 4.0",
+   "name": "Balance Scale",
+   "page": "https://archive.ics.uci.edu/dataset/12/balance+scale",
+   "rows": 625,
+   "sha256": "a17c0a1969fde30247e8d446c889287e4ecdb14b2e2ecc02bee3c9e8221206a9",
+   "tags": [
+    "categorical_only"
+   ],
+   "time_candidates": [],
+   "uci_id": 12,
+   "url": "https://archive.ics.uci.edu/static/public/12/data.csv"
+  },
+  {
+   "area": "Other",
+   "columns": 7,
+   "licence": "CC BY 4.0",
+   "name": "Car Evaluation",
+   "page": "https://archive.ics.uci.edu/dataset/19/car+evaluation",
+   "rows": 1728,
+   "sha256": "0023b86e0dd3502aaa0e4a610ef4d8aebbba7ff40f53fa7c2f0543c68bee5114",
+   "tags": [
+    "categorical_only"
+   ],
+   "time_candidates": [],
+   "uci_id": 19,
+   "url": "https://archive.ics.uci.edu/static/public/19/data.csv"
+  },
+  {
+   "area": "Games",
+   "columns": 36,
+   "licence": "CC BY 4.0",
+   "name": "Chess (King-Rook vs. King-Pawn)",
+   "page": "https://archive.ics.uci.edu/dataset/22/chess+king+rook+vs+king+pawn",
+   "rows": 3196,
+   "sha256": "a324da057b4eefd5a42203531d7a90dba11c476fddea42e6cf7c2810a1e0c16b",
+   "tags": [
+    "categorical_only"
+   ],
+   "time_candidates": [],
+   "uci_id": 22,
+   "url": "https://archive.ics.uci.edu/static/public/22/data.csv"
+  },
+  {
+   "area": "Games",
+   "columns": 43,
+   "licence": "CC BY 4.0",
+   "name": "Connect-4",
+   "page": "https://archive.ics.uci.edu/dataset/26/connect+4",
+   "rows": 67557,
+   "sha256": "56a4a9aba8c73e8b4eb1f4a912504e43e159bf881604c856ef67137684bae0a7",
+   "tags": [
+    "categorical_only"
+   ],
+   "time_candidates": [],
+   "uci_id": 26,
+   "url": "https://archive.ics.uci.edu/static/public/26/data.csv"
+  },
+  {
+   "area": "Biology",
+   "columns": 62,
+   "licence": "CC BY 4.0",
+   "name": "Molecular Biology (Splice-junction Gene Sequences)",
+   "page": "https://archive.ics.uci.edu/dataset/69/molecular+biology+splice+junction+gene+sequences",
+   "rows": 3190,
+   "sha256": "5819ab8ec8a06efefd55ad3adfcca0291f13ea226690a19bc3bd19ec6058480b",
+   "tags": [
+    "sequential",
+    "categorical_only"
+   ],
+   "time_candidates": [],
+   "uci_id": 69,
+   "url": "https://archive.ics.uci.edu/static/public/69/data.csv"
+  },
+  {
+   "area": "Other",
+   "columns": 8,
+   "licence": "CC BY 4.0",
+   "name": "MONK's Problems",
+   "page": "https://archive.ics.uci.edu/dataset/70/monk+s+problems",
+   "rows": 432,
+   "sha256": "a4110c251fb863e48f4afa56c6747a5fad35e6f0cbe736eb6f81c74960369a72",
+   "tags": [
+    "categorical_only"
+   ],
+   "time_candidates": [],
+   "uci_id": 70,
+   "url": "https://archive.ics.uci.edu/static/public/70/data.csv"
+  },
+  {
+   "area": "Social Science",
+   "columns": 9,
+   "licence": "CC BY 4.0",
+   "name": "Nursery",
+   "page": "https://archive.ics.uci.edu/dataset/76/nursery",
+   "rows": 12960,
+   "sha256": "264aa9d0775dd87e510755af4d033125f46821744137320a3b8d71e1232cc8c0",
+   "tags": [
+    "categorical_only"
+   ],
+   "time_candidates": [],
+   "uci_id": 76,
+   "url": "https://archive.ics.uci.edu/static/public/76/data.csv"
+  },
+  {
+   "area": "Games",
+   "columns": 10,
+   "licence": "CC BY 4.0",
+   "name": "Tic-Tac-Toe Endgame",
+   "page": "https://archive.ics.uci.edu/dataset/101/tic+tac+toe+endgame",
+   "rows": 958,
+   "sha256": "0b2ceb1c8cb0b062bc273e91f3130ba13dd8a7813b9728fc883e166ba4fbafb5",
+   "tags": [
+    "categorical_only"
+   ],
+   "time_candidates": [],
+   "uci_id": 101,
+   "url": "https://archive.ics.uci.edu/static/public/101/data.csv"
+  },
+  {
+   "area": "Business",
+   "columns": 15,
+   "licence": "CC BY 4.0",
+   "name": "Statlog (Australian Credit Approval)",
+   "page": "https://archive.ics.uci.edu/dataset/143/statlog+australian+credit+approval",
+   "rows": 690,
+   "sha256": "6120dc5e13976bdae24f9a89e1aa70e1738e462b3c46ebe0fc4e246b67ab4ba0",
+   "tags": [
+    "transactional"
+   ],
+   "time_candidates": [],
+   "uci_id": 143,
+   "url": "https://archive.ics.uci.edu/static/public/143/data.csv"
+  },
+  {
+   "area": "Climate and Environment",
+   "columns": 75,
+   "licence": "CC BY 4.0",
+   "name": "Ozone Level Detection",
+   "page": "https://archive.ics.uci.edu/dataset/172/ozone+level+detection",
+   "rows": 5070,
+   "sha256": "d92528f9ac0ea3aeeb80a92ec3917b2265d05f680695bd86af3050352a4635ad",
+   "tags": [
+    "time_series",
+    "sequential"
+   ],
+   "time_candidates": [
+    "Date"
+   ],
+   "uci_id": 172,
+   "url": "https://archive.ics.uci.edu/static/public/172/data.csv"
+  },
+  {
+   "area": "Health and Medicine",
+   "columns": 15,
+   "licence": "CC BY 4.0",
+   "name": "EEG Eye State",
+   "page": "https://archive.ics.uci.edu/dataset/264/eeg+eye+state",
+   "rows": 14980,
+   "sha256": "42ade6611f0fadbc8c15e48bb04e5f20813c9939de21aa5f8204293f623c912a",
+   "tags": [
+    "time_series",
+    "sequential"
+   ],
+   "time_candidates": [],
+   "uci_id": 264,
+   "url": "https://archive.ics.uci.edu/static/public/264/data.csv"
+  },
+  {
+   "area": "Business",
+   "columns": 8,
+   "licence": "CC BY 4.0",
+   "name": "Online Retail",
+   "page": "https://archive.ics.uci.edu/dataset/352/online+retail",
+   "rows": 541909,
+   "sha256": "a2f79bbdd4463df6db8a3f5a50b9c980ae8f645a370bf5e2c0d6097f9e817b05",
+   "tags": [
+    "time_series",
+    "sequential",
+    "transactional"
+   ],
+   "time_candidates": [
+    "InvoiceDate"
+   ],
+   "uci_id": 352,
+   "url": "https://archive.ics.uci.edu/static/public/352/data.csv"
+  },
+  {
+   "area": "Business",
+   "columns": 107,
+   "licence": "CC BY 4.0",
+   "name": "Sales Transactions Weekly",
+   "page": "https://archive.ics.uci.edu/dataset/396/sales+transactions+dataset+weekly",
+   "rows": 811,
+   "sha256": "6f939a928c04820bc291a6184f4f1d0be694b8de58d949e808852804f25969c3",
+   "tags": [
+    "time_series",
+    "transactional"
+   ],
+   "time_candidates": [],
+   "uci_id": 396,
+   "url": "https://archive.ics.uci.edu/static/public/396/data.csv"
+  },
+  {
+   "area": "Business",
+   "columns": 12,
+   "licence": "CC BY 4.0",
+   "name": "Facebook Live Sellers in Thailand",
+   "page": "https://archive.ics.uci.edu/dataset/488/facebook+live+sellers+in+thailand",
+   "rows": 7050,
+   "sha256": "a8657c7c5217ed273e85989738aaed304af5e3e500089658516a3ff99462300d",
+   "tags": [
+    "transactional"
+   ],
+   "time_candidates": [
+    "status_published"
+   ],
+   "uci_id": 488,
+   "url": "https://archive.ics.uci.edu/static/public/488/data.csv"
+  },
+  {
+   "area": "Other",
+   "columns": 9,
+   "licence": "CC BY 4.0",
+   "name": "Metro Interstate Traffic Volume",
+   "page": "https://archive.ics.uci.edu/dataset/492/metro+interstate+traffic+volume",
+   "rows": 48204,
+   "sha256": "749c90d720360a4215bb15345526073c079ba4cc95e3fa558796d083f85fce9e",
+   "tags": [
+    "time_series",
+    "sequential"
+   ],
+   "time_candidates": [
+    "date_time"
+   ],
+   "uci_id": 492,
+   "url": "https://archive.ics.uci.edu/static/public/492/data.csv"
+  },
+  {
+   "area": "Computer Science",
+   "columns": 14,
+   "licence": "CC BY 4.0",
+   "name": "Pedestrians in Traffic",
+   "page": "https://archive.ics.uci.edu/dataset/536/pedestrian+in+traffic+dataset",
+   "rows": 4759,
+   "sha256": "0f76304fa2890335723e2c9c08e2ff15bffc1b80f5cc6752c35bdcd7e1de543a",
+   "tags": [
+    "time_series",
+    "sequential"
+   ],
+   "time_candidates": [
+    "timestamp"
+   ],
+   "uci_id": 536,
+   "url": "https://archive.ics.uci.edu/static/public/536/data.csv"
+  },
+  {
+   "area": "Computer Science",
+   "columns": 8,
+   "licence": "CC BY 4.0",
+   "name": "Accelerometer Gyro Mobile Phone",
+   "page": "https://archive.ics.uci.edu/dataset/755/accelerometer+gyro+mobile+phone+dataset",
+   "rows": 31991,
+   "sha256": "60277d4ce6fb574ce9e4a1a5971049be9ba221d9300f1922b3cbc92f53475329",
+   "tags": [
+    "time_series",
+    "sequential"
+   ],
+   "time_candidates": [
+    "timestamp"
+   ],
+   "uci_id": 755,
+   "url": "https://archive.ics.uci.edu/static/public/755/data.csv"
+  },
+  {
+   "area": "Health and Medicine",
+   "columns": 7,
+   "licence": "CC BY 4.0",
+   "name": "Multivariate Gait Data",
+   "page": "https://archive.ics.uci.edu/dataset/760/multivariate+gait+data",
+   "rows": 181800,
+   "sha256": "049fa506f120622aed9c1d538aae6ff58bd7b9e6eaf368afdede8cee64cbae39",
+   "tags": [
+    "time_series",
+    "sequential"
+   ],
+   "time_candidates": [
+    "time"
+   ],
+   "uci_id": 760,
+   "url": "https://archive.ics.uci.edu/static/public/760/data.csv"
+  },
+  {
+   "area": "Engineering",
+   "columns": 85,
+   "licence": "CC BY 4.0",
+   "name": "RT-IoT2022 ",
+   "page": "https://archive.ics.uci.edu/dataset/942/rt-iot2022",
+   "rows": 123117,
+   "sha256": "289632f1b01a317e86a3cce5e276246ad64e1e6ac03ffd3b16202b9d016d7d90",
+   "tags": [
+    "sequential"
+   ],
+   "time_candidates": [],
+   "uci_id": 942,
+   "url": "https://archive.ics.uci.edu/static/public/942/data.csv"
+  }
+ ]
+}

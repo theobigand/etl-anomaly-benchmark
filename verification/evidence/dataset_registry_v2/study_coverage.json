@@ -1,0 +1,9375 @@
+{
+ "groups": {
+  "3pfl": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "3pfl",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_3pfl"
+   ]
+  },
+  "a_day_in_daylight": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 1 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "a_day_in_daylight",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_daylight_events"
+   ]
+  },
+  "ademe_dpe": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "ademe_dpe",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "ademe_dpe_existant"
+   ]
+  },
+  "airquality_italy": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "airquality_italy",
+   "exposed": true,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "series"
+   ]
+  },
+  "aoe_gameplay": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 2 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "aoe_gameplay",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_aoe_interactions"
+   ]
+  },
+  "apis_guru_openapi_directory": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "apis_guru_openapi_directory",
+   "exposed": false,
+   "labels": {
+    "natural_labels": true,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "apis_guru_openapi_directory"
+   ]
+  },
+  "austin_police_dispatch": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 0 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "austin_police_dispatch",
+   "exposed": false,
+   "labels": {
+    "natural_labels": true,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "austin_apd_cad"
+   ]
+  },
+  "austin_surface_water_quality": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "austin_surface_water_quality",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "austin_water_quality"
+   ]
+  },
+  "backblaze": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 0 rows after cleaning"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "backblaze",
+   "exposed": false,
+   "labels": {
+    "natural_labels": true,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "backblaze_drive_stats"
+   ]
+  },
+  "bloomington_locus_solar_monitoring": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "bloomington_locus_solar_monitoring",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "bloomington_solar_sites"
+   ]
+  },
+  "bloomington_utilities_water_plant": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "bloomington_locus_solar_monitoring",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "bloomington_water_plant_energy"
+   ]
+  },
+  "bts_umd_daily_mobility_statistics": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "bts_umd_daily_mobility_statistics",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "bts_daily_mobility_national"
+   ]
+  },
+  "candanedo_umons": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "candanedo_umons",
+   "exposed": true,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "series"
+   ]
+  },
+  "ccin2p3_slurm": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "ccin2p3_slurm",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "slurm_ccin2p3"
+   ]
+  },
+  "cdc_covid_vaccination_reporting": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 1107 rows after cleaning"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "cdc_covid_vaccination_reporting",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "cdc_covid_vaccination_trends_us"
+   ]
+  },
+  "cftc_cot_disaggregated": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "cftc_cot_disaggregated",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "cftc_cot_disaggregated"
+   ]
+  },
+  "chembl_molecules": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "chembl_molecules",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "chembl_molecules"
+   ]
+  },
+  "cincinnati_emergency_communications_calls": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 0 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "cincinnati_emergency_communications_calls",
+   "exposed": false,
+   "labels": {
+    "natural_labels": true,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "cincinnati_ecc_calls"
+   ]
+  },
+  "cincinnati_fire_dispatch": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 0 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "cincinnati_emergency_communications_calls",
+   "exposed": false,
+   "labels": {
+    "natural_labels": true,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "cincinnati_fire_cad"
+   ]
+  },
+  "city_of_austin_campaign_finance": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 1 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "city_of_austin_campaign_finance",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "austin_campaign_finance"
+   ]
+  },
+  "clinicaltrials_gov": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "clinicaltrials_gov",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "clinicaltrials_v2"
+   ]
+  },
+  "cnc_five_axis_milling": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "cnc_five_axis_milling",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_cnc_milling"
+   ]
+  },
+  "coatings_multinational": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout",
+     "only 2 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C2b",
+    "C4"
+   ],
+   "cluster": "coatings_multinational",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "4tu_bpic19"
+   ]
+  },
+  "colorado_dam_safety_registry": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "colorado_dam_safety_registry",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "colorado_dam_safety"
+   ]
+  },
+  "colorado_regulated_storage_tanks": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "colorado_regulated_storage_tanks",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "colorado_storage_tanks"
+   ]
+  },
+  "cordis_horizon_europe": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "cordis_horizon_europe",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "cordis_horizon_europe"
+   ]
+  },
+  "cpsc_recall_notices": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "cpsc_recall_notices",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "cpsc_recalls"
+   ]
+  },
+  "crossref": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "crossref",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "crossref_works"
+   ]
+  },
+  "cubico_kelmarsh": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "cubico_kelmarsh",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_kelmarsh"
+   ]
+  },
+  "danish_district_heating": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 2 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "danish_district_heating",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_dk_district_heating"
+   ]
+  },
+  "datacite_dois": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "datacite_dois",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "datacite_dois"
+   ]
+  },
+  "delaware_dnrec_well_permits": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "delaware_dnrec_well_permits",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "delaware_well_permits"
+   ]
+  },
+  "delaware_state_purchasing_cards": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 1 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "delaware_state_purchasing_cards",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "delaware_state_credit_cards"
+   ]
+  },
+  "dft_stats19": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "dft_stats19",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "dft_stats19_2023"
+   ]
+  },
+  "dgal_alimconfiance": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 1 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "dgal_alimconfiance",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "dgal_alimconfiance"
+   ]
+  },
+  "dgccrf_fuel_prices": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 2 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "dgccrf_fuel_prices",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "dgccrf_fuel_prices"
+   ]
+  },
+  "dgfip_dvf": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "dgfip_dvf",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "dgfip_dvf"
+   ]
+  },
+  "dmsp_ssj_auroral": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "dmsp_ssj_auroral",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_dmsp_auroral"
+   ]
+  },
+  "doaj_directory_of_open_access_journals": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "doaj_directory_of_open_access_journals",
+   "exposed": false,
+   "labels": {
+    "natural_labels": true,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "doaj_journals"
+   ]
+  },
+  "dutch_municipalities": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 2 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "dutch_municipalities",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "4tu_bpic15_m5"
+   ]
+  },
+  "dwd_germany": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 3 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "dwd_germany",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "dwd_hourly_climate"
+   ]
+  },
+  "ea_hydrology": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 1 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "ea_hydrology",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "ea_hydrology_flow"
+   ]
+  },
+  "ecb_euro_fx_reference_rates": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 0 rows after cleaning"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "ecb_euro_fx_reference_rates",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "ecb_fx_reference_rates"
+   ]
+  },
+  "edp_wind_farm_portugal": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "edp_wind_farm_portugal",
+   "exposed": false,
+   "labels": {
+    "natural_labels": true,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_care_wind_a"
+   ]
+  },
+  "eia_petroleum_spot_prices": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "eia_petroleum_spot_prices",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "eia_petroleum_spot_prices"
+   ]
+  },
+  "eicu_philips": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "eicu_philips",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "physionet_eicu_demo"
+   ]
+  },
+  "elder_home": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "elder_home",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "series"
+   ]
+  },
+  "epa_aqs": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column",
+     "only 1 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "epa_aqs",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "epa_aqs_ozone_hourly"
+   ]
+  },
+  "fda_maude": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "fda_maude",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "openfda_device_event"
+   ]
+  },
+  "fdic_bank_financials": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "fdic_bank_financials",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "fdic_bank_financials"
+   ]
+  },
+  "fec_federal_campaign_finance_filings": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "fec_federal_campaign_finance_filings",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "fec_federal_campaign_finance_2024"
+   ]
+  },
+  "federal_register": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "federal_register",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "us_federal_register"
+   ]
+  },
+  "fermi_blazar_flares": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "fermi_blazar_flares",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_blazar_flares"
+   ]
+  },
+  "fin_institute_nl": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 2 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "fin_institute_nl",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "4tu_bpic12"
+   ]
+  },
+  "florida_bridge_inspections": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "florida_bridge_inspections",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_florida_bridges"
+   ]
+  },
+  "france_baac_road_accidents": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column",
+     "only 3 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "france_baac_road_accidents",
+   "exposed": false,
+   "labels": {
+    "natural_labels": true,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "france_baac_road_accidents"
+   ]
+  },
+  "fraunhofer_iee_care_wind_b": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "fraunhofer_iee_care_wind_b",
+   "exposed": false,
+   "labels": {
+    "natural_labels": true,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_care_wind_b"
+   ]
+  },
+  "fta_national_transit_database": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "fta_national_transit_database",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "fta_ntd_monthly_ridership"
+   ]
+  },
+  "fugaku_riken": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "fugaku_riken",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_fdata_fugaku"
+   ]
+  },
+  "gbif_occurrences": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "gbif_occurrences",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "gbif_cc0_occurrences"
+   ]
+  },
+  "gene_ontology_consortium_annotations": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "gene_ontology_consortium_annotations",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "gene_ontology_annotations"
+   ]
+  },
+  "georgia_procurement": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout",
+     "no parseable time column",
+     "only 0 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C2b",
+    "C5",
+    "C6"
+   ],
+   "cluster": "georgia_procurement",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "ocds_georgia"
+   ]
+  },
+  "german_paying_agency": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout",
+     "only 3 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C2b",
+    "C4"
+   ],
+   "cluster": "german_paying_agency",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "4tu_bpic18"
+   ]
+  },
+  "german_water_demand": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "german_water_demand",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_water_demand"
+   ]
+  },
+  "gfz_potsdam_kp": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 2 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "gfz_potsdam_kp",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "gfz_kp_index"
+   ]
+  },
+  "github_actions_workflows": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "github_actions_workflows",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_gha_workflows"
+   ]
+  },
+  "github_advisory_database": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "github_advisory_database",
+   "exposed": false,
+   "labels": {
+    "natural_labels": true,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "github_reviewed_advisories"
+   ]
+  },
+  "grouplens": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "grouplens",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "grouplens_movielens"
+   ]
+  },
+  "gtfs_fr_alterneo": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "gtfs_fr_alterneo",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "gtfs_fr_alterneo"
+   ]
+  },
+  "gtfs_fr_aravis": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "gtfs_fr_aravis",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "gtfs_fr_aravis"
+   ]
+  },
+  "gtfs_fr_citea": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "gtfs_fr_citea",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "gtfs_fr_citea"
+   ]
+  },
+  "gtfs_fr_diviamobilites": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "gtfs_fr_diviamobilites",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "gtfs_fr_diviamobilites"
+   ]
+  },
+  "gtfs_fr_filibus": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "gtfs_fr_filibus",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "gtfs_fr_filibus"
+   ]
+  },
+  "gtfs_fr_kiceo": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "gtfs_fr_kiceo",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "gtfs_fr_kiceo"
+   ]
+  },
+  "gtfs_fr_optymo": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "gtfs_fr_optymo",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "gtfs_fr_optymo"
+   ]
+  },
+  "gtfs_fr_palmbus": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "gtfs_fr_palmbus",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "gtfs_fr_palmbus"
+   ]
+  },
+  "gtfs_fr_sankeo": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "gtfs_fr_sankeo",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "gtfs_fr_sankeo"
+   ]
+  },
+  "gtfs_fr_sibra": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "gtfs_fr_sibra",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "gtfs_fr_sibra"
+   ]
+  },
+  "gtfs_fr_tango": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "gtfs_fr_tango",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "gtfs_fr_tango"
+   ]
+  },
+  "gtfs_fr_transvilles": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "gtfs_fr_transvilles",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "gtfs_fr_transvilles"
+   ]
+  },
+  "hm_land_registry": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 1 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "hm_land_registry",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "hmlr_price_paid"
+   ]
+  },
+  "hospital_sepsis_nl": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 1 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "hospital_sepsis_nl",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "4tu_sepsis"
+   ]
+  },
+  "ingv_seismic": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "ingv_seismic",
+   "exposed": false,
+   "labels": {
+    "natural_labels": true,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "ingv_seismic_events"
+   ]
+  },
+  "inpi_bce_ratios": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "inpi_bce_ratios",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "inpi_bce_ratios"
+   ]
+  },
+  "italian_road_fines": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout",
+     "only 0 rows after cleaning"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C2b",
+    "C4"
+   ],
+   "cluster": "italian_road_fines",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "4tu_road_fines"
+   ]
+  },
+  "japan_reconstructed_buildings": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column",
+     "only 2 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "japan_reconstructed_buildings",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_japan_buildings"
+   ]
+  },
+  "jolpica_f1": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "jolpica_f1",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "jolpica_f1"
+   ]
+  },
+  "kanto_landslides": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "kanto_landslides",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_kanto_landslides"
+   ]
+  },
+  "loghub_collection": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column",
+     "only 0 continuous columns",
+     "only 1 continuous columns",
+     "only 2 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "loghub_collection",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "loghub"
+   ]
+  },
+  "lyft_bikeshare": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 1 continuous columns",
+     "only 3 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "lyft_bikeshare",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "bikeshare_capital",
+    "bikeshare_jc"
+   ]
+  },
+  "melbourne_pedestrian": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 0 rows after cleaning"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "melbourne_pedestrian",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "monash_pedestrian"
+   ]
+  },
+  "met_museum": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "met_museum",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "met_museum_objects"
+   ]
+  },
+  "metropt_porto": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "metropt_porto",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_metropt2"
+   ]
+  },
+  "microsoft_azure_compute": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "microsoft_azure_compute",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "azure_packing_2020"
+   ]
+  },
+  "mimic_iv_bidmc": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "mimic_iv_bidmc",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "physionet_mimic_iv_demo"
+   ]
+  },
+  "mitre_attack_knowledge_base": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "mitre_attack_knowledge_base",
+   "exposed": false,
+   "labels": {
+    "natural_labels": true,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "mitre_attack_enterprise_stix"
+   ]
+  },
+  "montgomery_county_liquor_control_sales": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "montgomery_county_liquor_control_sales",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "montgomery_dlc_sales"
+   ]
+  },
+  "montreal_contracts": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout",
+     "no parseable time column",
+     "only 1 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C2b",
+    "C6"
+   ],
+   "cluster": "montreal_contracts",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "ocds_montreal"
+   ]
+  },
+  "moodle_lms_events": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 0 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "moodle_lms_events",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_moodle_events"
+   ]
+  },
+  "naoj_norp_solar_bursts": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "naoj_norp_solar_bursts",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_norp_solar_bursts"
+   ]
+  },
+  "nasa_common_metadata_repository": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "nasa_common_metadata_repository",
+   "exposed": false,
+   "labels": {
+    "natural_labels": true,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "nasa_cmr_collections"
+   ]
+  },
+  "nasa_omni_near_earth_solar_wind": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "nasa_omni_near_earth_solar_wind",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "nasa_omni_solar_wind"
+   ]
+  },
+  "ncbi_pubchem_compound_records": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "ncbi_pubchem_compound_records",
+   "exposed": false,
+   "labels": {
+    "natural_labels": true,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "pubchem_compounds"
+   ]
+  },
+  "nces_ipeds_postsecondary_surveys": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "nces_ipeds_postsecondary_surveys",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "nces_ipeds_2023"
+   ]
+  },
+  "ndbc_moored_buoys": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "ndbc_moored_buoys",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "ndbc_buoys_2023"
+   ]
+  },
+  "nhif_hospital_cases": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "nhif_hospital_cases",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_nhif_hospital_cases"
+   ]
+  },
+  "nih_research_grants": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "nih_research_grants",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "nih_reporter_projects_fy2024"
+   ]
+  },
+  "nist_nvd": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "github_advisory_database",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "nvd_cve"
+   ]
+  },
+  "noaa_coops": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 2 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "noaa_coops",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "noaa_coops_tides"
+   ]
+  },
+  "noaa_cpc_arctic_oscillation_index": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 1 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "noaa_cpc_arctic_oscillation_index",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "noaa_cpc_daily_ao_index"
+   ]
+  },
+  "noaa_gml_co2": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 0 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "noaa_gml_co2",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "noaa_gml_co2_weekly"
+   ]
+  },
+  "noaa_ncei_storm_events": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "noaa_ncei_storm_events",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "ncei_storm_events_2024"
+   ]
+  },
+  "noaa_nhc_hurdat2_best_track": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "noaa_nhc_hurdat2_best_track",
+   "exposed": false,
+   "labels": {
+    "natural_labels": true,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "nhc_hurdat2_atlantic"
+   ]
+  },
+  "nsidc_sea_ice_index": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 2 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "nsidc_sea_ice_index",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "nsidc_sea_ice_index"
+   ]
+  },
+  "ntnu_ev_charging": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 2 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "ntnu_ev_charging",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_ev_charging"
+   ]
+  },
+  "nws_alerts": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "nws_alerts",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "nws_weather_alerts"
+   ]
+  },
+  "nyc_tlc": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "nyc_tlc",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "nyc_tlc_yellow"
+   ]
+  },
+  "openalex": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C5",
+    "C6"
+   ],
+   "cluster": "openalex",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "openalex"
+   ]
+  },
+  "openfda_faers": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "openfda_faers",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "openfda_drug_event"
+   ]
+  },
+  "openfoodfacts": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "openfoodfacts",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "openfoodfacts"
+   ]
+  },
+  "openlibrary": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "openlibrary",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "openlibrary_dump"
+   ]
+  },
+  "osv_go": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "github_advisory_database",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "osv_go_advisories"
+   ]
+  },
+  "ourairports_db": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "ourairports_db",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "ourairports_db"
+   ]
+  },
+  "paleobiology_database": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C2a",
+    "C5"
+   ],
+   "cluster": "paleobiology_database",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_pbdb",
+    "zen_pbdb_relational"
+   ]
+  },
+  "paris_urban_trees": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "paris_urban_trees",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "paris_urban_trees"
+   ]
+  },
+  "pnnl_epri_bess": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "pnnl_epri_bess",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_bess"
+   ]
+  },
+  "port_noumea_stopovers": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "port_noumea_stopovers",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_port_noumea"
+   ]
+  },
+  "queensland_petroleum_production": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 717 rows after cleaning"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "queensland_petroleum_production",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_queensland_petrol"
+   ]
+  },
+  "rabobank_ict": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 1 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "rabobank_ict",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "4tu_bpic14"
+   ]
+  },
+  "rcsb_pdb": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "rcsb_pdb",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "rcsb_pdb_entries"
+   ]
+  },
+  "reactome_curated_pathway_database": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "reactome_curated_pathway_database",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "reactome_pathway_knowledgebase"
+   ]
+  },
+  "rki_surveillance": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "rki_surveillance",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "panels"
+   ]
+  },
+  "ror": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "ror",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "ror_organizations"
+   ]
+  },
+  "rte_france_grid": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "rte_france_grid",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "rte_eco2mix_national"
+   ]
+  },
+  "seattle_fire_911_dispatch": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 0 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "seattle_fire_911_dispatch",
+   "exposed": false,
+   "labels": {
+    "natural_labels": true,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "seattle_fire_911_calls"
+   ]
+  },
+  "seattle_fremont_bridge_counter": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 3 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "seattle_fremont_bridge_counter",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "seattle_fremont_bridge"
+   ]
+  },
+  "seattle_sdci_building_permits": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "seattle_sdci_building_permits",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "seattle_building_permits"
+   ]
+  },
+  "seoul_bike": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "seoul_bike",
+   "exposed": true,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "series"
+   ]
+  },
+  "sffd_fire_incidents": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "sffd_fire_incidents",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "sffd_fire_incidents"
+   ]
+  },
+  "sfo_passenger_statistics": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 1 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "sfo_passenger_statistics",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "sfo_air_traffic"
+   ]
+  },
+  "sncf_tgv_regularite": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "sncf_tgv_regularite",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "sncf_tgv_regularite"
+   ]
+  },
+  "stackexchange": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "stackexchange",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "stackexchange"
+   ]
+  },
+  "steel_korea": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "steel_korea",
+   "exposed": true,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "series"
+   ]
+  },
+  "surf_lisa_slurm": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "surf_lisa_slurm",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_surf_lisa_slurm"
+   ]
+  },
+  "telecom_operator_kpis": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "telecom_operator_kpis",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_telecom_kpis"
+   ]
+  },
+  "terralore_chronicle_db": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column",
+     "only 2 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "terralore_chronicle_db",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_terralore_chronicle"
+   ]
+  },
+  "tetouan_power": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "tetouan_power",
+   "exposed": true,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "series"
+   ]
+  },
+  "tue_travel_claims": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 1 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "tue_travel_claims",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "4tu_bpic20_domestic",
+    "4tu_bpic20_international"
+   ]
+  },
+  "tx_hhsc_child_care_operations": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "tx_hhsc_child_care_operations",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "tx_hhsc_child_care"
+   ]
+  },
+  "tx_hotel_occupancy_tax_revenue": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "tx_hotel_occupancy_tax_revenue",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "tx_hotel_occupancy_tax"
+   ]
+  },
+  "uci:101": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "uci:101",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_101_C2a"
+   ]
+  },
+  "uci:110": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:110",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_110_C1"
+   ]
+  },
+  "uci:143": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:143",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_143_C1"
+   ]
+  },
+  "uci:146": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:146",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_146_C1"
+   ]
+  },
+  "uci:148": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:148",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_148_C1"
+   ]
+  },
+  "uci:149": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:149",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_149_C1"
+   ]
+  },
+  "uci:15": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:15",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_15_C1"
+   ]
+  },
+  "uci:159": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:159",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_159_C1"
+   ]
+  },
+  "uci:162": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:162",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_162_C1"
+   ]
+  },
+  "uci:165": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:165",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_165_C1"
+   ]
+  },
+  "uci:189": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:189",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_189_C1"
+   ]
+  },
+  "uci:19": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "uci:19",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_19_C2a"
+   ]
+  },
+  "uci:193": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:193",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_193_C1"
+   ]
+  },
+  "uci:198": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:198",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_198_C1"
+   ]
+  },
+  "uci:212": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:212",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_212_C1"
+   ]
+  },
+  "uci:22": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "uci:22",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_22_C2a"
+   ]
+  },
+  "uci:247": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 536 rows after cleaning"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:247",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_247_C1"
+   ]
+  },
+  "uci:257": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:257",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_257_C1"
+   ]
+  },
+  "uci:26": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "uci:26",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_26_C2a"
+   ]
+  },
+  "uci:264": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:264",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_264_C1"
+   ]
+  },
+  "uci:267": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:267",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_267_C1"
+   ]
+  },
+  "uci:27": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "uci:27",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_27_C2a"
+   ]
+  },
+  "uci:270": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:270",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_270_C1"
+   ]
+  },
+  "uci:291": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:291",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_291_C1"
+   ]
+  },
+  "uci:292": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:292",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_292_C1"
+   ]
+  },
+  "uci:294": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:294",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_294_C1"
+   ]
+  },
+  "uci:296": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:296",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_296_C1"
+   ]
+  },
+  "uci:31": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:31",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_31_C1"
+   ]
+  },
+  "uci:312": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 720 rows after cleaning"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:312",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_312_C1"
+   ]
+  },
+  "uci:32": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "uci:32",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_32_C2a"
+   ]
+  },
+  "uci:327": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:327",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_327_C1"
+   ]
+  },
+  "uci:329": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:329",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_329_C1"
+   ]
+  },
+  "uci:352": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 3 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "uci:352",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "uci_online_retail"
+   ]
+  },
+  "uci:365": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:365",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_365_C1"
+   ]
+  },
+  "uci:368": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:368",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_368_C1"
+   ]
+  },
+  "uci:372": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:372",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_372_C1"
+   ]
+  },
+  "uci:379": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:379",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_379_C1"
+   ]
+  },
+  "uci:381": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:381",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_381_C1"
+   ]
+  },
+  "uci:396": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:396",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_396_C1"
+   ]
+  },
+  "uci:464": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:464",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_464_C1"
+   ]
+  },
+  "uci:52": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:52",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_52_C1"
+   ]
+  },
+  "uci:536": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:536",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_536_C1"
+   ]
+  },
+  "uci:545": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:545",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_545_C1"
+   ]
+  },
+  "uci:551": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:551",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_551_C1"
+   ]
+  },
+  "uci:555": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "uci:555",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_555_C2a"
+   ]
+  },
+  "uci:572": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:572",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_572_C1"
+   ]
+  },
+  "uci:59": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:59",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_59_C1"
+   ]
+  },
+  "uci:597": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 690 rows after cleaning"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:597",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_597_C1"
+   ]
+  },
+  "uci:601": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:601",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_601_C1"
+   ]
+  },
+  "uci:602": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:602",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_602_C1"
+   ]
+  },
+  "uci:69": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "uci:69",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_69_C2a"
+   ]
+  },
+  "uci:73": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "uci:73",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_73_C2a"
+   ]
+  },
+  "uci:75": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:75",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_75_C1"
+   ]
+  },
+  "uci:755": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:755",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_755_C1"
+   ]
+  },
+  "uci:76": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "uci:76",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_76_C2a"
+   ]
+  },
+  "uci:760": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:760",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_760_C1"
+   ]
+  },
+  "uci:78": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:78",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_78_C1"
+   ]
+  },
+  "uci:80": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:80",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_80_C1"
+   ]
+  },
+  "uci:848": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:848",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_848_C1"
+   ]
+  },
+  "uci:850": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:850",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_850_C1"
+   ]
+  },
+  "uci:864": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:864",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_864_C1"
+   ]
+  },
+  "uci:911": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "uci:911",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_911_C2a"
+   ]
+  },
+  "uci:94": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:94",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_94_C1"
+   ]
+  },
+  "uci:942": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C1"
+   ],
+   "cluster": "uci:942",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_942_C1"
+   ]
+  },
+  "uci:967": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "uci:967",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "flat_uci_967_C2a"
+   ]
+  },
+  "uk_charity_commission": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "uk_charity_commission",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "uk_charity_register"
+   ]
+  },
+  "uk_ledger_mhra": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 1 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "uk_ledger_mhra",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "ukspend"
+   ]
+  },
+  "uk_ledger_nhsbsa": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 2 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "uk_ledger_nhsbsa",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "ukspend"
+   ]
+  },
+  "uniprot_kb": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "uniprot_kb",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "uniprot_kb_reviewed"
+   ]
+  },
+  "unisg_smart_factory": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout",
+     "only 0 rows after cleaning",
+     "only 1 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C3",
+    "C4"
+   ],
+   "cluster": "unisg_smart_factory",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_unisg_factory"
+   ]
+  },
+  "us_treasury_dts": {
+   "batch_approved": {
+    "eligible": true,
+    "reasons": []
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "us_treasury_dts",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "us_treasury_dts"
+   ]
+  },
+  "usda_fdc": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "usda_fdc",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "usda_fdc_sr_legacy"
+   ]
+  },
+  "usgs_water": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 1 continuous columns"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "usgs_water",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "usgs_continuous_discharge"
+   ]
+  },
+  "vif_aegis": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C3"
+   ],
+   "cluster": "vif_aegis",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TS",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "point_outlier",
+     "contextual_anomaly",
+     "collective_anomaly",
+     "level_shift",
+     "gradual_drift",
+     "seasonal_deviation",
+     "missing_interval",
+     "delayed_arrival",
+     "prevalence_change"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_aegis_vehicle"
+   ]
+  },
+  "volvo_it": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 1 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "volvo_it",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "4tu_bpic13_incidents"
+   ]
+  },
+  "wa_ecology_ghg_reports": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "wa_ecology_ghg_reports",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "wa_ghg_reporting"
+   ]
+  },
+  "wa_ev_population": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "wa_ev_population",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "wa_ev_population"
+   ]
+  },
+  "wals_cldf": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "wals_cldf",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "wals_cldf"
+   ]
+  },
+  "wikimedia_simplewiki": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 3 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "event_window"
+    }
+   ],
+   "categories": [
+    "C4"
+   ],
+   "cluster": "wikimedia_simplewiki",
+   "exposed": false,
+   "labels": {
+    "natural_labels": true,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-SEQ",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "order_violation",
+     "missing_event",
+     "unexpected_sequence",
+     "rare_pattern",
+     "duplicate_event",
+     "abnormal_transition"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "wikimedia_simplewiki_edits"
+   ]
+  },
+  "wikimedia_wikidata": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "wikimedia_wikidata",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "wikidata_entities"
+   ]
+  },
+  "wind_fragility_power_db": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "relational_load"
+    }
+   ],
+   "categories": [
+    "C5"
+   ],
+   "cluster": "wind_fragility_power_db",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-REL",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "referential_violation",
+     "invalid_relationship",
+     "broken_entity_dependency",
+     "inconsistent_aggregate",
+     "duplicate_entity",
+     "relationship_anomaly"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zen_wind_fragility"
+   ]
+  },
+  "world_bank_projects": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "only 718 rows after cleaning"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2b"
+   ],
+   "cluster": "world_bank_projects",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "wb_lending_projects"
+   ]
+  },
+  "wri_global_power_plants": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no parseable time column"
+    ]
+   },
+   "batch_provisional": [],
+   "categories": [
+    "C2a"
+   ],
+   "cluster": "wri_global_power_plants",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-TAB",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "univariate_outlier",
+     "multivariate_outlier",
+     "invalid_category_code",
+     "missing_values",
+     "duplicate_rows",
+     "cross_field_violation",
+     "abnormal_entity_behaviour"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "wri_power_plants"
+   ]
+  },
+  "zambia_procurement": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout",
+     "only 1 continuous columns"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C2b",
+    "C5",
+    "C6"
+   ],
+   "cluster": "zambia_procurement",
+   "exposed": false,
+   "labels": {
+    "natural_labels": false,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "ocds_zambia"
+   ]
+  },
+  "zenodo_repository_records": {
+   "batch_approved": {
+    "eligible": false,
+    "reasons": [
+     "no CSV table: the batch unit is not defined for this layout"
+    ]
+   },
+   "batch_provisional": [
+    {
+     "reason": "unsupported: the unit has no approved definition",
+     "unit": "document_batch"
+    }
+   ],
+   "categories": [
+    "C6"
+   ],
+   "cluster": "zenodo_repository_records",
+   "exposed": false,
+   "labels": {
+    "natural_labels": true,
+    "origin": [
+     "controlled_injection"
+    ]
+   },
+   "local_view_available": true,
+   "protocol": "P-NEST",
+   "unit_level": {
+    "compatible": true,
+    "mechanisms": [
+     "missing_required_field",
+     "invalid_nested_type",
+     "structural_inconsistency",
+     "unexpected_array_or_object",
+     "broken_hierarchy",
+     "schema_evolution_violation"
+    ],
+    "reason": ""
+   },
+   "views": [
+    "zenodo_dataset_records_2023_03"
+   ]
+  }
+ },
+ "summary": {
+  "batch_approved": 47,
+  "batch_approved_clusters": 46,
+  "clusters": 231,
+  "groups": 235,
+  "natural_labels": 18,
+  "per_category": {
+   "C1": {
+    "batch_approved": 1,
+    "batch_approved_clusters": 1,
+    "exposed": 0,
+    "groups": 52,
+    "local_view": 52,
+    "unit_level": 52
+   },
+   "C2a": {
+    "batch_approved": 6,
+    "batch_approved_clusters": 6,
+    "exposed": 0,
+    "groups": 30,
+    "local_view": 30,
+    "unit_level": 30
+   },
+   "C2b": {
+    "batch_approved": 8,
+    "batch_approved_clusters": 8,
+    "exposed": 0,
+    "groups": 30,
+    "local_view": 30,
+    "unit_level": 30
+   },
+   "C3": {
+    "batch_approved": 21,
+    "batch_approved_clusters": 20,
+    "exposed": 5,
+    "groups": 40,
+    "local_view": 40,
+    "unit_level": 40
+   },
+   "C4": {
+    "batch_approved": 5,
+    "batch_approved_clusters": 5,
+    "exposed": 0,
+    "groups": 28,
+    "local_view": 28,
+    "unit_level": 28
+   },
+   "C5": {
+    "batch_approved": 6,
+    "batch_approved_clusters": 6,
+    "exposed": 0,
+    "groups": 36,
+    "local_view": 36,
+    "unit_level": 36
+   },
+   "C6": {
+    "batch_approved": 0,
+    "batch_approved_clusters": 0,
+    "exposed": 0,
+    "groups": 30,
+    "local_view": 30,
+    "unit_level": 30
+   }
+  },
+  "protocols": {
+   "P-NEST": 30,
+   "P-REL": 33,
+   "P-SEQ": 25,
+   "P-TAB": 108,
+   "P-TS": 39
+  },
+  "unit_level": 235
+ }
+}

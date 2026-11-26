@@ -1,0 +1,332 @@
+{
+ "errors": {},
+ "features": 49,
+ "metrics": {
+  "copod": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 9.090909090909092,
+    "pr_auc": 0.03370173452140665,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2567567567567568
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 2.5974025974025974,
+    "pr_auc": 0.09496658312447787,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.660958904109589
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 1.2987012987012987,
+    "pr_auc": 0.09997313994090787,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5225225225225225
+   }
+  ],
+  "ecod": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 7.792207792207792,
+    "pr_auc": 0.034436689930209374,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.27027027027027023
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.896103896103896,
+    "pr_auc": 0.10886437908496732,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.7089041095890412
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 2.5974025974025974,
+    "pr_auc": 0.14782608695652172,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5675675675675675
+   }
+  ],
+  "great_expectations": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.03896103896103896,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.05194805194805195,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.03896103896103896,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   }
+  ],
+  "hbos": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 10.38961038961039,
+    "pr_auc": 0.03450268817204301,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2657657657657657
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.493506493506493,
+    "pr_auc": 0.10102348631760395,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.6198630136986302
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 1.2987012987012987,
+    "pr_auc": 0.1061965811965812,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.563063063063063
+   }
+  ],
+  "iqr": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.03896103896103896,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.05194805194805195,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.03896103896103896,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   }
+  ],
+  "isolation_forest": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 7.792207792207792,
+    "pr_auc": 0.03709308582189938,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3108108108108108
+   },
+   {
+    "f1": 0.2,
+    "flagged_pct": 7.792207792207792,
+    "pr_auc": 0.10922395273899033,
+    "precision": 0.16666666666666666,
+    "recall": 0.25,
+    "roc_auc": 0.6575342465753424
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.896103896103896,
+    "pr_auc": 0.11207245496862983,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.49099099099099097
+   }
+  ],
+  "knn": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.493506493506493,
+    "pr_auc": 0.046873706004140786,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4279279279279279
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 1.2987012987012987,
+    "pr_auc": 0.2326923076923077,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.8904109589041096
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 1.2987012987012987,
+    "pr_auc": 0.07170645446507516,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5585585585585585
+   }
+  ],
+  "lof": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 7.792207792207792,
+    "pr_auc": 0.04801801801801802,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.43243243243243235
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 1.2987012987012987,
+    "pr_auc": 0.26620370370370366,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.8698630136986302
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.08701628799668015,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5675675675675675
+   }
+  ],
+  "ocsvm": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 11.688311688311687,
+    "pr_auc": 0.044684684684684686,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.40990990990990983
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 1.2987012987012987,
+    "pr_auc": 0.24188311688311687,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.8835616438356164
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 2.5974025974025974,
+    "pr_auc": 0.07717054263565892,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.572072072072072
+   }
+  ],
+  "pca": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 14.285714285714285,
+    "pr_auc": 0.04654661864745899,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.463963963963964
+   },
+   {
+    "f1": 0.5454545454545454,
+    "flagged_pct": 9.090909090909092,
+    "pr_auc": 0.4303030303030303,
+    "precision": 0.42857142857142855,
+    "recall": 0.75,
+    "roc_auc": 0.8835616438356164
+   },
+   {
+    "f1": 0.3333333333333333,
+    "flagged_pct": 3.896103896103896,
+    "pr_auc": 0.22241784037558684,
+    "precision": 0.3333333333333333,
+    "recall": 0.3333333333333333,
+    "roc_auc": 0.6261261261261261
+   }
+  ],
+  "zscore": [
+   {
+    "f1": 0.08695652173913043,
+    "flagged_pct": 55.84415584415584,
+    "pr_auc": 0.047543859649122805,
+    "precision": 0.046511627906976744,
+    "recall": 0.6666666666666666,
+    "roc_auc": 0.43918918918918914
+   },
+   {
+    "f1": 0.18181818181818182,
+    "flagged_pct": 51.94805194805194,
+    "pr_auc": 0.24999999999999997,
+    "precision": 0.1,
+    "recall": 1.0,
+    "roc_auc": 0.815068493150685
+   },
+   {
+    "f1": 0.1,
+    "flagged_pct": 48.05194805194805,
+    "pr_auc": 0.08653846153846154,
+    "precision": 0.05405405405405406,
+    "recall": 0.6666666666666666,
+    "roc_auc": 0.6599099099099099
+   }
+  ]
+ },
+ "name": "Student Performance on an Entrance Examination",
+ "prevalence": 0.04500978473581213,
+ "problem": "uci:582",
+ "report": {
+  "anomalies": 30,
+  "anomaly_class": "Excellent",
+  "conflicting_rows_removed": 17,
+  "dropped_constant": [],
+  "dropped_high_cardinality": [],
+  "dropped_missing": [],
+  "duplicates_removed": 67,
+  "encoded": [
+   "Gender",
+   "Caste",
+   "coaching",
+   "time",
+   "Class_ten_education",
+   "twelve_education",
+   "medium",
+   "Class_X_Percentage",
+   "Class_XII_Percentage",
+   "Father_occupation",
+   "Mother_occupation"
+  ],
+  "features_out": 49,
+  "kind": "downsampled",
+  "natural_rate": 0.15165165165165165,
+  "rows": 595,
+  "rows_in": 595,
+  "rows_out": 511,
+  "rule": "R2"
+ },
+ "rows": 511,
+ "rule": "R2",
+ "seeds": [
+  42,
+  1,
+  2
+ ],
+ "skipped": []
+}

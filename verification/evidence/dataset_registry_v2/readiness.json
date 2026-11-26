@@ -1,0 +1,3214 @@
+{
+ "datasets": [
+  {
+   "failed": {
+    "reasons": [
+     "no independent source group",
+     "personal-data handling not reviewed",
+     "expected source properties (baseline) not recorded",
+     "anomaly origin (natural or injected) not declared",
+     "too few detection units"
+    ],
+    "status": "scientifically_eligible"
+   },
+   "group": null,
+   "id": "monash:4654773",
+   "status": "structurally_valid",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "licence class 'restricted' is not open or research_only"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4654833",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656009",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656014",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656022",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656027",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656032",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656042",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656049",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656058",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656096",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656110",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656132",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656144",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "melbourne_pedestrian",
+   "id": "monash:4656626",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656719",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4659727",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:5121965",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:5122114",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:5122535",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:5184708",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "stackexchange",
+   "id": "stackexchange:3dprinting",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "stackexchange",
+   "id": "stackexchange:astronomy",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "stackexchange",
+   "id": "stackexchange:beer",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "stackexchange",
+   "id": "stackexchange:coffee",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "stackexchange",
+   "id": "stackexchange:earthscience",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "stackexchange",
+   "id": "stackexchange:economics",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "stackexchange",
+   "id": "stackexchange:fitness",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "stackexchange",
+   "id": "stackexchange:gardening",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "stackexchange",
+   "id": "stackexchange:ham",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "stackexchange",
+   "id": "stackexchange:health",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "openfda_faers",
+   "id": "openfda_drug_event",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "openfda_drug_label",
+   "status": "discovered",
+   "stratum": "C6"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "openfda_food_enforcement",
+   "status": "discovered",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "openalex",
+   "id": "openalex:relational",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "openalex",
+   "id": "openalex:nested",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "openfoodfacts",
+   "id": "openfoodfacts_products",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "uk_ledger_mhra",
+   "id": "ukspend_mhra",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "uk_ledger_nhsbsa",
+   "id": "ukspend_nhsbsa",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "ukspend_charity_commission",
+   "status": "discovered",
+   "stratum": "C2b"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "ukspend_nice",
+   "status": "discovered",
+   "stratum": "C2b"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "ukspend_ofsted",
+   "status": "discovered",
+   "stratum": "C2b"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "rejected:tate",
+   "status": "discovered",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "montreal_contracts",
+   "id": "ocds_montreal",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "montreal_contracts",
+   "id": "ocds_montreal:nested",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "georgia_procurement",
+   "id": "ocds_georgia",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "licence class 'unclear' is not open or research_only",
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "ocds_netherlands",
+   "status": "discovered",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "zambia_procurement",
+   "id": "ocds_zambia",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "rejected:usaspending",
+   "status": "discovered",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "georgia_procurement",
+   "id": "ocds_georgia:nested",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "georgia_procurement",
+   "id": "ocds_georgia:relational",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "zambia_procurement",
+   "id": "ocds_zambia:nested",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "zambia_procurement",
+   "id": "ocds_zambia:relational",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "lyft_bikeshare",
+   "id": "bikeshare_capital",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "lyft_bikeshare",
+   "id": "bikeshare_jc",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "ccin2p3_slurm",
+   "id": "slurm_ccin2p3",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "clinicaltrials_gov",
+   "id": "clinicaltrials_v2",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "crossref",
+   "id": "crossref_works",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "candanedo_umons",
+   "id": "uci:357",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "candanedo_umons",
+   "id": "uci:374",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "airquality_italy",
+   "id": "uci:360",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "seoul_bike",
+   "id": "uci:560",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "elder_home",
+   "id": "uci:799",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "tetouan_power",
+   "id": "uci:849",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "steel_korea",
+   "id": "uci:851",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "uci:172",
+   "status": "acquired",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "uci:492",
+   "status": "acquired",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "rki_surveillance",
+   "id": "rki_notaufnahme",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "rki_surveillance",
+   "id": "rki_hospitalisation",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "google_cluster_2019a",
+   "status": "acquired",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "3pfl",
+   "id": "zen_3pfl",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "zen_datacenter_traces",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "vif_aegis",
+   "id": "zen_aegis_vehicle",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "zen_nyc_telematics",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "zen_pure_requirements",
+   "status": "discovered",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "surf_lisa_slurm",
+   "id": "zen_surf_lisa_slurm",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "fugaku_riken",
+   "id": "zen_fdata_fugaku",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "metropt_porto",
+   "id": "zen_metropt2",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "openlibrary",
+   "id": "openlibrary_dump",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": "ait_clue",
+   "id": "zen_clue_lds",
+   "status": "discovered",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "fin_institute_nl",
+   "id": "4tu_bpic12",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "volvo_it",
+   "id": "4tu_bpic13_incidents",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "dutch_municipalities",
+   "id": "4tu_bpic15_m5",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "italian_road_fines",
+   "id": "4tu_road_fines",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "coatings_multinational",
+   "id": "4tu_bpic19",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "italian_road_fines",
+   "id": "4tu_road_fines:transactions",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "coatings_multinational",
+   "id": "4tu_bpic19:transactions",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "tue_travel_claims",
+   "id": "4tu_bpic20_domestic",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "tue_travel_claims",
+   "id": "4tu_bpic20_international",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "hospital_sepsis_nl",
+   "id": "4tu_sepsis",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "grouplens",
+   "id": "grouplens_movielens",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "rabobank_ict",
+   "id": "4tu_bpic14",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "german_paying_agency",
+   "id": "4tu_bpic18",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "german_paying_agency",
+   "id": "4tu_bpic18:transactions",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_alterneo",
+   "id": "gtfs_fr_alterneo",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_aravis",
+   "id": "gtfs_fr_aravis",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_citea",
+   "id": "gtfs_fr_citea",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_diviamobilites",
+   "id": "gtfs_fr_diviamobilites",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_filibus",
+   "id": "gtfs_fr_filibus",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_kiceo",
+   "id": "gtfs_fr_kiceo",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_optymo",
+   "id": "gtfs_fr_optymo",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_palmbus",
+   "id": "gtfs_fr_palmbus",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_sankeo",
+   "id": "gtfs_fr_sankeo",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_sibra",
+   "id": "gtfs_fr_sibra",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_tango",
+   "id": "gtfs_fr_tango",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_transvilles",
+   "id": "gtfs_fr_transvilles",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "met_museum",
+   "id": "met_museum_objects",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "ea_hydrology",
+   "id": "ea_hydrology_flow",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "dgfip_dvf",
+   "id": "dgfip_dvf",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "mimic_iv_bidmc",
+   "id": "physionet_mimic_iv_demo",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "eicu_philips",
+   "id": "physionet_eicu_demo",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:1:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:101",
+   "id": "flat:uci:101:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:105:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:110",
+   "id": "flat:uci:110:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:117:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:12:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:143",
+   "id": "flat:uci:143:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:144:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:146",
+   "id": "flat:uci:146:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:148",
+   "id": "flat:uci:148:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:149",
+   "id": "flat:uci:149:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:15",
+   "id": "flat:uci:15:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:159",
+   "id": "flat:uci:159:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:161:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:162",
+   "id": "flat:uci:162:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:165",
+   "id": "flat:uci:165:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:183:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:189",
+   "id": "flat:uci:189:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:19",
+   "id": "flat:uci:19:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:193",
+   "id": "flat:uci:193:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:198",
+   "id": "flat:uci:198:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:2:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:212",
+   "id": "flat:uci:212:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:22",
+   "id": "flat:uci:22:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:222:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:225:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:247",
+   "id": "flat:uci:247:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:257",
+   "id": "flat:uci:257:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:26",
+   "id": "flat:uci:26:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:264",
+   "id": "flat:uci:264:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:267",
+   "id": "flat:uci:267:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:27",
+   "id": "flat:uci:27:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:270",
+   "id": "flat:uci:270:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:277:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:291",
+   "id": "flat:uci:291:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:292",
+   "id": "flat:uci:292:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:294",
+   "id": "flat:uci:294:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:296",
+   "id": "flat:uci:296:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:296:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:3:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:30:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:31",
+   "id": "flat:uci:31:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:312",
+   "id": "flat:uci:312:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:32",
+   "id": "flat:uci:32:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:327",
+   "id": "flat:uci:327:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:329",
+   "id": "flat:uci:329:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:33:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:336:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:365",
+   "id": "flat:uci:365:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:368",
+   "id": "flat:uci:368:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:372",
+   "id": "flat:uci:372:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:373:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:379",
+   "id": "flat:uci:379:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:381",
+   "id": "flat:uci:381:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:396",
+   "id": "flat:uci:396:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:426:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:445:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:45:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:464",
+   "id": "flat:uci:464:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:47:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:50:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:503:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:52",
+   "id": "flat:uci:52:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:529:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:536",
+   "id": "flat:uci:536:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:544:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:545",
+   "id": "flat:uci:545:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:551",
+   "id": "flat:uci:551:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:555",
+   "id": "flat:uci:555:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:563:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:571:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:572",
+   "id": "flat:uci:572:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:579:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:582:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:59",
+   "id": "flat:uci:59:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:597",
+   "id": "flat:uci:597:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:60:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:601",
+   "id": "flat:uci:601:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:602",
+   "id": "flat:uci:602:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:603:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:69",
+   "id": "flat:uci:69:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:697:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:70:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:722:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:73",
+   "id": "flat:uci:73:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:75",
+   "id": "flat:uci:75:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:755",
+   "id": "flat:uci:755:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:759:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:76",
+   "id": "flat:uci:76:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:760",
+   "id": "flat:uci:760:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:78",
+   "id": "flat:uci:78:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:80",
+   "id": "flat:uci:80:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:83:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:848",
+   "id": "flat:uci:848:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:850",
+   "id": "flat:uci:850:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:863:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:864",
+   "id": "flat:uci:864:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:878:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:887:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:89:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:9:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:90:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:911",
+   "id": "flat:uci:911:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:913:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:915:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:936:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:94",
+   "id": "flat:uci:94:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:942",
+   "id": "flat:uci:942:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:967",
+   "id": "flat:uci:967:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "hm_land_registry",
+   "id": "hmlr_price_paid",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "uci:352",
+   "id": "uci_online_retail",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "paleobiology_database",
+   "id": "zen_pbdb",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "cubico_kelmarsh",
+   "id": "zen_kelmarsh",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "wikimedia_wikidata",
+   "id": "wikidata_entities",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "pnnl_epri_bess",
+   "id": "zen_bess",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "fraunhofer_iee_care_wind_b",
+   "id": "zen_care_wind_b",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "nist_nvd",
+   "id": "nvd_cve",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "unisg_smart_factory",
+   "id": "zen_unisg_factory",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "unisg_smart_factory",
+   "id": "zen_unisg_factory:C3",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "edp_wind_farm_portugal",
+   "id": "zen_care_wind_a",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "paleobiology_database",
+   "id": "zen_pbdb_relational",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "jolpica_f1",
+   "id": "jolpica_f1",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "backblaze",
+   "id": "backblaze_drive_stats",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "nyc_tlc",
+   "id": "nyc_tlc_yellow",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "fda_maude",
+   "id": "openfda_device_event",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "usda_fdc",
+   "id": "usda_fdc_sr_legacy",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "dft_stats19",
+   "id": "dft_stats19_2023",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "usgs_water",
+   "id": "usgs_continuous_discharge",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "epa_aqs",
+   "id": "epa_aqs_ozone_hourly",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "wikimedia_simplewiki",
+   "id": "wikimedia_simplewiki_edits",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "uniprot_kb",
+   "id": "uniprot_kb_reviewed",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "osv_go",
+   "id": "osv_go_advisories",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "gfz_potsdam_kp",
+   "id": "gfz_kp_index",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "dwd_germany",
+   "id": "dwd_hourly_climate",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "rte_france_grid",
+   "id": "rte_eco2mix_national",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "ademe_dpe",
+   "id": "ademe_dpe_existant",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "dgal_alimconfiance",
+   "id": "dgal_alimconfiance",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "ntnu_ev_charging",
+   "id": "zen_ev_charging",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "microsoft_azure_compute",
+   "id": "azure_packing_2020",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "aoe_gameplay",
+   "id": "zen_aoe_interactions",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "uk_charity_commission",
+   "id": "uk_charity_register",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "japan_reconstructed_buildings",
+   "id": "zen_japan_buildings",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "noaa_coops",
+   "id": "noaa_coops_tides",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "noaa_gml_co2",
+   "id": "noaa_gml_co2_weekly",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "cnc_five_axis_milling",
+   "id": "zen_cnc_milling",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "world_bank_projects",
+   "id": "wb_lending_projects",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "queensland_petroleum_production",
+   "id": "zen_queensland_petrol",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "inpi_bce_ratios",
+   "id": "inpi_bce_ratios",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "ror",
+   "id": "ror_organizations",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "rcsb_pdb",
+   "id": "rcsb_pdb_entries",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "nws_alerts",
+   "id": "nws_weather_alerts",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "port_noumea_stopovers",
+   "id": "zen_port_noumea",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "kanto_landslides",
+   "id": "zen_kanto_landslides",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "nhif_hospital_cases",
+   "id": "zen_nhif_hospital_cases",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "ingv_seismic",
+   "id": "ingv_seismic_events",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "github_actions_workflows",
+   "id": "zen_gha_workflows",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "wals_cldf",
+   "id": "wals_cldf",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "cordis_horizon_europe",
+   "id": "cordis_horizon_europe",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "telecom_operator_kpis",
+   "id": "zen_telecom_kpis",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "danish_district_heating",
+   "id": "zen_dk_district_heating",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "german_water_demand",
+   "id": "zen_water_demand",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "dmsp_ssj_auroral",
+   "id": "zen_dmsp_auroral",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "us_treasury_dts",
+   "id": "us_treasury_dts",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "fdic_bank_financials",
+   "id": "fdic_bank_financials",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "sncf_tgv_regularite",
+   "id": "sncf_tgv_regularite",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "dgccrf_fuel_prices",
+   "id": "dgccrf_fuel_prices",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "federal_register",
+   "id": "us_federal_register",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "datacite_dois",
+   "id": "datacite_dois",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "gbif_occurrences",
+   "id": "gbif_cc0_occurrences",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "chembl_molecules",
+   "id": "chembl_molecules",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "florida_bridge_inspections",
+   "id": "zen_florida_bridges",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "wri_global_power_plants",
+   "id": "wri_power_plants",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "paris_urban_trees",
+   "id": "paris_urban_trees",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "moodle_lms_events",
+   "id": "zen_moodle_events",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "naoj_norp_solar_bursts",
+   "id": "zen_norp_solar_bursts",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "fermi_blazar_flares",
+   "id": "zen_blazar_flares",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "wind_fragility_power_db",
+   "id": "zen_wind_fragility",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "terralore_chronicle_db",
+   "id": "zen_terralore_chronicle",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "noaa_ncei_storm_events",
+   "id": "ncei_storm_events_2024",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "ourairports_db",
+   "id": "ourairports_db",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "cftc_cot_disaggregated",
+   "id": "cftc_cot_disaggregated",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "ndbc_moored_buoys",
+   "id": "ndbc_buoys_2023",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "a_day_in_daylight",
+   "id": "zen_daylight_events",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "cpsc_recall_notices",
+   "id": "cpsc_recalls",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "nih_research_grants",
+   "id": "nih_reporter_projects_fy2024",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "ecb_euro_fx_reference_rates",
+   "id": "ecb_fx_reference_rates",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "seattle_fremont_bridge_counter",
+   "id": "seattle_fremont_bridge",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "nsidc_sea_ice_index",
+   "id": "nsidc_sea_ice_index",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "nasa_omni_near_earth_solar_wind",
+   "id": "nasa_omni_solar_wind",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "austin_surface_water_quality",
+   "id": "austin_water_quality",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "colorado_dam_safety_registry",
+   "id": "colorado_dam_safety",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "colorado_regulated_storage_tanks",
+   "id": "colorado_storage_tanks",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "sffd_fire_incidents",
+   "id": "sffd_fire_incidents",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "sfo_passenger_statistics",
+   "id": "sfo_air_traffic",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "tx_hhsc_child_care_operations",
+   "id": "tx_hhsc_child_care",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "tx_hotel_occupancy_tax_revenue",
+   "id": "tx_hotel_occupancy_tax",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "wa_ev_population",
+   "id": "wa_ev_population",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "wa_ecology_ghg_reports",
+   "id": "wa_ghg_reporting",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "seattle_fire_911_dispatch",
+   "id": "seattle_fire_911_calls",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "france_baac_road_accidents",
+   "id": "france_baac_road_accidents",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "mitre_attack_knowledge_base",
+   "id": "mitre_attack_enterprise_stix",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "seattle_sdci_building_permits",
+   "id": "seattle_building_permits",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "delaware_dnrec_well_permits",
+   "id": "delaware_well_permits",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "city_of_austin_campaign_finance",
+   "id": "austin_campaign_finance",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "delaware_state_purchasing_cards",
+   "id": "delaware_state_credit_cards",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "montgomery_county_liquor_control_sales",
+   "id": "montgomery_dlc_sales",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "fta_national_transit_database",
+   "id": "fta_ntd_monthly_ridership",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "bloomington_utilities_water_plant",
+   "id": "bloomington_water_plant_energy",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "bloomington_locus_solar_monitoring",
+   "id": "bloomington_solar_sites",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "bts_umd_daily_mobility_statistics",
+   "id": "bts_daily_mobility_national",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "eia_petroleum_spot_prices",
+   "id": "eia_petroleum_spot_prices",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "noaa_nhc_hurdat2_best_track",
+   "id": "nhc_hurdat2_atlantic",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "nces_ipeds_postsecondary_surveys",
+   "id": "nces_ipeds_2023",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "apis_guru_openapi_directory",
+   "id": "apis_guru_openapi_directory",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "zenodo_repository_records",
+   "id": "zenodo_dataset_records_2023_03",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "cincinnati_fire_dispatch",
+   "id": "cincinnati_fire_cad",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "austin_police_dispatch",
+   "id": "austin_apd_cad",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "fec_federal_campaign_finance_filings",
+   "id": "fec_federal_campaign_finance_2024",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "reactome_curated_pathway_database",
+   "id": "reactome_pathway_knowledgebase",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "github_advisory_database",
+   "id": "github_reviewed_advisories",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "ncbi_pubchem_compound_records",
+   "id": "pubchem_compounds",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "nasa_common_metadata_repository",
+   "id": "nasa_cmr_collections",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "doaj_directory_of_open_access_journals",
+   "id": "doaj_journals",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "gene_ontology_consortium_annotations",
+   "id": "gene_ontology_annotations",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "cincinnati_emergency_communications_calls",
+   "id": "cincinnati_ecc_calls",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "cdc_covid_vaccination_reporting",
+   "id": "cdc_covid_vaccination_trends_us",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "noaa_cpc_arctic_oscillation_index",
+   "id": "noaa_cpc_daily_ao_index",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Android",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Apache",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:BGL",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:HDFS",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:HPC",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Hadoop",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:HealthApp",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Linux",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Mac",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:OpenSSH",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:OpenStack",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Proxifier",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Spark",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Thunderbird",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Windows",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Zookeeper",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  }
+ ],
+ "ready_groups": {
+  "C1": [
+   "uci:110",
+   "uci:143",
+   "uci:146",
+   "uci:148",
+   "uci:149",
+   "uci:15",
+   "uci:159",
+   "uci:162",
+   "uci:165",
+   "uci:189",
+   "uci:193",
+   "uci:198",
+   "uci:212",
+   "uci:247",
+   "uci:257",
+   "uci:264",
+   "uci:267",
+   "uci:270",
+   "uci:291",
+   "uci:292",
+   "uci:294",
+   "uci:296",
+   "uci:31",
+   "uci:312",
+   "uci:327",
+   "uci:329",
+   "uci:365",
+   "uci:368",
+   "uci:372",
+   "uci:379",
+   "uci:381",
+   "uci:396",
+   "uci:464",
+   "uci:52",
+   "uci:536",
+   "uci:545",
+   "uci:551",
+   "uci:572",
+   "uci:59",
+   "uci:597",
+   "uci:601",
+   "uci:602",
+   "uci:75",
+   "uci:755",
+   "uci:760",
+   "uci:78",
+   "uci:80",
+   "uci:848",
+   "uci:850",
+   "uci:864",
+   "uci:94",
+   "uci:942"
+  ],
+  "C2a": [
+   "ademe_dpe",
+   "colorado_dam_safety_registry",
+   "colorado_regulated_storage_tanks",
+   "delaware_dnrec_well_permits",
+   "dft_stats19",
+   "dgal_alimconfiance",
+   "florida_bridge_inspections",
+   "kanto_landslides",
+   "nhif_hospital_cases",
+   "nih_research_grants",
+   "paleobiology_database",
+   "paris_urban_trees",
+   "port_noumea_stopovers",
+   "seattle_sdci_building_permits",
+   "sffd_fire_incidents",
+   "tx_hhsc_child_care_operations",
+   "uci:101",
+   "uci:19",
+   "uci:22",
+   "uci:26",
+   "uci:27",
+   "uci:32",
+   "uci:555",
+   "uci:69",
+   "uci:73",
+   "uci:76",
+   "uci:911",
+   "uci:967",
+   "wa_ev_population",
+   "wri_global_power_plants"
+  ],
+  "C2b": [
+   "austin_surface_water_quality",
+   "cftc_cot_disaggregated",
+   "city_of_austin_campaign_finance",
+   "coatings_multinational",
+   "delaware_state_purchasing_cards",
+   "dgccrf_fuel_prices",
+   "dgfip_dvf",
+   "fdic_bank_financials",
+   "fta_national_transit_database",
+   "georgia_procurement",
+   "german_paying_agency",
+   "hm_land_registry",
+   "inpi_bce_ratios",
+   "italian_road_fines",
+   "lyft_bikeshare",
+   "montgomery_county_liquor_control_sales",
+   "montreal_contracts",
+   "ntnu_ev_charging",
+   "nyc_tlc",
+   "queensland_petroleum_production",
+   "sfo_passenger_statistics",
+   "sncf_tgv_regularite",
+   "tx_hotel_occupancy_tax_revenue",
+   "uci:352",
+   "uk_ledger_mhra",
+   "uk_ledger_nhsbsa",
+   "us_treasury_dts",
+   "wa_ecology_ghg_reports",
+   "world_bank_projects",
+   "zambia_procurement"
+  ],
+  "C3": [
+   "airquality_italy",
+   "backblaze",
+   "bloomington_locus_solar_monitoring",
+   "bloomington_utilities_water_plant",
+   "bts_umd_daily_mobility_statistics",
+   "candanedo_umons",
+   "cdc_covid_vaccination_reporting",
+   "cnc_five_axis_milling",
+   "cubico_kelmarsh",
+   "danish_district_heating",
+   "dmsp_ssj_auroral",
+   "dwd_germany",
+   "ea_hydrology",
+   "ecb_euro_fx_reference_rates",
+   "edp_wind_farm_portugal",
+   "eia_petroleum_spot_prices",
+   "elder_home",
+   "epa_aqs",
+   "fraunhofer_iee_care_wind_b",
+   "german_water_demand",
+   "gfz_potsdam_kp",
+   "melbourne_pedestrian",
+   "metropt_porto",
+   "nasa_omni_near_earth_solar_wind",
+   "ndbc_moored_buoys",
+   "noaa_coops",
+   "noaa_cpc_arctic_oscillation_index",
+   "noaa_gml_co2",
+   "nsidc_sea_ice_index",
+   "pnnl_epri_bess",
+   "rki_surveillance",
+   "rte_france_grid",
+   "seattle_fremont_bridge_counter",
+   "seoul_bike",
+   "steel_korea",
+   "telecom_operator_kpis",
+   "tetouan_power",
+   "unisg_smart_factory",
+   "usgs_water",
+   "vif_aegis"
+  ],
+  "C4": [
+   "a_day_in_daylight",
+   "aoe_gameplay",
+   "austin_police_dispatch",
+   "ccin2p3_slurm",
+   "cincinnati_emergency_communications_calls",
+   "cincinnati_fire_dispatch",
+   "coatings_multinational",
+   "dutch_municipalities",
+   "fermi_blazar_flares",
+   "fin_institute_nl",
+   "fugaku_riken",
+   "german_paying_agency",
+   "github_actions_workflows",
+   "hospital_sepsis_nl",
+   "ingv_seismic",
+   "italian_road_fines",
+   "loghub_collection",
+   "microsoft_azure_compute",
+   "moodle_lms_events",
+   "naoj_norp_solar_bursts",
+   "noaa_nhc_hurdat2_best_track",
+   "rabobank_ict",
+   "seattle_fire_911_dispatch",
+   "surf_lisa_slurm",
+   "tue_travel_claims",
+   "unisg_smart_factory",
+   "volvo_it",
+   "wikimedia_simplewiki"
+  ],
+  "C5": [
+   "3pfl",
+   "cordis_horizon_europe",
+   "eicu_philips",
+   "fec_federal_campaign_finance_filings",
+   "france_baac_road_accidents",
+   "gene_ontology_consortium_annotations",
+   "georgia_procurement",
+   "grouplens",
+   "gtfs_fr_alterneo",
+   "gtfs_fr_aravis",
+   "gtfs_fr_citea",
+   "gtfs_fr_diviamobilites",
+   "gtfs_fr_filibus",
+   "gtfs_fr_kiceo",
+   "gtfs_fr_optymo",
+   "gtfs_fr_palmbus",
+   "gtfs_fr_sankeo",
+   "gtfs_fr_sibra",
+   "gtfs_fr_tango",
+   "gtfs_fr_transvilles",
+   "japan_reconstructed_buildings",
+   "jolpica_f1",
+   "mimic_iv_bidmc",
+   "nces_ipeds_postsecondary_surveys",
+   "noaa_ncei_storm_events",
+   "openalex",
+   "ourairports_db",
+   "paleobiology_database",
+   "reactome_curated_pathway_database",
+   "stackexchange",
+   "terralore_chronicle_db",
+   "uk_charity_commission",
+   "usda_fdc",
+   "wals_cldf",
+   "wind_fragility_power_db",
+   "zambia_procurement"
+  ],
+  "C6": [
+   "apis_guru_openapi_directory",
+   "chembl_molecules",
+   "clinicaltrials_gov",
+   "cpsc_recall_notices",
+   "crossref",
+   "datacite_dois",
+   "doaj_directory_of_open_access_journals",
+   "fda_maude",
+   "federal_register",
+   "gbif_occurrences",
+   "georgia_procurement",
+   "github_advisory_database",
+   "met_museum",
+   "mitre_attack_knowledge_base",
+   "montreal_contracts",
+   "nasa_common_metadata_repository",
+   "ncbi_pubchem_compound_records",
+   "nist_nvd",
+   "nws_alerts",
+   "openalex",
+   "openfda_faers",
+   "openfoodfacts",
+   "openlibrary",
+   "osv_go",
+   "rcsb_pdb",
+   "ror",
+   "uniprot_kb",
+   "wikimedia_wikidata",
+   "zambia_procurement",
+   "zenodo_repository_records"
+  ]
+ },
+ "summary": {
+  "C1": {
+   "acquired": 71,
+   "discovered": 71,
+   "experiment_ready": 52,
+   "protocol_ready": 52,
+   "rights_verified": 71,
+   "scientifically_eligible": 52,
+   "structurally_valid": 52
+  },
+  "C2a": {
+   "acquired": 56,
+   "discovered": 56,
+   "experiment_ready": 30,
+   "protocol_ready": 30,
+   "rights_verified": 56,
+   "scientifically_eligible": 30,
+   "structurally_valid": 30
+  },
+  "C2b": {
+   "acquired": 31,
+   "discovered": 37,
+   "experiment_ready": 31,
+   "protocol_ready": 31,
+   "rights_verified": 31,
+   "scientifically_eligible": 31,
+   "structurally_valid": 31
+  },
+  "C3": {
+   "acquired": 45,
+   "discovered": 66,
+   "experiment_ready": 42,
+   "protocol_ready": 42,
+   "rights_verified": 45,
+   "scientifically_eligible": 42,
+   "structurally_valid": 43
+  },
+  "C4": {
+   "acquired": 45,
+   "discovered": 46,
+   "experiment_ready": 44,
+   "protocol_ready": 44,
+   "rights_verified": 45,
+   "scientifically_eligible": 44,
+   "structurally_valid": 44
+  },
+  "C5": {
+   "acquired": 45,
+   "discovered": 45,
+   "experiment_ready": 45,
+   "protocol_ready": 45,
+   "rights_verified": 45,
+   "scientifically_eligible": 45,
+   "structurally_valid": 45
+  },
+  "C6": {
+   "acquired": 30,
+   "discovered": 33,
+   "experiment_ready": 30,
+   "protocol_ready": 30,
+   "rights_verified": 30,
+   "scientifically_eligible": 30,
+   "structurally_valid": 30
+  }
+ }
+}

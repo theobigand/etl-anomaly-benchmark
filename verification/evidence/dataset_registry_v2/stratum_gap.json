@@ -1,0 +1,102 @@
+{
+ "licence_classes": {
+  "open": 318,
+  "research_only": 22
+ },
+ "strata": {
+  "C1": {
+   "ambitious": 50,
+   "minimum": 15,
+   "missing_to_minimum": 0,
+   "missing_to_recommended": 0,
+   "publishers": 95,
+   "recommended": 36,
+   "sources": 95,
+   "stratum": "flat tabular",
+   "systems": 95
+  },
+  "C2": {
+   "ambitious": 45,
+   "minimum": 15,
+   "missing_to_minimum": 0,
+   "missing_to_recommended": 0,
+   "publishers": 42,
+   "recommended": 30,
+   "sources": 42,
+   "stratum": "transactional and categorical (historical)",
+   "systems": 42
+  },
+  "C2a": {
+   "ambitious": 45,
+   "minimum": 15,
+   "missing_to_minimum": 0,
+   "missing_to_recommended": 0,
+   "publishers": 30,
+   "recommended": 30,
+   "sources": 30,
+   "stratum": "categorical and mixed tables",
+   "systems": 30
+  },
+  "C2b": {
+   "ambitious": 45,
+   "minimum": 15,
+   "missing_to_minimum": 0,
+   "missing_to_recommended": 0,
+   "publishers": 30,
+   "recommended": 30,
+   "sources": 30,
+   "stratum": "transactional events",
+   "systems": 32
+  },
+  "C3": {
+   "ambitious": 55,
+   "minimum": 15,
+   "missing_to_minimum": 0,
+   "missing_to_recommended": 0,
+   "publishers": 66,
+   "recommended": 40,
+   "sources": 72,
+   "stratum": "time series",
+   "systems": 74
+  },
+  "C4": {
+   "ambitious": 40,
+   "minimum": 15,
+   "missing_to_minimum": 0,
+   "missing_to_recommended": 0,
+   "publishers": 29,
+   "recommended": 28,
+   "sources": 45,
+   "stratum": "logs and event sequences",
+   "systems": 44
+  },
+  "C5": {
+   "ambitious": 55,
+   "minimum": 15,
+   "missing_to_minimum": 0,
+   "missing_to_recommended": 11,
+   "publishers": 36,
+   "recommended": 36,
+   "sources": 25,
+   "stratum": "relational",
+   "systems": 45
+  },
+  "C6": {
+   "ambitious": 45,
+   "minimum": 15,
+   "missing_to_minimum": 0,
+   "missing_to_recommended": 0,
+   "publishers": 30,
+   "recommended": 30,
+   "sources": 31,
+   "stratum": "nested",
+   "systems": 31
+  }
+ },
+ "time_candidates_not_yet_verified": [
+  "uci:536",
+  "uci:755",
+  "uci:760"
+ ],
+ "total_sources": 340
+}

@@ -1,0 +1,320 @@
+{
+ "errors": {},
+ "features": 7,
+ "metrics": {
+  "copod": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 1.0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 1.4492753623188406,
+    "pr_auc": 0.5149253731343284,
+    "precision": 1.0,
+    "recall": 0.5,
+    "roc_auc": 0.5149253731343284
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.5,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.9852941176470589
+   }
+  ],
+  "ecod": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 2.898550724637681,
+    "pr_auc": 0.25,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.9558823529411765
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.5147058823529411,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5074626865671642
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 1.4492753623188406,
+    "pr_auc": 0.3333333333333333,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.9705882352941176
+   }
+  ],
+  "great_expectations": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 2.898550724637681,
+    "pr_auc": 0.014492753623188406,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4852941176470588
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.028985507246376812,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 2.898550724637681,
+    "pr_auc": 0.014492753623188406,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4852941176470588
+   }
+  ],
+  "hbos": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.3333333333333333,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.9705882352941175
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 1.4492753623188406,
+    "pr_auc": 0.5151515151515151,
+    "precision": 1.0,
+    "recall": 0.5,
+    "roc_auc": 0.5223880597014925
+   },
+   {
+    "f1": 1.0,
+    "flagged_pct": 1.4492753623188406,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   }
+  ],
+  "iqr": [
+   {
+    "f1": 0.25,
+    "flagged_pct": 10.144927536231885,
+    "pr_auc": 0.25,
+    "precision": 0.14285714285714285,
+    "recall": 1.0,
+    "roc_auc": 0.9558823529411764
+   },
+   {
+    "f1": 0.2222222222222222,
+    "flagged_pct": 10.144927536231885,
+    "pr_auc": 0.09782608695652173,
+    "precision": 0.14285714285714285,
+    "recall": 0.5,
+    "roc_auc": 0.6902985074626865
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 8.695652173913043,
+    "pr_auc": 0.014492753623188406,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.45588235294117646
+   }
+  ],
+  "isolation_forest": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.2,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.9411764705882353
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 1.4492753623188406,
+    "pr_auc": 0.5158730158730158,
+    "precision": 1.0,
+    "recall": 0.5,
+    "roc_auc": 0.5447761194029851
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 1.4492753623188406,
+    "pr_auc": 0.25,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.9558823529411765
+   }
+  ],
+  "knn": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.25,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.9558823529411765
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 1.4492753623188406,
+    "pr_auc": 0.5175438596491229,
+    "precision": 1.0,
+    "recall": 0.5,
+    "roc_auc": 0.5895522388059702
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.16666666666666666,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.9264705882352942
+   }
+  ],
+  "lof": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.3333333333333333,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.9705882352941176
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 1.4492753623188406,
+    "pr_auc": 0.5188679245283019,
+    "precision": 1.0,
+    "recall": 0.5,
+    "roc_auc": 0.6194029850746269
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.16666666666666666,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.9264705882352942
+   }
+  ],
+  "ocsvm": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 1.4492753623188406,
+    "pr_auc": 0.5,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.9852941176470589
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 1.4492753623188406,
+    "pr_auc": 0.5158730158730158,
+    "precision": 1.0,
+    "recall": 0.5,
+    "roc_auc": 0.5447761194029851
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.16666666666666666,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.9264705882352942
+   }
+  ],
+  "pca": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 2.898550724637681,
+    "pr_auc": 0.03333333333333333,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5735294117647058
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 1.4492753623188406,
+    "pr_auc": 0.11538461538461539,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 1.4492753623188406,
+    "pr_auc": 0.03333333333333333,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5735294117647058
+   }
+  ],
+  "zscore": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 2.898550724637681,
+    "pr_auc": 0.2,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.9411764705882353
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 2.898550724637681,
+    "pr_auc": 0.115625,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5074626865671642
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 2.898550724637681,
+    "pr_auc": 0.125,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.8970588235294118
+   }
+  ]
+ },
+ "name": "Raisin",
+ "prevalence": 0.0196078431372549,
+ "problem": "uci:850",
+ "report": {
+  "anomalies": 9,
+  "anomaly_class": "Besni",
+  "conflicting_rows_removed": 0,
+  "dropped_constant": [],
+  "dropped_high_cardinality": [],
+  "dropped_missing": [],
+  "duplicates_removed": 0,
+  "encoded": [],
+  "features_out": 7,
+  "kind": "downsampled",
+  "natural_rate": 0.5,
+  "rows": 459,
+  "rows_in": 459,
+  "rows_out": 459,
+  "rule": "R1"
+ },
+ "rows": 459,
+ "rule": "R1",
+ "seeds": [
+  42,
+  1,
+  2
+ ],
+ "skipped": []
+}

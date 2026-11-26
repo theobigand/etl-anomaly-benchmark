@@ -1,0 +1,336 @@
+{
+ "errors": {},
+ "features": 31,
+ "metrics": {
+  "copod": [
+   {
+    "f1": 0.25,
+    "flagged_pct": 17.24137931034483,
+    "pr_auc": 0.28044871794871795,
+    "precision": 0.2,
+    "recall": 0.3333333333333333,
+    "roc_auc": 0.6794871794871795
+   },
+   {
+    "f1": 0.3333333333333333,
+    "flagged_pct": 10.344827586206897,
+    "pr_auc": 0.5075757575757576,
+    "precision": 0.3333333333333333,
+    "recall": 0.3333333333333333,
+    "roc_auc": 0.8205128205128205
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.896551724137931,
+    "pr_auc": 0.10491616936629725,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3717948717948718
+   }
+  ],
+  "ecod": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.896551724137931,
+    "pr_auc": 0.1623931623931624,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.6025641025641025
+   },
+   {
+    "f1": 0.3333333333333333,
+    "flagged_pct": 10.344827586206897,
+    "pr_auc": 0.2851851851851852,
+    "precision": 0.3333333333333333,
+    "recall": 0.3333333333333333,
+    "roc_auc": 0.7948717948717949
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.896551724137931,
+    "pr_auc": 0.11347813979392926,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4230769230769231
+   }
+  ],
+  "great_expectations": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.896551724137931,
+    "pr_auc": 0.10344827586206896,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.46153846153846156
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.10344827586206896,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.896551724137931,
+    "pr_auc": 0.10344827586206896,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.46153846153846156
+   }
+  ],
+  "hbos": [
+   {
+    "f1": 0.3333333333333333,
+    "flagged_pct": 10.344827586206897,
+    "pr_auc": 0.29393939393939394,
+    "precision": 0.3333333333333333,
+    "recall": 0.3333333333333333,
+    "roc_auc": 0.717948717948718
+   },
+   {
+    "f1": 0.3333333333333333,
+    "flagged_pct": 10.344827586206897,
+    "pr_auc": 0.34074074074074073,
+    "precision": 0.3333333333333333,
+    "recall": 0.3333333333333333,
+    "roc_auc": 0.8076923076923077
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.4482758620689653,
+    "pr_auc": 0.13055365686944634,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5128205128205128
+   }
+  ],
+  "iqr": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.10344827586206896,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.10344827586206896,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.10344827586206896,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   }
+  ],
+  "isolation_forest": [
+   {
+    "f1": 0.5,
+    "flagged_pct": 17.24137931034483,
+    "pr_auc": 0.2642857142857143,
+    "precision": 0.4,
+    "recall": 0.6666666666666666,
+    "roc_auc": 0.6923076923076923
+   },
+   {
+    "f1": 0.2,
+    "flagged_pct": 24.137931034482758,
+    "pr_auc": 0.18888888888888888,
+    "precision": 0.14285714285714285,
+    "recall": 0.3333333333333333,
+    "roc_auc": 0.6794871794871794
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 24.137931034482758,
+    "pr_auc": 0.09653182066975172,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2948717948717949
+   }
+  ],
+  "knn": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.896551724137931,
+    "pr_auc": 0.17169312169312168,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.6153846153846153
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.125,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.48717948717948717
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 10.344827586206897,
+    "pr_auc": 0.10051060051060051,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.33333333333333337
+   }
+  ],
+  "lof": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.896551724137931,
+    "pr_auc": 0.1360708534621578,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4743589743589743
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.896551724137931,
+    "pr_auc": 0.08073206986250464,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.14102564102564105
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 10.344827586206897,
+    "pr_auc": 0.10951871657754012,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.39743589743589747
+   }
+  ],
+  "ocsvm": [
+   {
+    "f1": 0.16666666666666666,
+    "flagged_pct": 31.03448275862069,
+    "pr_auc": 0.14915824915824916,
+    "precision": 0.1111111111111111,
+    "recall": 0.3333333333333333,
+    "roc_auc": 0.5512820512820513
+   },
+   {
+    "f1": 0.2,
+    "flagged_pct": 24.137931034482758,
+    "pr_auc": 0.1987012987012987,
+    "precision": 0.14285714285714285,
+    "recall": 0.3333333333333333,
+    "roc_auc": 0.6923076923076923
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 27.586206896551722,
+    "pr_auc": 0.08453583453583455,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2051282051282051
+   }
+  ],
+  "pca": [
+   {
+    "f1": 0.15384615384615385,
+    "flagged_pct": 34.48275862068966,
+    "pr_auc": 0.17337164750957856,
+    "precision": 0.1,
+    "recall": 0.3333333333333333,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 27.586206896551722,
+    "pr_auc": 0.09442409442409443,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2948717948717948
+   },
+   {
+    "f1": 0.10526315789473684,
+    "flagged_pct": 55.172413793103445,
+    "pr_auc": 0.11037037037037037,
+    "precision": 0.0625,
+    "recall": 0.3333333333333333,
+    "roc_auc": 0.3974358974358974
+   }
+  ],
+  "zscore": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.13333333333333333,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4935897435897436
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.17777777777777778,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.6987179487179488
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.125,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4230769230769231
+   }
+  ]
+ },
+ "name": "Early Stage Diabetes Risk Prediction",
+ "prevalence": 0.08465608465608465,
+ "problem": "uci:529",
+ "report": {
+  "anomalies": 17,
+  "anomaly_class": "Negative",
+  "conflicting_rows_removed": 0,
+  "dropped_constant": [],
+  "dropped_high_cardinality": [],
+  "dropped_missing": [],
+  "duplicates_removed": 148,
+  "encoded": [
+   "gender",
+   "polyuria",
+   "polydipsia",
+   "sudden_weight_loss",
+   "weakness",
+   "polyphagia",
+   "genital_thrush",
+   "visual_blurring",
+   "itching",
+   "irritability",
+   "delayed_healing",
+   "partial_paresis",
+   "muscle_stiffness",
+   "alopecia",
+   "obesity"
+  ],
+  "features_out": 31,
+  "kind": "downsampled",
+  "natural_rate": 0.38461538461538464,
+  "rows": 337,
+  "rows_in": 337,
+  "rows_out": 189,
+  "rule": "R2"
+ },
+ "rows": 189,
+ "rule": "R2",
+ "seeds": [
+  42,
+  1,
+  2
+ ],
+ "skipped": []
+}
