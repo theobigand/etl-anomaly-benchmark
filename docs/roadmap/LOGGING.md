@@ -88,8 +88,36 @@ and identifiers, and a last processor makes the event name the message while kee
 `structlog.get_logger().info("stage.started", rows=3)`. Without the package the call raises a `RuntimeError` giving
 the install command; the rest of the module is unaffected.
 
+## Redaction and ground-truth isolation (#159)
+
+`research/obs_redaction.py` cleans every record before any formatter, file, export or dashboard sees it. Install it
+after `obs_logging.configure()` with `obs_redaction.attach()`; it runs after the correlation filter whatever the call
+order.
+
+- **Allowlist first.** Only the names in `obs_redaction.ALLOWED` (schema keys, correlation identifiers, `stage`,
+  `rows`, `code`, `attempt`, `max_attempts`, `retry`, `duration_ms`, `failure_class`, `final_status`) with scalar values
+  survive. Any other field, and any list, mapping or bytes value, is removed and counted in `dropped_fields`, so a raw row,
+  a held-out label or an unknown attribute cannot be logged by accident. Text is cut at 500 characters. To log a new
+  field, add its name to `ALLOWED` in a reviewed change.
+- **Secrets.** `password=`, `token=`, `api_key=`, `authorization:` and similar assignments, bearer credentials,
+  credentials inside URLs, AWS access keys and GitHub tokens become `[REDACTED]` in the message, string fields, exception
+  message and stack. The exception type and the stack frames stay.
+- **Ground truth.** The words `ground_truth`, `y_true`, `is_anomaly`, `anomaly_label`, `fault_mask`, `injected`,
+  `injection`, `held-out`, `holdout` and `label(s)` are replaced by `[REDACTED]` in the same text and in paths, so
+  telemetry that a detector can read cannot name the injected fault. Whole-word matching leaves `labelled` and
+  `labeler` alone. The cost is that a legitimate log line about labels is blurred; scientific records, not logs, carry
+  that information.
+- **Leakage audit.** `obs_redaction.audit(record)` returns the findings in the names, text values, paths and ids of one
+  record and `audit_vocabulary()` checks the registered event names and identifier names; both are tested. Dashboards,
+  exports and embeddings must be built from records that passed the filter; those consumers do not exist yet (#161 and
+  later), so only the log path is covered here.
+
+Limits: the filter cannot recognise a secret that has no keyword or known prefix, and it does not inspect values inside
+non-scalar fields because it removes them. The scientific runners still use their own logging until a separate, replayed
+decision adopts this layer.
+
 ## Not in this change
 
-Rotation and retention (#160), redaction (#159), failure classification and retries (#158), OpenTelemetry (#161), and
+Rotation and retention (#160), failure classification and retries (#158), OpenTelemetry (#161), and
 the adoption of the schema by the scientific runners (a separate replayed decision). The existing
 `src/etl_benchmark/logging_setup.py` and the runners are unchanged.

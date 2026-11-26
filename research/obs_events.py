@@ -142,6 +142,7 @@ def attach() -> None:
             isinstance(f, CorrelationFilter) for f in handler.filters
         ):
             handler.addFilter(CorrelationFilter())
+            handler.filters.sort(key=lambda f: getattr(f, "runs_last", False))
 
 
 def environ(base: Mapping[str, str] | None = None) -> dict[str, str]:

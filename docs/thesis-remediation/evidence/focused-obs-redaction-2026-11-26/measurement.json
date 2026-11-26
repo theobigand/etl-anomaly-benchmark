@@ -1,0 +1,28 @@
+{
+ "base_head": "35f6b87527d023688668f6ac54f83d5a119cbacb",
+ "command": "python -m mutmut run with research/tests/test_obs_redaction.py, test_obs_events.py and test_obs_logging.py, in a scratch copy holding research/obs_*.py and a narrowed pyproject",
+ "date": "2026-11-26",
+ "environment": {
+  "mutmut": "3.8.x (etl-mutation-venv)",
+  "platform": "macOS-27.2-arm64",
+  "python": "3.13"
+ },
+ "kind": "local focused development measurement of the unit classified for issue #159; not the controller campaign, not attested",
+ "modules": {
+  "research/obs_redaction.py": {
+   "eligible": 93,
+   "killed": 93,
+   "level": "L3",
+   "raw_score": 100.0,
+   "source_sha256": "678c6bdecf1512ea6f25c1f576c0993af9ff788861d3086d68fc8fad99f3d67a",
+   "status": "PASS_RAW",
+   "survived": 0,
+   "threshold": 95
+  }
+ },
+ "note": "No mutant was marked equivalent.",
+ "survivors": {
+  "research/obs_redaction.py": []
+ },
+ "working_tree": "clean apart from the measured modules and their tests"
+}
