@@ -580,6 +580,10 @@
       "level": "L2",
       "reason": "It extends the per-group coverage with the seven utilization stages and a dry run of the registered batch adapter, so it states which groups can contribute to an evaluation; it fits no detector, injects no fault and reads no detector output."
     },
+    "research/unit_pilot_plan.py": {
+      "level": "L3",
+      "reason": "It proposes the seeded split of the 235 groups into the unit-level pilot and the confirmatory holdout and states which holdout groups meet the eligibility floor, so a defect changes which groups can confirm; it fits no detector and reads no detector output."
+    },
     "research/compatibility_model.py": {
       "level": "L2",
       "reason": "It reads the registry into the table of units, operators, detectors and metrics that apply to each category and protocol, so it states which units a group can be run on; it fits no detector and reads no detector output."

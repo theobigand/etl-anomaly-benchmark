@@ -402,3 +402,104 @@ The pilot stays at 16 distinct provenance groups (`pilot_plan_dry_run.json`: 16 
 45, 10, 9, 9, 11, 17 and 7 sum to 108 over 103 distinct groups); the 24-group alternative is deferred and not authorised, because its extra groups all came from C1.
 16 groups do not estimate the variance components of seven categories separately; they estimate the pooled between-source SD and a coarse
 design effect, and the pilot is revisited only after the corpus has grown. Execution remains unauthorised.
+
+## 13. Reconciliation with the 235-group corpus (issue #152; design only; nothing was run)
+
+Dated 2026-11-26. Sections 11.7 and 12.5 drew the pilot from the readiness inventory of 2026-11-21
+(119 distinct ready groups, `pilot_plan_dry_run.json`). Acquisition closed with 235 provenance groups
+(246 category participations, 231 linked clusters). That plan and its group list are kept as history
+and are superseded for panel purposes by this section. The statistical design of section 12
+(1 percent primary alert budget with 0.5, 2 and 5 percent sensitivity, validation-only learned
+composite, F1, F2 and F5 as confirmatory families, F3 and F4 exploratory, one Holm family of at most 11
+comparisons) is unchanged: the corpus growth changes who can be drawn, not what is estimated.
+
+### 13.1 How the panel is derived
+
+`research/unit_pilot_plan.py` draws the panel with the clustered draw of the batch pilot
+(`batch_statistics.draw_clustered_pilot`) over `readiness.json`, `linked_sets.json`,
+`source_attributes.json` and `readiness_facts.json` only. No detector result, label outcome or
+held-out value is read. A linked cluster is drawn as one unit; previously exposed groups and their
+linked partners never confirm and are not drawn (5 groups: the plumbing-pilot UCI sources
+`airquality_italy`, `candanedo_umons`, `seoul_bike`, `steel_korea`, `tetouan_power`). Groups of
+a domain not yet in the pilot are preferred. Every category receives at least 2 pilot groups; further
+slots go to the category with the most ready groups left. The seed 20261121 and the minimum of 2 are
+carried over from section 11.7 as proposals; the owner freezes them (13.5). The output is
+`verification/evidence/dataset_registry_v2/unit_pilot_panel.json` (group table and the plans of 16, 24
+and 32 groups); regenerate with
+`python research/unit_pilot_plan.py --sizes 16 24 32 --minimum 2 --seed 20261121 --output ...`.
+
+### 13.2 Panel proposal of 16 groups and its holdout
+
+Pilot: city_of_austin_campaign_finance, colorado_regulated_storage_tanks, datacite_dois,
+gtfs_fr_palmbus, kanto_landslides, naoj_norp_solar_bursts, ncbi_pubchem_compound_records,
+noaa_gml_co2, noaa_ncei_storm_events, nsidc_sea_ice_index, queensland_petroleum_production,
+surf_lisa_slurm, uci:267, uci:292, uci:296, uci:464 (16 groups, 16 distinct domains, 13 schema
+families). Holdout: 214 groups in 210 clusters. Per category (a group in several categories counts in
+each):
+
+| Category | Ready | Pilot | Holdout | Holdout meeting the unit floor | Floor unknown | Exposed, not confirming |
+|---|---:|---:|---:|---:|---:|---:|
+| C1 | 52 | 4 | 48 | 22 | 0 | 0 |
+| C2a | 30 | 2 | 28 | 20 | 0 | 0 |
+| C2b | 30 | 2 | 28 | 22 | 0 | 0 |
+| C3 | 40 | 2 | 33 | 30 | 0 | 5 |
+| C4 | 28 | 2 | 26 | 14 | 1 | 0 |
+| C5 | 36 | 2 | 34 | 30 | 1 | 0 |
+| C6 | 30 | 2 | 28 | 8 | 1 | 0 |
+
+The unit floor of section 12.4 needs at least 1,000 eligible test units. A group meets it here when its
+recorded partition is the 70/15/15 hash split and 15 percent of its units reach 1,000 (units at least
+6,667); another recorded partition is reported as unknown and never as met. Over all 235 groups: floor
+met 150, not met 83, unknown 2. The holdout holds 137 clusters that meet the floor. Larger plans: 24
+groups leave 206 holdout clusters (133 meeting the floor), 32 groups leave 198 (129). The extra slots
+of both come from C1 (12 and 20 groups of the pilot) and, as in 11.7, improve the pooled variance
+estimate without adding information on the scarce categories, so the 16-group plan remains the
+proposal. The change from 11.7 is the holdout: 103 groups then, 210 clusters now.
+
+Adequacy against the planning figures of 11.7 (hypothetical sigma 0.10, smallest effect 0.05;
+`paired_sources`): 34 sources for one comparison, 45 for three, 51 for five, 59 for eleven. The pooled
+holdout of 137 floor-meeting clusters exceeds these before any design effect, but C6 holds only 8
+floor-meeting holdout groups and C4 14, so no category-level confirmatory claim is supported for them
+and category analyses stay exploratory (11.8 unchanged). Every single-category holdout (8 to 30
+floor-meeting groups) is below the 34 needed for one comparison before clustering by schema family and
+curator is applied; this is a planning statement, not a power calculation (the sigma is a pilot output).
+
+### 13.3 Separation and exposure
+
+Pilot and holdout are disjoint at the cluster level (3 linked sets of 7 groups are drawn as units; none
+of them is in the 16-group pilot). Exposed groups are excluded from both sides; the alternative rule
+(exposed groups fill the first pilot places, `--reuse-exposed`) spends no fresh cluster on them but lets
+five C3 groups, already seen in the plumbing pilot, set the variance estimate, which is an owner decision
+(13.5). The exposure table of the batch design (`batch_pilot_addendum_proposal.md`) is a separate study and
+is not merged here; cross-study exposure belongs to #153.
+
+### 13.4 What cannot start yet
+
+The compatibility model (`verification/compatibility_model.md`) shows that no unit-level protocol has a
+registry-driven runner: no group can be executed on its own detection unit today (47 groups only on the
+registered batch unit). The pilot therefore needs, before any authorization is usable, the runners of
+#135, #137, #138 and #139 or an owner decision to pilot the protocols that have them. Provisional units
+(event, relational, document) need the protocol amendments of #154.
+
+### 13.5 Decisions the owner must take (nothing below is decided)
+
+1. Pilot size: 16 (proposed), 24 or 32; and whether a protocol with no runner leaves the pilot.
+2. Seed and minimum per category; the seed 20261121 is the preregistration date of 11.7.
+3. Exposure rule: exclude the five exposed groups (proposed) or let them fill the pilot.
+4. Floor rule: the 15 percent test share assumption, and whether the 2 unknown groups are excluded.
+5. Date from which the freeze is lifted for the pilot only, and the sealing of the holdout.
+
+### 13.6 Authorization request (draft; unsigned and not an authorization)
+
+The text below is what the owner would record, in their own words, in the authorization record read by
+`registry_units.check_authorization` (`step`, `groups`). It is prepared, not issued; no record exists.
+
+> I authorize the step `unit-level-variance-pilot` for the following `<N>` provenance groups, taken
+> from plan `<N>` of `verification/evidence/dataset_registry_v2/unit_pilot_panel.json` at commit
+> `<commit>` with seed `<seed>`: `<group identifiers>`. The freeze on detector experiments is lifted for
+> this step and these groups only, from `<date>` to `<date>`. The step runs the detectors and protocol
+> units of `variance_pilot_design.md` sections 12.1 to 12.5 with the primary budget of 1 percent and the
+> sensitivity budgets 0.5, 2 and 5 percent, estimates variance components only, tests no hypothesis, and
+> changes no detector, parameter, partition, seed or holdout group after its first result. The holdout
+> of `<M>` groups is sealed and is not read. Results are archived unaltered, including failures and
+> inapplicable cases.
