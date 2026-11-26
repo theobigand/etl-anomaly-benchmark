@@ -57,7 +57,7 @@ Mandatory: Platform 02 and the scientific issues, plus the existing Thesis 01-07
 
 Complete utilization of the acquired benchmark: registry-driven execution, category-specific experimental units, compatibility and data integrity. Phase label of the ETL Anomaly Benchmark platform roadmap; not a schedule.
 
-Outputs: [utilization ledger](../../verification/utilization_ledger.md) (#133).
+Outputs: [utilization ledger](../../verification/utilization_ledger.md) (#133) and [compatibility model](../../verification/compatibility_model.md) (#134).
 
 | Issue | Title | Scope | Authorization | Blocked by |
 | --- | --- | --- | --- | --- |
