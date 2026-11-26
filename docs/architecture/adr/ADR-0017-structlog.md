@@ -1,6 +1,6 @@
 # ADR-0017: structlog
 
-Status: accepted for planning, 2026-11-26. Nothing is installed or imported by this record.
+Status: accepted, 2026-11-26. The record installs nothing; #157 adds the optional group below.
 
 | Field | Value |
 |---|---|
@@ -11,7 +11,7 @@ Status: accepted for planning, 2026-11-26. Nothing is installed or imported by t
 | Platform | Pure Python wheel (py3-none-any), Python >=3.10. |
 | Evidence | PyPI metadata (read 2026-11-26) |
 
-**Isolation.** Optional dependency group. The central configuration works with the standard library alone and uses structlog only when it is importable. The existing logging setup lives under src/ and experiments/, which are part of the scientific fingerprint, so adoption there is a separate replay decision.
+**Isolation.** Optional dependency group `observability` (`[dependency-groups]` in `pyproject.toml`, `structlog>=26.1,<27`; #157). The central configuration works with the standard library alone and uses structlog only when it is importable. The existing logging setup lives under src/ and experiments/, which are part of the scientific fingerprint, so adoption there is a separate replay decision.
 
 **Resources and limits.** No service. Not installed in the research lock.
 
