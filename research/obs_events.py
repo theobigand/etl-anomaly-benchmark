@@ -51,6 +51,10 @@ EVENTS = {
     "stage.started": ("INFO", "a stage of a run began"),
     "stage.completed": ("INFO", "a stage of a run finished"),
     "stage.failed": ("ERROR", "a stage failed; the exception is attached"),
+    "stage.retrying": (
+        "WARNING",
+        "a stage attempt failed with a transient error and will be retried",
+    ),
     "artifact.written": ("INFO", "an artifact was written to its destination"),
     "subprocess.started": ("INFO", "a child process was launched"),
     "subprocess.completed": ("INFO", "a child process exited; its code is a field"),

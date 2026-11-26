@@ -42,6 +42,8 @@ ALLOWED = (
             "duration_ms",
             "failure_class",
             "final_status",
+            "transient",
+            "delay_s",
         }
     )
 )
