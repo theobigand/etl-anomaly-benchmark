@@ -9,6 +9,8 @@ This directory is the canonical, version-controlled backlog for strengthening th
 - **29 GitHub labels:** priority, scope, status (including `status:if-time`), work kind, subject area (including `area:governance`), and historical provenance.
 - **Evidence-based completion:** tasks began unchecked; individual checks now link to audited implementation and validation. A recorded concern alone proves neither that work is missing nor that it is complete.
 
+Platform extension roadmap (engine coverage, industrial ETL/ELT, observability, AIOps, analytics): [docs/roadmap/ROADMAP.md](../roadmap/ROADMAP.md). The `Thesis NN` milestone names below are historical phase names, not the project name.
+
 Current reconciliation: [2026-11-03 audit and execution dependencies](AUDIT_2026-11-03.md).
 Partial completion evidence: [metric definitions](METRIC_DEFINITIONS_2026-11-03.md) and
 [rule definitions](RULE_DEFINITIONS_2026-11-03.md), and
