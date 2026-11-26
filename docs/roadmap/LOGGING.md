@@ -17,6 +17,8 @@ obs_logging.configure()  # reads ETL_LOG_*; replaces only its own handler
 | `ETL_LOG_LEVEL` | DEBUG, INFO, WARNING, ERROR, CRITICAL | INFO |
 | `ETL_LOG_FORMAT` | `console` (readable, UTC), `json` (one object per line) | console |
 | `ETL_LOG_DEST` | `stderr`, `stdout`, `file` (needs `ETL_LOG_FILE`) | stderr |
+| `ETL_LOG_MAX_BYTES` | size at which a file log rotates (integer of at least 1) | 10485760 (10 MiB) |
+| `ETL_LOG_BACKUPS` | numbered backups kept, `app.log.1`... (integer of at least 0) | 5 |
 | `ETL_LOG_THIRD_PARTY_LEVEL` | level of great_expectations, matplotlib, urllib3, numba, PIL | WARNING |
 | `ETL_LOG_CAPTURE_WARNINGS` | `1` routes `warnings.warn` to the `py.warnings` logger, `0` leaves it | 1 |
 
@@ -116,8 +118,47 @@ Limits: the filter cannot recognise a secret that has no keyword or known prefix
 non-scalar fields because it removes them. The scientific runners still use their own logging until a separate, replayed
 decision adopts this layer.
 
+## Log lifecycle (#160)
+
+Rotation is `obs_logging` (a file destination uses a size-rotating handler; stream destinations have none). Everything
+else is `research/obs_lifecycle.py`, which works on one log file and its numbered backups `<log>.N` and on nothing else.
+
+| Variable | Meaning | Default |
+|---|---|---|
+| `ETL_LOG_RETENTION_DAYS` | a backup older than this is removed | 14 |
+| `ETL_LOG_BUDGET_BYTES` | active file plus backups; the oldest backups are removed until it is met, the active file never | 104857600 (100 MiB) |
+| `ETL_LOG_PROTECTED` | extra protected paths relative to the repository root, `os.pathsep` separated | none |
+
+```python
+import datetime, pathlib, obs_lifecycle as lc
+
+lc.install_shutdown()  # SIGTERM flushes the log and exits with code 143
+chosen = lc.settings(os.environ)
+lc.prune(
+    log_file,
+    now=datetime.datetime.now(datetime.UTC),
+    root=repo_root,
+    retention_days=chosen["retention_days"],
+    budget_bytes=chosen["budget_bytes"],
+    protected=chosen["protected"],
+)
+```
+
+- **Evidence is out of reach.** `docs/thesis-remediation/evidence`, `verification/evidence` and `experiments/results`
+  (plus `ETL_LOG_PROTECTED`) are protected: if the log folder is inside one, contains one, or resolves into one through a
+  symbolic link, `prune` and `export_sanitized` raise before deleting anything. Scientific evidence retention is not
+  decided by this module and no cleanup of it exists.
+- **Sanitized exports are separate.** `export_sanitized(log_file, folder, now=..., root=...)` writes the JSON lines that
+  pass `obs_redaction.audit`, backups first, to `<folder>/<log>-<YYYYMMDD>.jsonl` with a `.sha256` sidecar. It counts
+  the lines it skipped (not JSON, a secret, ground-truth vocabulary), never overwrites, refuses the log folder, and
+  `prune` never touches an export, so selected exports live independently of the rotation.
+- **Shutdown.** Handlers flush after every record; `shutdown()` flushes and closes the `obs_logging` handler and leaves
+  foreign handlers alone, and `install_shutdown()` does it on SIGTERM and exits with `128 + signal`. SIGKILL cannot be
+  caught.
+- Nothing schedules `prune`: a caller (a run wrapper, or a scheduler profile of #142) invokes it.
+
 ## Not in this change
 
-Rotation and retention (#160), failure classification and retries (#158), OpenTelemetry (#161), and
+Failure classification and retries (#158), OpenTelemetry (#161), and
 the adoption of the schema by the scientific runners (a separate replayed decision). The existing
 `src/etl_benchmark/logging_setup.py` and the runners are unchanged.

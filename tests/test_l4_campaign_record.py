@@ -25,6 +25,7 @@ SUPPLEMENTS = (
     ROOT / "docs/thesis-remediation/evidence/focused-obs-logging-2026-11-26/measurement.json",
     ROOT / "docs/thesis-remediation/evidence/focused-obs-events-2026-11-26/measurement.json",
     ROOT / "docs/thesis-remediation/evidence/focused-obs-redaction-2026-11-26/measurement.json",
+    ROOT / "docs/thesis-remediation/evidence/focused-obs-lifecycle-2026-11-26/measurement.json",
     ROOT / "docs/thesis-remediation/evidence/focused-unit-pilot-panel-2026-11-26/measurement.json",
     ROOT
     / "docs/thesis-remediation/evidence/focused-compatibility-model-2026-11-26/measurement.json",

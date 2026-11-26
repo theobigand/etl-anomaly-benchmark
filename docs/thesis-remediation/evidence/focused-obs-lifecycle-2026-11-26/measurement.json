@@ -1,0 +1,30 @@
+{
+ "base_head": "35f6b87527d023688668f6ac54f83d5a119cbacb",
+ "command": "python -m mutmut run with research/tests/test_obs_lifecycle.py, in a scratch copy holding research/obs_*.py and a narrowed pyproject",
+ "date": "2026-11-26",
+ "environment": {
+  "mutmut": "3.8.x (etl-mutation-venv)",
+  "platform": "macOS-27.2-arm64",
+  "python": "3.13"
+ },
+ "kind": "local focused development measurement of the unit classified for issue #160; not the controller campaign, not attested",
+ "modules": {
+  "research/obs_lifecycle.py": {
+   "eligible": 170,
+   "killed": 169,
+   "level": "L3",
+   "raw_score": 99.4,
+   "source_sha256": "d30684d9a9b1d285f2752d18f4df665eeb1ac708d0700b44edadee3c622fc9c6",
+   "status": "PASS_RAW",
+   "survived": 1,
+   "threshold": 95
+  }
+ },
+ "note": "No survivor was marked equivalent. The one survivor renames the .sha256 sidecar to .SHA256, which a case-insensitive macOS volume resolves to the same file; it is killed on Linux.",
+ "survivors": {
+  "research/obs_lifecycle.py": [
+   "x_export_sanitized__mutmut_48: sidecar file-name case on a case-insensitive volume; not individually approved"
+  ]
+ },
+ "working_tree": "clean apart from the measured modules and their tests"
+}
