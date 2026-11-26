@@ -52,8 +52,10 @@ groups passed the dry run; none failed.
 | C5 | 36 | 36 | 6 | 6 | 0 | 1 |
 | C6 | 30 | 28 | 0 | 0 | 0 | 7 |
 
-By protocol (groups, executable): P-TAB 108, 17; P-TS 39, 21; P-REL 33, 6; P-NEST 30, 0; P-SEQ 25, 3.
-Category rows overlap (246 participations over 235 groups) and are not additive. The 5 previously
+By protocol (groups, executable): P-TAB 115, 17; P-TS 40, 21; P-REL 36, 6; P-NEST 30, 0; P-SEQ 25, 3.
+The protocol belongs to the participation (a group and a category): nine groups sit in two or three
+categories under different protocols, so a group is counted under each of its protocols and
+protocol rows are not additive. Category rows overlap too (246 participations over 235 groups). The 5 previously
 exposed groups are the plumbing-pilot sources of the acquisition report (Update 32); exposure is
 recorded, not counted as utilization.
 
@@ -72,13 +74,13 @@ Counted over the 188 groups that are not executable (a group can need several it
 
 | Work | Groups |
 |---|---:|
-| Registry-driven unit-level runner for P-TAB (loader, partitions, detectors) | 91 |
+| Registry-driven unit-level runner for P-TAB (loader, partitions, detectors) | 98 |
 | Registry-driven unit-level runner for P-NEST | 30 |
-| Registry-driven unit-level runner for P-REL | 27 |
+| Registry-driven unit-level runner for P-REL | 30 |
 | Registry-driven unit-level runner for P-SEQ | 22 |
-| Registry-driven unit-level runner for P-TS | 18 |
+| Registry-driven unit-level runner for P-TS | 19 |
 | Approve and implement the `document_batch` unit (no approved definition) | 30 |
-| Approve and implement the `relational_load` unit (no approved definition) | 27 |
+| Approve and implement the `relational_load` unit (no approved definition) | 30 |
 | Approve and implement the `event_window` unit (no approved definition) | 22 |
 | Timestamped numeric table for the batch unit (reasons per group in the ledger) | 188 |
 
@@ -90,10 +92,10 @@ owner decision before any implementation counts (protocol amendment, #152 to #15
 
 Tests: `research/tests/test_utilization_ledger.py` (stage logic, one failure path per stage,
 dry-run success and failure, exact entry records, determinism, no detector or fault call). Focused
-mutation of the new L2 module (policy: 90 percent): 651 of 662 killed (98.3 percent). The 11
+mutation of the new L2 module (policy: 90 percent): 729 of 742 killed (98.3 percent). The 13
 survivors are equivalent or environment-only: message-only arguments (`load_group` group name in an
 error message, the reason of a `yes` stage, the parser description), `defaultdict(None)` where no
-missing key is read, and four file-name case mutants that survive only on a case-insensitive
+missing key is read, and six file-name case mutants that survive only on a case-insensitive
 volume (macOS) and die on the Linux runner. The run is development feedback, not release evidence.
 
 Not checked: the real-data adapter dry run of unit-level protocols (no adapter exists), relational

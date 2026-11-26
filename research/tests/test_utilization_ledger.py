@@ -44,10 +44,13 @@ def _setup(tmp_path):
         "b": _fact("gb", "vb", "P-TAB", units=10),
         "c": _fact("gc", "vc", "P-REL"),
         "d": _fact("gd", "vd", "P-TS"),
+        "e": _fact("gc", "vc", "P-TAB"),  # the same group, another category, another protocol
     }
     (ev / "readiness_facts.json").write_text(json.dumps({"facts": facts}))
     ready = {"C3": ["ga", "gd"], "C1": ["gb", "gc"], "C5": ["gc"]}
-    (ev / "readiness.json").write_text(json.dumps({"ready_groups": ready}))
+    stratum = {"a": "C3", "b": "C1", "c": "C5", "d": "C3", "e": "C1"}
+    datasets = [{"id": i, "stratum": c} for i, c in stratum.items()]
+    (ev / "readiness.json").write_text(json.dumps({"ready_groups": ready, "datasets": datasets}))
     chosen = bp.audit_view(views, "va", "a", False)["table"]
     ok = {"eligible": True, "reasons": [], "view": "va", "views": ["va"], "table": chosen}
     audit = {
@@ -176,7 +179,7 @@ def test_batch_detectors_and_metrics_are_listed_only_for_an_accepted_group(tmp_p
     assert groups["ga"]["detectors"]["temporal_batch"] and groups["ga"]["metrics"]["temporal_batch"]
     assert groups["gb"]["detectors"]["temporal_batch"] == []
     assert groups["ga"]["detectors"]["unit_level"] == []  # no runner yet
-    assert groups["ga"]["fault_operators"]["unit_level"] == ["m-P-TS"]
+    assert groups["ga"]["fault_operators"]["unit_level"] == {"P-TS": ["m-P-TS"]}
 
 
 def test_main_is_deterministic_and_reads_the_optional_records(tmp_path, capsys):
@@ -198,7 +201,6 @@ def test_a_group_entry_is_exactly_the_documented_record_for_accepted_and_refused
     assert groups["ga"] == {
         "categories": ["C3"],
         "cluster": "ga",
-        "detection_unit": "time_window",
         "detectors": {"temporal_batch": list(pb.DETECTORS), "unit_level": []},
         "dry_run": {
             "columns": 4,
@@ -213,7 +215,10 @@ def test_a_group_entry_is_exactly_the_documented_record_for_accepted_and_refused
             "status": "ok",
         },
         "evidence_level": "adapter_dry_run",
-        "fault_operators": {"temporal_batch": list(pb.MECHANISMS), "unit_level": ["m-P-TS"]},
+        "fault_operators": {
+            "temporal_batch": list(pb.MECHANISMS),
+            "unit_level": {"P-TS": ["m-P-TS"]},
+        },
         "label_origin": ["controlled_injection"],
         "limitations": ["unit-level protocol P-TS has no registry-driven runner"],
         "local_view_available": True,
@@ -222,12 +227,13 @@ def test_a_group_entry_is_exactly_the_documented_record_for_accepted_and_refused
             "unit_level": ["tp", "fp", "fn"],
         },
         "natural_labels": False,
+        "participations": [{"category": "C3", "detection_unit": "time_window", "protocol": "P-TS"}],
         "paths": [
             {"dry_run": "ok", "path": "temporal_batch", "status": "registered"},
             {"dry_run": "not_available", "path": "unit_level", "status": "no_runner"},
         ],
         "previous_exposure": True,
-        "protocol": "P-TS",
+        "protocols": ["P-TS"],
         "remaining_work": [],
         "stages": {
             "acquired": {"reason": "", "status": "yes"},
@@ -243,11 +249,10 @@ def test_a_group_entry_is_exactly_the_documented_record_for_accepted_and_refused
     assert groups["gb"] == {
         "categories": ["C1"],
         "cluster": "gb",
-        "detection_unit": "row",
         "detectors": {"temporal_batch": [], "unit_level": []},
         "dry_run": None,
         "evidence_level": "none",
-        "fault_operators": {"temporal_batch": [], "unit_level": ["m-P-TAB"]},
+        "fault_operators": {"temporal_batch": [], "unit_level": {"P-TAB": ["m-P-TAB"]}},
         "label_origin": ["controlled_injection"],
         "limitations": [
             "only 1 continuous columns",
@@ -256,12 +261,13 @@ def test_a_group_entry_is_exactly_the_documented_record_for_accepted_and_refused
         "local_view_available": True,
         "metrics": {"temporal_batch": [], "unit_level": ["tp", "fp", "fn"]},
         "natural_labels": False,
+        "participations": [{"category": "C1", "detection_unit": "row", "protocol": "P-TAB"}],
         "paths": [
             {"dry_run": "not_applicable", "path": "temporal_batch", "status": "registered"},
             {"dry_run": "not_available", "path": "unit_level", "status": "no_runner"},
         ],
         "previous_exposure": False,
-        "protocol": "P-TAB",
+        "protocols": ["P-TAB"],
         "remaining_work": [
             "repair the structural compatibility: fewer units than the minimum",
             "registry-driven unit-level runner for P-TAB (loader, partitions, detectors)",
@@ -284,29 +290,37 @@ def test_a_group_entry_is_exactly_the_documented_record_for_accepted_and_refused
     assert groups["gc"] == {
         "categories": ["C1", "C5"],
         "cluster": "gc",
-        "detection_unit": "relationship",
         "detectors": {"temporal_batch": [], "unit_level": []},
         "dry_run": None,
         "evidence_level": "none",
-        "fault_operators": {"temporal_batch": [], "unit_level": ["m-P-REL"]},
+        "fault_operators": {
+            "temporal_batch": [],
+            "unit_level": {"P-REL": ["m-P-REL"], "P-TAB": ["m-P-TAB"]},
+        },
         "label_origin": ["controlled_injection"],
         "limitations": [
             "view vc is not built locally",
             "unit-level protocol P-REL has no registry-driven runner",
+            "unit-level protocol P-TAB has no registry-driven runner",
             "relational_load: unsupported: the unit has no approved definition",
         ],
         "local_view_available": False,
         "metrics": {"temporal_batch": [], "unit_level": ["tp", "fp", "fn"]},
         "natural_labels": False,
+        "participations": [
+            {"category": "C1", "detection_unit": "row", "protocol": "P-TAB"},
+            {"category": "C5", "detection_unit": "relationship", "protocol": "P-REL"},
+        ],
         "paths": [
             {"dry_run": "not_applicable", "path": "temporal_batch", "status": "registered"},
             {"dry_run": "not_available", "path": "unit_level", "status": "no_runner"},
         ],
         "previous_exposure": False,
-        "protocol": "P-REL",
+        "protocols": ["P-REL", "P-TAB"],
         "remaining_work": [
             "repair the structural compatibility: view not built locally",
             "registry-driven unit-level runner for P-REL (loader, partitions, detectors)",
+            "registry-driven unit-level runner for P-TAB (loader, partitions, detectors)",
             "provide a timestamped numeric table for the batch unit (see the limitations)",
             "approve and implement the relational_load unit (no approved definition)",
         ],
@@ -411,9 +425,9 @@ def test_the_remaining_work_is_counted_most_frequent_first_then_by_name(tmp_path
     work = ul.build(ev, views)["summary"]["remaining_work"]
     assert list(work.items()) == [
         ("provide a timestamped numeric table for the batch unit (see the limitations)", 2),
+        ("registry-driven unit-level runner for P-TAB (loader, partitions, detectors)", 2),
         ("approve and implement the relational_load unit (no approved definition)", 1),
         ("registry-driven unit-level runner for P-REL (loader, partitions, detectors)", 1),
-        ("registry-driven unit-level runner for P-TAB (loader, partitions, detectors)", 1),
         ("repair the structural compatibility: fewer units than the minimum", 1),
         ("repair the structural compatibility: view not built locally", 1),
     ]
@@ -449,3 +463,43 @@ def test_main_passes_the_records_and_the_dry_run_switch_and_prints_sorted_indent
     skipped = json.loads(capsys.readouterr().out)
     assert skipped["groups"]["gd"]["dry_run"] is None
     assert skipped["groups"]["gd"]["stages"]["executable"]["status"] == "no"
+
+
+def test_a_group_in_two_categories_keeps_the_protocol_of_each_participation(tmp_path):
+    ev, views = _setup(tmp_path)
+    assert ul.registry_participations(ev)["gc"] == {"C1": "P-TAB", "C5": "P-REL"}
+    group = ul.build(ev, views)["groups"]["gc"]
+    assert group["protocols"] == ["P-REL", "P-TAB"]
+    assert [
+        (p["category"], p["protocol"], p["detection_unit"]) for p in group["participations"]
+    ] == [
+        ("C1", "P-TAB", "row"),
+        ("C5", "P-REL", "relationship"),
+    ]
+    by_protocol = ul.build(ev, views)["summary"]["by_protocol"]
+    assert by_protocol["P-TAB"]["groups"] == 2 and by_protocol["P-REL"]["groups"] == 1
+
+
+def test_a_participation_without_a_fact_or_with_two_protocols_is_refused(tmp_path):
+    ev, _views = _setup(tmp_path)
+    facts = json.loads((ev / "readiness_facts.json").read_text())
+    facts["facts"]["f"] = _fact("gc", "vc", "P-TS")
+    facts["facts"]["f"]["extra"] = 1
+    (ev / "readiness_facts.json").write_text(json.dumps(facts))
+    readiness = json.loads((ev / "readiness.json").read_text())
+    readiness["datasets"].append({"id": "f", "stratum": "C5"})  # C5 of gc now has two protocols
+    (ev / "readiness.json").write_text(json.dumps(readiness))
+    with pytest.raises(ValueError, match=r"^participations with several protocols: \['gc/C5'\]$"):
+        ul.registry_participations(ev)
+    del facts["facts"]["f"], facts["facts"]["e"]  # gc/C1 loses its only fact
+    (ev / "readiness_facts.json").write_text(json.dumps(facts))
+    with pytest.raises(ValueError, match=r"^participations without a protocol fact: \['gc/C1'\]$"):
+        ul.registry_participations(ev)
+
+
+def test_provisional_units_are_listed_once_over_all_protocols_of_a_group():
+    entry = {"eligible": False, "reasons": ["no parseable time column"]}
+    units = ul.provisional_units(["P-REL", "P-SEQ", "P-TAB"], entry)
+    assert [u["unit"] for u in units] == ["event_window", "relational_load"]
+    assert all(u["reason"].startswith("unsupported") for u in units)
+    assert ul.provisional_units(["P-TAB"], entry) == []

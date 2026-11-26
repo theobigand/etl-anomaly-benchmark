@@ -89,7 +89,7 @@
   "research/uci_loader.py": 186,
   "research/uci_pool.py": 423,
   "research/uci_wave2.py": 456,
-  "research/utilization_ledger.py": 662,
+  "research/utilization_ledger.py": 742,
   "research/validity_summary.py": 559,
   "research/xes_stream.py": 281,
   "src/etl_benchmark/__main__.py": 36,

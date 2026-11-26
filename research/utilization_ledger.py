@@ -152,17 +152,52 @@ def evidence_level(stages: dict[str, dict[str, Any]], ok: bool) -> str:
     return "metadata_only" if stages["structurally_compatible"]["status"] == "yes" else "none"
 
 
-def work_items(row: dict[str, Any], ok: bool) -> list[str]:
+def registry_participations(evidence: Path) -> dict[str, dict[str, str]]:
+    """Protocol of each (group, category) participation: {group: {category: protocol}}.
+
+    A group in several categories can fall under a different protocol in each (a sequence log
+    in C4 and a table in C2b), so the protocol belongs to the participation, not to the group.
+    """
+    facts = json.loads((evidence / "readiness_facts.json").read_text())["facts"]
+    registry = json.loads((evidence / "readiness.json").read_text())
+    stratum = {d["id"]: d["stratum"] for d in registry["datasets"]}
+    ready = {(g, c) for c, groups in registry["ready_groups"].items() for g in groups}
+    found: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
+    for fact_id, fact in facts.items():
+        group, category = fact.get("independent_group"), stratum.get(fact_id)
+        if (group, category) in ready:
+            found[group][category].add(fact["protocol_id"])
+    missing = sorted(f"{g}/{c}" for g, c in ready if not found[g][c])
+    if missing:
+        raise ValueError(f"participations without a protocol fact: {missing}")
+    conflict = sorted(f"{g}/{c}" for g in found for c, ps in found[g].items() if len(ps) > 1)
+    if conflict:
+        raise ValueError(f"participations with several protocols: {conflict}")
+    return {g: {c: next(iter(ps)) for c, ps in cats.items()} for g, cats in found.items()}
+
+
+def provisional_units(protocols: list[str], entry: dict[str, Any]) -> list[dict[str, str]]:
+    """Candidate units that are not registered, over every protocol of the group, once each."""
+    seen: dict[str, str] = {}
+    for protocol in protocols:
+        for item in ru.compatibility(protocol, entry):
+            if item["status"] != ru.REGISTERED:
+                seen.setdefault(item["unit"], item["reason"])
+    return [{"unit": unit, "reason": reason} for unit, reason in sorted(seen.items())]
+
+
+def work_items(
+    row: dict[str, Any], protocols: list[str], provisional: list[dict[str, str]], ok: bool
+) -> list[str]:
     """Implementation work that remains before the group can contribute to an evaluation."""
     items = []
     if not row["unit_level"]["compatible"]:
         items.append("repair the structural compatibility: " + row["unit_level"]["reason"])
     if not ok:
-        items.append(WORK_UNIT_LEVEL.format(protocol=row["protocol"]))
+        items += [WORK_UNIT_LEVEL.format(protocol=p) for p in protocols]
         if not row["batch_approved"]["eligible"]:
             items.append(WORK_BATCH_TABLE)
-        for unit in row["batch_provisional"]:
-            items.append(WORK_BATCH_UNIT.format(unit=unit["unit"]))
+        items += [WORK_BATCH_UNIT.format(unit=u["unit"]) for u in provisional]
     return items
 
 
@@ -171,6 +206,7 @@ def group_entry(
     row: dict[str, Any],
     audit: dict[str, Any],
     protocols: dict[str, Any],
+    by_category: dict[str, str],
     views: Path,
     execution: dict[str, bool] | None,
     exclusion: str | None,
@@ -180,7 +216,8 @@ def group_entry(
     dry_run = dry_run_batch(entry, group, views) if attempt and entry["eligible"] else None
     ok = dry_run is not None and dry_run["status"] == "ok"
     stages = stages_of(row, dry_run, execution, exclusion)
-    proto = protocols[row["protocol"]]
+    used = sorted(set(by_category.values()))
+    provisional = provisional_units(used, entry)
     paths = [
         {
             "path": BATCH,
@@ -190,17 +227,24 @@ def group_entry(
         {"path": "unit_level", "status": PATHS["unit_level"]["status"], "dry_run": "not_available"},
     ]
     limitations = list(row["batch_approved"]["reasons"])
-    limitations.append(f"unit-level protocol {row['protocol']} has no registry-driven runner")
-    limitations += [f"{p['unit']}: {p['reason']}" for p in row["batch_provisional"]]
+    limitations += [f"unit-level protocol {p} has no registry-driven runner" for p in used]
+    limitations += [f"{u['unit']}: {u['reason']}" for u in provisional]
     return {
         "categories": row["categories"],
         "cluster": row["cluster"],
         "views": row["views"],
         "local_view_available": row["local_view_available"],
-        "protocol": row["protocol"],
-        "detection_unit": proto["detection_unit"],
+        "protocols": used,
+        "participations": [
+            {
+                "category": category,
+                "protocol": protocol,
+                "detection_unit": protocols[protocol]["detection_unit"],
+            }
+            for category, protocol in sorted(by_category.items())
+        ],
         "fault_operators": {
-            "unit_level": proto["mechanisms"],
+            "unit_level": {p: protocols[p]["mechanisms"] for p in used},
             BATCH: list(pb.MECHANISMS) if entry["eligible"] else [],
         },
         "detectors": {BATCH: list(pb.DETECTORS) if ok else [], "unit_level": []},
@@ -216,7 +260,7 @@ def group_entry(
         "evidence_level": evidence_level(stages, ok),
         "stages": stages,
         "limitations": limitations,
-        "remaining_work": work_items(row, ok),
+        "remaining_work": work_items(row, used, provisional, ok),
     }
 
 
@@ -246,8 +290,10 @@ def summarise(groups: dict[str, dict[str, Any]]) -> dict[str, Any]:
         by_category[category] = {
             g_id: g for g_id, g in groups.items() if category in g["categories"]
         }
-    for protocol in sorted({g["protocol"] for g in groups.values()}):
-        by_protocol[protocol] = {g_id: g for g_id, g in groups.items() if g["protocol"] == protocol}
+    for protocol in sorted({p for g in groups.values() for p in g["protocols"]}):
+        by_protocol[protocol] = {
+            g_id: g for g_id, g in groups.items() if protocol in g["protocols"]
+        }
     work: Counter[str] = Counter(w for g in groups.values() for w in g["remaining_work"])
     return {
         "total": counts(groups),
@@ -273,12 +319,23 @@ def build(
     rows = sc.group_rows(evidence, views, links, manifest)
     audit = json.loads((evidence / "batch_eligibility.json").read_text())["groups"]
     protocols = json.loads((evidence / "anomaly_protocols.json").read_text())["protocols"]
+    participations = registry_participations(evidence)
     executions, exclusions = executions or {}, exclusions or {}
     unknown = sorted((set(executions) | set(exclusions)) - set(rows))
     if unknown:
         raise ValueError(f"records name groups outside the registry: {unknown}")
     groups = {
-        g: group_entry(g, r, audit, protocols, views, executions.get(g), exclusions.get(g), attempt)
+        g: group_entry(
+            g,
+            r,
+            audit,
+            protocols,
+            participations[g],
+            views,
+            executions.get(g),
+            exclusions.get(g),
+            attempt,
+        )
         for g, r in rows.items()
     }
     return {
