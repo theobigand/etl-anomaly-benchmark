@@ -2,6 +2,7 @@
 
 This directory is the canonical, version-controlled backlog for strengthening the ETL anomaly-detection benchmark and its IMRaD manuscript.
 
+- **Task validation:** `research/roadmap_tasks.py` (run by the roadmap synchronization workflow) checks the task list dynamically: T001–T415 (`task_range` in `tracking.json`) must all be defined, every identifier has exactly one definition, a `(promoted, see NN)` line is a reference to a definition in file NN and must agree with it, and identifiers above the historical range must continue without a gap. There is no fixed total.
 - **415 individually numbered actions:** T001–T397 preserve the complete consolidated remediation checklist; T398–T415 add repository-specific verification and coordination requirements.
 - **12 checklist volumes:** each task appears once and has a stable identifier.
 - **34 active GitHub issues:** 16 core roadmap issues with complete checklists, eight historical follow-ups, five optional rule-generation research issues, and five governance/DoR/DoD follow-ups; one historical planning issue is archived.

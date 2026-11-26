@@ -23,6 +23,13 @@ jobs:
       - name: Checkout roadmap
         uses: actions/checkout@v4
 
+      - name: Validate the roadmap task list
+        id: tasks
+        run: |
+          summary=$(python3 research/roadmap_tasks.py docs/thesis-remediation)
+          echo "$summary"
+          echo "summary=$summary" >> "$GITHUB_OUTPUT"
+
       - name: Validate tasks and synchronize GitHub milestones and labels
         uses: actions/github-script@v7
         with:
@@ -31,14 +38,6 @@ jobs:
             const path = require('path');
             const root = 'docs/thesis-remediation';
             const config = JSON.parse(fs.readFileSync(path.join(root, 'tracking.json'), 'utf8'));
-            const files = fs.readdirSync(root).filter(f => /^\d{2}-.*\.md$/.test(f));
-            const ids = files.flatMap(f => [...fs.readFileSync(path.join(root, f), 'utf8')
-              .matchAll(/^- \[[ xX]\] T(\d{3}) /gm)].map(m => Number(m[1])));
-            const unique = new Set(ids);
-            if (ids.length !== 415 || unique.size !== 415 ||
-                Array.from({length: 415}, (_, i) => i + 1).some(id => !unique.has(id))) {
-              throw new Error('The roadmap must contain exactly T001–T415, each once');
-            }
             const historicalOpen = config.historical_open_issues ?? [];
             const historicalClosed = config.historical_closed_issues ?? [];
             const optionalResearch = config.optional_research_issues ?? [];
@@ -121,7 +120,7 @@ jobs:
                 owner, repo, issue_number: item.number, labels: item.labels
               });
             }
-            core.info('Verified 415 tasks and synchronized ' +
+            core.info('${{ steps.tasks.outputs.summary }} and synchronized ' +
               active.length + ' open issues, ' +
               historicalClosed.length + ' archived issues, ' +
               config.milestones.length + ' milestones, and ' +
