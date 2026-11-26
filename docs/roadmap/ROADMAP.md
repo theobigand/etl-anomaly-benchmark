@@ -74,6 +74,8 @@ Outputs: [utilization ledger](../../verification/utilization_ledger.md) (#133) a
 
 Production-oriented ingestion, transformation, orchestration, storage, data modeling and controlled pipeline fault injection (engineering extension).
 
+Outputs: [architecture decisions](../architecture/README.md) (#141).
+
 | Issue | Title | Scope | Authorization | Blocked by |
 | --- | --- | --- | --- | --- |
 | [#141](https://github.com/theobigand/etl-anomaly-benchmark/issues/141) | Architecture decisions, technology selection and dependency isolation | engineering | none | - |
