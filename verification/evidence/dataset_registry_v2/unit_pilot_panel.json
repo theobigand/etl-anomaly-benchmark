@@ -1,0 +1,4495 @@
+{
+ "status": "proposal: size, minimum, seed and exposure rule are owner decisions",
+ "table": {
+  "3pfl": {
+   "categories": [
+    "C5"
+   ],
+   "units": 50271,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public procurement and research funding",
+   "schema_family": "federal procurement/grants tables",
+   "curator": "zenodo",
+   "cluster": "3pfl",
+   "exposed": false
+  },
+  "a_day_in_daylight": {
+   "categories": [
+    "C4"
+   ],
+   "units": 1763,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "chronobiology and light exposure",
+   "schema_family": "participant context-event diary log",
+   "curator": "zenodo",
+   "cluster": "a_day_in_daylight",
+   "exposed": false
+  },
+  "ademe_dpe": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 50000,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "building energy certification",
+   "schema_family": "building energy certificate csv",
+   "curator": "data.ademe.fr",
+   "cluster": "ademe_dpe",
+   "exposed": false
+  },
+  "airquality_italy": {
+   "categories": [
+    "C3"
+   ],
+   "units": 9357,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "environmental monitoring",
+   "schema_family": "uci time series",
+   "curator": "uci",
+   "cluster": "airquality_italy",
+   "exposed": true
+  },
+  "aoe_gameplay": {
+   "categories": [
+    "C4"
+   ],
+   "units": 2881,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Games",
+   "schema_family": "xes gameplay interaction log",
+   "curator": "zenodo",
+   "cluster": "aoe_gameplay",
+   "exposed": false
+  },
+  "apis_guru_openapi_directory": {
+   "categories": [
+    "C6"
+   ],
+   "units": 2529,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "web API description registry",
+   "schema_family": "openapi directory json",
+   "curator": "github.com/APIs-guru",
+   "cluster": "apis_guru_openapi_directory",
+   "exposed": false
+  },
+  "austin_police_dispatch": {
+   "categories": [
+    "C4"
+   ],
+   "units": 88816,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "police dispatch",
+   "schema_family": "dispatch lifecycle timestamps",
+   "curator": "datahub.austintexas.gov",
+   "cluster": "austin_police_dispatch",
+   "exposed": false
+  },
+  "austin_surface_water_quality": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 22887,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "surface water quality sampling",
+   "schema_family": "long-format laboratory results",
+   "curator": "datahub.austintexas.gov",
+   "cluster": "austin_surface_water_quality",
+   "exposed": false
+  },
+  "backblaze": {
+   "categories": [
+    "C3"
+   ],
+   "units": 206941,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "data-centre storage hardware",
+   "schema_family": "drive smart snapshots",
+   "curator": "backblaze",
+   "cluster": "backblaze",
+   "exposed": false
+  },
+  "bloomington_locus_solar_monitoring": {
+   "categories": [
+    "C3"
+   ],
+   "units": 91437,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "distributed photovoltaic generation monitoring",
+   "schema_family": "photovoltaic site daily panel",
+   "curator": "data.bloomington.in.gov",
+   "cluster": "bloomington_locus_solar_monitoring",
+   "exposed": false
+  },
+  "bloomington_utilities_water_plant": {
+   "categories": [
+    "C3"
+   ],
+   "units": 6109,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "drinking water plant operations",
+   "schema_family": "utility plant daily meter series",
+   "curator": "data.bloomington.in.gov",
+   "cluster": "bloomington_locus_solar_monitoring",
+   "exposed": false
+  },
+  "bts_umd_daily_mobility_statistics": {
+   "categories": [
+    "C3"
+   ],
+   "units": 1923,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "population mobility",
+   "schema_family": "derived mobility indicator panel",
+   "curator": "data.bts.gov",
+   "cluster": "bts_umd_daily_mobility_statistics",
+   "exposed": false
+  },
+  "candanedo_umons": {
+   "categories": [
+    "C3"
+   ],
+   "units": 20560,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "building energy and occupancy",
+   "schema_family": "uci time series",
+   "curator": "uci",
+   "cluster": "candanedo_umons",
+   "exposed": true
+  },
+  "ccin2p3_slurm": {
+   "categories": [
+    "C4"
+   ],
+   "units": 233716,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "HPC operations",
+   "schema_family": "slurm job accounting",
+   "curator": "zenodo",
+   "cluster": "ccin2p3_slurm",
+   "exposed": false
+  },
+  "cdc_covid_vaccination_reporting": {
+   "categories": [
+    "C3"
+   ],
+   "units": 1476,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "public health immunization reporting",
+   "schema_family": "vaccination reporting counts",
+   "curator": "data.cdc.gov",
+   "cluster": "cdc_covid_vaccination_reporting",
+   "exposed": false
+  },
+  "cftc_cot_disaggregated": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 27231,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "commodity derivatives positioning",
+   "schema_family": "futures trader position report ledger",
+   "curator": "publicreporting.cftc.gov",
+   "cluster": "cftc_cot_disaggregated",
+   "exposed": false
+  },
+  "chembl_molecules": {
+   "categories": [
+    "C6"
+   ],
+   "units": 1000,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "medicinal chemistry bioactivity",
+   "schema_family": "small-molecule pharmacology json",
+   "curator": "ebi.ac.uk",
+   "cluster": "chembl_molecules",
+   "exposed": false
+  },
+  "cincinnati_emergency_communications_calls": {
+   "categories": [
+    "C4"
+   ],
+   "units": 164525,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "emergency call handling",
+   "schema_family": "telephony call lifecycle timestamps",
+   "curator": "data.cincinnati-oh.gov",
+   "cluster": "cincinnati_emergency_communications_calls",
+   "exposed": false
+  },
+  "cincinnati_fire_dispatch": {
+   "categories": [
+    "C4"
+   ],
+   "units": 96071,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "emergency fire and medical dispatch",
+   "schema_family": "dispatch lifecycle timestamps",
+   "curator": "data.cincinnati-oh.gov",
+   "cluster": "cincinnati_emergency_communications_calls",
+   "exposed": false
+  },
+  "city_of_austin_campaign_finance": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 3654,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "political campaign finance disclosure",
+   "schema_family": "campaign finance transaction ledger",
+   "curator": "datahub.austintexas.gov",
+   "cluster": "city_of_austin_campaign_finance",
+   "exposed": false
+  },
+  "clinicaltrials_gov": {
+   "categories": [
+    "C6"
+   ],
+   "units": 12000,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "clinical registry",
+   "schema_family": "study records json",
+   "curator": "clinicaltrials.gov",
+   "cluster": "clinicaltrials_gov",
+   "exposed": false
+  },
+  "cnc_five_axis_milling": {
+   "categories": [
+    "C3"
+   ],
+   "units": 189089,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "industrial manufacturing",
+   "schema_family": "cnc machine controller telemetry",
+   "curator": "zenodo",
+   "cluster": "cnc_five_axis_milling",
+   "exposed": false
+  },
+  "coatings_multinational": {
+   "categories": [
+    "C2b",
+    "C4"
+   ],
+   "units": 144920,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "purchasing (ERP)",
+   "schema_family": "xes event log",
+   "curator": "4tu",
+   "cluster": "coatings_multinational",
+   "exposed": false
+  },
+  "colorado_dam_safety_registry": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 2737,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "dam safety regulation",
+   "schema_family": "regulatory structure inventory",
+   "curator": "data.colorado.gov",
+   "cluster": "colorado_dam_safety_registry",
+   "exposed": false
+  },
+  "colorado_regulated_storage_tanks": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 52111,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "petroleum storage tank regulation",
+   "schema_family": "facility and tank registry",
+   "curator": "data.colorado.gov",
+   "cluster": "colorado_regulated_storage_tanks",
+   "exposed": false
+  },
+  "cordis_horizon_europe": {
+   "categories": [
+    "C5"
+   ],
+   "units": 24419,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public research funding grants",
+   "schema_family": "research grant project tables",
+   "curator": "cordis eu",
+   "cluster": "cordis_horizon_europe",
+   "exposed": false
+  },
+  "cpsc_recall_notices": {
+   "categories": [
+    "C6"
+   ],
+   "units": 725,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "consumer product safety regulation",
+   "schema_family": "product recall notice json",
+   "curator": "saferproducts.gov",
+   "cluster": "cpsc_recall_notices",
+   "exposed": false
+  },
+  "crossref": {
+   "categories": [
+    "C6"
+   ],
+   "units": 2000,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "scholarly metadata",
+   "schema_family": "crossref works json",
+   "curator": "crossref",
+   "cluster": "crossref",
+   "exposed": false
+  },
+  "cubico_kelmarsh": {
+   "categories": [
+    "C3"
+   ],
+   "units": 314496,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "wind energy generation",
+   "schema_family": "wind turbine scada",
+   "curator": "zenodo",
+   "cluster": "cubico_kelmarsh",
+   "exposed": false
+  },
+  "danish_district_heating": {
+   "categories": [
+    "C3"
+   ],
+   "units": 105192,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "district heating infrastructure",
+   "schema_family": "district thermal meter time series",
+   "curator": "zenodo",
+   "cluster": "danish_district_heating",
+   "exposed": false
+  },
+  "datacite_dois": {
+   "categories": [
+    "C6"
+   ],
+   "units": 1000,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "scholarly metadata",
+   "schema_family": "datacite metadata json",
+   "curator": "api.datacite.org",
+   "cluster": "datacite_dois",
+   "exposed": false
+  },
+  "delaware_dnrec_well_permits": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 20123,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "groundwater well regulation",
+   "schema_family": "well permit records",
+   "curator": "data.delaware.gov",
+   "cluster": "delaware_dnrec_well_permits",
+   "exposed": false
+  },
+  "delaware_state_purchasing_cards": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 188670,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public purchasing-card spending",
+   "schema_family": "card transaction ledger",
+   "curator": "data.delaware.gov",
+   "cluster": "delaware_state_purchasing_cards",
+   "exposed": false
+  },
+  "dft_stats19": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 104258,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "road safety",
+   "schema_family": "road collision coded tables",
+   "curator": "gov.uk",
+   "cluster": "dft_stats19",
+   "exposed": false
+  },
+  "dgal_alimconfiance": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 71228,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "food safety inspection",
+   "schema_family": "food safety inspection register",
+   "curator": "dgal.opendatasoft.com",
+   "cluster": "dgal_alimconfiance",
+   "exposed": false
+  },
+  "dgccrf_fuel_prices": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 32699,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "retail motor fuel pricing",
+   "schema_family": "retail fuel station price ledger",
+   "curator": "data economie gouv fr",
+   "cluster": "dgccrf_fuel_prices",
+   "exposed": false
+  },
+  "dgfip_dvf": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 75985,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "real estate",
+   "schema_family": "property register csv",
+   "curator": "data.gouv.fr",
+   "cluster": "dgfip_dvf",
+   "exposed": false
+  },
+  "dmsp_ssj_auroral": {
+   "categories": [
+    "C3"
+   ],
+   "units": 68034,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "spacecraft magnetospheric telemetry",
+   "schema_family": "polar satellite particle boundary series",
+   "curator": "zenodo",
+   "cluster": "dmsp_ssj_auroral",
+   "exposed": false
+  },
+  "doaj_directory_of_open_access_journals": {
+   "categories": [
+    "C6"
+   ],
+   "units": 999,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "open access journal registry",
+   "schema_family": "doaj bibjson journal records",
+   "curator": "doaj.org",
+   "cluster": "doaj_directory_of_open_access_journals",
+   "exposed": false
+  },
+  "dutch_municipalities": {
+   "categories": [
+    "C4"
+   ],
+   "units": 1156,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "public administration",
+   "schema_family": "xes event log",
+   "curator": "4tu",
+   "cluster": "dutch_municipalities",
+   "exposed": false
+  },
+  "dwd_germany": {
+   "categories": [
+    "C3"
+   ],
+   "units": 838605,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "meteorology",
+   "schema_family": "synoptic hourly climate archive",
+   "curator": "opendata.dwd.de",
+   "cluster": "dwd_germany",
+   "exposed": false
+  },
+  "ea_hydrology": {
+   "categories": [
+    "C3"
+   ],
+   "units": 70128,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "hydrology",
+   "schema_family": "gauging time series",
+   "curator": "environment.data.gov.uk",
+   "cluster": "ea_hydrology",
+   "exposed": false
+  },
+  "ecb_euro_fx_reference_rates": {
+   "categories": [
+    "C3"
+   ],
+   "units": 7141,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "foreign exchange reference rates",
+   "schema_family": "daily multi-currency rate panel",
+   "curator": "ecb",
+   "cluster": "ecb_euro_fx_reference_rates",
+   "exposed": false
+  },
+  "edp_wind_farm_portugal": {
+   "categories": [
+    "C3"
+   ],
+   "units": 437750,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "wind energy generation",
+   "schema_family": "care wind turbine datasets",
+   "curator": "zenodo",
+   "cluster": "edp_wind_farm_portugal",
+   "exposed": false
+  },
+  "eia_petroleum_spot_prices": {
+   "categories": [
+    "C3"
+   ],
+   "units": 10473,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "energy commodity markets",
+   "schema_family": "commodity spot price panel",
+   "curator": "eia.gov",
+   "cluster": "eia_petroleum_spot_prices",
+   "exposed": false
+  },
+  "eicu_philips": {
+   "categories": [
+    "C5"
+   ],
+   "units": 434660,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "intensive care",
+   "schema_family": "clinical record tables",
+   "curator": "physionet",
+   "cluster": "eicu_philips",
+   "exposed": false
+  },
+  "elder_home": {
+   "categories": [
+    "C3"
+   ],
+   "units": 416153,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "ambient assisted living",
+   "schema_family": "uci time series",
+   "curator": "uci",
+   "cluster": "elder_home",
+   "exposed": false
+  },
+  "epa_aqs": {
+   "categories": [
+    "C3"
+   ],
+   "units": 162829,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "environmental monitoring",
+   "schema_family": "hourly monitor long-format records",
+   "curator": "aqs.epa.gov",
+   "cluster": "epa_aqs",
+   "exposed": false
+  },
+  "fda_maude": {
+   "categories": [
+    "C6"
+   ],
+   "units": 7355,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "medical device safety reporting",
+   "schema_family": "openfda device event json",
+   "curator": "openfda",
+   "cluster": "fda_maude",
+   "exposed": false
+  },
+  "fdic_bank_financials": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 18402,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "prudential banking supervision",
+   "schema_family": "bank regulatory call reports",
+   "curator": "banks.data.fdic.gov",
+   "cluster": "fdic_bank_financials",
+   "exposed": false
+  },
+  "fec_federal_campaign_finance_filings": {
+   "categories": [
+    "C5"
+   ],
+   "units": 742533,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "federal campaign finance",
+   "schema_family": "campaign finance relational tables",
+   "curator": "fec.gov",
+   "cluster": "fec_federal_campaign_finance_filings",
+   "exposed": false
+  },
+  "federal_register": {
+   "categories": [
+    "C6"
+   ],
+   "units": 2000,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "federal regulatory rulemaking",
+   "schema_family": "federal regulatory documents json",
+   "curator": "federalregister.gov",
+   "cluster": "federal_register",
+   "exposed": false
+  },
+  "fermi_blazar_flares": {
+   "categories": [
+    "C4"
+   ],
+   "units": 3598,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "high-energy gamma-ray astrophysics",
+   "schema_family": "astrophysical flare point-process catalog",
+   "curator": "zenodo",
+   "cluster": "fermi_blazar_flares",
+   "exposed": false
+  },
+  "fin_institute_nl": {
+   "categories": [
+    "C4"
+   ],
+   "units": 13087,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "banking process",
+   "schema_family": "xes event log",
+   "curator": "4tu",
+   "cluster": "fin_institute_nl",
+   "exposed": false
+  },
+  "florida_bridge_inspections": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 12986,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "civil bridge infrastructure",
+   "schema_family": "bridge structural inspection inventory",
+   "curator": "zenodo",
+   "cluster": "florida_bridge_inspections",
+   "exposed": false
+  },
+  "france_baac_road_accidents": {
+   "categories": [
+    "C5"
+   ],
+   "units": 342515,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "road safety",
+   "schema_family": "road collision coded tables",
+   "curator": "data.gouv.fr",
+   "cluster": "france_baac_road_accidents",
+   "exposed": false
+  },
+  "fraunhofer_iee_care_wind_b": {
+   "categories": [
+    "C3"
+   ],
+   "units": 279733,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "wind energy generation",
+   "schema_family": "care wind turbine datasets",
+   "curator": "zenodo",
+   "cluster": "fraunhofer_iee_care_wind_b",
+   "exposed": false
+  },
+  "fta_national_transit_database": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 74173,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public transit operations reporting",
+   "schema_family": "agency-mode-month activity counts",
+   "curator": "datahub.transportation.gov",
+   "cluster": "fta_national_transit_database",
+   "exposed": false
+  },
+  "fugaku_riken": {
+   "categories": [
+    "C4"
+   ],
+   "units": 116977,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "HPC operations",
+   "schema_family": "fugaku job records",
+   "curator": "zenodo",
+   "cluster": "fugaku_riken",
+   "exposed": false
+  },
+  "gbif_occurrences": {
+   "categories": [
+    "C6"
+   ],
+   "units": 1500,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "biodiversity species occurrences",
+   "schema_family": "darwin core occurrence json",
+   "curator": "api.gbif.org",
+   "cluster": "gbif_occurrences",
+   "exposed": false
+  },
+  "gene_ontology_consortium_annotations": {
+   "categories": [
+    "C5"
+   ],
+   "units": 1026281,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "gene function ontology and annotation",
+   "schema_family": "ontology term and annotation tables",
+   "curator": "geneontology.org",
+   "cluster": "gene_ontology_consortium_annotations",
+   "exposed": false
+  },
+  "georgia_procurement": {
+   "categories": [
+    "C2b",
+    "C5",
+    "C6"
+   ],
+   "units": 18299,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public procurement",
+   "schema_family": "ocds",
+   "curator": "ocds registry",
+   "cluster": "georgia_procurement",
+   "exposed": false
+  },
+  "german_paying_agency": {
+   "categories": [
+    "C2b",
+    "C4"
+   ],
+   "units": 487270,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "agricultural subsidies",
+   "schema_family": "xes event log",
+   "curator": "4tu",
+   "cluster": "german_paying_agency",
+   "exposed": false
+  },
+  "german_water_demand": {
+   "categories": [
+    "C3"
+   ],
+   "units": 46026,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "municipal water supply",
+   "schema_family": "municipal utility pumping time series",
+   "curator": "zenodo",
+   "cluster": "german_water_demand",
+   "exposed": false
+  },
+  "gfz_potsdam_kp": {
+   "categories": [
+    "C3"
+   ],
+   "units": 277272,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "geomagnetism and space weather",
+   "schema_family": "three-hourly geomagnetic index",
+   "curator": "kp.gfz.de",
+   "cluster": "gfz_potsdam_kp",
+   "exposed": false
+  },
+  "github_actions_workflows": {
+   "categories": [
+    "C4"
+   ],
+   "units": 1272,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "software CI/CD workflow evolution",
+   "schema_family": "git ci workflow change history",
+   "curator": "zenodo",
+   "cluster": "github_actions_workflows",
+   "exposed": false
+  },
+  "github_advisory_database": {
+   "categories": [
+    "C6"
+   ],
+   "units": 1000,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "software vulnerability advisories",
+   "schema_family": "github advisory json",
+   "curator": "github.com",
+   "cluster": "github_advisory_database",
+   "exposed": false
+  },
+  "grouplens": {
+   "categories": [
+    "C5"
+   ],
+   "units": 100836,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "recommender service",
+   "schema_family": "ratings tables",
+   "curator": "grouplens",
+   "cluster": "grouplens",
+   "exposed": false
+  },
+  "gtfs_fr_alterneo": {
+   "categories": [
+    "C5"
+   ],
+   "units": 367750,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public transport timetables",
+   "schema_family": "gtfs",
+   "curator": "transport.data.gouv.fr",
+   "cluster": "gtfs_fr_alterneo",
+   "exposed": false
+  },
+  "gtfs_fr_aravis": {
+   "categories": [
+    "C5"
+   ],
+   "units": 396301,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public transport timetables",
+   "schema_family": "gtfs",
+   "curator": "transport.data.gouv.fr",
+   "cluster": "gtfs_fr_aravis",
+   "exposed": false
+  },
+  "gtfs_fr_citea": {
+   "categories": [
+    "C5"
+   ],
+   "units": 497486,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public transport timetables",
+   "schema_family": "gtfs",
+   "curator": "transport.data.gouv.fr",
+   "cluster": "gtfs_fr_citea",
+   "exposed": false
+  },
+  "gtfs_fr_diviamobilites": {
+   "categories": [
+    "C5"
+   ],
+   "units": 712352,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public transport timetables",
+   "schema_family": "gtfs",
+   "curator": "transport.data.gouv.fr",
+   "cluster": "gtfs_fr_diviamobilites",
+   "exposed": false
+  },
+  "gtfs_fr_filibus": {
+   "categories": [
+    "C5"
+   ],
+   "units": 255903,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public transport timetables",
+   "schema_family": "gtfs",
+   "curator": "transport.data.gouv.fr",
+   "cluster": "gtfs_fr_filibus",
+   "exposed": false
+  },
+  "gtfs_fr_kiceo": {
+   "categories": [
+    "C5"
+   ],
+   "units": 65019,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public transport timetables",
+   "schema_family": "gtfs",
+   "curator": "transport.data.gouv.fr",
+   "cluster": "gtfs_fr_kiceo",
+   "exposed": false
+  },
+  "gtfs_fr_optymo": {
+   "categories": [
+    "C5"
+   ],
+   "units": 165089,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public transport timetables",
+   "schema_family": "gtfs",
+   "curator": "transport.data.gouv.fr",
+   "cluster": "gtfs_fr_optymo",
+   "exposed": false
+  },
+  "gtfs_fr_palmbus": {
+   "categories": [
+    "C5"
+   ],
+   "units": 836508,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public transport timetables",
+   "schema_family": "gtfs",
+   "curator": "transport.data.gouv.fr",
+   "cluster": "gtfs_fr_palmbus",
+   "exposed": false
+  },
+  "gtfs_fr_sankeo": {
+   "categories": [
+    "C5"
+   ],
+   "units": 377481,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public transport timetables",
+   "schema_family": "gtfs",
+   "curator": "transport.data.gouv.fr",
+   "cluster": "gtfs_fr_sankeo",
+   "exposed": false
+  },
+  "gtfs_fr_sibra": {
+   "categories": [
+    "C5"
+   ],
+   "units": 269669,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public transport timetables",
+   "schema_family": "gtfs",
+   "curator": "transport.data.gouv.fr",
+   "cluster": "gtfs_fr_sibra",
+   "exposed": false
+  },
+  "gtfs_fr_tango": {
+   "categories": [
+    "C5"
+   ],
+   "units": 387117,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public transport timetables",
+   "schema_family": "gtfs",
+   "curator": "transport.data.gouv.fr",
+   "cluster": "gtfs_fr_tango",
+   "exposed": false
+  },
+  "gtfs_fr_transvilles": {
+   "categories": [
+    "C5"
+   ],
+   "units": 325127,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public transport timetables",
+   "schema_family": "gtfs",
+   "curator": "transport.data.gouv.fr",
+   "cluster": "gtfs_fr_transvilles",
+   "exposed": false
+  },
+  "hm_land_registry": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 180229,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "real estate",
+   "schema_family": "property register csv",
+   "curator": "gov.uk",
+   "cluster": "hm_land_registry",
+   "exposed": false
+  },
+  "hospital_sepsis_nl": {
+   "categories": [
+    "C4"
+   ],
+   "units": 1050,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "hospital pathways",
+   "schema_family": "xes event log",
+   "curator": "4tu",
+   "cluster": "hospital_sepsis_nl",
+   "exposed": false
+  },
+  "ingv_seismic": {
+   "categories": [
+    "C4"
+   ],
+   "units": 1096,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "geophysical seismology",
+   "schema_family": "fdsnws seismic event catalog",
+   "curator": "ingv fdsnws",
+   "cluster": "ingv_seismic",
+   "exposed": false
+  },
+  "inpi_bce_ratios": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 23012,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "corporate financial reporting",
+   "schema_family": "corporate financial filings",
+   "curator": "data economie gouv fr",
+   "cluster": "inpi_bce_ratios",
+   "exposed": false
+  },
+  "italian_road_fines": {
+   "categories": [
+    "C2b",
+    "C4"
+   ],
+   "units": 561470,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "police fines",
+   "schema_family": "xes event log",
+   "curator": "4tu",
+   "cluster": "italian_road_fines",
+   "exposed": false
+  },
+  "japan_reconstructed_buildings": {
+   "categories": [
+    "C5"
+   ],
+   "units": 1014,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "architectural heritage and archaeology",
+   "schema_family": "archaeological heritage database",
+   "curator": "zenodo",
+   "cluster": "japan_reconstructed_buildings",
+   "exposed": false
+  },
+  "jolpica_f1": {
+   "categories": [
+    "C5"
+   ],
+   "units": 52234,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "motorsport competition records",
+   "schema_family": "competition results database",
+   "curator": "jolpica",
+   "cluster": "jolpica_f1",
+   "exposed": false
+  },
+  "kanto_landslides": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 21814,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "earth science geomorphology",
+   "schema_family": "geomorphological landslide hazard inventory",
+   "curator": "zenodo",
+   "cluster": "kanto_landslides",
+   "exposed": false
+  },
+  "loghub_collection": {
+   "categories": [
+    "C4"
+   ],
+   "units": 2000,
+   "split": [
+    false
+   ],
+   "floor": null,
+   "domain": "system logs (16 systems)",
+   "schema_family": "raw logs",
+   "curator": "loghub (one curator)",
+   "cluster": "loghub_collection",
+   "exposed": false
+  },
+  "lyft_bikeshare": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 1947784,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "bike sharing",
+   "schema_family": "trip records",
+   "curator": "operator open data",
+   "cluster": "lyft_bikeshare",
+   "exposed": false
+  },
+  "melbourne_pedestrian": {
+   "categories": [
+    "C3"
+   ],
+   "units": 98723,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "urban sensing",
+   "schema_family": "pedestrian counts",
+   "curator": "monash",
+   "cluster": "melbourne_pedestrian",
+   "exposed": false
+  },
+  "met_museum": {
+   "categories": [
+    "C6"
+   ],
+   "units": 1000,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "cultural heritage",
+   "schema_family": "museum catalogue json",
+   "curator": "met open access",
+   "cluster": "met_museum",
+   "exposed": false
+  },
+  "metropt_porto": {
+   "categories": [
+    "C3"
+   ],
+   "units": 373470,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "industrial maintenance",
+   "schema_family": "sensor csv",
+   "curator": "zenodo",
+   "cluster": "metropt_porto",
+   "exposed": false
+  },
+  "microsoft_azure_compute": {
+   "categories": [
+    "C4"
+   ],
+   "units": 6086,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "cloud compute infrastructure",
+   "schema_family": "azure vm packing trace",
+   "curator": "github",
+   "cluster": "microsoft_azure_compute",
+   "exposed": false
+  },
+  "mimic_iv_bidmc": {
+   "categories": [
+    "C5"
+   ],
+   "units": 107727,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "intensive care",
+   "schema_family": "clinical record tables",
+   "curator": "physionet",
+   "cluster": "mimic_iv_bidmc",
+   "exposed": false
+  },
+  "mitre_attack_knowledge_base": {
+   "categories": [
+    "C6"
+   ],
+   "units": 26699,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "cyber threat knowledge base",
+   "schema_family": "stix 2.1 bundle json",
+   "curator": "github.com/mitre-attack",
+   "cluster": "mitre_attack_knowledge_base",
+   "exposed": false
+  },
+  "montgomery_county_liquor_control_sales": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 138638,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public liquor wholesale and retail",
+   "schema_family": "item-month sales ledger",
+   "curator": "data.montgomerycountymd.gov",
+   "cluster": "montgomery_county_liquor_control_sales",
+   "exposed": false
+  },
+  "montreal_contracts": {
+   "categories": [
+    "C2b",
+    "C6"
+   ],
+   "units": 30551,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public procurement",
+   "schema_family": "ocds",
+   "curator": "ocds registry",
+   "cluster": "montreal_contracts",
+   "exposed": false
+  },
+  "moodle_lms_events": {
+   "categories": [
+    "C4"
+   ],
+   "units": 8940,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "educational software clickstreams",
+   "schema_family": "lms user interaction event log",
+   "curator": "zenodo",
+   "cluster": "moodle_lms_events",
+   "exposed": false
+  },
+  "naoj_norp_solar_bursts": {
+   "categories": [
+    "C4"
+   ],
+   "units": 4239,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "solar radio astrophysics",
+   "schema_family": "solar radio burst event catalog",
+   "curator": "zenodo",
+   "cluster": "naoj_norp_solar_bursts",
+   "exposed": false
+  },
+  "nasa_common_metadata_repository": {
+   "categories": [
+    "C6"
+   ],
+   "units": 900,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "earth science data catalogue",
+   "schema_family": "umm-c collection json",
+   "curator": "cmr.earthdata.nasa.gov",
+   "cluster": "nasa_common_metadata_repository",
+   "exposed": false
+  },
+  "nasa_omni_near_earth_solar_wind": {
+   "categories": [
+    "C3"
+   ],
+   "units": 131496,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "heliospheric space physics",
+   "schema_family": "hourly fixed-format spacecraft compilation",
+   "curator": "nasa_spdf",
+   "cluster": "nasa_omni_near_earth_solar_wind",
+   "exposed": false
+  },
+  "ncbi_pubchem_compound_records": {
+   "categories": [
+    "C6"
+   ],
+   "units": 1000,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "chemical structure records",
+   "schema_family": "pubchem pug compound json",
+   "curator": "pubchem.ncbi.nlm.nih.gov",
+   "cluster": "ncbi_pubchem_compound_records",
+   "exposed": false
+  },
+  "nces_ipeds_postsecondary_surveys": {
+   "categories": [
+    "C5"
+   ],
+   "units": 434081,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "postsecondary education statistics",
+   "schema_family": "institutional survey relational tables",
+   "curator": "nces.ed.gov",
+   "cluster": "nces_ipeds_postsecondary_surveys",
+   "exposed": false
+  },
+  "ndbc_moored_buoys": {
+   "categories": [
+    "C3"
+   ],
+   "units": 360156,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "marine surface meteorology and sea state",
+   "schema_family": "buoy standard meteorological series",
+   "curator": "noaa",
+   "cluster": "ndbc_moored_buoys",
+   "exposed": false
+  },
+  "nhif_hospital_cases": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 43503,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public healthcare inpatient billing",
+   "schema_family": "clinical pathway icd10 billing table",
+   "curator": "zenodo",
+   "cluster": "nhif_hospital_cases",
+   "exposed": false
+  },
+  "nih_research_grants": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 83314,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "biomedical research funding administration",
+   "schema_family": "grant award administrative register",
+   "curator": "reporter.nih.gov",
+   "cluster": "nih_research_grants",
+   "exposed": false
+  },
+  "nist_nvd": {
+   "categories": [
+    "C6"
+   ],
+   "units": 4194,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "cybersecurity vulnerability records",
+   "schema_family": "nvd cve json",
+   "curator": "nist",
+   "cluster": "github_advisory_database",
+   "exposed": false
+  },
+  "noaa_coops": {
+   "categories": [
+    "C3"
+   ],
+   "units": 157823,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "oceanography and coastal tides",
+   "schema_family": "gauging time series",
+   "curator": "noaa",
+   "cluster": "noaa_coops",
+   "exposed": false
+  },
+  "noaa_cpc_arctic_oscillation_index": {
+   "categories": [
+    "C3"
+   ],
+   "units": 28083,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "atmospheric circulation climate index",
+   "schema_family": "daily climate index",
+   "curator": "cpc.ncep.noaa.gov",
+   "cluster": "noaa_cpc_arctic_oscillation_index",
+   "exposed": false
+  },
+  "noaa_gml_co2": {
+   "categories": [
+    "C3"
+   ],
+   "units": 2740,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "environmental monitoring",
+   "schema_family": "atmospheric gas concentration time series",
+   "curator": "noaa",
+   "cluster": "noaa_gml_co2",
+   "exposed": false
+  },
+  "noaa_ncei_storm_events": {
+   "categories": [
+    "C5"
+   ],
+   "units": 111202,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "severe weather impact archives",
+   "schema_family": "storm event impact relational tables",
+   "curator": "noaa",
+   "cluster": "noaa_ncei_storm_events",
+   "exposed": false
+  },
+  "noaa_nhc_hurdat2_best_track": {
+   "categories": [
+    "C4"
+   ],
+   "units": 1988,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "tropical cyclone climatology",
+   "schema_family": "best-track storm record file",
+   "curator": "nhc.noaa.gov",
+   "cluster": "noaa_nhc_hurdat2_best_track",
+   "exposed": false
+  },
+  "nsidc_sea_ice_index": {
+   "categories": [
+    "C3"
+   ],
+   "units": 15908,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "cryosphere sea ice extent",
+   "schema_family": "satellite-derived hemispheric daily index",
+   "curator": "nsidc",
+   "cluster": "nsidc_sea_ice_index",
+   "exposed": false
+  },
+  "ntnu_ev_charging": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 35377,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "electric vehicle charging",
+   "schema_family": "ev charging session records",
+   "curator": "zenodo",
+   "cluster": "ntnu_ev_charging",
+   "exposed": false
+  },
+  "nws_alerts": {
+   "categories": [
+    "C6"
+   ],
+   "units": 2000,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "operational weather hazard alerting",
+   "schema_family": "geojson cap weather alerts",
+   "curator": "api.weather.gov",
+   "cluster": "nws_alerts",
+   "exposed": false
+  },
+  "nyc_tlc": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 320320,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "urban taxi fares",
+   "schema_family": "trip fare records",
+   "curator": "nyc open data",
+   "cluster": "nyc_tlc",
+   "exposed": false
+  },
+  "openalex": {
+   "categories": [
+    "C5",
+    "C6"
+   ],
+   "units": 4477,
+   "split": [
+    false,
+    true
+   ],
+   "floor": null,
+   "domain": "scholarly metadata",
+   "schema_family": "scholarly graph json",
+   "curator": "openalex",
+   "cluster": "openalex",
+   "exposed": false
+  },
+  "openfda_faers": {
+   "categories": [
+    "C6"
+   ],
+   "units": 4000,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "pharmacovigilance",
+   "schema_family": "adverse event reports json",
+   "curator": "openfda",
+   "cluster": "openfda_faers",
+   "exposed": false
+  },
+  "openfoodfacts": {
+   "categories": [
+    "C6"
+   ],
+   "units": 9688,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "consumer products",
+   "schema_family": "product records json",
+   "curator": "openfoodfacts",
+   "cluster": "openfoodfacts",
+   "exposed": false
+  },
+  "openlibrary": {
+   "categories": [
+    "C6"
+   ],
+   "units": 19269,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "library catalogue",
+   "schema_family": "catalogue records json",
+   "curator": "internet archive",
+   "cluster": "openlibrary",
+   "exposed": false
+  },
+  "osv_go": {
+   "categories": [
+    "C6"
+   ],
+   "units": 4820,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "cybersecurity vulnerability records",
+   "schema_family": "osv json",
+   "curator": "osv.dev",
+   "cluster": "github_advisory_database",
+   "exposed": false
+  },
+  "ourairports_db": {
+   "categories": [
+    "C5"
+   ],
+   "units": 180458,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "aviation infrastructure",
+   "schema_family": "aviation infrastructure relational tables",
+   "curator": "ourairports",
+   "cluster": "ourairports_db",
+   "exposed": false
+  },
+  "paleobiology_database": {
+   "categories": [
+    "C2a",
+    "C5"
+   ],
+   "units": 201107,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "palaeontology",
+   "schema_family": "paleobiology occurrence and taxon tables",
+   "curator": "zenodo",
+   "cluster": "paleobiology_database",
+   "exposed": false
+  },
+  "paris_urban_trees": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 25000,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "urban forestry and arboriculture",
+   "schema_family": "municipal tree asset inventory",
+   "curator": "opendata.paris.fr",
+   "cluster": "paris_urban_trees",
+   "exposed": false
+  },
+  "pnnl_epri_bess": {
+   "categories": [
+    "C3"
+   ],
+   "units": 1452814,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "grid-scale energy storage",
+   "schema_family": "battery meter readings in elapsed time",
+   "curator": "zenodo",
+   "cluster": "pnnl_epri_bess",
+   "exposed": false
+  },
+  "port_noumea_stopovers": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 7335,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "maritime port logistics",
+   "schema_family": "maritime port call stopover log",
+   "curator": "zenodo",
+   "cluster": "port_noumea_stopovers",
+   "exposed": false
+  },
+  "queensland_petroleum_production": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 1028,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "hydrocarbon resource extraction",
+   "schema_family": "field production ledger",
+   "curator": "zenodo",
+   "cluster": "queensland_petroleum_production",
+   "exposed": false
+  },
+  "rabobank_ict": {
+   "categories": [
+    "C4"
+   ],
+   "units": 46616,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "IT service management",
+   "schema_family": "csv event log",
+   "curator": "4tu",
+   "cluster": "rabobank_ict",
+   "exposed": false
+  },
+  "rcsb_pdb": {
+   "categories": [
+    "C6"
+   ],
+   "units": 1000,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "structural biology",
+   "schema_family": "mmcif pdbx structure json",
+   "curator": "rcsb pdb",
+   "cluster": "rcsb_pdb",
+   "exposed": false
+  },
+  "reactome_curated_pathway_database": {
+   "categories": [
+    "C5"
+   ],
+   "units": 486907,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "molecular pathway biology",
+   "schema_family": "pathway hierarchy and identifier mapping tables",
+   "curator": "reactome.org",
+   "cluster": "reactome_curated_pathway_database",
+   "exposed": false
+  },
+  "rki_surveillance": {
+   "categories": [
+    "C3"
+   ],
+   "units": 343682,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "public health surveillance",
+   "schema_family": "surveillance panels",
+   "curator": "zenodo",
+   "cluster": "rki_surveillance",
+   "exposed": false
+  },
+  "ror": {
+   "categories": [
+    "C6"
+   ],
+   "units": 10154,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "research institution registries",
+   "schema_family": "organization registry json",
+   "curator": "zenodo",
+   "cluster": "ror",
+   "exposed": false
+  },
+  "rte_france_grid": {
+   "categories": [
+    "C3"
+   ],
+   "units": 70120,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "national electricity transmission grid",
+   "schema_family": "national electricity grid telemetry",
+   "curator": "odre.opendatasoft.com",
+   "cluster": "rte_france_grid",
+   "exposed": false
+  },
+  "seattle_fire_911_dispatch": {
+   "categories": [
+    "C4"
+   ],
+   "units": 365,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "emergency fire and medical dispatch",
+   "schema_family": "dispatch event stream",
+   "curator": "data.seattle.gov",
+   "cluster": "seattle_fire_911_dispatch",
+   "exposed": false
+  },
+  "seattle_fremont_bridge_counter": {
+   "categories": [
+    "C3"
+   ],
+   "units": 122675,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "urban cycling infrastructure counting",
+   "schema_family": "single-site hourly counter series",
+   "curator": "data.seattle.gov",
+   "cluster": "seattle_fremont_bridge_counter",
+   "exposed": false
+  },
+  "seattle_sdci_building_permits": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 5603,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "building permitting",
+   "schema_family": "permit application register",
+   "curator": "data.seattle.gov",
+   "cluster": "seattle_sdci_building_permits",
+   "exposed": false
+  },
+  "seoul_bike": {
+   "categories": [
+    "C3"
+   ],
+   "units": 8760,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "bike sharing",
+   "schema_family": "uci time series",
+   "curator": "uci",
+   "cluster": "seoul_bike",
+   "exposed": true
+  },
+  "sffd_fire_incidents": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 37906,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "municipal fire and rescue operations",
+   "schema_family": "NFIRS-style incident register",
+   "curator": "datasf",
+   "cluster": "sffd_fire_incidents",
+   "exposed": false
+  },
+  "sfo_passenger_statistics": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 40803,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "airport passenger traffic",
+   "schema_family": "monthly airline activity counts",
+   "curator": "datasf",
+   "cluster": "sfo_passenger_statistics",
+   "exposed": false
+  },
+  "sncf_tgv_regularite": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 12907,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "intercity rail operations",
+   "schema_family": "rail route operational performance ledger",
+   "curator": "ressources.data.sncf.com",
+   "cluster": "sncf_tgv_regularite",
+   "exposed": false
+  },
+  "stackexchange": {
+   "categories": [
+    "C5"
+   ],
+   "units": 44155,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "community q-and-a",
+   "schema_family": "relational dump",
+   "curator": "stack exchange dump",
+   "cluster": "stackexchange",
+   "exposed": false
+  },
+  "steel_korea": {
+   "categories": [
+    "C3"
+   ],
+   "units": 35040,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "industrial energy",
+   "schema_family": "uci time series",
+   "curator": "uci",
+   "cluster": "steel_korea",
+   "exposed": true
+  },
+  "surf_lisa_slurm": {
+   "categories": [
+    "C4"
+   ],
+   "units": 199621,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "HPC operations",
+   "schema_family": "slurm job accounting",
+   "curator": "zenodo",
+   "cluster": "surf_lisa_slurm",
+   "exposed": false
+  },
+  "telecom_operator_kpis": {
+   "categories": [
+    "C3"
+   ],
+   "units": 150332,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "telecommunications infrastructure",
+   "schema_family": "telecom operator kpi time series",
+   "curator": "zenodo",
+   "cluster": "telecom_operator_kpis",
+   "exposed": false
+  },
+  "terralore_chronicle_db": {
+   "categories": [
+    "C5"
+   ],
+   "units": 16754,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "historical chronicle archives",
+   "schema_family": "historical event-source relational tables",
+   "curator": "zenodo",
+   "cluster": "terralore_chronicle_db",
+   "exposed": false
+  },
+  "tetouan_power": {
+   "categories": [
+    "C3"
+   ],
+   "units": 52416,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "energy",
+   "schema_family": "uci time series",
+   "curator": "uci",
+   "cluster": "tetouan_power",
+   "exposed": true
+  },
+  "tue_travel_claims": {
+   "categories": [
+    "C4"
+   ],
+   "units": 10500,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "university administration",
+   "schema_family": "xes event log",
+   "curator": "4tu",
+   "cluster": "tue_travel_claims",
+   "exposed": false
+  },
+  "tx_hhsc_child_care_operations": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 14966,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "child care licensing and inspection",
+   "schema_family": "licensed operation register",
+   "curator": "data.texas.gov",
+   "cluster": "tx_hhsc_child_care_operations",
+   "exposed": false
+  },
+  "tx_hotel_occupancy_tax_revenue": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 2395,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "local tourism tax revenue",
+   "schema_family": "government-year revenue ledger",
+   "curator": "data.texas.gov",
+   "cluster": "tx_hotel_occupancy_tax_revenue",
+   "exposed": false
+  },
+  "uci:101": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 958,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Games",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:101",
+   "exposed": false
+  },
+  "uci:110": {
+   "categories": [
+    "C1"
+   ],
+   "units": 1484,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Biology",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:110",
+   "exposed": false
+  },
+  "uci:143": {
+   "categories": [
+    "C1"
+   ],
+   "units": 690,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Business",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:143",
+   "exposed": false
+  },
+  "uci:146": {
+   "categories": [
+    "C1"
+   ],
+   "units": 6435,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Climate and Environment",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:146",
+   "exposed": false
+  },
+  "uci:148": {
+   "categories": [
+    "C1"
+   ],
+   "units": 58000,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Physics and Chemistry",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:148",
+   "exposed": false
+  },
+  "uci:149": {
+   "categories": [
+    "C1"
+   ],
+   "units": 846,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Other",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:149",
+   "exposed": false
+  },
+  "uci:15": {
+   "categories": [
+    "C1"
+   ],
+   "units": 699,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Health and Medicine",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:15",
+   "exposed": false
+  },
+  "uci:159": {
+   "categories": [
+    "C1"
+   ],
+   "units": 19020,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Physics and Chemistry",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:159",
+   "exposed": false
+  },
+  "uci:162": {
+   "categories": [
+    "C1"
+   ],
+   "units": 39644,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Climate and Environment",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:162",
+   "exposed": false
+  },
+  "uci:165": {
+   "categories": [
+    "C1"
+   ],
+   "units": 1030,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Physics and Chemistry",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:165",
+   "exposed": false
+  },
+  "uci:189": {
+   "categories": [
+    "C1"
+   ],
+   "units": 768,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Health and Medicine",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:189",
+   "exposed": false
+  },
+  "uci:19": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 1728,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Other",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:19",
+   "exposed": false
+  },
+  "uci:193": {
+   "categories": [
+    "C1"
+   ],
+   "units": 2126,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Health and Medicine",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:193",
+   "exposed": false
+  },
+  "uci:198": {
+   "categories": [
+    "C1"
+   ],
+   "units": 1941,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Physics and Chemistry",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:198",
+   "exposed": false
+  },
+  "uci:212": {
+   "categories": [
+    "C1"
+   ],
+   "units": 310,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Health and Medicine",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:212",
+   "exposed": false
+  },
+  "uci:22": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 3196,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Games",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:22",
+   "exposed": false
+  },
+  "uci:247": {
+   "categories": [
+    "C1"
+   ],
+   "units": 536,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Business",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:247",
+   "exposed": false
+  },
+  "uci:257": {
+   "categories": [
+    "C1"
+   ],
+   "units": 403,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Computer Science",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:257",
+   "exposed": false
+  },
+  "uci:26": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 67557,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Games",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:26",
+   "exposed": false
+  },
+  "uci:264": {
+   "categories": [
+    "C1"
+   ],
+   "units": 14980,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Health and Medicine",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:264",
+   "exposed": false
+  },
+  "uci:267": {
+   "categories": [
+    "C1"
+   ],
+   "units": 1372,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Computer Science",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:267",
+   "exposed": false
+  },
+  "uci:27": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 690,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Business",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:27",
+   "exposed": false
+  },
+  "uci:270": {
+   "categories": [
+    "C1"
+   ],
+   "units": 13910,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Computer Science",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:270",
+   "exposed": false
+  },
+  "uci:291": {
+   "categories": [
+    "C1"
+   ],
+   "units": 1503,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Physics and Chemistry",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:291",
+   "exposed": false
+  },
+  "uci:292": {
+   "categories": [
+    "C1"
+   ],
+   "units": 440,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Business",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:292",
+   "exposed": false
+  },
+  "uci:294": {
+   "categories": [
+    "C1"
+   ],
+   "units": 9568,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Computer Science",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:294",
+   "exposed": false
+  },
+  "uci:296": {
+   "categories": [
+    "C1"
+   ],
+   "units": 1080,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Health and Medicine",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:296",
+   "exposed": false
+  },
+  "uci:31": {
+   "categories": [
+    "C1"
+   ],
+   "units": 581012,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Biology",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:31",
+   "exposed": false
+  },
+  "uci:312": {
+   "categories": [
+    "C1"
+   ],
+   "units": 750,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Business",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:312",
+   "exposed": false
+  },
+  "uci:32": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 541,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Physics and Chemistry",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:32",
+   "exposed": false
+  },
+  "uci:327": {
+   "categories": [
+    "C1"
+   ],
+   "units": 11055,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Computer Science",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:327",
+   "exposed": false
+  },
+  "uci:329": {
+   "categories": [
+    "C1"
+   ],
+   "units": 1151,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Health and Medicine",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:329",
+   "exposed": false
+  },
+  "uci:352": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 541909,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "retail commerce",
+   "schema_family": "uci transactional invoices",
+   "curator": "uci",
+   "cluster": "uci:352",
+   "exposed": false
+  },
+  "uci:365": {
+   "categories": [
+    "C1"
+   ],
+   "units": 43405,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Business",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:365",
+   "exposed": false
+  },
+  "uci:368": {
+   "categories": [
+    "C1"
+   ],
+   "units": 500,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Business",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:368",
+   "exposed": false
+  },
+  "uci:372": {
+   "categories": [
+    "C1"
+   ],
+   "units": 17898,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Physics and Chemistry",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:372",
+   "exposed": false
+  },
+  "uci:379": {
+   "categories": [
+    "C1"
+   ],
+   "units": 1353,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Computer Science",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:379",
+   "exposed": false
+  },
+  "uci:381": {
+   "categories": [
+    "C1"
+   ],
+   "units": 43824,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Climate and Environment",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:381",
+   "exposed": false
+  },
+  "uci:396": {
+   "categories": [
+    "C1"
+   ],
+   "units": 811,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Business",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:396",
+   "exposed": false
+  },
+  "uci:464": {
+   "categories": [
+    "C1"
+   ],
+   "units": 21263,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Physics and Chemistry",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:464",
+   "exposed": false
+  },
+  "uci:52": {
+   "categories": [
+    "C1"
+   ],
+   "units": 351,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Physics and Chemistry",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:52",
+   "exposed": false
+  },
+  "uci:536": {
+   "categories": [
+    "C1"
+   ],
+   "units": 4759,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Computer Science",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:536",
+   "exposed": false
+  },
+  "uci:545": {
+   "categories": [
+    "C1"
+   ],
+   "units": 3810,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Biology",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:545",
+   "exposed": false
+  },
+  "uci:551": {
+   "categories": [
+    "C1"
+   ],
+   "units": 36733,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Computer Science",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:551",
+   "exposed": false
+  },
+  "uci:555": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 99826,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Business",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:555",
+   "exposed": false
+  },
+  "uci:572": {
+   "categories": [
+    "C1"
+   ],
+   "units": 6819,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Business",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:572",
+   "exposed": false
+  },
+  "uci:59": {
+   "categories": [
+    "C1"
+   ],
+   "units": 20000,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Computer Science",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:59",
+   "exposed": false
+  },
+  "uci:597": {
+   "categories": [
+    "C1"
+   ],
+   "units": 1197,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Business",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:597",
+   "exposed": false
+  },
+  "uci:601": {
+   "categories": [
+    "C1"
+   ],
+   "units": 10000,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Computer Science",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:601",
+   "exposed": false
+  },
+  "uci:602": {
+   "categories": [
+    "C1"
+   ],
+   "units": 13611,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Biology",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:602",
+   "exposed": false
+  },
+  "uci:69": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 3190,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Biology",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:69",
+   "exposed": false
+  },
+  "uci:73": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 8124,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Biology",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:73",
+   "exposed": false
+  },
+  "uci:75": {
+   "categories": [
+    "C1"
+   ],
+   "units": 6598,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Physics and Chemistry",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:75",
+   "exposed": false
+  },
+  "uci:755": {
+   "categories": [
+    "C1"
+   ],
+   "units": 31991,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Computer Science",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:755",
+   "exposed": false
+  },
+  "uci:76": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 12960,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Social Science",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:76",
+   "exposed": false
+  },
+  "uci:760": {
+   "categories": [
+    "C1"
+   ],
+   "units": 181800,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Health and Medicine",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:760",
+   "exposed": false
+  },
+  "uci:78": {
+   "categories": [
+    "C1"
+   ],
+   "units": 5473,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Computer Science",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:78",
+   "exposed": false
+  },
+  "uci:80": {
+   "categories": [
+    "C1"
+   ],
+   "units": 10992,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Computer Science",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:80",
+   "exposed": false
+  },
+  "uci:848": {
+   "categories": [
+    "C1"
+   ],
+   "units": 61069,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Biology",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:848",
+   "exposed": false
+  },
+  "uci:850": {
+   "categories": [
+    "C1"
+   ],
+   "units": 900,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Biology",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:850",
+   "exposed": false
+  },
+  "uci:864": {
+   "categories": [
+    "C1"
+   ],
+   "units": 10129,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Computer Science",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:864",
+   "exposed": false
+  },
+  "uci:911": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 18182,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Computer Science",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:911",
+   "exposed": false
+  },
+  "uci:94": {
+   "categories": [
+    "C1"
+   ],
+   "units": 4601,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "Computer Science",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:94",
+   "exposed": false
+  },
+  "uci:942": {
+   "categories": [
+    "C1"
+   ],
+   "units": 123117,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Engineering",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:942",
+   "exposed": false
+  },
+  "uci:967": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 235795,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "Computer Science",
+   "schema_family": "uci flat table",
+   "curator": "uci",
+   "cluster": "uci:967",
+   "exposed": false
+  },
+  "uk_charity_commission": {
+   "categories": [
+    "C5"
+   ],
+   "units": 19952,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "charitable sector regulation",
+   "schema_family": "charity register relational tables",
+   "curator": "ccew",
+   "cluster": "uk_charity_commission",
+   "exposed": false
+  },
+  "uk_ledger_mhra": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 1330,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "public expenditure",
+   "schema_family": "ledger csv",
+   "curator": "data.gov.uk",
+   "cluster": "uk_ledger_mhra",
+   "exposed": false
+  },
+  "uk_ledger_nhsbsa": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 3477,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "public expenditure",
+   "schema_family": "ledger csv",
+   "curator": "data.gov.uk",
+   "cluster": "uk_ledger_nhsbsa",
+   "exposed": false
+  },
+  "uniprot_kb": {
+   "categories": [
+    "C6"
+   ],
+   "units": 1500,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "molecular biology",
+   "schema_family": "uniprotkb protein entry json",
+   "curator": "uniprot consortium",
+   "cluster": "uniprot_kb",
+   "exposed": false
+  },
+  "unisg_smart_factory": {
+   "categories": [
+    "C3",
+    "C4"
+   ],
+   "units": 139901,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "industrial automation testbed",
+   "schema_family": "smart factory iot and workflow logs",
+   "curator": "zenodo",
+   "cluster": "unisg_smart_factory",
+   "exposed": false
+  },
+  "us_treasury_dts": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 91119,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "sovereign fiscal cashflows",
+   "schema_family": "sovereign treasury cash ledger",
+   "curator": "fiscaldata.treasury.gov",
+   "cluster": "us_treasury_dts",
+   "exposed": false
+  },
+  "usda_fdc": {
+   "categories": [
+    "C5"
+   ],
+   "units": 644125,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "food composition and nutrition",
+   "schema_family": "nutrient measurement fact tables",
+   "curator": "usda ars",
+   "cluster": "usda_fdc",
+   "exposed": false
+  },
+  "usgs_water": {
+   "categories": [
+    "C3"
+   ],
+   "units": 243474,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "hydrology",
+   "schema_family": "gauging time series",
+   "curator": "api.waterdata.usgs.gov",
+   "cluster": "usgs_water",
+   "exposed": false
+  },
+  "vif_aegis": {
+   "categories": [
+    "C3"
+   ],
+   "units": 45141,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "automotive",
+   "schema_family": "obd signals",
+   "curator": "zenodo",
+   "cluster": "vif_aegis",
+   "exposed": false
+  },
+  "volvo_it": {
+   "categories": [
+    "C4"
+   ],
+   "units": 7554,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "IT service management",
+   "schema_family": "xes event log",
+   "curator": "4tu",
+   "cluster": "volvo_it",
+   "exposed": false
+  },
+  "wa_ecology_ghg_reports": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 2521,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "industrial greenhouse gas reporting",
+   "schema_family": "facility-year emissions ledger",
+   "curator": "data.wa.gov",
+   "cluster": "wa_ecology_ghg_reports",
+   "exposed": false
+  },
+  "wa_ev_population": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 30000,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "vehicle registration",
+   "schema_family": "vehicle registry",
+   "curator": "data.wa.gov",
+   "cluster": "wa_ev_population",
+   "exposed": false
+  },
+  "wals_cldf": {
+   "categories": [
+    "C5"
+   ],
+   "units": 3573,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "linguistic typology",
+   "schema_family": "cldf linguistic typology",
+   "curator": "github",
+   "cluster": "wals_cldf",
+   "exposed": false
+  },
+  "wikimedia_simplewiki": {
+   "categories": [
+    "C4"
+   ],
+   "units": 1416,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "collaborative editing activity",
+   "schema_family": "mediawiki revision metadata",
+   "curator": "wikimedia",
+   "cluster": "wikimedia_simplewiki",
+   "exposed": false
+  },
+  "wikimedia_wikidata": {
+   "categories": [
+    "C6"
+   ],
+   "units": 1611,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "open knowledge base",
+   "schema_family": "wikidata entity json",
+   "curator": "wikimedia",
+   "cluster": "wikimedia_wikidata",
+   "exposed": false
+  },
+  "wind_fragility_power_db": {
+   "categories": [
+    "C5"
+   ],
+   "units": 48662,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "power infrastructure structural engineering",
+   "schema_family": "engineering fragility curve relational tables",
+   "curator": "zenodo",
+   "cluster": "wind_fragility_power_db",
+   "exposed": false
+  },
+  "world_bank_projects": {
+   "categories": [
+    "C2b"
+   ],
+   "units": 5000,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "sovereign development finance",
+   "schema_family": "sovereign development lending records",
+   "curator": "world bank",
+   "cluster": "world_bank_projects",
+   "exposed": false
+  },
+  "wri_global_power_plants": {
+   "categories": [
+    "C2a"
+   ],
+   "units": 34936,
+   "split": [
+    true
+   ],
+   "floor": true,
+   "domain": "power generation infrastructure",
+   "schema_family": "power generation asset registry",
+   "curator": "github",
+   "cluster": "wri_global_power_plants",
+   "exposed": false
+  },
+  "zambia_procurement": {
+   "categories": [
+    "C2b",
+    "C5",
+    "C6"
+   ],
+   "units": 2999,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "public procurement",
+   "schema_family": "ocds",
+   "curator": "ocds registry",
+   "cluster": "zambia_procurement",
+   "exposed": false
+  },
+  "zenodo_repository_records": {
+   "categories": [
+    "C6"
+   ],
+   "units": 4105,
+   "split": [
+    true
+   ],
+   "floor": false,
+   "domain": "research data repository",
+   "schema_family": "repository record json",
+   "curator": "zenodo.org",
+   "cluster": "zenodo_repository_records",
+   "exposed": false
+  }
+ },
+ "plans": {
+  "16": {
+   "seed": 20261121,
+   "total": 16,
+   "minimum": 2,
+   "reuse_exposed": false,
+   "pilot": [
+    "city_of_austin_campaign_finance",
+    "colorado_regulated_storage_tanks",
+    "datacite_dois",
+    "gtfs_fr_palmbus",
+    "kanto_landslides",
+    "naoj_norp_solar_bursts",
+    "ncbi_pubchem_compound_records",
+    "noaa_gml_co2",
+    "noaa_ncei_storm_events",
+    "nsidc_sea_ice_index",
+    "queensland_petroleum_production",
+    "surf_lisa_slurm",
+    "uci:267",
+    "uci:292",
+    "uci:296",
+    "uci:464"
+   ],
+   "holdout": [
+    "3pfl",
+    "a_day_in_daylight",
+    "ademe_dpe",
+    "aoe_gameplay",
+    "apis_guru_openapi_directory",
+    "austin_police_dispatch",
+    "austin_surface_water_quality",
+    "backblaze",
+    "bloomington_locus_solar_monitoring",
+    "bloomington_utilities_water_plant",
+    "bts_umd_daily_mobility_statistics",
+    "ccin2p3_slurm",
+    "cdc_covid_vaccination_reporting",
+    "cftc_cot_disaggregated",
+    "chembl_molecules",
+    "cincinnati_emergency_communications_calls",
+    "cincinnati_fire_dispatch",
+    "clinicaltrials_gov",
+    "cnc_five_axis_milling",
+    "coatings_multinational",
+    "colorado_dam_safety_registry",
+    "cordis_horizon_europe",
+    "cpsc_recall_notices",
+    "crossref",
+    "cubico_kelmarsh",
+    "danish_district_heating",
+    "delaware_dnrec_well_permits",
+    "delaware_state_purchasing_cards",
+    "dft_stats19",
+    "dgal_alimconfiance",
+    "dgccrf_fuel_prices",
+    "dgfip_dvf",
+    "dmsp_ssj_auroral",
+    "doaj_directory_of_open_access_journals",
+    "dutch_municipalities",
+    "dwd_germany",
+    "ea_hydrology",
+    "ecb_euro_fx_reference_rates",
+    "edp_wind_farm_portugal",
+    "eia_petroleum_spot_prices",
+    "eicu_philips",
+    "elder_home",
+    "epa_aqs",
+    "fda_maude",
+    "fdic_bank_financials",
+    "fec_federal_campaign_finance_filings",
+    "federal_register",
+    "fermi_blazar_flares",
+    "fin_institute_nl",
+    "florida_bridge_inspections",
+    "france_baac_road_accidents",
+    "fraunhofer_iee_care_wind_b",
+    "fta_national_transit_database",
+    "fugaku_riken",
+    "gbif_occurrences",
+    "gene_ontology_consortium_annotations",
+    "georgia_procurement",
+    "german_paying_agency",
+    "german_water_demand",
+    "gfz_potsdam_kp",
+    "github_actions_workflows",
+    "github_advisory_database",
+    "grouplens",
+    "gtfs_fr_alterneo",
+    "gtfs_fr_aravis",
+    "gtfs_fr_citea",
+    "gtfs_fr_diviamobilites",
+    "gtfs_fr_filibus",
+    "gtfs_fr_kiceo",
+    "gtfs_fr_optymo",
+    "gtfs_fr_sankeo",
+    "gtfs_fr_sibra",
+    "gtfs_fr_tango",
+    "gtfs_fr_transvilles",
+    "hm_land_registry",
+    "hospital_sepsis_nl",
+    "ingv_seismic",
+    "inpi_bce_ratios",
+    "italian_road_fines",
+    "japan_reconstructed_buildings",
+    "jolpica_f1",
+    "loghub_collection",
+    "lyft_bikeshare",
+    "melbourne_pedestrian",
+    "met_museum",
+    "metropt_porto",
+    "microsoft_azure_compute",
+    "mimic_iv_bidmc",
+    "mitre_attack_knowledge_base",
+    "montgomery_county_liquor_control_sales",
+    "montreal_contracts",
+    "moodle_lms_events",
+    "nasa_common_metadata_repository",
+    "nasa_omni_near_earth_solar_wind",
+    "nces_ipeds_postsecondary_surveys",
+    "ndbc_moored_buoys",
+    "nhif_hospital_cases",
+    "nih_research_grants",
+    "nist_nvd",
+    "noaa_coops",
+    "noaa_cpc_arctic_oscillation_index",
+    "noaa_nhc_hurdat2_best_track",
+    "ntnu_ev_charging",
+    "nws_alerts",
+    "nyc_tlc",
+    "openalex",
+    "openfda_faers",
+    "openfoodfacts",
+    "openlibrary",
+    "osv_go",
+    "ourairports_db",
+    "paleobiology_database",
+    "paris_urban_trees",
+    "pnnl_epri_bess",
+    "port_noumea_stopovers",
+    "rabobank_ict",
+    "rcsb_pdb",
+    "reactome_curated_pathway_database",
+    "rki_surveillance",
+    "ror",
+    "rte_france_grid",
+    "seattle_fire_911_dispatch",
+    "seattle_fremont_bridge_counter",
+    "seattle_sdci_building_permits",
+    "sffd_fire_incidents",
+    "sfo_passenger_statistics",
+    "sncf_tgv_regularite",
+    "stackexchange",
+    "telecom_operator_kpis",
+    "terralore_chronicle_db",
+    "tue_travel_claims",
+    "tx_hhsc_child_care_operations",
+    "tx_hotel_occupancy_tax_revenue",
+    "uci:101",
+    "uci:110",
+    "uci:143",
+    "uci:146",
+    "uci:148",
+    "uci:149",
+    "uci:15",
+    "uci:159",
+    "uci:162",
+    "uci:165",
+    "uci:189",
+    "uci:19",
+    "uci:193",
+    "uci:198",
+    "uci:212",
+    "uci:22",
+    "uci:247",
+    "uci:257",
+    "uci:26",
+    "uci:264",
+    "uci:27",
+    "uci:270",
+    "uci:291",
+    "uci:294",
+    "uci:31",
+    "uci:312",
+    "uci:32",
+    "uci:327",
+    "uci:329",
+    "uci:352",
+    "uci:365",
+    "uci:368",
+    "uci:372",
+    "uci:379",
+    "uci:381",
+    "uci:396",
+    "uci:52",
+    "uci:536",
+    "uci:545",
+    "uci:551",
+    "uci:555",
+    "uci:572",
+    "uci:59",
+    "uci:597",
+    "uci:601",
+    "uci:602",
+    "uci:69",
+    "uci:73",
+    "uci:75",
+    "uci:755",
+    "uci:76",
+    "uci:760",
+    "uci:78",
+    "uci:80",
+    "uci:848",
+    "uci:850",
+    "uci:864",
+    "uci:911",
+    "uci:94",
+    "uci:942",
+    "uci:967",
+    "uk_charity_commission",
+    "uk_ledger_mhra",
+    "uk_ledger_nhsbsa",
+    "uniprot_kb",
+    "unisg_smart_factory",
+    "us_treasury_dts",
+    "usda_fdc",
+    "usgs_water",
+    "vif_aegis",
+    "volvo_it",
+    "wa_ecology_ghg_reports",
+    "wa_ev_population",
+    "wals_cldf",
+    "wikimedia_simplewiki",
+    "wikimedia_wikidata",
+    "wind_fragility_power_db",
+    "world_bank_projects",
+    "wri_global_power_plants",
+    "zambia_procurement",
+    "zenodo_repository_records"
+   ],
+   "exposed": [
+    "airquality_italy",
+    "candanedo_umons",
+    "seoul_bike",
+    "steel_korea",
+    "tetouan_power"
+   ],
+   "clusters": {
+    "pilot": 16,
+    "holdout": 210
+   },
+   "per_category": {
+    "C1": {
+     "ready": 52,
+     "pilot": 4,
+     "holdout": 48,
+     "holdout_floor_met": 22,
+     "holdout_floor_unknown": 0,
+     "exposed_not_confirming": 0
+    },
+    "C2a": {
+     "ready": 30,
+     "pilot": 2,
+     "holdout": 28,
+     "holdout_floor_met": 20,
+     "holdout_floor_unknown": 0,
+     "exposed_not_confirming": 0
+    },
+    "C2b": {
+     "ready": 30,
+     "pilot": 2,
+     "holdout": 28,
+     "holdout_floor_met": 22,
+     "holdout_floor_unknown": 0,
+     "exposed_not_confirming": 0
+    },
+    "C3": {
+     "ready": 40,
+     "pilot": 2,
+     "holdout": 33,
+     "holdout_floor_met": 30,
+     "holdout_floor_unknown": 0,
+     "exposed_not_confirming": 5
+    },
+    "C4": {
+     "ready": 28,
+     "pilot": 2,
+     "holdout": 26,
+     "holdout_floor_met": 14,
+     "holdout_floor_unknown": 1,
+     "exposed_not_confirming": 0
+    },
+    "C5": {
+     "ready": 36,
+     "pilot": 2,
+     "holdout": 34,
+     "holdout_floor_met": 30,
+     "holdout_floor_unknown": 1,
+     "exposed_not_confirming": 0
+    },
+    "C6": {
+     "ready": 30,
+     "pilot": 2,
+     "holdout": 28,
+     "holdout_floor_met": 8,
+     "holdout_floor_unknown": 1,
+     "exposed_not_confirming": 0
+    }
+   },
+   "holdout_clusters": 210,
+   "holdout_clusters_floor_met": 137,
+   "required_sources": {
+    "1": 34,
+    "3": 45,
+    "5": 51,
+    "11": 59
+   }
+  },
+  "24": {
+   "seed": 20261121,
+   "total": 24,
+   "minimum": 2,
+   "reuse_exposed": false,
+   "pilot": [
+    "city_of_austin_campaign_finance",
+    "colorado_regulated_storage_tanks",
+    "datacite_dois",
+    "gtfs_fr_palmbus",
+    "kanto_landslides",
+    "naoj_norp_solar_bursts",
+    "ncbi_pubchem_compound_records",
+    "noaa_gml_co2",
+    "noaa_ncei_storm_events",
+    "nsidc_sea_ice_index",
+    "queensland_petroleum_production",
+    "surf_lisa_slurm",
+    "uci:110",
+    "uci:146",
+    "uci:149",
+    "uci:189",
+    "uci:267",
+    "uci:292",
+    "uci:296",
+    "uci:365",
+    "uci:372",
+    "uci:464",
+    "uci:80",
+    "uci:942"
+   ],
+   "holdout": [
+    "3pfl",
+    "a_day_in_daylight",
+    "ademe_dpe",
+    "aoe_gameplay",
+    "apis_guru_openapi_directory",
+    "austin_police_dispatch",
+    "austin_surface_water_quality",
+    "backblaze",
+    "bloomington_locus_solar_monitoring",
+    "bloomington_utilities_water_plant",
+    "bts_umd_daily_mobility_statistics",
+    "ccin2p3_slurm",
+    "cdc_covid_vaccination_reporting",
+    "cftc_cot_disaggregated",
+    "chembl_molecules",
+    "cincinnati_emergency_communications_calls",
+    "cincinnati_fire_dispatch",
+    "clinicaltrials_gov",
+    "cnc_five_axis_milling",
+    "coatings_multinational",
+    "colorado_dam_safety_registry",
+    "cordis_horizon_europe",
+    "cpsc_recall_notices",
+    "crossref",
+    "cubico_kelmarsh",
+    "danish_district_heating",
+    "delaware_dnrec_well_permits",
+    "delaware_state_purchasing_cards",
+    "dft_stats19",
+    "dgal_alimconfiance",
+    "dgccrf_fuel_prices",
+    "dgfip_dvf",
+    "dmsp_ssj_auroral",
+    "doaj_directory_of_open_access_journals",
+    "dutch_municipalities",
+    "dwd_germany",
+    "ea_hydrology",
+    "ecb_euro_fx_reference_rates",
+    "edp_wind_farm_portugal",
+    "eia_petroleum_spot_prices",
+    "eicu_philips",
+    "elder_home",
+    "epa_aqs",
+    "fda_maude",
+    "fdic_bank_financials",
+    "fec_federal_campaign_finance_filings",
+    "federal_register",
+    "fermi_blazar_flares",
+    "fin_institute_nl",
+    "florida_bridge_inspections",
+    "france_baac_road_accidents",
+    "fraunhofer_iee_care_wind_b",
+    "fta_national_transit_database",
+    "fugaku_riken",
+    "gbif_occurrences",
+    "gene_ontology_consortium_annotations",
+    "georgia_procurement",
+    "german_paying_agency",
+    "german_water_demand",
+    "gfz_potsdam_kp",
+    "github_actions_workflows",
+    "github_advisory_database",
+    "grouplens",
+    "gtfs_fr_alterneo",
+    "gtfs_fr_aravis",
+    "gtfs_fr_citea",
+    "gtfs_fr_diviamobilites",
+    "gtfs_fr_filibus",
+    "gtfs_fr_kiceo",
+    "gtfs_fr_optymo",
+    "gtfs_fr_sankeo",
+    "gtfs_fr_sibra",
+    "gtfs_fr_tango",
+    "gtfs_fr_transvilles",
+    "hm_land_registry",
+    "hospital_sepsis_nl",
+    "ingv_seismic",
+    "inpi_bce_ratios",
+    "italian_road_fines",
+    "japan_reconstructed_buildings",
+    "jolpica_f1",
+    "loghub_collection",
+    "lyft_bikeshare",
+    "melbourne_pedestrian",
+    "met_museum",
+    "metropt_porto",
+    "microsoft_azure_compute",
+    "mimic_iv_bidmc",
+    "mitre_attack_knowledge_base",
+    "montgomery_county_liquor_control_sales",
+    "montreal_contracts",
+    "moodle_lms_events",
+    "nasa_common_metadata_repository",
+    "nasa_omni_near_earth_solar_wind",
+    "nces_ipeds_postsecondary_surveys",
+    "ndbc_moored_buoys",
+    "nhif_hospital_cases",
+    "nih_research_grants",
+    "nist_nvd",
+    "noaa_coops",
+    "noaa_cpc_arctic_oscillation_index",
+    "noaa_nhc_hurdat2_best_track",
+    "ntnu_ev_charging",
+    "nws_alerts",
+    "nyc_tlc",
+    "openalex",
+    "openfda_faers",
+    "openfoodfacts",
+    "openlibrary",
+    "osv_go",
+    "ourairports_db",
+    "paleobiology_database",
+    "paris_urban_trees",
+    "pnnl_epri_bess",
+    "port_noumea_stopovers",
+    "rabobank_ict",
+    "rcsb_pdb",
+    "reactome_curated_pathway_database",
+    "rki_surveillance",
+    "ror",
+    "rte_france_grid",
+    "seattle_fire_911_dispatch",
+    "seattle_fremont_bridge_counter",
+    "seattle_sdci_building_permits",
+    "sffd_fire_incidents",
+    "sfo_passenger_statistics",
+    "sncf_tgv_regularite",
+    "stackexchange",
+    "telecom_operator_kpis",
+    "terralore_chronicle_db",
+    "tue_travel_claims",
+    "tx_hhsc_child_care_operations",
+    "tx_hotel_occupancy_tax_revenue",
+    "uci:101",
+    "uci:143",
+    "uci:148",
+    "uci:15",
+    "uci:159",
+    "uci:162",
+    "uci:165",
+    "uci:19",
+    "uci:193",
+    "uci:198",
+    "uci:212",
+    "uci:22",
+    "uci:247",
+    "uci:257",
+    "uci:26",
+    "uci:264",
+    "uci:27",
+    "uci:270",
+    "uci:291",
+    "uci:294",
+    "uci:31",
+    "uci:312",
+    "uci:32",
+    "uci:327",
+    "uci:329",
+    "uci:352",
+    "uci:368",
+    "uci:379",
+    "uci:381",
+    "uci:396",
+    "uci:52",
+    "uci:536",
+    "uci:545",
+    "uci:551",
+    "uci:555",
+    "uci:572",
+    "uci:59",
+    "uci:597",
+    "uci:601",
+    "uci:602",
+    "uci:69",
+    "uci:73",
+    "uci:75",
+    "uci:755",
+    "uci:76",
+    "uci:760",
+    "uci:78",
+    "uci:848",
+    "uci:850",
+    "uci:864",
+    "uci:911",
+    "uci:94",
+    "uci:967",
+    "uk_charity_commission",
+    "uk_ledger_mhra",
+    "uk_ledger_nhsbsa",
+    "uniprot_kb",
+    "unisg_smart_factory",
+    "us_treasury_dts",
+    "usda_fdc",
+    "usgs_water",
+    "vif_aegis",
+    "volvo_it",
+    "wa_ecology_ghg_reports",
+    "wa_ev_population",
+    "wals_cldf",
+    "wikimedia_simplewiki",
+    "wikimedia_wikidata",
+    "wind_fragility_power_db",
+    "world_bank_projects",
+    "wri_global_power_plants",
+    "zambia_procurement",
+    "zenodo_repository_records"
+   ],
+   "exposed": [
+    "airquality_italy",
+    "candanedo_umons",
+    "seoul_bike",
+    "steel_korea",
+    "tetouan_power"
+   ],
+   "clusters": {
+    "pilot": 24,
+    "holdout": 202
+   },
+   "per_category": {
+    "C1": {
+     "ready": 52,
+     "pilot": 12,
+     "holdout": 40,
+     "holdout_floor_met": 18,
+     "holdout_floor_unknown": 0,
+     "exposed_not_confirming": 0
+    },
+    "C2a": {
+     "ready": 30,
+     "pilot": 2,
+     "holdout": 28,
+     "holdout_floor_met": 20,
+     "holdout_floor_unknown": 0,
+     "exposed_not_confirming": 0
+    },
+    "C2b": {
+     "ready": 30,
+     "pilot": 2,
+     "holdout": 28,
+     "holdout_floor_met": 22,
+     "holdout_floor_unknown": 0,
+     "exposed_not_confirming": 0
+    },
+    "C3": {
+     "ready": 40,
+     "pilot": 2,
+     "holdout": 33,
+     "holdout_floor_met": 30,
+     "holdout_floor_unknown": 0,
+     "exposed_not_confirming": 5
+    },
+    "C4": {
+     "ready": 28,
+     "pilot": 2,
+     "holdout": 26,
+     "holdout_floor_met": 14,
+     "holdout_floor_unknown": 1,
+     "exposed_not_confirming": 0
+    },
+    "C5": {
+     "ready": 36,
+     "pilot": 2,
+     "holdout": 34,
+     "holdout_floor_met": 30,
+     "holdout_floor_unknown": 1,
+     "exposed_not_confirming": 0
+    },
+    "C6": {
+     "ready": 30,
+     "pilot": 2,
+     "holdout": 28,
+     "holdout_floor_met": 8,
+     "holdout_floor_unknown": 1,
+     "exposed_not_confirming": 0
+    }
+   },
+   "holdout_clusters": 202,
+   "holdout_clusters_floor_met": 133,
+   "required_sources": {
+    "1": 34,
+    "3": 45,
+    "5": 51,
+    "11": 59
+   }
+  },
+  "32": {
+   "seed": 20261121,
+   "total": 32,
+   "minimum": 2,
+   "reuse_exposed": false,
+   "pilot": [
+    "city_of_austin_campaign_finance",
+    "colorado_regulated_storage_tanks",
+    "datacite_dois",
+    "gtfs_fr_palmbus",
+    "kanto_landslides",
+    "naoj_norp_solar_bursts",
+    "noaa_gml_co2",
+    "noaa_ncei_storm_events",
+    "nsidc_sea_ice_index",
+    "queensland_petroleum_production",
+    "surf_lisa_slurm",
+    "uci:110",
+    "uci:146",
+    "uci:149",
+    "uci:162",
+    "uci:189",
+    "uci:198",
+    "uci:267",
+    "uci:292",
+    "uci:296",
+    "uci:312",
+    "uci:329",
+    "uci:365",
+    "uci:372",
+    "uci:381",
+    "uci:464",
+    "uci:545",
+    "uci:755",
+    "uci:80",
+    "uci:848",
+    "uci:942",
+    "zambia_procurement"
+   ],
+   "holdout": [
+    "3pfl",
+    "a_day_in_daylight",
+    "ademe_dpe",
+    "aoe_gameplay",
+    "apis_guru_openapi_directory",
+    "austin_police_dispatch",
+    "austin_surface_water_quality",
+    "backblaze",
+    "bloomington_locus_solar_monitoring",
+    "bloomington_utilities_water_plant",
+    "bts_umd_daily_mobility_statistics",
+    "ccin2p3_slurm",
+    "cdc_covid_vaccination_reporting",
+    "cftc_cot_disaggregated",
+    "chembl_molecules",
+    "cincinnati_emergency_communications_calls",
+    "cincinnati_fire_dispatch",
+    "clinicaltrials_gov",
+    "cnc_five_axis_milling",
+    "coatings_multinational",
+    "colorado_dam_safety_registry",
+    "cordis_horizon_europe",
+    "cpsc_recall_notices",
+    "crossref",
+    "cubico_kelmarsh",
+    "danish_district_heating",
+    "delaware_dnrec_well_permits",
+    "delaware_state_purchasing_cards",
+    "dft_stats19",
+    "dgal_alimconfiance",
+    "dgccrf_fuel_prices",
+    "dgfip_dvf",
+    "dmsp_ssj_auroral",
+    "doaj_directory_of_open_access_journals",
+    "dutch_municipalities",
+    "dwd_germany",
+    "ea_hydrology",
+    "ecb_euro_fx_reference_rates",
+    "edp_wind_farm_portugal",
+    "eia_petroleum_spot_prices",
+    "eicu_philips",
+    "elder_home",
+    "epa_aqs",
+    "fda_maude",
+    "fdic_bank_financials",
+    "fec_federal_campaign_finance_filings",
+    "federal_register",
+    "fermi_blazar_flares",
+    "fin_institute_nl",
+    "florida_bridge_inspections",
+    "france_baac_road_accidents",
+    "fraunhofer_iee_care_wind_b",
+    "fta_national_transit_database",
+    "fugaku_riken",
+    "gbif_occurrences",
+    "gene_ontology_consortium_annotations",
+    "georgia_procurement",
+    "german_paying_agency",
+    "german_water_demand",
+    "gfz_potsdam_kp",
+    "github_actions_workflows",
+    "github_advisory_database",
+    "grouplens",
+    "gtfs_fr_alterneo",
+    "gtfs_fr_aravis",
+    "gtfs_fr_citea",
+    "gtfs_fr_diviamobilites",
+    "gtfs_fr_filibus",
+    "gtfs_fr_kiceo",
+    "gtfs_fr_optymo",
+    "gtfs_fr_sankeo",
+    "gtfs_fr_sibra",
+    "gtfs_fr_tango",
+    "gtfs_fr_transvilles",
+    "hm_land_registry",
+    "hospital_sepsis_nl",
+    "ingv_seismic",
+    "inpi_bce_ratios",
+    "italian_road_fines",
+    "japan_reconstructed_buildings",
+    "jolpica_f1",
+    "loghub_collection",
+    "lyft_bikeshare",
+    "melbourne_pedestrian",
+    "met_museum",
+    "metropt_porto",
+    "microsoft_azure_compute",
+    "mimic_iv_bidmc",
+    "mitre_attack_knowledge_base",
+    "montgomery_county_liquor_control_sales",
+    "montreal_contracts",
+    "moodle_lms_events",
+    "nasa_common_metadata_repository",
+    "nasa_omni_near_earth_solar_wind",
+    "ncbi_pubchem_compound_records",
+    "nces_ipeds_postsecondary_surveys",
+    "ndbc_moored_buoys",
+    "nhif_hospital_cases",
+    "nih_research_grants",
+    "nist_nvd",
+    "noaa_coops",
+    "noaa_cpc_arctic_oscillation_index",
+    "noaa_nhc_hurdat2_best_track",
+    "ntnu_ev_charging",
+    "nws_alerts",
+    "nyc_tlc",
+    "openalex",
+    "openfda_faers",
+    "openfoodfacts",
+    "openlibrary",
+    "osv_go",
+    "ourairports_db",
+    "paleobiology_database",
+    "paris_urban_trees",
+    "pnnl_epri_bess",
+    "port_noumea_stopovers",
+    "rabobank_ict",
+    "rcsb_pdb",
+    "reactome_curated_pathway_database",
+    "rki_surveillance",
+    "ror",
+    "rte_france_grid",
+    "seattle_fire_911_dispatch",
+    "seattle_fremont_bridge_counter",
+    "seattle_sdci_building_permits",
+    "sffd_fire_incidents",
+    "sfo_passenger_statistics",
+    "sncf_tgv_regularite",
+    "stackexchange",
+    "telecom_operator_kpis",
+    "terralore_chronicle_db",
+    "tue_travel_claims",
+    "tx_hhsc_child_care_operations",
+    "tx_hotel_occupancy_tax_revenue",
+    "uci:101",
+    "uci:143",
+    "uci:148",
+    "uci:15",
+    "uci:159",
+    "uci:165",
+    "uci:19",
+    "uci:193",
+    "uci:212",
+    "uci:22",
+    "uci:247",
+    "uci:257",
+    "uci:26",
+    "uci:264",
+    "uci:27",
+    "uci:270",
+    "uci:291",
+    "uci:294",
+    "uci:31",
+    "uci:32",
+    "uci:327",
+    "uci:352",
+    "uci:368",
+    "uci:379",
+    "uci:396",
+    "uci:52",
+    "uci:536",
+    "uci:551",
+    "uci:555",
+    "uci:572",
+    "uci:59",
+    "uci:597",
+    "uci:601",
+    "uci:602",
+    "uci:69",
+    "uci:73",
+    "uci:75",
+    "uci:76",
+    "uci:760",
+    "uci:78",
+    "uci:850",
+    "uci:864",
+    "uci:911",
+    "uci:94",
+    "uci:967",
+    "uk_charity_commission",
+    "uk_ledger_mhra",
+    "uk_ledger_nhsbsa",
+    "uniprot_kb",
+    "unisg_smart_factory",
+    "us_treasury_dts",
+    "usda_fdc",
+    "usgs_water",
+    "vif_aegis",
+    "volvo_it",
+    "wa_ecology_ghg_reports",
+    "wa_ev_population",
+    "wals_cldf",
+    "wikimedia_simplewiki",
+    "wikimedia_wikidata",
+    "wind_fragility_power_db",
+    "world_bank_projects",
+    "wri_global_power_plants",
+    "zenodo_repository_records"
+   ],
+   "exposed": [
+    "airquality_italy",
+    "candanedo_umons",
+    "seoul_bike",
+    "steel_korea",
+    "tetouan_power"
+   ],
+   "clusters": {
+    "pilot": 32,
+    "holdout": 194
+   },
+   "per_category": {
+    "C1": {
+     "ready": 52,
+     "pilot": 20,
+     "holdout": 32,
+     "holdout_floor_met": 14,
+     "holdout_floor_unknown": 0,
+     "exposed_not_confirming": 0
+    },
+    "C2a": {
+     "ready": 30,
+     "pilot": 2,
+     "holdout": 28,
+     "holdout_floor_met": 20,
+     "holdout_floor_unknown": 0,
+     "exposed_not_confirming": 0
+    },
+    "C2b": {
+     "ready": 30,
+     "pilot": 3,
+     "holdout": 27,
+     "holdout_floor_met": 22,
+     "holdout_floor_unknown": 0,
+     "exposed_not_confirming": 0
+    },
+    "C3": {
+     "ready": 40,
+     "pilot": 2,
+     "holdout": 33,
+     "holdout_floor_met": 30,
+     "holdout_floor_unknown": 0,
+     "exposed_not_confirming": 5
+    },
+    "C4": {
+     "ready": 28,
+     "pilot": 2,
+     "holdout": 26,
+     "holdout_floor_met": 14,
+     "holdout_floor_unknown": 1,
+     "exposed_not_confirming": 0
+    },
+    "C5": {
+     "ready": 36,
+     "pilot": 3,
+     "holdout": 33,
+     "holdout_floor_met": 30,
+     "holdout_floor_unknown": 1,
+     "exposed_not_confirming": 0
+    },
+    "C6": {
+     "ready": 30,
+     "pilot": 2,
+     "holdout": 28,
+     "holdout_floor_met": 8,
+     "holdout_floor_unknown": 1,
+     "exposed_not_confirming": 0
+    }
+   },
+   "holdout_clusters": 194,
+   "holdout_clusters_floor_met": 129,
+   "required_sources": {
+    "1": 34,
+    "3": 45,
+    "5": 51,
+    "11": 59
+   }
+  }
+ }
+}
