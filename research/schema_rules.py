@@ -168,12 +168,16 @@ def run_one(job: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def main(argv: list[str] | None = None) -> int:
+def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--only", nargs="*")
-    args = parser.parse_args(argv)
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = build_parser().parse_args(argv)
     from etl_benchmark.atomic import atomic_path
 
     eligibility = ROOT / "verification/evidence/pool_extension_v2/typed_mixed/eligibility.json"

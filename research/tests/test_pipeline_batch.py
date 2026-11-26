@@ -614,3 +614,351 @@ def test_delivery_faults_at_least_one_batch_and_the_share_applies_to_the_stream_
             assert batch[pb.TIME].max() == batches[i - 3][pb.TIME].max()  # three loads back
         else:
             assert batch.equals(batches[i])
+
+
+# ---------------------------------------------------------------------------------------------
+# run_source: the wiring between the stages, observed through spies on the real functions
+# ---------------------------------------------------------------------------------------------
+def _spy(monkeypatch, name):
+    calls = []
+    original = getattr(pb, name)
+
+    def wrapper(*args, **kwargs):
+        calls.append((args, kwargs))
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(pb, name, wrapper)
+    return calls
+
+
+def test_a_source_run_reports_its_protocol_sizes_detectors_and_the_neural_note():
+    result = pb.run_source(_table(), seeds=(42,), learned=("isolation_forest",))
+    assert result["protocol"] == "pipeline-batch-v1"
+    assert result["contaminated_reference"] is False
+    assert result["batch_rows"] == 24 and result["seeds"] == [42]
+    assert result["batches"] == {"reference": 40, "validation": 20, "test": 40}
+    assert result["faulty_test_batches"] == 12
+    assert result["detectors"] == [
+        "constraint_rules",
+        "volume_freshness",
+        "distribution_distance",
+        "isolation_forest",
+        "random",
+    ]
+    assert result["neural"] == "not run: fewer than MIN_REFERENCE_FOR_NEURAL reference batches"
+    assert list(result["results"]) == result["detectors"]
+    for by_mechanism in result["results"].values():
+        assert list(by_mechanism) == list(pb.MECHANISMS)
+        for by_level in by_mechanism.values():
+            assert list(by_level) == ["0", "1", "2"]
+            for cell in by_level.values():
+                assert set(cell) == {"recall", "false_alert_rate", "roc_auc", "ap"}
+
+
+def test_the_number_of_features_is_the_profile_width_of_the_reference():
+    table = _table()
+    batches, ref = _ref(table)
+    result = pb.run_source(table, seeds=(42,), learned=())
+    assert result["features"] == len(ref.mean)
+    assert result["detectors"] == [
+        "constraint_rules",
+        "volume_freshness",
+        "distribution_distance",
+        "random",
+    ]
+
+
+def test_cells_average_the_seeds_and_a_second_seed_is_not_a_repeat_of_the_first():
+    table = _table()
+    both = pb.run_source(table, seeds=(42, 1), learned=())["results"]
+    one = pb.run_source(table, seeds=(42,), learned=())["results"]
+    two = pb.run_source(table, seeds=(1,), learned=())["results"]
+    for d in ("constraint_rules", "random"):
+        for m in ("partial_load", "silent_corruption"):
+            for lv in ("0", "2"):
+                for key in ("recall", "false_alert_rate", "roc_auc", "ap"):
+                    want = (one[d][m][lv][key] + two[d][m][lv][key]) / 2
+                    assert both[d][m][lv][key] == pytest.approx(want)
+    assert (
+        one["random"]["partial_load"]["0"]["recall"] != two["random"]["partial_load"]["0"]["recall"]
+    )
+
+
+def test_the_stages_receive_the_seed_the_previous_batch_and_a_stream_specific_generator(
+    monkeypatch,
+):
+    table = _table()
+    batches = pb.make_batches(table)
+    fits = _spy(monkeypatch, "fit_learned")
+    scores = _spy(monkeypatch, "detector_scores")
+    streams = _spy(monkeypatch, "profile_stream")
+    deliveries = _spy(monkeypatch, "deliver")
+    pb.run_source(table, seeds=(7,), learned=("isolation_forest",))
+    assert len(fits) == 1 and fits[0][0][1] == 7 and fits[0][0][2] == ("isolation_forest",)
+    assert {args[4] for args, _ in scores} == {7}
+    # one validation stream then 24 test streams (8 mechanisms x 3 severities)
+    assert len(streams) == 1 + 24
+    validation_previous = streams[0][0][2]
+    assert validation_previous.equals(batches[39])  # the last reference batch, not a later one
+    assert len(streams[0][0][1]) == 20 and streams[0][0][1][0].equals(batches[40])
+    for args, _ in streams[1:]:
+        assert args[2].equals(batches[59])  # the last validation batch precedes the test stream
+    for k, (args, _) in enumerate(deliveries):
+        mechanism, level = args[2], args[3]
+        assert mechanism == pb.MECHANISMS[k // 3] and level == k % 3
+        assert args[1] == range(60, 100)
+
+
+def test_the_generator_of_each_stream_is_keyed_by_seed_mechanism_and_severity(monkeypatch):
+    table = _table()
+    states = []
+
+    def capture(clean, indices, mechanism, level, rng, ref, share=pb.FAULT_SHARE):
+        states.append((mechanism, level, rng.bit_generator.state["state"]["state"]))
+        raise RuntimeError("stop")
+
+    monkeypatch.setattr(pb, "deliver", capture)
+    with pytest.raises(RuntimeError):
+        pb.run_source(table, seeds=(7,), learned=())
+    mechanism, level, state = states[0]
+    assert (mechanism, level) == ("partial_load", 0)
+    assert state == np.random.default_rng([7, 0, 0]).bit_generator.state["state"]["state"]
+    assert state != np.random.default_rng([7, 0, 1]).bit_generator.state["state"]["state"]
+    assert state != np.random.default_rng([8, 0, 0]).bit_generator.state["state"]["state"]
+
+
+def test_a_contaminated_reference_replaces_the_stated_share_of_its_batches_with_faulty_ones(
+    monkeypatch,
+):
+    table = _table()
+    clean = pb.make_batches(table)
+    references = _spy(monkeypatch, "Reference")
+    pb.run_source(table, seeds=(42,), contaminated=True, learned=())
+    assert len(references) == 2
+    final = references[1][0][0]
+    changed = [i for i, b in enumerate(final) if not b.equals(clean[i])]
+    picks = np.random.default_rng(7).choice(40, 2, replace=False)
+    assert changed == sorted(int(i) for i in picks)
+
+
+def test_the_contaminating_faults_follow_the_seeded_draws_and_see_only_earlier_batches(
+    monkeypatch,
+):
+    table = _table()
+    clean = pb.make_batches(table)
+    faults = _spy(monkeypatch, "apply_fault")
+    pb.run_source(table, seeds=(42,), contaminated=True, learned=())
+    sd = pb.Reference(clean[:40]).sd
+    rng = np.random.default_rng(7)
+    picks = rng.choice(40, 2, replace=False)
+    for k, i in enumerate(picks):
+        mechanism = pb.MECHANISMS[int(rng.integers(len(pb.MECHANISMS)))]
+        level = int(rng.integers(3))
+        args, kwargs = faults[k]
+        assert (args[1], args[2]) == (mechanism, level)
+        assert len(kwargs["history"]) == i
+        assert kwargs["sd"].equals(sd)
+        pb.apply_fault(clean[i], mechanism, level, rng, history=clean[:i], sd=sd)  # same draws
+
+
+# ---------------------------------------------------------------------------------------------
+# load_table, run_one, main
+# ---------------------------------------------------------------------------------------------
+def _pool(tmp_path, monkeypatch, frame, uci_id=9001, min_rows=50, spec=None):
+    import json
+
+    import chrono_injected as ci
+
+    registry = tmp_path / "verification/evidence/dataset_registry"
+    registry.mkdir(parents=True)
+    meta = {
+        "uci_id": uci_id,
+        "name": "Toy",
+        "tasks": ["Classification"],
+        "target_col": ["y"],
+        "variables": [{"name": "id", "role": "ID"}, {"name": "y", "role": "Target"}],
+    }
+    (registry / "uci_curated.json").write_text(
+        json.dumps({"kept": [{"uci_id": 1, "name": "x"}, meta]})
+    )
+    (tmp_path / "data" / "pool").mkdir(parents=True)
+    frame.to_csv(tmp_path / "data" / "pool" / f"{uci_id}.csv", index=False)
+    monkeypatch.setattr(pb, "ROOT", tmp_path)
+    monkeypatch.setitem(
+        ci.TIME_SPECS, uci_id, spec or {"date": "date", "format": "%Y-%m-%d %H:%M:%S"}
+    )
+    monkeypatch.setattr(ci, "MIN_ROWS", min_rows)
+    return meta
+
+
+def _raw_frame(n=60, seed=0):
+    rng = np.random.default_rng(seed)
+    frame = pd.DataFrame(rng.normal(size=(n, 5)), columns=[f"f{i}" for i in range(1, 6)])
+    stamps = pd.date_range("2020-01-01", periods=n, freq="h")
+    frame.insert(0, "date", stamps.strftime("%Y-%m-%d %H:%M:%S"))
+    frame["id"] = np.arange(n)
+    frame["trend"] = np.arange(n) * 1.0
+    frame["y"] = rng.integers(0, 2, n)
+    return frame
+
+
+def test_a_table_is_loaded_sorted_by_time_without_ids_targets_trends_and_incomplete_rows(
+    tmp_path, monkeypatch
+):
+    frame = _raw_frame().sample(frac=1, random_state=3).reset_index(drop=True)
+    frame.loc[frame.index[5], "f1"] = np.nan
+    twin = frame.index[10]
+    frame.loc[twin, [f"f{i}" for i in range(1, 6)]] = frame.loc[
+        frame.index[11], [f"f{i}" for i in range(1, 6)]
+    ].to_numpy()
+    _pool(tmp_path, monkeypatch, frame)
+    table, info = pb.load_table(9001)
+    columns = [f"f{i}" for i in range(1, 6)]
+    assert list(table.columns) == [*columns, pb.TIME]
+    assert info == {"name": "Toy", "rows": 58, "columns": columns}
+    assert len(table) == 58 and list(table.index) == list(range(58))
+    assert table[pb.TIME].is_monotonic_increasing
+    assert table[columns].notna().all().all() and table[columns].duplicated().sum() == 0
+    assert set(table[pb.TIME].dt.strftime("%Y-%m-%d %H:%M:%S")) <= set(frame["date"])
+    assert pd.api.types.is_datetime64_any_dtype(table[pb.TIME])
+    assert all(pd.api.types.is_float_dtype(table[c]) for c in columns)
+
+
+def test_a_table_with_unreadable_timestamps_is_not_eligible_and_says_how_many(
+    tmp_path, monkeypatch
+):
+    import injection as inj
+
+    frame = _raw_frame()
+    frame.loc[[3, 4, 9], "date"] = "not a time"
+    _pool(tmp_path, monkeypatch, frame)
+    with pytest.raises(inj.NotEligible, match=r"^3 timestamps could not be read$"):
+        pb.load_table(9001)
+
+
+def test_a_table_needs_at_least_four_continuous_columns_after_the_trend_is_dropped(
+    tmp_path, monkeypatch
+):
+    import injection as inj
+
+    four = _raw_frame().drop(columns="f5")
+    _pool(tmp_path, monkeypatch, four)
+    table, info = pb.load_table(9001)
+    assert len(info["columns"]) == 4
+    three = _raw_frame().drop(columns=["f4", "f5"])
+    _pool(tmp_path / "again", monkeypatch, three)
+    with pytest.raises(inj.NotEligible, match=r"^only 3 continuous columns$"):
+        pb.load_table(9001)
+
+
+def test_a_table_needs_the_minimum_number_of_rows_after_cleaning(tmp_path, monkeypatch):
+    import injection as inj
+
+    frame = _raw_frame()
+    frame.loc[0, "f1"] = np.nan
+    _pool(tmp_path, monkeypatch, frame, min_rows=59)
+    assert len(pb.load_table(9001)[0]) == 59
+    _pool(tmp_path / "again", monkeypatch, frame, min_rows=60)
+    with pytest.raises(inj.NotEligible, match=r"^only 59 rows after cleaning$"):
+        pb.load_table(9001)
+
+
+def test_a_date_and_a_time_column_are_read_together_by_the_registered_format(tmp_path, monkeypatch):
+    frame = _raw_frame()
+    frame["day"] = frame["date"].str[:10]
+    frame["clock"] = frame["date"].str[11:]
+    frame = frame.drop(columns="date")
+    _pool(
+        tmp_path,
+        monkeypatch,
+        frame,
+        spec={"date": "day", "time": "clock", "format": "%Y-%m-%d %H:%M:%S"},
+    )
+    table, _ = pb.load_table(9001)
+    assert table[pb.TIME].iloc[0] == pd.Timestamp("2020-01-01 00:00:00")
+    assert "day" not in table.columns and "clock" not in table.columns
+
+
+def test_a_run_of_one_table_runs_both_reference_arms_with_the_same_seeds_and_detectors(
+    monkeypatch,
+):
+    table = _table(240)
+    calls = []
+
+    def fake_run(t, seeds=pb.SEEDS, contaminated=False, learned=pb.LEARNED):
+        calls.append((t, seeds, contaminated, learned))
+        return {"arm": "dirty" if contaminated else "clean"}
+
+    monkeypatch.setattr(pb, "load_table", lambda uci_id: (table, {"name": "T", "rows": 240}))
+    monkeypatch.setattr(pb, "run_source", fake_run)
+    out = pb.run_one(7, seeds=(1, 2), learned=("knn",))
+    assert out == {
+        "id": "uci:7",
+        "name": "T",
+        "rows": 240,
+        "arms": {
+            "clean_reference": {"arm": "clean"},
+            "contaminated_reference": {"arm": "dirty"},
+        },
+    }
+    assert [c[1:] for c in calls] == [((1, 2), False, ("knn",)), ((1, 2), True, ("knn",))]
+    assert all(c[0] is table for c in calls)
+    calls.clear()
+    pb.run_one(7)
+    assert [c[1:] for c in calls] == [(pb.SEEDS, False, pb.LEARNED), (pb.SEEDS, True, pb.LEARNED)]
+
+
+def test_the_parser_requires_an_output_directory_and_reads_the_only_list_as_integers():
+    parser = pb.build_parser()
+    assert parser.description == pb.__doc__
+    args = parser.parse_args(["--output", "out"])
+    assert args.output == Path("out") and isinstance(args.output, Path)
+    assert args.only is None and args.compact is False
+    custom = parser.parse_args(["--output", "o", "--only", "247", "275", "--compact"])
+    assert custom.only == [247, 275] and custom.compact is True
+    assert parser.parse_args(["--output", "o", "--only"]).only == []
+    with pytest.raises(SystemExit):
+        parser.parse_args([])
+    assert "learned detectors on the compact profile" in parser.format_help()
+
+
+@pytest.fixture
+def cli(monkeypatch):
+    import chrono_injected as ci
+    import injection as inj
+
+    seen = []
+
+    def fake_run_one(uci_id, learned):
+        seen.append((uci_id, learned))
+        if uci_id == 2:
+            raise inj.NotEligible("too small")
+        return {"id": f"uci:{uci_id}", "b": 1, "a": [uci_id]}
+
+    monkeypatch.setattr(ci, "TIME_SPECS", {1: {}, 2: {}, 3: {}})
+    monkeypatch.setattr(pb, "run_one", fake_run_one)
+    return seen
+
+
+def test_main_writes_one_result_per_eligible_table_and_a_list_of_the_skipped_ones(
+    cli, tmp_path, capsys
+):
+    out = tmp_path / "deep" / "out"
+    assert pb.main(["--output", str(out)]) == 0
+    assert sorted(p.name for p in out.iterdir()) == ["skipped_all.json", "uci_1.json", "uci_3.json"]
+    assert (out / "uci_1.json").read_text() == '{"a": [1], "b": 1, "id": "uci:1"}\n'
+    assert (out / "skipped_all.json").read_text() == '{"uci:2": "too small"}\n'
+    assert capsys.readouterr().out == "1\n3\n"
+    assert cli == [(1, pb.LEARNED), (2, pb.LEARNED), (3, pb.LEARNED)]
+    pb.main(["--output", str(out)])  # an existing directory is fine
+
+
+def test_main_can_restrict_the_tables_and_switch_to_the_compact_profile(cli, tmp_path, capsys):
+    out = tmp_path / "out"
+    assert pb.main(["--output", str(out), "--only", "1", "3", "--compact"]) == 0
+    assert cli == [(1, pb.COMPACT), (3, pb.COMPACT)]
+    assert (out / "skipped_1_3.json").read_text() == "{}\n"
+    assert not (out / "uci_2.json").exists()
+    assert capsys.readouterr().out == "1\n3\n"
+    assert pb.main(["--output", str(out), "--only", "2"]) == 0
+    assert (out / "skipped_2.json").read_text() == '{"uci:2": "too small"}\n'

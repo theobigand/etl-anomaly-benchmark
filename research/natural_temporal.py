@@ -239,7 +239,7 @@ def run_series(spec: dict[str, str], root: Path = DATA_DIR) -> dict[str, Any]:
     return {**head, **result, "skipped": skipped}
 
 
-def main(argv: list[str] | None = None) -> int:
+def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data", type=Path, default=DATA_DIR)
     commands = parser.add_subparsers(dest="command", required=True)
@@ -249,7 +249,11 @@ def main(argv: list[str] | None = None) -> int:
     one = commands.add_parser("run")
     one.add_argument("--id", required=True)
     one.add_argument("--output", type=Path, required=True)
-    args = parser.parse_args(argv)
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = build_parser().parse_args(argv)
     if args.command == "fetch":
         fetch(args.data)
     elif args.command == "manifest":
