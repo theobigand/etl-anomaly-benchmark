@@ -45,6 +45,8 @@ def test_the_defaults_are_info_console_stderr_and_warnings_captured():
         "format": "console",
         "destination": "stderr",
         "file": None,
+        "max_bytes": 10 * 1024 * 1024,
+        "backups": 5,
         "third_party": "WARNING",
         "capture_warnings": True,
     }

@@ -10,17 +10,17 @@
  "kind": "local focused development measurement of the unit classified for issue #156; not the controller campaign, not attested",
  "modules": {
   "research/obs_logging.py": {
-   "eligible": 248,
-   "killed": 248,
+   "eligible": 300,
+   "killed": 300,
    "level": "L2",
    "raw_score": 100.0,
-   "source_sha256": "57a050cc83382095d618331abc02e0d7bcfed8ef523f1630eb3f2494a3ea1999",
+   "source_sha256": "3c43793c55b19dbf4021246ee9cf9562bc683a2df5607d797039a7a5e129ff2e",
    "status": "PASS_RAW",
    "survived": 0,
    "threshold": 90
   }
  },
- "note": "No mutant was marked equivalent. Re-measured after the exception stack became overridable by the redaction filter (#159); the earlier survivors were killed by the added tests.",
+ "note": "No mutant was marked equivalent. Re-measured after #159 (exception text hook) and #160 (rotation settings) with test_obs_logging.py and test_obs_redaction.py.",
  "survivors": {
   "research/obs_logging.py": []
  },
