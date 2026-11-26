@@ -116,8 +116,44 @@ Limits: the filter cannot recognise a secret that has no keyword or known prefix
 non-scalar fields because it removes them. The scientific runners still use their own logging until a separate, replayed
 decision adopts this layer.
 
+## Failure handling and bounded retries (#158)
+
+`research/obs_failures.py` classifies failures, retries only what is safe to retry, and keeps failures visible.
+
+| Class | Exit code | Meaning | Retried |
+|---|---|---|---|
+| `infrastructure` | 75 | storage, network, memory or service failure | only when transient |
+| `processing` | 1 | a pipeline step failed on valid input | no |
+| `data_quality` | 65 | the input violates a declared expectation | no |
+| `detector` | 2 | a detector failed to fit or score | no |
+| `inapplicability` | 3 | a protocol or unit does not apply | no |
+| `injected` | 4 | a fault injected on purpose for a test | no |
+| `unexpected` | 70 | an error nobody classified | no |
+
+- **Classification is explicit.** Raise `InfrastructureFailure` (transient by default), `ProcessingFailure`,
+  `DataQualityFailure`, `DetectorFailure`, `InapplicableFailure` or `InjectedFailure`, chaining the cause with
+  `raise ... from error`. `ConnectionError`, `TimeoutError` and `InterruptedError` are transient infrastructure failures,
+  other `OSError` and `MemoryError` permanent ones, and everything else is `unexpected`: an unclassified exception is never
+  reported as a data anomaly.
+- **Bounded retries.** `run_with_retries(call, stage=..., policy=..., idempotent=True, logger=...)` retries a transient
+  failure of a call declared idempotent, at most `ETL_RETRY_MAX_ATTEMPTS` times (default 3), with a delay of
+  `ETL_RETRY_BASE_DELAY_S` (0.5) doubling up to `ETL_RETRY_MAX_DELAY_S` (30), no jitter, and within the optional total
+  `ETL_RETRY_DEADLINE_S`. Permanent failures, non-idempotent calls and `KeyboardInterrupt` are never retried. A call that
+  hangs needs its own timeout; this helper does not interrupt it.
+- **Events.** Each retry logs `stage.retrying` (WARNING) with `stage`, `attempt`, `max_attempts`, `failure_class`,
+  `transient`, `retry` and `delay_s`; a retry that eventually succeeds logs `stage.completed` with `final_status`
+  `recovered`; the terminal failure logs one `stage.failed` (ERROR) with the structured exception and `final_status`
+  `failed`, `exhausted` or `deadline`. Correlation identifiers ride on every event. The original exception is re-raised
+  with a note, so its type and chain are intact; nothing is converted into a success.
+- **No duplicate logging.** `log_failure` marks an exception as reported; the layers above can call it or `run_guarded`
+  without producing a second record.
+- **Visible in orchestration.** `run_guarded(main, stage=..., logger=...)` returns the exit code of the failure class, so a
+  scheduler sees a non-zero status, and logs `run.failed` unless a lower layer already reported the failure.
+- **Not changed.** The archived runners keep their recorded-outcome handling: the audit lists the `except Exception`
+  blocks that turn a failure into scientific data (disclosed errors, ineligibility reasons) as "keep". This module does not
+  replace them.
+
 ## Not in this change
 
-Rotation and retention (#160), failure classification and retries (#158), OpenTelemetry (#161), and
-the adoption of the schema by the scientific runners (a separate replayed decision). The existing
-`src/etl_benchmark/logging_setup.py` and the runners are unchanged.
+Rotation and retention (#160), OpenTelemetry (#161), and the adoption of the schema by the scientific runners (a separate
+replayed decision). The existing `src/etl_benchmark/logging_setup.py` and the runners are unchanged.

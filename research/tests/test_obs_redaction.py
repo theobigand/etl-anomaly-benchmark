@@ -10,6 +10,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import obs_events as oe  # noqa: E402
+import obs_failures as of  # noqa: E402
 import obs_logging as ol  # noqa: E402
 import obs_redaction as orr  # noqa: E402
 
@@ -250,3 +251,39 @@ def test_no_ground_truth_word_survives_in_any_part_of_the_json_line(word):
         fail(logging.getLogger("etl.leak"))
         oe.emit(logging.getLogger("etl.leak"), "stage.completed", stage=f"path/{word}/x")
     assert not orr.GROUND_TRUTH.search(out.getvalue()), out.getvalue()
+
+
+def test_the_retry_and_failure_events_of_obs_failures_pass_the_allowlist_whole():
+    attempts = []
+
+    def flaky():
+        attempts.append(1)
+        if len(attempts) < 3:
+            raise ConnectionError("link down")
+
+    stream = io.StringIO()
+    ol.configure({"ETL_LOG_FORMAT": "json"}, stream=stream)
+    oe.attach()
+    orr.attach()
+    log = logging.getLogger("etl.retry")
+    policy = of.Policy(3, 0.5, 30.0, None)
+    of.run_with_retries(
+        flaky, stage="load", policy=policy, idempotent=True, logger=log, sleep=lambda s: None
+    )
+    with pytest.raises(ConnectionError):
+        of.run_with_retries(
+            lambda: (_ for _ in ()).throw(ConnectionError("x")),
+            stage="load",
+            policy=of.Policy(2, 0.5, 30.0, None),
+            idempotent=True,
+            logger=log,
+            sleep=lambda s: None,
+        )
+    records = [json.loads(line) for line in stream.getvalue().splitlines()]
+    assert [r["event"] for r in records][:3] == [
+        "stage.retrying",
+        "stage.retrying",
+        "stage.completed",
+    ]
+    assert all("dropped_fields" not in r for r in records)
+    assert records[0]["delay_s"] == 0.5 and records[0]["transient"] is True

@@ -596,6 +596,10 @@
       "level": "L3",
       "reason": "It is the allowlist and redaction layer of the platform logs and the guard that keeps the injected-fault ground truth out of detector-accessible telemetry: a defect can leak a secret, a raw row or a held-out label, which would compromise the scientific protocol; the scientific code does not import it (ADR-0001)."
     },
+    "research/obs_failures.py": {
+      "level": "L2",
+      "reason": "It classifies failures and decides which calls are retried and how often: a defect could retry a non-idempotent call, hide a failure or label an error as a data anomaly in operational telemetry, never change a scientific result; the scientific code does not import it (ADR-0001)."
+    },
     "research/obs_logging.py": {
       "level": "L2",
       "reason": "It is the single logging configuration of the platform tooling: a defect changes the format, level or destination of operational logs, never a scientific result; the scientific code does not import it (ADR-0001)."
