@@ -588,6 +588,10 @@
       "level": "L2",
       "reason": "It reads the registry into the table of units, operators, detectors and metrics that apply to each category and protocol, so it states which units a group can be run on; it fits no detector and reads no detector output."
     },
+    "research/roadmap_tasks.py": {
+      "level": "L2",
+      "reason": "It validates the roadmap task list that the synchronization workflow checks: a defect lets an inconsistent or incomplete roadmap pass or blocks a valid one, never a scientific result; no scientific code imports it."
+    },
     "research/obs_events.py": {
       "level": "L2",
       "reason": "It defines the event schema and correlation identifiers of the platform tooling's operational logs: a defect changes which identifiers a log record carries, never a scientific result; the scientific code does not import it (ADR-0001)."
