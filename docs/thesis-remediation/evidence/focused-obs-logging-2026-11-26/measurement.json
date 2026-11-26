@@ -1,6 +1,6 @@
 {
- "base_head": "4df1752f811d4e9723ac8b89108292db9228b414",
- "command": "python -m mutmut run \"research.obs_logging.*\" with research/tests/test_obs_logging.py only, in a scratch copy holding research/, src/etl_benchmark and a narrowed pyproject",
+ "base_head": "35f6b87527d023688668f6ac54f83d5a119cbacb",
+ "command": "python -m mutmut run \"research.obs_logging.*\" with research/tests/test_obs_logging.py only, in a scratch copy holding research/, src/etl_benchmark and a narrowed pyproject (re-measured on 2026-11-26 after #159 with test_obs_redaction.py added to the selection)",
  "date": "2026-11-26",
  "environment": {
   "mutmut": "3.8.x (etl-mutation-venv)",
@@ -10,21 +10,19 @@
  "kind": "local focused development measurement of the unit classified for issue #156; not the controller campaign, not attested",
  "modules": {
   "research/obs_logging.py": {
-   "eligible": 247,
-   "killed": 232,
+   "eligible": 248,
+   "killed": 248,
    "level": "L2",
-   "raw_score": 93.9,
-   "source_sha256": "91dd19cc6c94b83d5b7647a1e45202744b6eafef3dfccc8961aea2c46bd1ffd4",
+   "raw_score": 100.0,
+   "source_sha256": "57a050cc83382095d618331abc02e0d7bcfed8ef523f1630eb3f2494a3ea1999",
    "status": "PASS_RAW",
-   "survived": 15,
+   "survived": 0,
    "threshold": 90
   }
  },
- "note": "No survivor was marked equivalent. The survivors were not individually triaged; the test file's stdlib-only import check ignores the import that mutmut adds to a mutated copy.",
+ "note": "No mutant was marked equivalent. Re-measured after the exception stack became overridable by the redaction filter (#159); the earlier survivors were killed by the added tests.",
  "survivors": {
-  "research/obs_logging.py": [
-   "15 survived; not individually triaged"
-  ]
+  "research/obs_logging.py": []
  },
  "working_tree": "clean apart from the measured module and its tests"
 }

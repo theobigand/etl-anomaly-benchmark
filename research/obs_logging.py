@@ -63,7 +63,7 @@ class JsonFormatter(logging.Formatter):
             body["exception"] = {
                 "type": record.exc_info[0].__name__,
                 "message": str(record.exc_info[1]),
-                "stack": self.formatException(record.exc_info),
+                "stack": record.exc_text or self.formatException(record.exc_info),
             }
         return json.dumps(body, default=str, ensure_ascii=False)
 

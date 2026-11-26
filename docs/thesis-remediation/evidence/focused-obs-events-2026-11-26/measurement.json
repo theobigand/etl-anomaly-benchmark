@@ -1,6 +1,6 @@
 {
  "base_head": "35f6b87527d023688668f6ac54f83d5a119cbacb",
- "command": "python -m mutmut run with research/tests/test_obs_events.py only, in a scratch copy holding research/obs_events.py, research/obs_logging.py and a narrowed pyproject",
+ "command": "python -m mutmut run with research/tests/test_obs_events.py only, in a scratch copy holding research/obs_events.py, research/obs_logging.py and a narrowed pyproject (re-measured on 2026-11-26 after #159 with test_obs_redaction.py added to the selection)",
  "date": "2026-11-26",
  "environment": {
   "mutmut": "3.8.x (etl-mutation-venv)",
@@ -10,17 +10,17 @@
  "kind": "local focused development measurement of the unit classified for issue #157; not the controller campaign, not attested",
  "modules": {
   "research/obs_events.py": {
-   "eligible": 181,
-   "killed": 181,
+   "eligible": 192,
+   "killed": 192,
    "level": "L2",
    "raw_score": 100.0,
-   "source_sha256": "cab2c85f1a936b83490f4d5f68c572eb458e9509b059985fedd77e156157ba30",
+   "source_sha256": "1fda58e4bbc5ab8d67da80ac6d5837925da537a1e1f9ce9a6fbf8dacc18c050e",
    "status": "PASS_RAW",
    "survived": 0,
    "threshold": 90
   }
  },
- "note": "No mutant was marked equivalent. The structlog configuration is exercised through a stub module because structlog is not in the governed environment; the end-to-end structlog tests ran separately in a scratch environment with structlog 26.1.0 (34 passed). Re-measured after the stage.retrying event was registered (#158): 181 of 181.",
+ "note": "No mutant was marked equivalent. Re-measured after the exception stack became overridable by the redaction filter (#159); the earlier survivors were killed by the added tests.",
  "survivors": {
   "research/obs_events.py": []
  },
