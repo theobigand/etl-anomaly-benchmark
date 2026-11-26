@@ -464,19 +464,23 @@ def run_one(
     }
 
 
-def main(argv: list[str] | None = None) -> int:
-    import chrono_injected as ci
-    import injection as inj
-
-    from etl_benchmark.atomic import atomic_path
-
+def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--only", nargs="*", type=int)
     parser.add_argument(
         "--compact", action="store_true", help="learned detectors on the compact profile"
     )
-    args = parser.parse_args(argv)
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    import chrono_injected as ci
+    import injection as inj
+
+    from etl_benchmark.atomic import atomic_path
+
+    args = build_parser().parse_args(argv)
     args.output.mkdir(parents=True, exist_ok=True)
     skipped = {}
     for uci_id in ci.TIME_SPECS:

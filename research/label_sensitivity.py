@@ -141,7 +141,7 @@ def jobs(registry: Path, pool: Path, rules: list[str]) -> list[dict[str, Any]]:
     ]
 
 
-def main(argv: list[str] | None = None) -> int:
+def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     registry = ROOT / "verification" / "evidence" / "dataset_registry"
     parser.add_argument("--registry", type=Path, default=registry)
@@ -151,7 +151,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--rules", nargs="*", default=list(RULES))
     parser.add_argument("--only", nargs="*", help="problem ids, for a quick check")
     parser.add_argument("--methods", choices=("classical", "deep"), default="classical")
-    args = parser.parse_args(argv)
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = build_parser().parse_args(argv)
     from etl_benchmark.atomic import atomic_path
 
     methods = list(DEEP_NAMES) if args.methods == "deep" else list(lb.METHODS)

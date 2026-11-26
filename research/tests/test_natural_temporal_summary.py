@@ -372,3 +372,61 @@ def test_main_defaults_point_at_the_natural_temporal_evidence(monkeypatch):
     with pytest.raises(RuntimeError):
         ns.main([])
     assert parsed["defaults"]["output"] == ns.ROOT / "verification/evidence/natural_temporal"
+
+
+def test_an_interval_counts_as_below_zero_only_when_its_upper_end_is_negative():
+    assert ns.below_zero({"ci_high": -0.01}) is True
+    assert ns.below_zero({"ci_high": 0.0}) is False
+    assert ns.below_zero({"ci_high": 0.01}) is False
+    assert ns.below_zero({"units": 0}) is False  # no interval, no claim
+
+
+def _tied_world():
+    """Chronological and stratified scores are identical and the two baselines are the same."""
+    equal = (0.3, 0.5, 0.7)
+    return [_fixed(f"s{i}", f"g{i}", equal, equal, equal, prevalence=0.115) for i in range(4)]
+
+
+def test_a_tie_is_not_a_loss_for_the_pair_the_group_or_the_interval():
+    s = ns.summarise(_tied_world(), [], draws=100)
+    assert s["N1"]["chronological_lower_share"] == 0.0
+    assert s["N1_lift"]["chronological_lower_share"] == 0.0
+    assert all(v["groups_lower"] == 0 for v in s["N1"]["by_detector"].values())
+    assert s["N1"]["detectors_with_interval_below_zero"] == []
+    assert s["N1_lift"]["detectors_with_interval_below_zero"] == []
+    assert all(v["ci_high"] == 0.0 for v in s["N1"]["by_detector"].values())
+
+
+def test_detectors_are_listed_in_the_order_of_their_mean_rank_not_alphabetically():
+    reverse = [
+        _fixed(
+            r["id"],
+            r["group"],
+            tuple(reversed([r["chronological"][m]["pr_auc"] for m in DETECTORS])),
+            tuple(reversed([r["stratified"][m]["pr_auc"] for m in DETECTORS])),
+            tuple(reversed([r["stratified"][m]["pr_auc_matched"] for m in DETECTORS])),
+        )
+        for r in _world()
+    ]
+    s = ns.summarise(reverse, [], draws=50)
+    assert s["N4"]["mean_rank"]["zscore"] == 1.0
+    lines = ns.render(s).splitlines()
+    assert [ln.split("|")[1].strip() for ln in lines[12:15]] == ["zscore", "lof", "autoencoder"]
+
+
+def test_the_report_keeps_its_blank_separator_lines():
+    excluded = [{"id": "x", "group": "gX", "excluded": "0 anomalies"}]
+    lines = ns.render(ns.summarise(_world(), excluded, draws=50)).splitlines()
+    assert [i for i, line in enumerate(lines) if line == ""] == [1, 3, 9, 15, 21, 23]
+    assert not any("XXXX" in line for line in lines)
+
+
+def test_the_parser_defaults_to_the_natural_temporal_evidence_directories():
+    parser = ns.build_parser()
+    assert parser.description == ns.__doc__
+    args = parser.parse_args([])
+    assert args.results == ns.ROOT / "verification/evidence/natural_temporal/results"
+    assert args.output == ns.ROOT / "verification/evidence/natural_temporal"
+    assert isinstance(args.results, Path) and isinstance(args.output, Path)
+    custom = parser.parse_args(["--results", "r", "--output", "o"])
+    assert custom.results == Path("r") and custom.output == Path("o")

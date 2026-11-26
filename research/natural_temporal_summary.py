@@ -63,6 +63,11 @@ def lifts(record: dict[str, Any]) -> dict[str, dict[str, float]]:
     return out
 
 
+def below_zero(effect: dict[str, Any]) -> bool:
+    """Whether the whole interval of a paired effect lies below zero (no interval: not below)."""
+    return bool(effect.get("ci_high", 1) < 0)
+
+
 def table_by_group(
     evaluated: list[dict[str, Any]], pick: Any
 ) -> tuple[list[str], dict[str, np.ndarray]]:
@@ -78,7 +83,7 @@ def table_by_group(
                 for r in evaluated
                 if r["group"] == group and method in r["chronological"]
             ]
-            column.append(float(np.mean(values)) if values else float("nan"))
+            column.append(float(np.mean(values or [np.nan])))
         table[method] = np.array(column)
     return groups, table
 
@@ -99,7 +104,7 @@ def summarise(
         d = chrono[method] - strat[method]
         detectors[method] = pinf.paired_effect(chrono[method], strat[method], draws)
         detectors[method]["groups_lower"] = int((d < 0).sum())
-    median_ci_below = {m: bool(v.get("ci_high", 1) < 0) for m, v in detectors.items()}
+    median_ci_below = {m: below_zero(v) for m, v in detectors.items()}
     h = td.hypotheses({r["id"]: r for r in evaluated})
     rho = [
         float(
@@ -147,14 +152,14 @@ def summarise(
         "N1_lift": {
             "chronological_lower_share": lift_lower / len(pairs),
             "detectors_with_interval_below_zero": sorted(
-                m for m, v in lift_by_detector.items() if v.get("ci_high", 1) < 0
+                m for m, v in lift_by_detector.items() if below_zero(v)
             ),
             "by_detector": lift_by_detector,
         },
         "N2": {
             "median_spearman": float(np.median(rho)),
             "supported": bool(np.median(rho) >= 0.8),
-            "by_series": dict(zip((r["id"] for r in evaluated), rho, strict=True)),
+            "by_series": {r["id"]: rho[i] for i, r in enumerate(evaluated)},
         },
         "N3": {
             "series_where_matching_closes_half": int(
@@ -168,9 +173,9 @@ def summarise(
         },
         "N4": {
             "detectors": names,
-            "mean_rank": dict(zip(names, map(float, ranks), strict=True)),
+            "mean_rank": {n: float(ranks[i]) for i, n in enumerate(names)},
             "rank_interval": {
-                n: [float(a), float(b)] for n, (a, b) in zip(names, intervals, strict=True)
+                n: [float(intervals[i][0]), float(intervals[i][1])] for i, n in enumerate(names)
             },
             "friedman": pinf.friedman(matrix),
             "families": family_rows,
@@ -226,7 +231,7 @@ def render(summary: dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
-def main(argv: list[str] | None = None) -> int:
+def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--results", type=Path, default=ROOT / "verification/evidence/natural_temporal/results"
@@ -234,7 +239,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--output", type=Path, default=ROOT / "verification/evidence/natural_temporal"
     )
-    args = parser.parse_args(argv)
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = build_parser().parse_args(argv)
     evaluated, excluded = load(args.results)
     summary = summarise(evaluated, excluded)
     (args.output / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True) + "\n")

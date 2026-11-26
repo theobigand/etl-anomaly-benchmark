@@ -306,3 +306,138 @@ def test_the_archive_and_rule_directories_point_into_the_evidence_tree():
         root / "validity" / "label_rules" / "deep",
     ) == vs.RULE_DIRS
     assert root.name == "evidence" and root.parent.name == "verification"
+
+
+# ---------------------------------------------------------------------------------------------
+# Varied data: per-problem noise makes every source and detector differ, so wiring errors show.
+# ---------------------------------------------------------------------------------------------
+BASE = {"zscore": 0.55, "isolation_forest": 0.7, "knn": 0.5, NEURAL: 0.3, "lof": 0.6, "exact5": 0.4}
+LENGTH = {"zscore": 10, "isolation_forest": 10, "knn": 10, NEURAL: 10, "lof": 7, "exact5": 5}
+
+
+def _varied():
+    """Eleven problems of ten sources (adbench:breastw is the twin of uci:15)."""
+    rng = np.random.default_rng(11)
+    problems = ["uci:15", "adbench:breastw"] + [f"uci:{i}" for i in range(2, 11)]
+    out = {}
+    for p in problems:
+        out[p] = {}
+        for m, base in BASE.items():
+            if m == "knn" and p == "uci:2":
+                continue  # one problem of eleven lacks this detector
+            values = list(base + rng.normal(0, 0.08, LENGTH[m]))
+            if m == "lof":
+                values[5:] = [0.0, 0.0]  # the sixth seed must not enter the five-seed mean
+            out[p][m] = values
+    return out
+
+
+def _expected_tables(seeded):
+    ten = {
+        p: {m: float(np.mean(v)) for m, v in d.items() if len(v) >= 10} for p, d in seeded.items()
+    }
+    five = {
+        p: {m: float(np.mean(v[:5])) for m, v in d.items() if len(v) >= 5}
+        for p, d in seeded.items()
+    }
+    return ten, five
+
+
+def test_part_a_agrees_with_an_independent_computation_on_varied_data():
+    seeded = _varied()
+    a = vs.part_a(seeded, DRAWS)
+    ten, five = _expected_tables(seeded)
+    groups, table = vs.source_table(ten)
+    _, table5 = vs.source_table(five)
+    assert a["problems"] == 11 and a["independent_sources"] == 10 == len(groups)
+    assert a["pairwise"] == pinf.pairwise(table, DRAWS)
+    assert a["ten_seeds"] == vs.ranking(table, DRAWS)
+    assert a["five_seeds"] == vs.ranking(table5, DRAWS)
+    # exact5 has exactly five seeds: in the five-seed ranking only; lof's sixth seed is ignored
+    assert "exact5" in a["five_seeds"]["detectors"] and "exact5" not in a["ten_seeds"]["detectors"]
+    assert "lof" in a["five_seeds"]["detectors"]
+    # knn is missing from one problem: 9 of 10 sources still reach the 90 % coverage
+    assert "knn" in a["ten_seeds"]["detectors"] and a["ten_seeds"]["units"] == 9
+    fams = {
+        name: np.nanmean(np.column_stack([table[m] for m in table if vs.family(m) == name]), axis=1)
+        for name in ("rule", "classical", "neural")
+    }
+    assert a["families"] == pinf.pairwise(fams, DRAWS)
+    problem_table = {m: np.array([ten[p].get(m, np.nan) for p in sorted(ten)]) for m in table}
+    assert a["problem_level_ranking"] == vs.ranking(problem_table, DRAWS)
+    assert a["problem_level_ranking"]["units"] == 10  # knn is absent from one of eleven problems
+
+
+def test_part_a_counts_pairs_significant_after_holm_with_a_strict_threshold():
+    a = vs.part_a(_varied(), DRAWS)
+    assert a["pairs_significant_holm_05"] == sum(r["p_holm"] < 0.05 for r in a["pairwise"])
+    assert a["pairs_total"] == len(a["pairwise"]) == 6
+
+
+def test_part_b_ranks_only_the_detectors_that_both_the_baseline_and_the_rule_ran():
+    seeded, runs = _rules_world()
+    for d in (seeded, runs):
+        for p in list(d):
+            d[p]["d"] = [0.1] * len(d[p]["a"])
+    runs = {p: {m: v for m, v in d.items() if m != "c"} for p, d in runs.items()}
+    r = vs.part_b(seeded, {"R1": runs}, DRAWS)["R1"]
+    assert set(r["mean_rank_rule"]) == {"a", "b", "d"}
+    assert set(r["mean_rank_R0"]) == {"a", "b", "c", "d"}
+    assert r["R0_leader"] == "a" and r["R0_leader_rank_under_rule"] == 2
+    assert r["leader_under_rule"] == "b"
+    assert r["kendall_tau_vs_R0"] == pytest.approx(1 / 3)
+
+
+def test_the_report_keeps_its_blank_separator_lines():
+    lines = vs.render(_summary()).splitlines()
+    blank = [i for i, line in enumerate(lines) if line == ""]
+    assert blank == [1, 3, 5, 12, 18, 20]
+    assert not any("XXXX" in line for line in lines)
+
+
+def test_main_skips_failed_and_inapplicable_runs_but_keeps_reading_the_directory(
+    tmp_path, monkeypatch
+):
+    old, new = tmp_path / "old", tmp_path / "new"
+    rules_c, rules_d = tmp_path / "rc", tmp_path / "rd"
+    evidence = tmp_path / "evidence"
+    (evidence / "validity").mkdir(parents=True)
+    names = {"zscore": 0.9, "isolation_forest": 0.6, NEURAL: 0.3}
+    for i in range(1, 7):
+        for directory, seeds in ((old, range(5)), (new, range(5, 10))):
+            _run(directory, f"p{i}", f"uci:{i}", {m: [v] * 5 for m, v in names.items()}, seeds)
+        _run(
+            rules_c,
+            f"r{i}",
+            f"uci:{i}",
+            {m: [v] * 3 for m, v in {"zscore": 0.6, "isolation_forest": 0.9, NEURAL: 0.3}.items()},
+            range(3),
+            "R1",
+        )
+    # a failed and an inapplicable run come first in sorted order and must be skipped, not stop
+    # the reading of the files that follow them
+    _run(rules_d, "a_failed", "uci:7", {"zscore": [0.0] * 3}, range(3), "R1", failed="x")
+    _run(rules_d, "b_na", "uci:8", {"zscore": [0.0] * 3}, range(3), "R1", not_applicable="x")
+    _run(rules_d, "c_good", "uci:6", {NEURAL: [0.3] * 3}, range(3), "R1")
+    for directory in (old, new):
+        _run(directory, "p7", "uci:7", {m: [0.5] * 5 for m in names}, range(5))
+        _run(directory, "p8", "uci:8", {m: [0.5] * 5 for m in names}, range(5))
+    monkeypatch.setattr(vs, "ARCHIVE", (old,))
+    monkeypatch.setattr(vs, "NEW", (new,))
+    monkeypatch.setattr(vs, "RULE_DIRS", (rules_c, rules_d))
+    monkeypatch.setattr(vs, "EVIDENCE", evidence)
+    monkeypatch.setattr(vs.pinf, "DRAWS", DRAWS)
+    assert vs.main() == 0
+    summary = json.loads((evidence / "validity" / "summary.json").read_text())
+    assert summary["B"]["R1"]["problems"] == 6
+    raw = (evidence / "validity" / "summary.json").read_text()
+    assert list(summary["A"]) == sorted(summary["A"])
+    assert raw.index('"V3"') < raw.index('"families"') < raw.index('"pairwise"')
+
+
+def test_load_seeds_goes_on_with_the_next_file_after_a_failed_or_inapplicable_run(tmp_path):
+    d = tmp_path / "d"
+    _run(d, "a", "uci:1", {"m": [0.1, 0.2]}, [0, 1], failed="boom")
+    _run(d, "b", "uci:2", {"m": [0.3, 0.4]}, [0, 1], not_applicable="none")
+    _run(d, "c", "uci:3", {"m": [0.5, 0.6]}, [0, 1])
+    assert vs.load_seeds((d,)) == {"uci:3": {"m": [0.5, 0.6]}}

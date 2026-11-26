@@ -218,12 +218,16 @@ def render(summary: dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
-def main(argv: list[str] | None = None) -> int:
+def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     default = ROOT / "verification/evidence/pipeline_batch/pilot"
     parser.add_argument("--results", type=Path, default=default)
     parser.add_argument("--compact-results", type=Path, default=None)
-    args = parser.parse_args(argv)
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = build_parser().parse_args(argv)
     summary = summarise(load(args.results, args.compact_results))
     (args.results / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True) + "\n")
     (args.results / "summary.md").write_text(render(summary))

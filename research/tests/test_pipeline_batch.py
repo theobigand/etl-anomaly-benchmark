@@ -174,3 +174,443 @@ def test_compact_detectors_are_fitted_on_the_compact_profile_and_reported_under_
     gross = result["results"]["isolation_forest_compact"]["partial_load"]["2"]["recall"]
     assert gross >= 0.9
     assert pb.FAMILY["isolation_forest_compact"] == "learned"
+
+
+# ---------------------------------------------------------------------------------------------
+# Exact-value tests: tiny frames where every count and statistic has one right answer.
+# ---------------------------------------------------------------------------------------------
+def _small(n=10, columns="abcd"):
+    """``a`` runs 0..n-1 (each row identifiable); the other columns are distinct reals."""
+    frame = pd.DataFrame({c: np.arange(n) * (i + 1.0) + 0.5 * i for i, c in enumerate(columns)})
+    return frame.assign(**{pb.TIME: pd.date_range("2020-01-01", periods=n, freq="h")})
+
+
+def _fault(frame, mechanism, level, seed=0, history=(), sd=None):
+    sd = sd if sd is not None else frame.drop(columns=pb.TIME).std(ddof=0)
+    return pb.apply_fault(
+        frame, mechanism, level, np.random.default_rng(seed), history=list(history), sd=sd
+    )
+
+
+def test_an_unknown_mechanism_is_refused_by_name():
+    with pytest.raises(ValueError, match=r"^unknown mechanism mystery$"):
+        _fault(_small(), "mystery", 0)
+
+
+def test_the_mechanism_table_and_split_constants_are_the_registered_ones():
+    assert pb.PROTOCOL == "pipeline-batch-v1" and pb.SEEDS == (42, 1, 2, 3, 4)
+    assert pb.ALERT_BUDGET == 0.05 and pb.FAULT_SHARE == 0.30 and pb.CONTAMINATION_SHARE == 0.05
+    assert (pb.REFERENCE_SHARE, pb.VALIDATION_SHARE) == (0.40, 0.20)
+    assert (pb.MIN_BATCH, pb.TARGET_BATCHES, pb.MIN_REFERENCE_FOR_NEURAL) == (24, 100, 200)
+    assert pb.KS_SAMPLE == 2000 and pb.TIME == "_t" and pb.LEVELS == (0, 1, 2)
+    assert (pb.WIDEN, pb.SHARE_FLOOR, pb.RATIO_FLOOR) == (0.20, 0.02, 0.10)
+    assert pb.SEVERITY["schema_drop"] == (1, 2, -1) and pb.SEVERITY["stale_batch"] == (1, 3, 10)
+    assert pb.SEVERITY["unit_change"] == (2.0, 10.0, 1000.0)
+    assert pb.SEVERITY["partial_load"] == (0.7, 0.4, 0.1)
+    assert set(pb.SEVERITY) == set(pb.MECHANISMS) and len(pb.MECHANISMS) == 8
+
+
+def test_a_partial_load_keeps_the_stated_share_of_rows_in_their_original_order_without_repeats():
+    frame = _small(10)
+    assert [len(_fault(frame, "partial_load", lv)) for lv in (0, 1, 2)] == [7, 4, 2]
+    kept = _fault(frame, "partial_load", 1)
+    assert list(kept.index) == [0, 1, 2, 3] and "index" not in kept.columns
+    assert kept["a"].is_monotonic_increasing and kept["a"].is_unique
+    assert set(kept["a"]) <= set(frame["a"])
+    assert len(_fault(_small(3), "partial_load", 2)) == 2  # never fewer than two rows
+
+
+def test_a_duplicate_load_repeats_distinct_rows_and_renumbers_the_index():
+    frame = _small(10)
+    assert [len(_fault(frame, "duplicate_load", lv)) for lv in (0, 1, 2)] == [12, 15, 20]
+    full = _fault(frame, "duplicate_load", 2)
+    assert list(full.index) == list(range(20))
+    assert sorted(full["a"].iloc[10:]) == sorted(frame["a"])  # every row exactly once more
+    assert full.iloc[:10].reset_index(drop=True).equals(frame)
+    assert len(_fault(_small(3), "duplicate_load", 0)) == 4  # at least one repeated row
+
+
+def test_a_stale_batch_replays_the_batch_lag_loads_back_or_the_oldest_available_one():
+    frame = _small(10)
+    history = [_small(10).assign(a=float(i)) for i in range(5)]
+    assert _fault(frame, "stale_batch", 0, history=history).equals(history[-1])
+    assert _fault(frame, "stale_batch", 1, history=history).equals(history[-3])
+    assert _fault(frame, "stale_batch", 2, history=history).equals(history[0])  # lag capped at 5
+    out = _fault(frame, "stale_batch", 0, history=history)
+    assert out is not history[-1]
+    out["a"] = -1.0
+    assert history[-1]["a"].iloc[0] == 4.0
+    assert _fault(frame, "stale_batch", 1, history=[]).equals(frame)  # nothing to replay
+
+
+def test_a_null_spike_blanks_the_stated_share_of_one_column_only():
+    frame = _small(10)
+    for level, count in ((0, 1), (1, 3), (2, 10)):
+        out = _fault(frame, "null_spike", level)
+        holes = out.drop(columns=pb.TIME).isna().sum()
+        assert holes.sum() == count and (holes > 0).sum() == 1
+        assert out[pb.TIME].equals(frame[pb.TIME])
+    assert frame.isna().sum().sum() == 0
+
+
+def test_a_schema_drop_removes_the_stated_number_of_value_columns_and_never_the_last_one():
+    four = _small(10, "abcd")
+    assert [len(_fault(four, "schema_drop", lv).columns) for lv in (0, 1, 2)] == [4, 3, 4]
+    seven = _small(10, "abcdefg")
+    assert [len(_fault(seven, "schema_drop", lv).columns) for lv in (0, 1, 2)] == [7, 6, 6]
+    # a third of the columns, at least one (4 // 3 = 1) and at most two for seven columns
+    assert len(_fault(four, "schema_drop", 2).columns) == 4
+    assert len(_fault(_small(10, "abc"), "schema_drop", 1).columns) == 2
+    assert len(_fault(_small(10, "ab"), "schema_drop", 1).columns) == 2
+    assert pb.TIME in _fault(four, "schema_drop", 2).columns
+    assert len(_fault(_small(10, "abcdefgh"), "schema_drop", 0).columns) == 8
+
+
+def test_a_silent_corruption_permutes_values_inside_exactly_two_columns():
+    frame = _small(40, "abcd")
+    out = _fault(frame, "silent_corruption", 2)
+    changed = [c for c in "abcd" if not out[c].equals(frame[c])]
+    assert len(changed) == 2
+    for c in "abcd":
+        assert sorted(out[c]) == sorted(frame[c])
+    one = _fault(_small(40, "ab"), "silent_corruption", 2)
+    assert len([c for c in "ab" if not one[c].equals(_small(40, "ab")[c])]) == 2
+    small = _fault(_small(10, "abcd"), "silent_corruption", 0, seed=3)
+    rows = (small[list("abcd")] != _small(10, "abcd")[list("abcd")]).any(axis=1)
+    assert rows.sum() <= 2
+
+
+def test_the_stream_profile_reads_each_batch_against_the_one_delivered_before_it():
+    batches, ref = _ref()
+    stream = [batches[50], batches[50]]  # the second load repeats the first
+    raw = pb.profile_stream(ref, stream, batches[49])
+    assert list(raw.columns) == list(ref.mean.index)
+    assert raw["repeat_prev"].iloc[1] == 1.0 and raw["repeat_prev"].iloc[0] == 0.0
+    assert raw["lag"].iloc[1] == 0.0
+    assert raw["lag"].iloc[0] > 0.0
+    first = pb.profile_stream(ref, [batches[50]], None)
+    assert first["repeat_prev"].iloc[0] == 0.0 and first["lag"].iloc[0] == 1.0
+
+
+def _mini_batches():
+    """Four reference batches of four rows over hours; columns a and b."""
+    stamps = pd.date_range("2020-01-01", periods=16, freq="h")
+    a = np.array([1.0, 2, 3, 4, 2, 3, 4, 5, 3, 4, 5, 6, 4, 5, 6, 8])
+    b = np.array([10.0, 10, 20, 20, 10, 10, 20, 30, 10, 20, 20, 30, 10, 20, 30, 30])
+    table = pd.DataFrame({"a": a, "b": b, pb.TIME: stamps})
+    return [table.iloc[i : i + 4].reset_index(drop=True) for i in range(0, 16, 4)]
+
+
+def test_the_reference_holds_the_pooled_spread_the_typical_size_lag_and_correlation():
+    batches = _mini_batches()
+    ref = pb.Reference(batches)
+    pooled = pd.concat(batches, ignore_index=True)
+    assert ref.columns == ["a", "b"]
+    assert ref.sd.to_dict() == pytest.approx(pooled[["a", "b"]].std(ddof=0).to_dict())
+    assert ref.rows == 4.0
+    hour = pd.Timedelta("1h").value
+    assert ref.lag == 4.0 * hour  # the batches end four hours apart
+    assert ref.corr.shape == (2, 2)
+    assert ref.corr[0, 1] == pytest.approx(pooled["a"].corr(pooled["b"]))
+    assert ref.corr[0, 0] == pytest.approx(1.0)
+    assert set(ref.sample) == {"a", "b"} and sorted(ref.sample["a"]) == sorted(pooled["a"])
+    assert len(ref.raw_reference) == 4 and list(ref.raw_reference.index) == [0, 1, 2, 3]
+    assert ref.mean.index.equals(ref.raw_reference.columns)
+
+
+def test_a_constant_column_gets_a_unit_spread_and_a_single_batch_a_unit_lag():
+    batches = _mini_batches()
+    flat = [b.assign(b=5.0) for b in batches]
+    ref = pb.Reference(flat)
+    assert ref.sd["b"] == 1.0 and ref.sd["a"] > 1.0
+    assert ref.corr[0, 1] == 0.0  # an undefined correlation counts as none
+    solo = pb.Reference(batches[:1])
+    assert solo.lag == 1.0
+    equal_ends = [b.assign(**{pb.TIME: batches[0][pb.TIME]}) for b in batches]
+    assert pb.Reference(equal_ends).lag == 1.0  # all gaps are zero: not a usable lag
+
+
+def test_the_median_rows_and_lag_ignore_one_odd_batch():
+    batches = _mini_batches()
+    odd = [batches[0], batches[1].iloc[:2], batches[2], batches[3]]
+    assert pb.Reference(odd).rows == 4.0
+    stamps = pd.date_range("2020-01-01", periods=4, freq="h")
+    one_hour = [b.assign(**{pb.TIME: stamps}) for b in batches[:1]]
+    assert pb.Reference(one_hour).rows == 4.0
+
+
+def test_the_ks_sample_is_a_seeded_permutation_capped_at_the_stated_size(monkeypatch):
+    batches = _mini_batches()
+    monkeypatch.setattr(pb, "KS_SAMPLE", 5)
+    ref = pb.Reference(batches)
+    pooled = pd.concat(batches, ignore_index=True)
+    order = np.random.default_rng(0).permutation(16)[:5]
+    assert ref.sample["a"].tolist() == pooled["a"].to_numpy()[order].tolist()
+    with_nan = [b.copy() for b in batches]
+    with_nan[0].loc[0, "a"] = np.nan
+    again = pb.Reference(with_nan)
+    assert len(again.sample["a"]) == 5 and not np.isnan(again.sample["a"]).any()
+
+
+def test_the_reference_scales_features_by_their_spread_and_keeps_their_range():
+    ref = pb.Reference(_mini_batches())
+    raw = ref.raw_reference
+    assert ref.mean.to_dict() == pytest.approx(raw.mean().to_dict())
+    assert ref.std.to_dict() == pytest.approx(raw.std(ddof=0).replace(0, 1.0).fillna(1.0).to_dict())
+    assert (ref.std > 0).all()
+    assert ref.lo.to_dict() == raw.min().to_dict() and ref.hi.to_dict() == raw.max().to_dict()
+    z = ref.standardise(raw)
+    assert z["rows"].tolist() == [0.0, 0.0, 0.0, 0.0]  # every batch has the typical size
+    assert list(z.columns) == list(ref.mean.index)
+
+
+def test_raw_profile_features_of_a_delivered_batch_are_computed_against_the_reference():
+    batches = _mini_batches()
+    ref = pb.Reference(batches)
+    delivered = batches[1].iloc[:3].reset_index(drop=True).copy()
+    delivered.loc[2, "a"] = np.nan
+    row = ref.raw(delivered, batches[0])
+    assert row["rows"] == 3 / 4
+    assert row["dup_share"] == 0.0 and row["absent"] == 0.0
+    assert row["null_a"] == pytest.approx(1 / 3) and row["null_b"] == 0.0
+    clean_a = delivered["a"].dropna()
+    assert row["mean_a"] == pytest.approx(clean_a.mean())
+    assert row["std_a"] == pytest.approx(clean_a.std(ddof=0))
+    q05, q50, q95 = clean_a.quantile([0.05, 0.5, 0.95])
+    assert (row["q05_a"], row["q50_a"], row["q95_a"]) == pytest.approx((q05, q50, q95))
+    from scipy.stats import ks_2samp
+
+    assert row["ks_a"] == pytest.approx(ks_2samp(clean_a.to_numpy(), ref.sample["a"]).statistic)
+    gap = delivered[pb.TIME].max().value - batches[0][pb.TIME].max().value
+    assert row["lag"] == pytest.approx(gap / ref.lag)
+    assert row["repeat_prev"] == pytest.approx(1 / 3)  # only the row (2, 10) was delivered before
+    assert row["corr_dist"] == row["corr_dist"]  # not NaN: two columns and three rows
+
+
+def test_duplicates_repeats_of_the_previous_load_and_missing_columns_are_counted():
+    batches = _mini_batches()
+    ref = pb.Reference(batches)
+    doubled = pd.concat([batches[1], batches[1].iloc[:2]], ignore_index=True)
+    row = ref.raw(doubled, batches[0])
+    assert row["dup_share"] == pytest.approx(2 / 6) and row["rows"] == 6 / 4
+    same = ref.raw(batches[1], batches[1])
+    assert same["repeat_prev"] == 1.0 and same["lag"] == 0.0
+    half = pd.concat([batches[1].iloc[:2], batches[2].iloc[:2].assign(a=99.0)], ignore_index=True)
+    assert ref.raw(half, batches[1])["repeat_prev"] == 0.5
+    near = batches[1].copy()
+    near["a"] = near["a"] + 1e-12
+    assert ref.raw(near, batches[1])["repeat_prev"] == 1.0  # rounded to nine decimals
+    gone = batches[1].drop(columns="b")
+    out = ref.raw(gone, batches[0])
+    assert out["absent"] == 1.0 and out["null_b"] == 1.0
+    assert all(np.isnan(out[f"{s}_b"]) for s in ("mean", "std", "q05", "q50", "q95", "ks"))
+    assert np.isnan(out["corr_dist"])  # one column left: no correlation
+    assert ref.raw(gone, batches[1])["repeat_prev"] == 1.0  # only the shared columns are compared
+
+
+def test_an_all_missing_column_and_a_tiny_batch_have_no_value_statistics_or_correlation():
+    batches = _mini_batches()
+    ref = pb.Reference(batches)
+    empty = batches[1].assign(a=np.nan)
+    row = ref.raw(empty, batches[0])
+    assert row["null_a"] == 1.0 and np.isnan(row["mean_a"]) and np.isnan(row["ks_a"])
+    assert not np.isnan(row["mean_b"])
+    tiny = ref.raw(batches[1].iloc[:2], batches[0])
+    assert np.isnan(tiny["corr_dist"])
+    three = ref.raw(batches[1].iloc[:3], batches[0])
+    assert not np.isnan(three["corr_dist"])
+    no_rows = ref.raw(batches[1].iloc[:0], batches[0])
+    assert no_rows["dup_share"] == 0.0 and no_rows["rows"] == 0.0 and no_rows["repeat_prev"] == 0.0
+
+
+def test_the_correlation_distance_is_the_mean_absolute_change_of_the_correlation_matrix():
+    batches = _mini_batches()
+    ref = pb.Reference(batches)
+    flipped = batches[1].assign(b=batches[1]["b"].to_numpy()[::-1])
+    local = flipped[["a", "b"]].corr().fillna(0.0).to_numpy()
+    expected = float(np.abs(local - ref.corr).mean())
+    assert ref.raw(flipped, batches[0])["corr_dist"] == pytest.approx(expected)
+    reversed_cols = flipped[["b", "a"]]
+    sub = ref.raw(reversed_cols.assign(**{pb.TIME: flipped[pb.TIME]}), batches[0])
+    assert sub["corr_dist"] == pytest.approx(expected)
+
+
+# ---------------------------------------------------------------------------------------------
+# Constraints, detector scores, fitting, delivery, metrics
+# ---------------------------------------------------------------------------------------------
+class _Stub:
+    """The part of a Reference that the constraint rule reads."""
+
+    def __init__(self, lo, hi, columns=("a",)):
+        self.columns = list(columns)
+        names = ["rows", "dup_share", "repeat_prev", "lag", "absent"]
+        names += [f"null_{c}" for c in columns] + [f"mean_{c}" for c in columns]
+        self.lo = pd.Series({n: lo.get(n, 0.0) for n in names})
+        self.hi = pd.Series({n: hi.get(n, 0.0) for n in names})
+        self.names = names
+
+
+def _raw_row(stub, **values):
+    row = {n: float(stub.lo[n] + stub.hi[n]) / 2 for n in stub.names}
+    row.update(values)
+    return pd.DataFrame([row])
+
+
+def _score(stub, **values):
+    return float(pb.constraint_scores(stub, _raw_row(stub, **values))[0])
+
+
+def test_the_absent_column_count_has_a_half_column_floor():
+    stub = _Stub({}, {})
+    assert _score(stub, absent=0.0) == 0.0
+    # allowed interval [-0.5, 0.5], half-width 0.5: one absent column is two half-widths over
+    assert _score(stub, absent=1.0) == pytest.approx(1.0)
+    assert _score(stub, absent=3.0) == pytest.approx(5.0)
+
+
+def test_row_count_and_lag_have_a_ratio_floor_and_shares_a_small_floor():
+    stub = _Stub({"rows": 1.0, "lag": 1.0}, {"rows": 1.0, "lag": 1.0})
+    assert _score(stub, rows=1.5) == pytest.approx((1.5 - 1.1) / 0.1)
+    assert _score(stub, lag=0.5) == pytest.approx((0.9 - 0.5) / 0.1)
+    assert _score(stub, rows=1.1) == 0.0
+    flat = _Stub({}, {})
+    for name in ("null_a", "dup_share", "repeat_prev"):
+        assert _score(flat, **{name: 0.12}) == pytest.approx((0.12 - 0.02) / 0.02)
+        assert _score(flat, **{name: 0.02}) == 0.0
+
+
+def test_other_features_have_no_floor_and_the_range_is_widened_by_a_fifth_of_its_width():
+    stub = _Stub({"mean_a": 0.0}, {"mean_a": 2.0})
+    # slack 0.4: allowed [-0.4, 2.4]; half-width 1.4
+    assert _score(stub, mean_a=3.4) == pytest.approx(1.0 / 1.4)
+    assert _score(stub, mean_a=-1.4) == pytest.approx(1.0 / 1.4)
+    assert _score(stub, mean_a=2.4) == 0.0
+    point = _Stub({"mean_a": 1.0}, {"mean_a": 1.0})
+    assert _score(point, mean_a=1.5) == pytest.approx(0.5 / 1e-12)  # a degenerate interval
+
+
+def test_a_missing_value_is_no_violation_and_the_largest_excess_decides():
+    stub = _Stub({"mean_a": 0.0}, {"mean_a": 2.0})
+    assert _score(stub, mean_a=np.nan) == 0.0
+    both = _score(stub, mean_a=3.4, absent=3.0)
+    assert both == pytest.approx(5.0)
+    rows = pd.concat([_raw_row(stub), _raw_row(stub, mean_a=3.4)], ignore_index=True)
+    assert pb.constraint_scores(stub, rows).tolist() == pytest.approx([0.0, 1.0 / 1.4])
+
+
+def test_each_column_adds_its_own_null_and_mean_constraints():
+    stub = _Stub({}, {}, columns=("a", "b"))
+    assert _score(stub, null_b=0.12, mean_b=0.0) == pytest.approx(5.0)
+    assert _score(stub, mean_b=5.0) == pytest.approx(5.0 / 1e-12)
+
+
+class _Scorer:
+    def __init__(self, scores):
+        self.scores, self.seen = scores, []
+
+    def score(self, frame):
+        self.seen.append(frame.copy())
+        return pd.Series(self.scores(frame), index=frame.index)
+
+
+def test_each_detector_reads_its_own_slice_of_the_standardised_profile():
+    batches, ref = _ref()
+    raw = pb.profile_stream(ref, [batches[50], batches[51]], batches[49])
+    z = ref.standardise(raw)
+    rules = pb.detector_scores("constraint_rules", ref, raw, {}, 1)
+    assert rules.tolist() == pb.constraint_scores(ref, raw).tolist()
+    volume = pb.detector_scores("volume_freshness", ref, raw, {}, 1)
+    assert volume.tolist() == np.nanmax(np.abs(z[["rows", "lag"]].to_numpy()), axis=1).tolist()
+    ks = pb.detector_scores("distribution_distance", ref, raw, {}, 1)
+    expected = np.nanmax(z[[f"ks_{c}" for c in ref.columns]].to_numpy(), axis=1)
+    assert ks.tolist() == expected.tolist()
+
+
+def test_the_distribution_distance_ignores_missing_columns_and_the_floor_is_seeded_noise():
+    batches, ref = _ref()
+    gone = [batches[50].drop(columns=c) for c in ("a",)]
+    raw = pb.profile_stream(ref, gone, batches[49])
+    assert np.isnan(ref.standardise(raw)["ks_a"].iloc[0])
+    score = pb.detector_scores("distribution_distance", ref, raw, {}, 1)
+    assert not np.isnan(score).any() and score[0] >= 0.0
+    only_a = raw.copy()
+    only_a[[c for c in raw.columns if c.startswith("ks_")]] = np.nan
+    assert pb.detector_scores("distribution_distance", ref, only_a, {}, 1).tolist() == [0.0]
+    r1 = pb.detector_scores("random", ref, raw, {}, 7)
+    assert r1.tolist() == np.random.default_rng(7).random(1).tolist()
+    assert pb.detector_scores("random", ref, raw, {}, 8).tolist() != r1.tolist()
+    two = pb.profile_stream(ref, [batches[50]] * 3, batches[49])
+    assert len(pb.detector_scores("random", ref, two, {}, 7)) == 3
+
+
+def test_learned_detectors_score_the_profile_and_compact_ones_the_compact_profile():
+    batches, ref = _ref()
+    raw = pb.profile_stream(ref, [batches[50]], batches[49])
+    z = ref.standardise(raw)
+    full, compact = _Scorer(lambda f: [1.5] * len(f)), _Scorer(lambda f: [2.5] * len(f))
+    fitted = {"isolation_forest": full, "isolation_forest_compact": compact}
+    assert pb.detector_scores("isolation_forest", ref, raw, fitted, 1).tolist() == [1.5]
+    assert pb.detector_scores("isolation_forest_compact", ref, raw, fitted, 1).tolist() == [2.5]
+    assert full.seen[0].equals(z) and compact.seen[0].equals(ref.compact(z))
+    assert pb.detector_scores("isolation_forest", ref, raw, fitted, 1).dtype == float
+
+
+def test_fitting_builds_each_detector_with_the_budget_and_seed_and_trains_on_its_profile(
+    monkeypatch,
+):
+    import types
+
+    built, fits = [], []
+
+    class Detector:
+        def fit(self, frame):
+            fits.append(frame)
+
+    def build(name, contamination, seed):
+        built.append((name, contamination, seed))
+        return Detector()
+
+    monkeypatch.setitem(sys.modules, "deep_support", types.SimpleNamespace(build=build))
+    batches, ref = _ref()
+    z = ref.standardise(ref.raw_reference)
+    fitted = pb.fit_learned(ref, 9, ("isolation_forest", "isolation_forest_compact"))
+    assert built == [("isolation_forest", 0.05, 9), ("isolation_forest", 0.05, 9)]
+    assert list(fitted) == ["isolation_forest", "isolation_forest_compact"]
+    assert fits[0].equals(z)
+    assert fits[1].equals(ref.compact(z)) and fits[1].shape == (40, 13)
+    built.clear()
+    pb.fit_learned(ref, 1)
+    assert [b[0] for b in built] == [n.removesuffix("_compact") for n in (*pb.LEARNED, *pb.COMPACT)]
+    assert {b[2] for b in built} == {1}
+
+
+def test_alert_metrics_need_both_kinds_of_batch_for_the_ranking_scores():
+    val = np.arange(100.0)
+    all_faulty = pb.alert_metrics(val, np.array([99.0, 98.0]), np.array([True, True]))
+    assert set(all_faulty) == {"recall", "false_alert_rate"} or "roc_auc" not in all_faulty
+    assert "roc_auc" not in all_faulty and "ap" not in all_faulty
+    assert all_faulty["recall"] == 1.0
+    equal = pb.alert_metrics(val, np.array([94.05, 99.0]), np.array([False, True]))
+    assert equal["false_alert_rate"] == 0.0  # a score equal to the threshold is not an alert
+    just_above = pb.alert_metrics(val, np.array([94.06, 99.0]), np.array([False, True]))
+    assert just_above["false_alert_rate"] == 1.0
+
+
+def test_delivery_faults_at_least_one_batch_and_the_share_applies_to_the_stream_length():
+    batches, ref = _ref()
+    indices = range(10, 12)
+    _, faulty = pb.deliver(batches, indices, "partial_load", 2, np.random.default_rng(0), ref)
+    assert faulty.sum() == 1
+    ten = range(10, 20)
+    _, faulty = pb.deliver(batches, ten, "partial_load", 2, np.random.default_rng(0), ref)
+    assert faulty.sum() == 3
+    _, faulty = pb.deliver(
+        batches, ten, "partial_load", 2, np.random.default_rng(0), ref, share=0.6
+    )
+    assert faulty.sum() == 6
+    stream, faulty = pb.deliver(batches, ten, "stale_batch", 1, np.random.default_rng(0), ref)
+    for batch, truth, i in zip(stream, faulty, ten, strict=True):
+        if truth:
+            assert batch[pb.TIME].max() == batches[i - 3][pb.TIME].max()  # three loads back
+        else:
+            assert batch.equals(batches[i])

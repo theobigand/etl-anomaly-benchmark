@@ -5,6 +5,7 @@ import sys
 from pathlib import Path
 
 import pandas as pd
+import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import uci_wave2 as w2  # noqa: E402
@@ -383,3 +384,92 @@ def test_the_command_is_required_and_the_default_destination_is_the_wave_directo
     monkeypatch.setattr(Path, "mkdir", lambda self, **kw: seen.setdefault("dir", self))
     assert w2.main(["fetch"]) == 0
     assert seen["dir"] == w2.WAVE_DIR
+
+
+def test_the_parser_has_three_commands_with_their_options_and_defaults():
+    parser = w2.build_parser()
+    assert parser.description == w2.__doc__
+    selected = parser.parse_args(["select", "--survey", "s.json"])
+    assert selected.command == "select" and selected.survey == Path("s.json")
+    assert isinstance(selected.survey, Path)
+    with pytest.raises(SystemExit):
+        parser.parse_args(["select"])  # the survey file is required
+    assert parser.parse_args(["verify-time"]).command == "verify-time"
+    fetched = parser.parse_args(["fetch"])
+    assert fetched.destination == w2.WAVE_DIR
+    moved = parser.parse_args(["fetch", "--destination", "here"])
+    assert moved.destination == Path("here") and isinstance(moved.destination, Path)
+    with pytest.raises(SystemExit):
+        parser.parse_args([])
+
+
+def _select_world(tmp_path, monkeypatch):
+    import json
+
+    survey = tmp_path / "survey.json"
+    survey.write_text(json.dumps({"datasets": [_meta(uci_id=1, repository_url="https://page/1")]}))
+    monkeypatch.setattr(w2, "first_pool_ids", lambda: set())
+    monkeypatch.setattr(w2.dr, "_text", lambda url: url)
+    monkeypatch.setattr(w2.dr, "uci_licence", lambda page: {"licence": "CC0 1.0"})
+    monkeypatch.setattr(w2.time, "sleep", lambda s: None)
+    return survey
+
+
+def test_the_selection_file_is_sorted_indented_json_in_a_directory_that_is_created(
+    tmp_path, monkeypatch
+):
+    import json
+
+    survey = _select_world(tmp_path, monkeypatch)
+    target = tmp_path / "deep" / "er" / "selection.json"
+    monkeypatch.setattr(w2, "SELECTION", target)
+    assert w2.main(["select", "--survey", str(survey)]) == 0
+    out = json.loads(target.read_text())
+    text = target.read_text()
+    assert text == json.dumps(out, indent=1, sort_keys=True) + "\n"
+    assert text.startswith('{\n "checked": "') and '\n "chosen": [\n  {' in text
+    assert w2.main(["select", "--survey", str(survey)]) == 0  # the directory may already exist
+
+
+def test_the_time_report_is_sorted_indented_json_written_after_the_check(tmp_path, monkeypatch):
+    target = tmp_path / "time.json"
+    monkeypatch.setattr(
+        w2,
+        "verify_times",
+        lambda: {"uci:2": {"verified": True}, "uci:1": {"verified": False, "x": 1}},
+    )
+    monkeypatch.setattr(w2, "TIME_REPORT", target)
+    assert w2.main(["verify-time"]) == 0
+    assert target.read_text() == (
+        '{\n "uci:1": {\n  "verified": false,\n  "x": 1\n },\n'
+        ' "uci:2": {\n  "verified": true\n }\n}\n'
+    )
+
+
+def test_the_manifest_is_sorted_indented_json_and_each_table_is_pinned_into_the_destination(
+    tmp_path, monkeypatch
+):
+    import json
+
+    selection = tmp_path / "sel.json"
+    selection.write_text(json.dumps({"chosen": [{"uci_id": 1, "name": "a"}]}))
+    seen = []
+
+    def pin(meta, destination):
+        seen.append((meta, destination))
+        return {"uci_id": 1, "rows": 5}
+
+    monkeypatch.setattr(w2, "SELECTION", selection)
+    monkeypatch.setattr(w2, "MANIFEST", tmp_path / "manifest.json")
+    monkeypatch.setattr(w2, "pin", pin)
+    destination = tmp_path / "wave"
+    destination.mkdir()  # an existing destination is fine
+    assert w2.main(["fetch", "--destination", str(destination)]) == 0
+    assert seen == [({"uci_id": 1, "name": "a"}, destination)]
+    assert (tmp_path / "manifest.json").read_text() == (
+        '{\n "failed": [],\n "tables": [\n  {\n   "rows": 5,\n   "uci_id": 1\n  }\n ]\n}\n'
+    )
+
+
+def test_a_business_table_with_unknown_size_serves_no_transactional_stratum():
+    assert w2.tags(_meta(characteristics=[], area="Business", num_instances=None)) == []

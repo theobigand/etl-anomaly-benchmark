@@ -139,9 +139,7 @@ def verify_times(manifest: Path = MANIFEST, directory: Path = WAVE_DIR) -> dict[
     return out
 
 
-def main(argv: list[str] | None = None) -> int:
-    from etl_benchmark.atomic import atomic_path
-
+def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
     pick = commands.add_parser("select")
@@ -149,7 +147,13 @@ def main(argv: list[str] | None = None) -> int:
     commands.add_parser("verify-time")
     get = commands.add_parser("fetch")
     get.add_argument("--destination", type=Path, default=WAVE_DIR)
-    args = parser.parse_args(argv)
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    from etl_benchmark.atomic import atomic_path
+
+    args = build_parser().parse_args(argv)
     if args.command == "select":
         survey = json.loads(args.survey.read_text())["datasets"]
         taken = first_pool_ids()

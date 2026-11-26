@@ -522,3 +522,101 @@ def test_main_merges_the_compact_results_when_given_and_uses_the_pilot_directory
         ps.main([])
     assert seen["directory"] == ps.ROOT / "verification/evidence/pipeline_batch/pilot"
     assert seen["extra"] is None
+
+
+def test_a_source_without_a_second_run_does_not_stop_the_merge_of_the_sources_after_it(tmp_path):
+    main, extra = tmp_path / "main", tmp_path / "extra"
+    main.mkdir()
+    extra.mkdir()
+    for i in (0, 1):
+        (main / f"uci_{i}.json").write_text(json.dumps(_src(i)))
+    (extra / "uci_1.json").write_text(json.dumps(_extra(1, ("ecod_compact",), 0.9)))
+    first, second = ps.load(main, extra)
+    assert "ecod_compact" not in first["arms"]["clean_reference"]["results"]
+    assert "ecod_compact" in second["arms"]["clean_reference"]["results"]
+
+
+def test_detectors_follow_the_registry_order_even_when_it_differs_from_the_alphabet():
+    order = ("constraint_rules", "volume_freshness", "isolation_forest", "random")
+    table = ps.summarise([_src(0, detectors=order), _src(1, detectors=order)])
+    assert list(table["median_recall_at_budget"]) == list(order)
+    assert list(table["median_false_alert_rate"]) == list(order)
+
+
+def test_b2_uses_every_severity_for_silent_corruption_and_only_the_lowest_for_the_shift():
+    def spec(rule, learned, mech="silent_corruption"):
+        return {
+            ("constraint_rules", mech): rule,
+            ("isolation_forest", mech): learned,
+        }
+
+    # the three severities average to 0.4 for the rules and 0.6 for the learned detector
+    one = spec((0.1, 0.4, 0.7), (0.9, 0.7, 0.2))
+    sources = [_src(i, one) for i in range(3)]
+    b2 = ps.summarise(sources)["B2_rules_vs_best_learned"]["silent_corruption"]
+    assert b2["median_gap"] == pytest.approx(0.2)
+    # dropping any one severity would change the gap
+    for keep in ((1, 2), (0, 2), (0, 1)):
+        gap = np.mean([one[("isolation_forest", "silent_corruption")][i] for i in keep]) - np.mean(
+            [one[("constraint_rules", "silent_corruption")][i] for i in keep]
+        )
+        assert abs(gap - 0.2) > 1e-6
+    shift = spec((0.1, 0.9, 0.9), (0.5, 0.0, 0.0), mech="distribution_shift")
+    gap = ps.summarise([_src(0, shift)])["B2_rules_vs_best_learned"]["distribution_shift"]
+    assert gap["median_gap"] == pytest.approx(0.4)
+
+
+def test_the_b2_gap_bar_is_inclusive_at_a_fifth():
+    spec = {
+        ("constraint_rules", "silent_corruption"): (0.25, 0.25, 0.25),
+        ("isolation_forest", "silent_corruption"): (0.45, 0.45, 0.45),
+    }
+    b2 = ps.summarise([_src(0, spec)])["B2_rules_vs_best_learned"]["silent_corruption"]
+    assert b2["median_gap"] == 0.2 and b2["share_ge_0.2"] == 1.0
+
+
+def test_b3_averages_the_three_severities_of_each_family():
+    rules = {("constraint_rules", m): (0.2, 0.2, 0.2) for m in pb.MECHANISMS}
+    stat_by_level = {
+        "stale_batch": (0.9, 0.0, 0.0),
+        "null_spike": (0.0, 0.9, 0.0),
+        "schema_drop": (0.0, 0.0, 0.9),
+    }
+    stat = {("distribution_distance", m): v for m, v in stat_by_level.items()}
+    sources = [_src(i, {**rules, **stat}) for i in range(3)]
+    winners = ps.summarise(sources)["B3_best_family_by_mechanism"]
+    for mechanism in stat_by_level:
+        assert winners[mechanism] == "statistical"
+    assert winners["partial_load"] == "rules"
+
+
+def test_b4_compares_a_family_only_where_both_references_have_it():
+    clean = {("isolation_forest", "stale_batch"): (0.5, 0.5, 0.5)}
+    dirty_arm = _spec_arm({("isolation_forest", "stale_batch"): (0.9, 0.9, 0.9)})
+    dirty_arm["detectors"] = ["constraint_rules", "random"]  # no learned detector this time
+    source = _src(0, clean)
+    source["arms"]["contaminated_reference"] = dirty_arm
+    other = _src(1, clean, dirty={("isolation_forest", "stale_batch"): (0.9, 0.9, 0.9)})
+    b4 = ps.summarise([source, other])["B4_mean_recall_change_contaminated_minus_clean"]
+    # only source 1 contributes learned pairs: eight mechanisms, one of them +0.4
+    assert b4["learned"] == pytest.approx(0.4 / 8)
+
+
+def test_the_report_keeps_its_blank_separator_lines():
+    spec = {("constraint_rules", "partial_load"): (0.2, 0.4, 0.6)}
+    lines = ps.render(ps.summarise([_src(0, spec), _src(1, spec)])).splitlines()
+    assert [i for i, line in enumerate(lines) if line == ""] == [1, 3, 5, 13, 15]
+    assert not any("XXXX" in line for line in lines)
+    full = ps.render(ps.summarise([_src(i) for i in range(15)])).splitlines()
+    assert full[2].endswith("). ") and "XXXX" not in full[2]
+
+
+def test_the_parser_defaults_to_the_pilot_directory_and_no_compact_results():
+    parser = ps.build_parser()
+    assert parser.description == ps.__doc__
+    args = parser.parse_args([])
+    assert args.results == ps.ROOT / "verification/evidence/pipeline_batch/pilot"
+    assert args.compact_results is None
+    custom = parser.parse_args(["--results", "r", "--compact-results", "c"])
+    assert custom.results == Path("r") and custom.compact_results == Path("c")
+    assert isinstance(custom.compact_results, Path)

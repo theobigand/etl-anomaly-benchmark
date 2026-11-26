@@ -19,8 +19,8 @@ LEVEL = 0.95
 
 def holm(p_values: list[float] | np.ndarray) -> np.ndarray:
     """Holm step-down adjusted p-values, in the order given, monotone and capped at 1."""
-    p = np.asarray(p_values, dtype=float)
-    order = np.argsort(p, kind="stable")
+    p = np.asarray(p_values) * 1.0
+    order = np.argsort(p)
     adjusted = np.empty(len(p))
     running = 0.0
     for rank, index in enumerate(order):
@@ -49,7 +49,7 @@ def paired_effect(
     if n == 0:
         return {**out, "median_difference": float("nan"), "p": 1.0}
     nonzero = d[d != 0]
-    p = 1.0 if len(nonzero) == 0 else float(wilcoxon(nonzero, zero_method="wilcox").pvalue)
+    p = 1.0 if len(nonzero) == 0 else float(wilcoxon(nonzero).pvalue)
     rng = np.random.default_rng(seed)
     medians = np.median(d[rng.integers(0, n, (draws, n))], axis=1)
     tail = (1 - LEVEL) / 2
@@ -71,9 +71,9 @@ def pairwise(table: dict[str, np.ndarray], draws: int = DRAWS) -> list[dict[str,
     rows = []
     for first, second in itertools.combinations(sorted(table), 2):
         rows.append({"a": first, "b": second, **paired_effect(table[first], table[second], draws)})
-    adjusted = holm([r["p"] for r in rows]) if rows else []
-    for row, value in zip(rows, adjusted, strict=True):
-        row["p_holm"] = float(value)
+    adjusted = holm([r["p"] for r in rows])
+    for i, row in enumerate(rows):
+        row["p_holm"] = float(adjusted[i])
     return rows
 
 
@@ -89,13 +89,13 @@ def complete_matrix(
 
 def mean_ranks(matrix: np.ndarray) -> np.ndarray:
     """Mean rank of each column (1 is best, ties averaged) over the rows."""
-    return np.mean([rankdata(-row, method="average") for row in matrix], axis=0)
+    return np.mean([rankdata(-row) for row in matrix], axis=0)
 
 
 def rank_intervals(matrix: np.ndarray, draws: int = DRAWS, seed: int = SEED) -> np.ndarray:
     """Percentile interval of the mean rank of each column, resampling rows (units)."""
     rng = np.random.default_rng(seed)
-    ranks = np.array([rankdata(-row, method="average") for row in matrix])
+    ranks = np.array([rankdata(-row) for row in matrix])
     means = ranks[rng.integers(0, len(ranks), (draws, len(ranks)))].mean(axis=1)
     tail = (1 - LEVEL) / 2
     return np.quantile(means, [tail, 1 - tail], axis=0).T

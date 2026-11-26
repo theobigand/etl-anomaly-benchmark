@@ -73,7 +73,7 @@ def summarise(rules_dir: Path, typed_dir: Path, draws: int = pinf.DRAWS) -> dict
 
         def by_source(v: list[float], names=names, groups=groups) -> np.ndarray:
             return np.array(
-                list(pinf.group_means(dict(zip(names, v, strict=True)), groups).values())
+                list(pinf.group_means({n: v[i] for i, n in enumerate(names)}, groups).values())
             )
 
         out["types"][t] = {

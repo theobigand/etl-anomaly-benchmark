@@ -73,7 +73,7 @@ def source_table(ap: dict[str, dict[str, float]]) -> tuple[list[str], dict[str, 
         column = []
         for g in groups:
             values = [ap[p][m] for p in ap if sc.source_id(p) == g and m in ap[p]]
-            column.append(float(np.mean(values)) if values else float("nan"))
+            column.append(float(np.mean(values or [np.nan])))
         table[m] = np.array(column)
     return groups, table
 
@@ -85,9 +85,9 @@ def ranking(table: dict[str, np.ndarray], draws: int) -> dict[str, Any]:
     return {
         "detectors": names,
         "units": int(len(matrix)),
-        "mean_rank": dict(zip(names, map(float, ranks), strict=True)),
+        "mean_rank": {n: float(ranks[i]) for i, n in enumerate(names)},
         "rank_interval": {
-            n: [float(a), float(b)] for n, (a, b) in zip(names, intervals, strict=True)
+            n: [float(intervals[i][0]), float(intervals[i][1])] for i, n in enumerate(names)
         },
         "friedman": pinf.friedman(matrix),
     }

@@ -140,7 +140,7 @@ def test_a_twin_table_shares_the_source_of_its_uci_counterpart(tmp_path):
 
 def test_a_type_without_a_baseline_recall_or_without_archived_values_is_skipped(tmp_path):
     rules, typed = tmp_path / "rules", tmp_path / "typed"
-    _rules(rules, "uci_1", 0.0, {"missing_value": 0.5, "duplicate": None})
+    _rules(rules, "uci_1", 0.0, {"missing_value": None, "duplicate": 0.5})
     _typed(
         typed,
         "uci_1",
@@ -160,9 +160,14 @@ def test_a_type_without_a_baseline_recall_or_without_archived_values_is_skipped(
         },
         None,
     )
+    _rules(rules, "uci_3", 0.0, {"missing_value": 0.5})
+    _typed(
+        typed, "uci_3", {"zscore": {"missing_value": 0.4}, "iforest": {"missing_value": 0.3}}, None
+    )
     s = srs.summarise(rules, typed, DRAWS)
-    assert list(s["types"]) == ["missing_value"]
-    assert s["types"]["missing_value"]["tables"] == 1
+    assert list(s["types"]) == ["missing_value", "duplicate"]
+    assert s["types"]["missing_value"]["tables"] == 1  # only uci_3 has both sides
+    assert s["types"]["duplicate"]["tables"] == 1
 
 
 def test_a_table_archived_without_any_rule_detector_is_an_error(tmp_path):
@@ -203,6 +208,7 @@ def test_render_lists_the_headline_and_one_row_per_type(tmp_path):
     )
     assert text.endswith("\n") and not text.endswith("\n\n")
     assert len(lines) == 7
+    assert [i for i, line in enumerate(lines) if line == ""] == [1, 3]
 
 
 def test_main_writes_the_json_and_markdown_summaries_and_returns_zero(tmp_path, monkeypatch):
@@ -218,6 +224,17 @@ def test_main_writes_the_json_and_markdown_summaries_and_returns_zero(tmp_path, 
     assert srs.main() == 0
     summary = json.loads((out / "schema_rules_summary.json").read_text())
     assert summary["tables"] == 4
+    assert summary["types"]["missing_value"]["tables"] == 4
     raw = (out / "schema_rules_summary.json").read_text()
     assert raw.endswith("}\n") and raw.startswith('{\n "S2"')
     assert (out / "schema_rules_summary.md").read_text() == srs.render(summary)
+
+
+def test_the_number_of_bootstrap_draws_reaches_both_paired_effects(tmp_path):
+    rules, typed = _world(tmp_path)
+    t = srs.summarise(rules, typed, 5)["types"]["missing_value"]
+    base, best, rule = [0.9, 0.5, 1.0, 0.3], [0.9, 0.7, 1.0, 0.3], [0.7, 0.5, 0.9, 0.2]
+    assert t["baseline_minus_best"] == pinf.paired_effect(np.array(base), np.array(best), 5)
+    assert t["baseline_minus_rule_detectors"] == pinf.paired_effect(
+        np.array(base), np.array(rule), 5
+    )

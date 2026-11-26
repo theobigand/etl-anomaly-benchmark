@@ -339,3 +339,50 @@ def test_main_rejects_an_unknown_method_family(cli, tmp_path):
 
 
 ANOMALY_ROWS_R1 = [380, 381, 384, 385, 387, 388, 391, 399]
+
+
+def test_the_parser_reads_paths_numbers_and_choices_with_the_documented_defaults():
+    parser = ls.build_parser()
+    assert parser.description == ls.__doc__
+    args = parser.parse_args(["--output", "out"])
+    assert args.output == Path("out") and isinstance(args.output, Path)
+    assert args.registry == ls.ROOT / "verification" / "evidence" / "dataset_registry"
+    assert args.pool == ls.ROOT / "data" / "pool"
+    assert args.workers == 4 and args.rules == list(ls.RULES)
+    assert args.only is None and args.methods == "classical"
+    custom = parser.parse_args(
+        [
+            "--output", "o", "--registry", "r", "--pool", "p", "--workers", "2",
+            "--rules", "R1", "R2", "--only", "uci:1", "uci:2", "--methods", "deep",
+        ]
+    )  # fmt: skip
+    assert custom.registry == Path("r") and isinstance(custom.registry, Path)
+    assert custom.pool == Path("p") and isinstance(custom.pool, Path)
+    assert custom.workers == 2 and custom.rules == ["R1", "R2"]
+    assert custom.only == ["uci:1", "uci:2"] and custom.methods == "deep"
+    assert parser.parse_args(["--output", "o", "--only"]).only == []
+    assert parser.parse_args(["--output", "o", "--rules"]).rules == []
+
+
+def test_the_output_directory_is_required_and_the_help_names_the_options():
+    parser = ls.build_parser()
+    with pytest.raises(SystemExit):
+        parser.parse_args([])
+    help_text = parser.format_help()
+    assert "problem ids, for a quick check" in help_text
+    assert "--output OUTPUT" in help_text.replace("\n", " ") and "[--output" not in help_text
+    assert "{classical,deep}" in help_text
+
+
+def test_main_creates_missing_parent_directories_of_the_output(cli, tmp_path):
+    out = tmp_path / "a" / "b" / "out"
+    assert ls.main(["--output", str(out)]) == 0
+    assert out.is_dir()
+
+
+def test_the_rarest_class_is_the_anomaly_even_with_three_classes():
+    frame = _frame(A=300, B=40, C=25)
+    features, labels, info = ls.derive_rule(frame, META, "R3")
+    assert info["anomaly_class"] == "C" and info["anomalies"] == 25
+    assert set(frame.loc[features["row"][labels == 1], "t"]) == {"C"}
+    assert info["rows"] == 365
