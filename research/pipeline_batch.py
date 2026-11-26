@@ -86,7 +86,12 @@ def make_batches(table: pd.DataFrame) -> list[pd.DataFrame]:
 
 def split_batches(n: int) -> tuple[range, range, range]:
     a, b = int(n * REFERENCE_SHARE), int(n * (REFERENCE_SHARE + VALIDATION_SHARE))
-    return range(0, a), range(a, b), range(b, n)
+    return range(a), range(a, b), range(b, n)
+
+
+def draw(rng: np.random.Generator, population: Any, count: int) -> np.ndarray:
+    """``count`` distinct members of ``population`` (an int means ``range(population)``)."""
+    return rng.choice(population, count, replace=False)
 
 
 def value_columns(batch: pd.DataFrame) -> list[str]:
@@ -111,7 +116,7 @@ def apply_fault(
     n = len(out)
     if mechanism == "partial_load":
         keep = max(2, int(round(n * value)))
-        return out.iloc[np.sort(rng.choice(n, keep, replace=False))].reset_index(drop=True)
+        return out.iloc[np.sort(draw(rng, n, keep))].reset_index(drop=True)
     if mechanism == "duplicate_load":
         extra = max(1, int(round(n * value)))
         rows = out.iloc[rng.choice(n, extra, replace=extra > n)]
@@ -121,12 +126,12 @@ def apply_fault(
         return history[-lag].copy() if lag else out
     column = columns[int(rng.integers(len(columns)))]
     if mechanism == "null_spike":
-        hit = rng.choice(n, max(1, int(round(n * value))), replace=False)
+        hit = draw(rng, n, max(1, int(round(n * value))))
         out.loc[out.index[hit], column] = np.nan
         return out
     if mechanism == "schema_drop":
-        count = max(1, len(columns) // 3) if value < 0 else min(int(value), len(columns) - 1)
-        drop = list(rng.choice(columns, count, replace=False))
+        count = max(1, len(columns) // 3) if value == -1 else min(int(value), len(columns) - 1)
+        drop = list(draw(rng, columns, count))
         return out.drop(columns=drop)
     if mechanism == "unit_change":
         out[column] = out[column] * value
@@ -134,15 +139,12 @@ def apply_fault(
     if mechanism == "distribution_shift":
         out[column] = out[column] + value * float(sd[column])
         return out
-    if mechanism == "silent_corruption":
-        chosen = list(rng.choice(columns, min(2, len(columns)), replace=False))
-        rows = np.sort(rng.choice(n, max(2, int(round(n * value))), replace=False))
-        for name in chosen:
-            out.loc[out.index[rows], name] = rng.permutation(
-                out.loc[out.index[rows], name].to_numpy()
-            )
-        return out
-    raise AssertionError(mechanism)  # unreachable: every known mechanism returns above
+    # silent_corruption: the only mechanism left once the others have returned
+    chosen = list(draw(rng, columns, min(2, len(columns))))
+    rows = np.sort(draw(rng, n, max(2, int(round(n * value)))))
+    for name in chosen:
+        out.loc[out.index[rows], name] = rng.permutation(out.loc[out.index[rows], name].to_numpy())
+    return out
 
 
 class Reference:
@@ -150,10 +152,10 @@ class Reference:
 
     def __init__(self, batches: list[pd.DataFrame]):
         self.columns = value_columns(batches[0])
-        pooled = pd.concat(batches, ignore_index=True)
+        pooled = pd.concat(batches)
         self.sd = pooled[self.columns].std(ddof=0).replace(0, 1.0)
         self.rows = float(np.median([len(b) for b in batches]))
-        ends = np.array([b[TIME].max().value for b in batches], dtype=float)
+        ends = np.array([b[TIME].max().value for b in batches])
         gaps = np.diff(ends)
         self.lag = float(np.median(gaps)) if len(gaps) and np.median(gaps) > 0 else 1.0
         self.corr = pooled[self.columns].corr().fillna(0.0).to_numpy()
@@ -271,7 +273,7 @@ def constraint_scores(ref: Reference, raw: pd.DataFrame) -> np.ndarray:
         slack = WIDEN * (hi - lo) + floor
         low, high = lo - slack, hi + slack
         half = max(0.5 * (high - low), 1e-12)
-        x = raw[name].to_numpy(dtype=float)
+        x = raw[name].to_numpy()
         over = np.where(np.isnan(x), 0.0, np.maximum(low - x, x - high))
         excess[:, j] = np.maximum(over, 0.0) / half
     return excess.max(axis=1)
@@ -291,8 +293,8 @@ def detector_scores(
     if name == "random":
         return np.random.default_rng(seed).random(len(raw))
     if name in COMPACT:
-        return fitted[name].score(ref.compact(z)).to_numpy(dtype=float)
-    return fitted[name].score(z).to_numpy(dtype=float)
+        return fitted[name].score(ref.compact(z)).to_numpy()
+    return fitted[name].score(z).to_numpy()
 
 
 def fit_learned(
@@ -339,7 +341,7 @@ def deliver(
     faulty = np.zeros(len(indices), dtype=bool)
     if mechanism is not None:
         count = max(1, int(round(share * len(indices))))
-        faulty[rng.choice(len(indices), count, replace=False)] = True
+        faulty[draw(rng, len(indices), count)] = True
     out = []
     for position, i in enumerate(indices):
         if faulty[position]:
@@ -361,9 +363,7 @@ def run_source(
     if contaminated:  # a production history that already holds faults, unlabelled to the detectors
         rng = np.random.default_rng(7)
         pre = Reference(reference)
-        picks = rng.choice(
-            len(reference), max(1, int(round(CONTAMINATION_SHARE * len(reference)))), replace=False
-        )
+        picks = draw(rng, len(reference), max(1, int(round(CONTAMINATION_SHARE * len(reference)))))
         for i in picks:
             m = MECHANISMS[int(rng.integers(len(MECHANISMS)))]
             reference[i] = apply_fault(
@@ -493,7 +493,8 @@ def main(argv: list[str] | None = None) -> int:
             continue
         with atomic_path(args.output / f"uci_{uci_id}.json") as partial:
             partial.write_text(json.dumps(result, sort_keys=True) + "\n")
-        print(uci_id, flush=True)
+        sys.stdout.write(f"{uci_id}\n")
+        sys.stdout.flush()
     tag = "_".join(map(str, args.only)) if args.only else "all"
     with atomic_path(args.output / f"skipped_{tag}.json") as partial:
         partial.write_text(json.dumps(skipped) + "\n")

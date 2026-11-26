@@ -962,3 +962,161 @@ def test_main_can_restrict_the_tables_and_switch_to_the_compact_profile(cli, tmp
     assert capsys.readouterr().out == "1\n3\n"
     assert pb.main(["--output", str(out), "--only", "2"]) == 0
     assert (out / "skipped_2.json").read_text() == '{"uci:2": "too small"}\n'
+
+
+# ---------------------------------------------------------------------------------------------
+# Second round: edge cases of the reference, the profile, the compact view and the source run
+# ---------------------------------------------------------------------------------------------
+def test_a_partial_load_never_repeats_a_row_whatever_the_draw():
+    frame = _small(10)
+    for seed in range(30):
+        kept = _fault(frame, "partial_load", 1, seed=seed)
+        assert kept["a"].is_unique and kept["a"].is_monotonic_increasing and len(kept) == 4
+
+
+def test_the_reference_profiles_each_batch_against_the_batch_before_it():
+    batches = _mini_batches()
+    ref = pb.Reference(batches)
+    raw = ref.raw_reference
+    assert raw["repeat_prev"].iloc[0] == 0.0 and raw["lag"].iloc[0] == 1.0
+    for i in (1, 2, 3):
+        expected = ref.raw(batches[i], batches[i - 1])
+        assert raw["repeat_prev"].iloc[i] == expected["repeat_prev"]
+        assert raw["lag"].iloc[i] == pytest.approx(expected["lag"])
+    assert raw["repeat_prev"].iloc[1] == 0.5 and raw["lag"].iloc[1] == 1.0
+    assert raw["lag"].iloc[3] == pytest.approx(1.0)  # equally spaced loads sit at the typical lag
+
+
+def test_a_feature_without_any_value_gets_a_unit_spread():
+    batches = [b.assign(a=np.nan) for b in _mini_batches()]
+    ref = pb.Reference(batches)
+    assert ref.raw_reference["mean_a"].isna().all()
+    assert ref.std["mean_a"] == 1.0 and ref.std["std_a"] == 1.0
+    assert (ref.std > 0).all() and not ref.std.isna().any()
+
+
+def test_a_lag_below_one_nanosecond_median_is_kept_and_a_zero_median_is_not():
+    base = _mini_batches()[:3]
+    ns = pd.Timestamp("2020-01-01 00:00:00")
+    ends = [ns, ns, ns + pd.Timedelta(1, "ns")]  # gaps of 0 and 1 ns: median 0.5
+    fine = [b.assign(**{pb.TIME: [e] * 4}) for b, e in zip(base, ends, strict=True)]
+    assert pb.Reference(fine).lag == 0.5
+    flat = [b.assign(**{pb.TIME: [ns] * 4}) for b in base]
+    assert pb.Reference(flat).lag == 1.0
+
+
+def test_a_batch_that_shares_no_column_with_the_previous_one_repeats_nothing():
+    batches = _mini_batches()
+    ref = pb.Reference(batches)
+    other = batches[0].rename(columns={"a": "x", "b": "y"})
+    assert ref.raw(batches[1], other)["repeat_prev"] == 0.0
+    no_columns = batches[1].drop(columns=["a", "b"])
+    assert ref.raw(no_columns, batches[0])["repeat_prev"] == 0.0
+    assert ref.raw(no_columns, None)["dup_share"] == 0.0
+
+
+def test_a_missing_first_column_does_not_hide_the_statistics_of_the_later_ones():
+    batches = _mini_batches()
+    ref = pb.Reference(batches)
+    row = ref.raw(batches[1].drop(columns="a"), batches[0])
+    assert row["null_a"] == 1.0 and np.isnan(row["mean_a"])
+    assert not np.isnan(row["mean_b"]) and not np.isnan(row["ks_b"]) and row["null_b"] == 0.0
+    empty_first = ref.raw(batches[1].assign(a=np.nan), batches[0])
+    assert all(np.isnan(empty_first[f"{s}_a"]) for s in ("mean", "std", "q05", "q50", "q95", "ks"))
+    assert not np.isnan(empty_first["mean_b"]) and not np.isnan(empty_first["ks_b"])
+
+
+def test_an_undefined_local_correlation_counts_as_no_correlation():
+    batches = _mini_batches()
+    ref = pb.Reference(batches)
+    constant = batches[1].assign(b=7.0)
+    local = constant[["a", "b"]].corr().fillna(0.0).to_numpy()
+    expected = float(np.abs(local - ref.corr).mean())
+    assert ref.raw(constant, batches[0])["corr_dist"] == pytest.approx(expected)
+
+
+def test_the_compact_profile_names_its_groups_and_zeroes_what_is_undefined():
+    batches = _mini_batches()
+    ref = pb.Reference(batches)
+    z = ref.standardise(ref.raw_reference)
+    assert list(ref.compact(z).columns) == [
+        "null", "mean", "std", "q05", "q50", "q95", "ks", *pb.SCALARS
+    ]  # fmt: skip
+    blank = z.copy()
+    blank[[c for c in z.columns if c.startswith("mean_")]] = np.nan
+    blank["corr_dist"] = np.nan
+    blank.index = list("wxyz")
+    out = ref.compact(blank)
+    assert out["mean"].tolist() == [0.0] * 4 and out["corr_dist"].tolist() == [0.0] * 4
+    assert list(out.index) == list("wxyz")
+    shifted = z.copy()
+    shifted["lag"] = [np.nan, 1.0, -2.0, 0.5]
+    assert ref.compact(shifted)["lag"].tolist() == [0.0, 1.0, -2.0, 0.5]
+
+
+def test_the_contamination_share_applies_to_the_reference_length(monkeypatch):
+    table = _table(1000)  # 41 batches of 24 rows: 16 reference batches, 5 percent rounds to 1
+    clean = pb.make_batches(table)
+    references = _spy(monkeypatch, "Reference")
+    pb.run_source(table, seeds=(42,), contaminated=True, learned=())
+    final = references[1][0][0]
+    assert len(final) == 16
+    assert sum(not b.equals(clean[i]) for i, b in enumerate(final)) == 1
+
+
+def test_a_short_test_stream_still_gets_a_whole_number_of_faulty_batches():
+    result = pb.run_source(_table(120), seeds=(42,), learned=())
+    assert result["batches"] == {"reference": 2, "validation": 1, "test": 2}
+    assert result["faulty_test_batches"] == 1  # round(0.3 * 2) = 1, never forced up to two
+
+
+def test_the_neural_note_depends_on_the_reference_length(monkeypatch):
+    table = _table()
+    monkeypatch.setattr(pb, "MIN_REFERENCE_FOR_NEURAL", 41)
+    short = pb.run_source(table, seeds=(42,), learned=())
+    assert short["neural"] == "not run: fewer than MIN_REFERENCE_FOR_NEURAL reference batches"
+    monkeypatch.setattr(pb, "MIN_REFERENCE_FOR_NEURAL", 40)
+    enough = pb.run_source(table, seeds=(42,), learned=())
+    assert enough["neural"] == "not run in this pilot"
+
+
+def test_a_time_column_given_as_a_number_of_hours_is_not_kept_as_a_feature(tmp_path, monkeypatch):
+    frame = _raw_frame()
+    frame["hr"] = np.random.default_rng(5).permutation(60) % 24 + np.random.default_rng(6).random(
+        60
+    )
+    _pool(
+        tmp_path,
+        monkeypatch,
+        frame,
+        spec={"date": "date", "format": "%Y-%m-%d %H:%M:%S", "hour": "hr"},
+    )
+    table, info = pb.load_table(9001)
+    assert "hr" not in info["columns"] and "hr" not in table.columns
+    assert info["columns"] == ["f1", "f2", "f3", "f4", "f5", "trend"]  # the hours break the trend
+
+
+def test_the_values_are_kept_as_read_and_equal_times_keep_their_file_order(tmp_path, monkeypatch):
+    frame = _raw_frame(64)
+    frame["date"] = (
+        pd.date_range("2020-01-01", periods=4, freq="D").repeat(16).strftime("%Y-%m-%d %H:%M:%S")
+    )
+    _pool(tmp_path, monkeypatch, frame, min_rows=50)
+    table, _ = pb.load_table(9001)
+    expected = frame.drop_duplicates(subset=[f"f{i}" for i in range(1, 6)]).dropna()
+    assert table["f1"].tolist() == pytest.approx(expected["f1"].tolist())  # unscaled, file order
+    assert table[pb.TIME].tolist() == pd.to_datetime(expected["date"]).tolist()
+
+
+def test_a_run_of_one_table_loads_the_requested_table(monkeypatch):
+    seen = []
+    monkeypatch.setattr(pb, "load_table", lambda uci_id: seen.append(uci_id) or (_table(240), {}))
+    monkeypatch.setattr(pb, "run_source", lambda *a, **k: {})
+    pb.run_one(247)
+    assert seen == [247]
+
+
+def test_the_compact_option_is_described_in_the_help_text():
+    parser = pb.build_parser()
+    helps = {a.dest: a.help for a in parser._actions}
+    assert helps["compact"] == "learned detectors on the compact profile"

@@ -187,10 +187,13 @@ def main(argv: list[str] | None = None) -> int:
     args.output.mkdir(parents=True, exist_ok=True)
     todo = [j for j in todo if not (args.output / f"{tm.stem(j)}.json").exists()]
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
-        for job, result in zip(todo, pool.map(run_one, todo), strict=True):
+        results = iter(pool.map(run_one, todo))
+        for job in todo:
+            result = next(results)
             with atomic_path(args.output / f"{tm.stem(job)}.json") as partial:
                 partial.write_text(json.dumps(result, sort_keys=True) + "\n")
-            print(job["id"], flush=True)
+            sys.stdout.write(f"{job['id']}\n")
+            sys.stdout.flush()
     return 0
 
 

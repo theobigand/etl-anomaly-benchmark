@@ -538,3 +538,72 @@ def test_the_run_command_evaluates_the_named_series_and_archives_its_result(
     )
     assert nt.main(["--data", str(tmp_path), "run", "--id", "s/1", "--output", str(out)]) == 0
     assert capsys.readouterr().out == "s/1 too few\n"
+
+
+def test_a_labelled_window_is_read_in_utc_and_a_path_is_looked_up_by_its_first_data_folder(
+    tmp_path,
+):
+    stamps = pd.date_range("2020-01-01", periods=40, freq="h").astype(str).tolist()
+    labels = tmp_path / "nab" / "labels"
+    labels.mkdir(parents=True)
+    key = "realTraffic/nab/data/x.csv"  # the folder name repeats the marker on purpose
+    (labels / "combined_windows.json").write_text(json.dumps({key: [[stamps[30], stamps[31]]]}))
+    folder = tmp_path / "nab" / "data" / "realTraffic" / "nab" / "data"
+    folder.mkdir(parents=True)
+    pd.DataFrame({"timestamp": stamps, "value": np.arange(40)}).to_csv(
+        folder / "x.csv", index=False
+    )
+    spec = {
+        "id": "nab/realTraffic/x",
+        "source": "nab",
+        "group": "nab_traffic",
+        "path": "nab/data/realTraffic/nab/data/x.csv",
+    }
+    loaded = nt.load_series(spec, tmp_path)
+    assert loaded["y"].sum() == 2
+    assert loaded["x"]["value"].dtype == float  # integer readings become floats
+
+
+def test_equal_timestamps_keep_the_order_of_the_file_and_binary_columns_are_kept(tmp_path):
+    stamps = ["2020-01-01 00:00:00"] * 20 + ["2020-01-01 00:00:01"] * 20
+    frame = pd.DataFrame(
+        {
+            "datetime": stamps,
+            "a": np.arange(40.0),
+            "flag": [0.0, 1.0] * 20,
+            "anomaly": [0] * 40,
+            "changepoint": [0.0] * 40,
+        }
+    )
+    spec = _skab(tmp_path, frame)
+    loaded = nt.load_series(spec, tmp_path)
+    assert loaded["x"]["a"].tolist() == list(range(40))
+    assert list(loaded["x"].columns) == ["a", "flag"]  # two distinct values are enough
+
+
+def test_the_test_partition_of_tied_times_follows_the_file_order():
+    times = pd.Series(pd.to_datetime(["2020-01-01"] * 1000, utc=True))
+    y = np.zeros(1000, dtype=int)
+    y[850:880] = 1
+    assert nt.eligible(y, times) == (True, "")
+    y[:] = 0
+    y[:30] = 1  # the anomalies sit in the first rows of the file, never in its last 15 %
+    ok, reason = nt.eligible(y, times)
+    assert not ok and reason.startswith("0 anomalies in the test partition")
+
+
+def test_the_commands_pass_the_data_directory_on_and_create_missing_output_directories(
+    tmp_path, monkeypatch, capsys
+):
+    seen = {}
+    monkeypatch.setattr(
+        nt, "series_files", lambda data: seen.setdefault("list", data) and [{"id": "s/1"}]
+    )
+    monkeypatch.setattr(nt, "check_manifest", lambda data: seen.setdefault("check", data) and [])
+    monkeypatch.setattr(nt, "run_series", lambda spec, data: {"id": spec["id"]})
+    assert nt.main(["--data", str(tmp_path), "list"]) == 0
+    out = tmp_path / "a" / "b" / "o.json"
+    assert nt.main(["--data", str(tmp_path), "run", "--id", "s/1", "--output", str(out)]) == 0
+    assert nt.main(["--data", str(tmp_path), "run", "--id", "s/1", "--output", str(out)]) == 0
+    assert seen == {"list": tmp_path, "check": tmp_path}
+    assert out.exists() and capsys.readouterr().out == "s/1\ns/1 ok\ns/1 ok\n"

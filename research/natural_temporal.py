@@ -16,6 +16,7 @@ import os
 import sys
 import urllib.request
 import zipfile
+from datetime import UTC
 from pathlib import Path
 from typing import Any
 
@@ -83,7 +84,7 @@ def fetch(dest: Path = DATA_DIR) -> None:
             raise ValueError(f"{key}: snapshot larger than {MAX_BYTES} bytes")
         with zipfile.ZipFile(io.BytesIO(blob)) as archive:
             for member in archive.namelist():
-                relative = member.split("/", 1)[1] if "/" in member else ""
+                relative = member.partition("/")[2]
                 if (
                     relative.endswith(".csv")
                     and (relative.startswith("data/") or relative.startswith("labels/"))
@@ -151,7 +152,7 @@ def window_labels(times: pd.Series, windows: list[list[str]]) -> np.ndarray:
     for start, end in windows:
         y[
             (
-                (stamps >= pd.Timestamp(start, tz="UTC")) & (stamps <= pd.Timestamp(end, tz="UTC"))
+                (stamps >= pd.Timestamp(start, tz=UTC)) & (stamps <= pd.Timestamp(end, tz=UTC))
             ).to_numpy()
         ] = 1
     return y
@@ -187,7 +188,7 @@ def load_series(spec: dict[str, str], root: Path = DATA_DIR) -> dict[str, Any]:
         frame = frame[["value"]].astype(float)
         dropped = WINDOW
     in_order = bool(times.is_monotonic_increasing)
-    order = np.argsort(times.to_numpy(), kind="stable")
+    order = np.argsort(times.rank(method="first").to_numpy())  # ties keep the file order
     x, y = frame.iloc[order].reset_index(drop=True), y[order]
     times = times.iloc[order].reset_index(drop=True)
     if spec["source"] == "nab":  # features are causal in time order, so they follow the sort
@@ -216,7 +217,7 @@ def eligible(y: np.ndarray, times: pd.Series) -> tuple[bool, str]:
     ok, reason = pc.eligible(y, times)
     if not ok:
         return ok, reason
-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind="stable")
+    order = np.argsort(pd.Series(times).rank(method="first").to_numpy())
     test = np.asarray(y)[order][int(len(y) * 0.85) :]
     normal = int((test == 0).sum())
     if normal < MIN_TEST:
@@ -272,7 +273,8 @@ def main(argv: list[str] | None = None) -> int:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         with atomic_path(args.output) as partial:
             partial.write_text(json.dumps(result, indent=1, sort_keys=True) + "\n")
-        print(args.id, result.get("excluded", "ok"), flush=True)
+        sys.stdout.write(f"{args.id} {result.get('excluded', 'ok')}\n")
+        sys.stdout.flush()
     return 0
 
 

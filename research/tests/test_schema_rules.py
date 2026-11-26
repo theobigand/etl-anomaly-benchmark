@@ -403,3 +403,104 @@ def test_the_command_skips_finished_tables_and_passes_the_selection_and_workers_
     assert (out / "uci_1.json").read_text() == "{}"
     assert (out / "adbench_3.json").exists()
     assert capsys.readouterr().out == "adbench:3\n"
+
+
+def test_integer_columns_with_a_nullable_type_are_fitted_as_numbers():
+    train = pd.DataFrame({"x": pd.array([1, 2, 3, 4, 5, 6, 7, 8, None], dtype="Int64")})
+    rules = sr.SchemaRules().fit(train, {"x": "num"})
+    assert rules.fence["x"] == pytest.approx((2.75 - 10.5, 6.25 + 10.5))
+    probe = pd.DataFrame({"x": pd.array([1, 100], dtype="Int64")})
+    assert rules.violations(probe)["range"].tolist() == [False, True]
+
+
+def test_a_violation_of_an_earlier_column_is_not_erased_by_a_clean_later_one():
+    values = [float(i) for i in range(1, 13)]
+    train = pd.DataFrame(
+        {
+            "x": values,
+            "y": values,
+            "g": ["a", "b"] * 6,
+            "h": ["p", "q"] * 6,
+            "k": ["u", "v"] * 6,
+        }
+    )
+    kinds = {"x": "num", "y": "num", "g": "cat", "h": "cat", "k": "cat"}
+    rules = sr.SchemaRules().fit(train, kinds)
+    probe = pd.DataFrame(
+        {
+            "x": [-1.0, 1.0], "y": [1.0, 1.0], "g": ["a", "a"],
+            "h": ["q", "p"], "k": ["u", "u"],
+        }
+    )  # fmt: skip
+    v = rules.violations(probe)
+    assert v["sign"].tolist() == [True, False]  # x < 0 although y is fine
+    assert v["combination"].tolist() == [True, False]  # g -> h is broken although g -> k holds
+
+
+def test_a_column_with_too_many_levels_does_not_stop_the_search_for_dependencies():
+    n = 120
+    frame = pd.DataFrame(
+        {
+            "id": [f"id{i}" for i in range(n)],  # 120 levels: skipped as a left-hand side
+            "a": ["x", "y"] * (n // 2),
+            "b": ["p", "q"] * (n // 2),
+        }
+    )
+    kinds = dict.fromkeys(frame, "cat")
+    pairs = {(r[0], r[1]) for r in sr.SchemaRules().fit(frame, kinds).dependencies}
+    assert ("a", "b") in pairs and ("b", "a") in pairs
+    assert not {p for p in pairs if p[0] == "id"}
+
+
+def test_the_eighty_columns_with_most_levels_are_the_only_ones_paired():
+    n = 60
+    base = [f"l{i % 3}" for i in range(n)]
+    columns = {f"c{i:02d}": [f"{name}{i}" for name in base] for i in range(82)}
+    for low in ("c00", "c01"):  # alphabetically first, but with fewer levels
+        columns[low] = [("l0" if b == "l0" else "m") for b in base]
+    frame = pd.DataFrame(columns)
+    rules = sr.SchemaRules().fit(frame, dict.fromkeys(frame, "cat"))
+    used = {r[0] for r in rules.dependencies} | {r[1] for r in rules.dependencies}
+    assert "c00" not in used and "c01" not in used
+    assert {"c02", "c80", "c81"} <= used
+    assert len(used) == 80
+
+
+def test_one_seed_is_evaluated_with_the_seed_it_is_given_and_false_alarms_are_counted(
+    monkeypatch,
+):
+    train, test = _layout_frame()
+    test = pd.concat(
+        [test, pd.DataFrame({"g": ["zz"], "x": [2.0], "anomaly_type": ["clean"]})],
+        ignore_index=True,
+    )
+    clean = train[["g", "x"]]
+    seen = {}
+    monkeypatch.setattr(sr.tm, "_seed_layout", lambda c, k, seed: train)
+    monkeypatch.setattr(
+        sr.tb, "split", lambda frame, seed: seen.update(seed=seed) or (train, None, test)
+    )
+    out = sr.evaluate_seed(clean, {"g": "cat", "x": "num"}, 5)
+    assert seen["seed"] == 5
+    assert out["clean"] == 3 and out["false_alarms"] == 1
+    assert out["false_alarms_by_constraint"] == {**dict.fromkeys(sr.CONSTRAINTS, 0), "domain": 1}
+
+
+def test_a_table_run_hands_the_job_and_the_carrier_to_the_stages(monkeypatch):
+    clean = pd.DataFrame({"g": ["a"] * 4, "x": np.arange(4.0)})
+    kinds = {"g": "cat", "x": "num"}
+    seen = {}
+    monkeypatch.setattr(
+        sr.tm, "load_carrier", lambda job: seen.update(job=job) or (clean, kinds, {})
+    )
+    monkeypatch.setattr(sr.tm, "seeds_for", lambda n: (1,))
+    monkeypatch.setattr(sr.im, "supported_types", lambda k, c: seen.update(support=(k, c)) or [])
+    monkeypatch.setattr(sr.im, "tier", lambda n: "A")
+    zero = dict.fromkeys(sr.CONSTRAINTS, 0)
+    monkeypatch.setattr(
+        sr, "evaluate_seed", lambda c, k, seed: _seed_result({}, {}, 1, 0, {}, zero, 0)
+    )
+    job = {"id": "t:2", "name": "T"}
+    sr.run_one(job)
+    assert seen["job"] is job
+    assert seen["support"][0] is kinds and seen["support"][1] is clean
