@@ -90,6 +90,8 @@ Production-oriented ingestion, transformation, orchestration, storage, data mode
 
 Experiment tracking, structured logging, centralized logs, tracing, metrics, alerting and data observability (engineering extension).
 
+Outputs: [logging audit](LOGGING_AUDIT.md) (#155).
+
 | Issue | Title | Scope | Authorization | Blocked by |
 | --- | --- | --- | --- | --- |
 | [#155](https://github.com/theobigand/etl-anomaly-benchmark/issues/155) | Audit existing logging, telemetry and error handling | engineering | none | - |
