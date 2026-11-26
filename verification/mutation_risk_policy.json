@@ -575,6 +575,10 @@
     "research/flat_readiness.py": {
       "level": "L3",
       "reason": "The eligibility rules and group representation decide which flat tabular and categorical sources are credited as experiment-ready."
+    },
+    "research/utilization_ledger.py": {
+      "level": "L2",
+      "reason": "It extends the per-group coverage with the seven utilization stages and a dry run of the registered batch adapter, so it states which groups can contribute to an evaluation; it fits no detector, injects no fault and reads no detector output."
     }
   }
 }

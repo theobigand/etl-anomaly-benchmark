@@ -57,6 +57,8 @@ Mandatory: Platform 02 and the scientific issues, plus the existing Thesis 01-07
 
 Complete utilization of the acquired benchmark: registry-driven execution, category-specific experimental units, compatibility and data integrity. Phase label of the ETL Anomaly Benchmark platform roadmap; not a schedule.
 
+Outputs: [utilization ledger](../../verification/utilization_ledger.md) (#133).
+
 | Issue | Title | Scope | Authorization | Blocked by |
 | --- | --- | --- | --- | --- |
 | [#133](https://github.com/theobigand/etl-anomaly-benchmark/issues/133) | Utilization ledger: seven-stage status of every provenance group | thesis | none | - |
