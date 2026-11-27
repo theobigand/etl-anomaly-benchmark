@@ -1,0 +1,24 @@
+// OTLP in, logs to Loki. Traces stay local to Tempo through the same receiver.
+otelcol.receiver.otlp "default" {
+  grpc { endpoint = "0.0.0.0:4317" }
+  http { endpoint = "0.0.0.0:4318" }
+  output {
+    logs   = [otelcol.exporter.loki.default.input]
+    traces = [otelcol.exporter.otlp.tempo.input]
+  }
+}
+
+otelcol.exporter.loki "default" {
+  forward_to = [loki.write.default.receiver]
+}
+
+loki.write "default" {
+  endpoint { url = "http://loki:3100/loki/api/v1/push" }
+}
+
+otelcol.exporter.otlp "tempo" {
+  client {
+    endpoint = "tempo:4317"
+    tls { insecure = true }
+  }
+}
