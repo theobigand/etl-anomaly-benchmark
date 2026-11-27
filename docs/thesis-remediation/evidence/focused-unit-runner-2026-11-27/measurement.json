@@ -1,6 +1,6 @@
 {
  "base_head": "efc670681eab40882f55a7f529f4ba05a93972fc",
- "command": "python -m mutmut run with research/tests/test_unit_runner.py, in a scratch copy holding research/*.py, src, verification/evidence/dataset_registry_v2 and a narrowed pyproject",
+ "command": "python -m mutmut run with research/tests/test_unit_runner.py and research/tests/test_obs_tracing.py, in a scratch copy holding research/*.py, src, verification/evidence/dataset_registry_v2 and a narrowed pyproject",
  "date": "2026-11-27",
  "environment": {
   "mutmut": "3.8.x (etl-mutation-venv)",
@@ -10,17 +10,17 @@
  "kind": "local focused development measurement of the synthetic unit runner for issues #135, #137, #138 and #139; not the controller campaign, not attested",
  "modules": {
   "research/unit_runner.py": {
-   "eligible": 472,
-   "killed": 448,
+   "eligible": 492,
+   "killed": 466,
    "level": "L2",
-   "raw_score": 94.9,
-   "source_sha256": "f03dfa5e6bf3cd8896c48e35494c90d44b765def009ecda3a3303cfdafaabbe8",
+   "raw_score": 94.7,
+   "source_sha256": "66081df2cbe9fcb4431303a0e2fd4b6fa21ed88c74bc7cdc4db1861277054e67",
    "status": "PASS_RAW",
-   "survived": 24,
+   "survived": 26,
    "threshold": 90
   }
  },
- "note": "No mutant was marked equivalent. 24 mutants are not killed: the numeric ranges and constants of the seeded fixture generators of P-TAB, P-TS, P-SEQ, P-REL and P-NEST, and two logging details of execute.",
+ "note": "No mutant was marked equivalent. 26 mutants are not killed: the numeric ranges and constants of the seeded fixture generators of P-TAB, P-TS, P-SEQ, P-REL and P-NEST, and four logging and span-attribute details of execute.",
  "survivors": [
   "x__nest_make__mutmut_1",
   "x__nest_make__mutmut_2",
@@ -45,6 +45,8 @@
   "x__ts_make__mutmut_8",
   "x__ts_make__mutmut_9",
   "x_execute__mutmut_11",
+  "x_execute__mutmut_33",
+  "x_execute__mutmut_35",
   "x_execute__mutmut_6"
  ],
  "working_tree": "clean apart from the measured module and its tests"

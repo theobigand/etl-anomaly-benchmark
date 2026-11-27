@@ -120,4 +120,9 @@ cache_invalidation_files = [
 research = ["pyarrow>=21,<27"]
 # Structured-log layer of the platform tooling (research/obs_events.py, #157; ADR-0017). Optional:
 # the module works without it. Outside [project], so the scientific fingerprint is unchanged.
-observability = ["structlog>=26.1,<27"]
+observability = [
+    "structlog>=26.1,<27",
+    # Tracing of the platform tooling (research/obs_tracing.py, #161; ADR-0009), optional.
+    "opentelemetry-sdk>=1.45,<2",
+    "opentelemetry-exporter-otlp-proto-http>=1.45,<2",
+]
