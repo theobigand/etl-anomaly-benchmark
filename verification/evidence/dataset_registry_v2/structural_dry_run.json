@@ -1,0 +1,4624 @@
+{
+ "access": {
+  "ledger_effect": "none: a structural verdict does not make a group executable or exposed",
+  "not_done": "no detector fit or inference, no score, no metric, no injection, no selection",
+  "operations": [
+   "sha256 of each view file, compared with the view manifest",
+   "header and at most 5000 leading rows of each CSV table, to learn column kinds",
+   "at most 5000 leading lines of the first JSON-lines file, parsed for paths"
+  ],
+  "returned": "counts, column names, column kinds and reasons; never a cell value",
+  "withheld": "columns whose name belongs to the ground-truth vocabulary are never read"
+ },
+ "availability": {
+  "P-NEST": {
+   "protocol": "P-NEST",
+   "reason": "the experiment freeze is active and no detector runner exists for this protocol",
+   "scientific_execution": false,
+   "unit": "nested_path",
+   "unit_status": "protocol_defined"
+  },
+  "P-REL": {
+   "protocol": "P-REL",
+   "reason": "the experiment freeze is active and no detector runner exists for this protocol",
+   "scientific_execution": false,
+   "unit": "relationship",
+   "unit_status": "protocol_defined"
+  },
+  "P-SEQ": {
+   "protocol": "P-SEQ",
+   "reason": "the experiment freeze is active and no detector runner exists for this protocol",
+   "scientific_execution": false,
+   "unit": "event_sequence",
+   "unit_status": "protocol_defined"
+  },
+  "P-TAB": {
+   "protocol": "P-TAB",
+   "reason": "the experiment freeze is active and no detector runner exists for this protocol",
+   "scientific_execution": false,
+   "unit": "row",
+   "unit_status": "protocol_defined"
+  },
+  "P-TS": {
+   "protocol": "P-TS",
+   "reason": "the experiment freeze is active and no detector runner exists for this protocol",
+   "scientific_execution": false,
+   "unit": "time_window",
+   "unit_status": "protocol_defined"
+  }
+ },
+ "groups": {
+  "3pfl": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 4,
+     "tables": 8
+    },
+    "group": "3pfl",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "a_day_in_daylight": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 16,
+     "events": 1763,
+     "order_column": "event_start_utc",
+     "table": "context_events.csv",
+     "withheld_columns": []
+    },
+    "group": "a_day_in_daylight",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "ademe_dpe": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 21,
+     "continuous_columns": 5,
+     "rows": 50000,
+     "table": "dpe.csv",
+     "withheld_columns": []
+    },
+    "group": "ademe_dpe",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "airquality_italy": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 13,
+     "rows": 9357,
+     "table": "uci_360.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "airquality_italy",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "aoe_gameplay": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 11,
+     "events": 290046,
+     "order_column": "time",
+     "table": "events.csv",
+     "withheld_columns": []
+    },
+    "group": "aoe_gameplay",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "apis_guru_openapi_directory": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 2529,
+     "file": "apis.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 24527,
+     "paths": 24531
+    },
+    "group": "apis_guru_openapi_directory",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "austin_police_dispatch": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 3,
+     "events": 266451,
+     "order_column": "timestamp",
+     "table": "events.csv",
+     "withheld_columns": []
+    },
+    "group": "austin_police_dispatch",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "austin_surface_water_quality": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 21,
+     "continuous_columns": 6,
+     "rows": 22887,
+     "table": "results.csv",
+     "withheld_columns": []
+    },
+    "group": "austin_surface_water_quality",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "backblaze": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 31,
+     "rows": 206941,
+     "table": "drive_days.csv",
+     "time_column": "date",
+     "time_ordered_in_probe": false,
+     "withheld_columns": []
+    },
+    "group": "backblaze",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "bloomington_locus_solar_monitoring": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 4,
+     "rows": 91437,
+     "table": "daily.csv",
+     "time_column": "date",
+     "time_ordered_in_probe": false,
+     "withheld_columns": []
+    },
+    "group": "bloomington_locus_solar_monitoring",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "bloomington_utilities_water_plant": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 9,
+     "rows": 6109,
+     "table": "daily.csv",
+     "time_column": "date",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "bloomington_utilities_water_plant",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "bts_umd_daily_mobility_statistics": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 15,
+     "rows": 1923,
+     "table": "daily.csv",
+     "time_column": "date",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "bts_umd_daily_mobility_statistics",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "candanedo_umons": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 6,
+     "rows": 20560,
+     "table": "uci_357.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "candanedo_umons",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "ccin2p3_slurm": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "columns": 14,
+     "continuous_columns": 9,
+     "rows": 233716,
+     "table": "jobs.csv",
+     "withheld_columns": []
+    },
+    "group": "ccin2p3_slurm",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "cdc_covid_vaccination_reporting": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 26,
+     "rows": 1476,
+     "table": "daily.csv",
+     "time_column": "date",
+     "time_ordered_in_probe": false,
+     "withheld_columns": []
+    },
+    "group": "cdc_covid_vaccination_reporting",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "cftc_cot_disaggregated": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 20,
+     "continuous_columns": 14,
+     "rows": 27231,
+     "table": "cot_positions.csv",
+     "withheld_columns": []
+    },
+    "group": "cftc_cot_disaggregated",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "chembl_molecules": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 1000,
+     "file": "molecules.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 41,
+     "paths": 76
+    },
+    "group": "chembl_molecules",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "cincinnati_emergency_communications_calls": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 3,
+     "events": 391439,
+     "order_column": "timestamp",
+     "table": "events.csv",
+     "withheld_columns": []
+    },
+    "group": "cincinnati_emergency_communications_calls",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "cincinnati_fire_dispatch": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 3,
+     "events": 359125,
+     "order_column": "timestamp",
+     "table": "events.csv",
+     "withheld_columns": []
+    },
+    "group": "cincinnati_fire_dispatch",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "city_of_austin_campaign_finance": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 27,
+     "continuous_columns": 1,
+     "rows": 3654,
+     "table": "transactions.csv",
+     "withheld_columns": []
+    },
+    "group": "city_of_austin_campaign_finance",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "clinicaltrials_gov": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 5000,
+     "file": "studies.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 445,
+     "paths": 451
+    },
+    "group": "clinicaltrials_gov",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "cnc_five_axis_milling": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 3,
+     "rows": 189089,
+     "table": "cnc_milling.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "cnc_five_axis_milling",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "coatings_multinational": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 7,
+     "continuous_columns": 2,
+     "rows": 144920,
+     "table": "events.csv",
+     "withheld_columns": []
+    },
+    "group": "coatings_multinational",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   },
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 4,
+     "events": 144920,
+     "order_column": "time",
+     "table": "events.csv",
+     "withheld_columns": []
+    },
+    "group": "coatings_multinational",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "colorado_dam_safety_registry": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 34,
+     "continuous_columns": 12,
+     "rows": 2737,
+     "table": "dams.csv",
+     "withheld_columns": []
+    },
+    "group": "colorado_dam_safety_registry",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "colorado_regulated_storage_tanks": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 16,
+     "continuous_columns": 2,
+     "rows": 52111,
+     "table": "tanks.csv",
+     "withheld_columns": []
+    },
+    "group": "colorado_regulated_storage_tanks",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "cordis_horizon_europe": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 5,
+     "tables": 6
+    },
+    "group": "cordis_horizon_europe",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "cpsc_recall_notices": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 725,
+     "file": "recalls.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 35,
+     "paths": 54
+    },
+    "group": "cpsc_recall_notices",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "crossref": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 2000,
+     "file": "works.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 54,
+     "paths": 70
+    },
+    "group": "crossref",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "cubico_kelmarsh": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 5,
+     "rows": 314496,
+     "table": "series.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "cubico_kelmarsh",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "danish_district_heating": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 1,
+     "rows": 105192,
+     "table": "district_heating.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "danish_district_heating",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "datacite_dois": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 1000,
+     "file": "dois.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 110,
+     "paths": 114
+    },
+    "group": "datacite_dois",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "delaware_dnrec_well_permits": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 56,
+     "continuous_columns": 20,
+     "rows": 20123,
+     "table": "permits.csv",
+     "withheld_columns": [
+      "injection"
+     ]
+    },
+    "group": "delaware_dnrec_well_permits",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "delaware_state_purchasing_cards": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 8,
+     "continuous_columns": 1,
+     "rows": 188670,
+     "table": "transactions.csv",
+     "withheld_columns": []
+    },
+    "group": "delaware_state_purchasing_cards",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "dft_stats19": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 22,
+     "continuous_columns": 9,
+     "rows": 132977,
+     "table": "casualty.csv",
+     "withheld_columns": []
+    },
+    "group": "dft_stats19",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "dgal_alimconfiance": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 16,
+     "continuous_columns": 1,
+     "rows": 71228,
+     "table": "inspections.csv",
+     "withheld_columns": []
+    },
+    "group": "dgal_alimconfiance",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "dgccrf_fuel_prices": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 8,
+     "continuous_columns": 2,
+     "rows": 32699,
+     "table": "fuel_prices.csv",
+     "withheld_columns": []
+    },
+    "group": "dgccrf_fuel_prices",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "dgfip_dvf": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 9,
+     "continuous_columns": 5,
+     "rows": 75985,
+     "table": "sales.csv",
+     "withheld_columns": []
+    },
+    "group": "dgfip_dvf",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "dmsp_ssj_auroral": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 18,
+     "rows": 68034,
+     "table": "dmsp_auroral.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "dmsp_ssj_auroral",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "doaj_directory_of_open_access_journals": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 999,
+     "file": "records.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 89,
+     "paths": 94
+    },
+    "group": "doaj_directory_of_open_access_journals",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "dutch_municipalities": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 3,
+     "events": 59083,
+     "order_column": "time",
+     "table": "events.csv",
+     "withheld_columns": []
+    },
+    "group": "dutch_municipalities",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "dwd_germany": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 2,
+     "rows": 838605,
+     "table": "air_temperature.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "dwd_germany",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "ea_hydrology": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 1,
+     "rows": 70128,
+     "table": "flow.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "ea_hydrology",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "ecb_euro_fx_reference_rates": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 40,
+     "rows": 7141,
+     "table": "rates.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "ecb_euro_fx_reference_rates",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "edp_wind_farm_portugal": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 45,
+     "rows": 437750,
+     "table": "series.csv",
+     "time_column": "time_stamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "edp_wind_farm_portugal",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "eia_petroleum_spot_prices": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 9,
+     "rows": 10473,
+     "table": "spot_prices.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "eia_petroleum_spot_prices",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "eicu_philips": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 5,
+     "tables": 6
+    },
+    "group": "eicu_philips",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "elder_home": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 9,
+     "rows": 416153,
+     "table": "uci_799.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "elder_home",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "epa_aqs": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 1,
+     "rows": 162829,
+     "table": "ozone.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "epa_aqs",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "fda_maude": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 5000,
+     "file": "reports.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 61,
+     "paths": 132
+    },
+    "group": "fda_maude",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "fdic_bank_financials": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 16,
+     "continuous_columns": 12,
+     "rows": 18402,
+     "table": "bank_financials.csv",
+     "withheld_columns": []
+    },
+    "group": "fdic_bank_financials",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "fec_federal_campaign_finance_filings": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 5,
+     "tables": 4
+    },
+    "group": "fec_federal_campaign_finance_filings",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "federal_register": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 2000,
+     "file": "documents.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 1348,
+     "paths": 1367
+    },
+    "group": "federal_register",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "fermi_blazar_flares": [
+   {
+    "category": "C4",
+    "code": "no_event_order",
+    "facts": {},
+    "group": "fermi_blazar_flares",
+    "ok": false,
+    "protocol": "P-SEQ",
+    "reason": "blazar_flares.csv has no instant or increasing integer column; numeric epoch or elapsed-time axes are not recognised by this adapter",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "fin_institute_nl": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 4,
+     "events": 262200,
+     "order_column": "time",
+     "table": "events.csv",
+     "withheld_columns": []
+    },
+    "group": "fin_institute_nl",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "florida_bridge_inspections": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 33,
+     "continuous_columns": 18,
+     "rows": 12986,
+     "table": "bridges.csv",
+     "withheld_columns": []
+    },
+    "group": "florida_bridge_inspections",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "france_baac_road_accidents": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 4,
+     "tables": 4
+    },
+    "group": "france_baac_road_accidents",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "fraunhofer_iee_care_wind_b": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 63,
+     "rows": 279733,
+     "table": "series.csv",
+     "time_column": "time_stamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "fraunhofer_iee_care_wind_b",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "fta_national_transit_database": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 16,
+     "continuous_columns": 6,
+     "rows": 74173,
+     "table": "ridership.csv",
+     "withheld_columns": []
+    },
+    "group": "fta_national_transit_database",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "fugaku_riken": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "columns": 18,
+     "continuous_columns": 12,
+     "rows": 116977,
+     "table": "jobs.csv",
+     "withheld_columns": []
+    },
+    "group": "fugaku_riken",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "gbif_occurrences": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 1500,
+     "file": "occurrences.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 108,
+     "paths": 216
+    },
+    "group": "gbif_occurrences",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "gene_ontology_consortium_annotations": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 3,
+     "tables": 3
+    },
+    "group": "gene_ontology_consortium_annotations",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "georgia_procurement": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 8,
+     "continuous_columns": 1,
+     "rows": 18299,
+     "table": "awards.csv",
+     "withheld_columns": []
+    },
+    "group": "georgia_procurement",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   },
+   {
+    "category": "C5",
+    "code": "no_relationship",
+    "facts": {},
+    "group": "georgia_procurement",
+    "ok": false,
+    "protocol": "P-REL",
+    "reason": "the view manifest declares no foreign key",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   },
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 5000,
+     "file": "releases.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 53,
+     "paths": 64
+    },
+    "group": "georgia_procurement",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "german_paying_agency": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 8,
+     "continuous_columns": 3,
+     "rows": 487270,
+     "table": "events.csv",
+     "withheld_columns": []
+    },
+    "group": "german_paying_agency",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   },
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 4,
+     "events": 487270,
+     "order_column": "time",
+     "table": "events.csv",
+     "withheld_columns": []
+    },
+    "group": "german_paying_agency",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "german_water_demand": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 3,
+     "rows": 46026,
+     "table": "water_demand.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "german_water_demand",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "gfz_potsdam_kp": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 2,
+     "rows": 277272,
+     "table": "kp_ap.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "gfz_potsdam_kp",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "github_actions_workflows": [
+   {
+    "category": "C4",
+    "code": "no_event_order",
+    "facts": {},
+    "group": "github_actions_workflows",
+    "ok": false,
+    "protocol": "P-SEQ",
+    "reason": "workflows.csv has no instant or increasing integer column; numeric epoch or elapsed-time axes are not recognised by this adapter",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "github_advisory_database": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 1000,
+     "file": "records.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 25,
+     "paths": 48
+    },
+    "group": "github_advisory_database",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "grouplens": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 4,
+     "tables": 4
+    },
+    "group": "grouplens",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "gtfs_fr_alterneo": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 3,
+     "tables": 5
+    },
+    "group": "gtfs_fr_alterneo",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "gtfs_fr_aravis": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 3,
+     "tables": 5
+    },
+    "group": "gtfs_fr_aravis",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "gtfs_fr_citea": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 3,
+     "tables": 5
+    },
+    "group": "gtfs_fr_citea",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "gtfs_fr_diviamobilites": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 3,
+     "tables": 5
+    },
+    "group": "gtfs_fr_diviamobilites",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "gtfs_fr_filibus": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 3,
+     "tables": 5
+    },
+    "group": "gtfs_fr_filibus",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "gtfs_fr_kiceo": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 3,
+     "tables": 5
+    },
+    "group": "gtfs_fr_kiceo",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "gtfs_fr_optymo": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 3,
+     "tables": 5
+    },
+    "group": "gtfs_fr_optymo",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "gtfs_fr_palmbus": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 3,
+     "tables": 5
+    },
+    "group": "gtfs_fr_palmbus",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "gtfs_fr_sankeo": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 3,
+     "tables": 5
+    },
+    "group": "gtfs_fr_sankeo",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "gtfs_fr_sibra": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 3,
+     "tables": 5
+    },
+    "group": "gtfs_fr_sibra",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "gtfs_fr_tango": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 3,
+     "tables": 5
+    },
+    "group": "gtfs_fr_tango",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "gtfs_fr_transvilles": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 3,
+     "tables": 5
+    },
+    "group": "gtfs_fr_transvilles",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "hm_land_registry": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 10,
+     "continuous_columns": 1,
+     "rows": 180229,
+     "table": "sales.csv",
+     "withheld_columns": []
+    },
+    "group": "hm_land_registry",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "hospital_sepsis_nl": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 3,
+     "events": 15214,
+     "order_column": "time",
+     "table": "events.csv",
+     "withheld_columns": []
+    },
+    "group": "hospital_sepsis_nl",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "ingv_seismic": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 3,
+     "events": 17755,
+     "order_column": "time",
+     "table": "events.csv",
+     "withheld_columns": []
+    },
+    "group": "ingv_seismic",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "inpi_bce_ratios": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 22,
+     "continuous_columns": 19,
+     "rows": 23012,
+     "table": "ratios.csv",
+     "withheld_columns": []
+    },
+    "group": "inpi_bce_ratios",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "italian_road_fines": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 9,
+     "continuous_columns": 2,
+     "rows": 561470,
+     "table": "events.csv",
+     "withheld_columns": []
+    },
+    "group": "italian_road_fines",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   },
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 4,
+     "events": 561470,
+     "order_column": "time",
+     "table": "events.csv",
+     "withheld_columns": []
+    },
+    "group": "italian_road_fines",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "japan_reconstructed_buildings": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 6,
+     "tables": 7
+    },
+    "group": "japan_reconstructed_buildings",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "jolpica_f1": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 13,
+     "tables": 11
+    },
+    "group": "jolpica_f1",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "kanto_landslides": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 8,
+     "continuous_columns": 4,
+     "rows": 21814,
+     "table": "landslides.csv",
+     "withheld_columns": []
+    },
+    "group": "kanto_landslides",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "loghub_collection": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 2,
+     "events": 2000,
+     "order_column": "Time",
+     "table": "Android.csv",
+     "withheld_columns": []
+    },
+    "group": "loghub_collection",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "lyft_bikeshare": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 8,
+     "continuous_columns": 3,
+     "rows": 1947784,
+     "table": "trips.csv",
+     "withheld_columns": []
+    },
+    "group": "lyft_bikeshare",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "melbourne_pedestrian": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 18,
+     "rows": 98723,
+     "table": "wide.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "melbourne_pedestrian",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "met_museum": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 1000,
+     "file": "objects.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 23,
+     "paths": 76
+    },
+    "group": "met_museum",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "metropt_porto": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 7,
+     "rows": 373470,
+     "table": "series.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "metropt_porto",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "microsoft_azure_compute": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 3,
+     "events": 38995,
+     "order_column": "tenant_id",
+     "table": "allocations.csv",
+     "withheld_columns": []
+    },
+    "group": "microsoft_azure_compute",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "mimic_iv_bidmc": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 6,
+     "tables": 6
+    },
+    "group": "mimic_iv_bidmc",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "mitre_attack_knowledge_base": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 5000,
+     "file": "objects.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 15,
+     "paths": 49
+    },
+    "group": "mitre_attack_knowledge_base",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "montgomery_county_liquor_control_sales": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 9,
+     "continuous_columns": 4,
+     "rows": 138638,
+     "table": "sales.csv",
+     "withheld_columns": []
+    },
+    "group": "montgomery_county_liquor_control_sales",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "montreal_contracts": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 8,
+     "continuous_columns": 1,
+     "rows": 30551,
+     "table": "awards.csv",
+     "withheld_columns": []
+    },
+    "group": "montreal_contracts",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   },
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 5000,
+     "file": "releases.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 26,
+     "paths": 36
+    },
+    "group": "montreal_contracts",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "moodle_lms_events": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 3,
+     "events": 182114,
+     "order_column": "timestamp",
+     "table": "moodle_events.csv",
+     "withheld_columns": []
+    },
+    "group": "moodle_lms_events",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "naoj_norp_solar_bursts": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 8,
+     "events": 4239,
+     "order_column": "year_month",
+     "table": "solar_bursts.csv",
+     "withheld_columns": []
+    },
+    "group": "naoj_norp_solar_bursts",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "nasa_common_metadata_repository": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 900,
+     "file": "records.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 399,
+     "paths": 401
+    },
+    "group": "nasa_common_metadata_repository",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "nasa_omni_near_earth_solar_wind": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 24,
+     "rows": 131496,
+     "table": "solar_wind.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "nasa_omni_near_earth_solar_wind",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "ncbi_pubchem_compound_records": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 1000,
+     "file": "records.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 78,
+     "paths": 86
+    },
+    "group": "ncbi_pubchem_compound_records",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "nces_ipeds_postsecondary_surveys": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 4,
+     "tables": 5
+    },
+    "group": "nces_ipeds_postsecondary_surveys",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "ndbc_moored_buoys": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 11,
+     "rows": 360156,
+     "table": "buoy_observations.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "ndbc_moored_buoys",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "nhif_hospital_cases": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 13,
+     "continuous_columns": 3,
+     "rows": 43503,
+     "table": "hospital_cases.csv",
+     "withheld_columns": []
+    },
+    "group": "nhif_hospital_cases",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "nih_research_grants": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 19,
+     "continuous_columns": 5,
+     "rows": 83314,
+     "table": "awards.csv",
+     "withheld_columns": []
+    },
+    "group": "nih_research_grants",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "nist_nvd": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 4194,
+     "file": "cves.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 180,
+     "paths": 196
+    },
+    "group": "nist_nvd",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "noaa_coops": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 2,
+     "rows": 157823,
+     "table": "tides.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "noaa_coops",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "noaa_cpc_arctic_oscillation_index": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 1,
+     "rows": 28083,
+     "table": "ao_index.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "noaa_cpc_arctic_oscillation_index",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "noaa_gml_co2": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 5,
+     "rows": 2740,
+     "table": "co2_weekly.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "noaa_gml_co2",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "noaa_ncei_storm_events": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 3,
+     "tables": 3
+    },
+    "group": "noaa_ncei_storm_events",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "noaa_nhc_hurdat2_best_track": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 2,
+     "events": 55524,
+     "order_column": "timestamp",
+     "table": "events.csv",
+     "withheld_columns": []
+    },
+    "group": "noaa_nhc_hurdat2_best_track",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "nsidc_sea_ice_index": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 2,
+     "rows": 15908,
+     "table": "extent.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "nsidc_sea_ice_index",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "ntnu_ev_charging": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 7,
+     "continuous_columns": 2,
+     "rows": 35377,
+     "table": "sessions.csv",
+     "withheld_columns": []
+    },
+    "group": "ntnu_ev_charging",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "nws_alerts": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 2000,
+     "file": "alerts.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 91,
+     "paths": 95
+    },
+    "group": "nws_alerts",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "nyc_tlc": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 19,
+     "continuous_columns": 8,
+     "rows": 320320,
+     "table": "trips.csv",
+     "withheld_columns": []
+    },
+    "group": "nyc_tlc",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "openalex": [
+   {
+    "category": "C5",
+    "code": "no_relationship",
+    "facts": {},
+    "group": "openalex",
+    "ok": false,
+    "protocol": "P-REL",
+    "reason": "the view manifest declares no foreign key",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   },
+   {
+    "category": "C6",
+    "code": "no_table",
+    "facts": {},
+    "group": "openalex",
+    "ok": false,
+    "protocol": "P-NEST",
+    "reason": "the view holds no JSON-lines document file",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "openfda_faers": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 4000,
+     "file": "events.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 89,
+     "paths": 114
+    },
+    "group": "openfda_faers",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "openfoodfacts": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 5000,
+     "file": "products.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 9845,
+     "paths": 10886
+    },
+    "group": "openfoodfacts",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "openlibrary": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 5000,
+     "file": "editions.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 64,
+     "paths": 122
+    },
+    "group": "openlibrary",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "osv_go": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 4820,
+     "file": "advisories.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 43,
+     "paths": 55
+    },
+    "group": "osv_go",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "ourairports_db": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 9,
+     "tables": 6
+    },
+    "group": "ourairports_db",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "paleobiology_database": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 31,
+     "continuous_columns": 8,
+     "rows": 201107,
+     "table": "occurrences.csv",
+     "withheld_columns": []
+    },
+    "group": "paleobiology_database",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   },
+   {
+    "category": "C5",
+    "code": "no_relationship",
+    "facts": {},
+    "group": "paleobiology_database",
+    "ok": false,
+    "protocol": "P-REL",
+    "reason": "the view manifest declares no foreign key",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "paris_urban_trees": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 10,
+     "continuous_columns": 3,
+     "rows": 25000,
+     "table": "trees.csv",
+     "withheld_columns": []
+    },
+    "group": "paris_urban_trees",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "pnnl_epri_bess": [
+   {
+    "category": "C3",
+    "code": "no_time_axis",
+    "facts": {},
+    "group": "pnnl_epri_bess",
+    "ok": false,
+    "protocol": "P-TS",
+    "reason": "readings.csv has no parseable instant column; numeric epoch or elapsed-time axes are not recognised by this adapter",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "port_noumea_stopovers": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 26,
+     "continuous_columns": 8,
+     "rows": 7335,
+     "table": "stopovers.csv",
+     "withheld_columns": []
+    },
+    "group": "port_noumea_stopovers",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "queensland_petroleum_production": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 21,
+     "continuous_columns": 13,
+     "rows": 1028,
+     "table": "production.csv",
+     "withheld_columns": []
+    },
+    "group": "queensland_petroleum_production",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "rabobank_ict": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 4,
+     "events": 466737,
+     "order_column": "time",
+     "table": "events.csv",
+     "withheld_columns": []
+    },
+    "group": "rabobank_ict",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "rcsb_pdb": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 1000,
+     "file": "entries.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 38,
+     "paths": 48
+    },
+    "group": "rcsb_pdb",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "reactome_curated_pathway_database": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 4,
+     "tables": 4
+    },
+    "group": "reactome_curated_pathway_database",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "rki_surveillance": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 2,
+     "rows": 292264,
+     "table": "rki_hospitalisation.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": false,
+     "withheld_columns": []
+    },
+    "group": "rki_surveillance",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "ror": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 5000,
+     "file": "organizations.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 37,
+     "paths": 48
+    },
+    "group": "ror",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "rte_france_grid": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 32,
+     "rows": 70120,
+     "table": "eco2mix.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "rte_france_grid",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "seattle_fire_911_dispatch": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 1,
+     "events": 125678,
+     "order_column": "event_date",
+     "table": "events.csv",
+     "withheld_columns": []
+    },
+    "group": "seattle_fire_911_dispatch",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "seattle_fremont_bridge_counter": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 3,
+     "rows": 122675,
+     "table": "counts.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "seattle_fremont_bridge_counter",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "seattle_sdci_building_permits": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 27,
+     "continuous_columns": 10,
+     "rows": 5603,
+     "table": "permits.csv",
+     "withheld_columns": []
+    },
+    "group": "seattle_sdci_building_permits",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "seoul_bike": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 9,
+     "rows": 8760,
+     "table": "uci_560.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "seoul_bike",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "sffd_fire_incidents": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 29,
+     "continuous_columns": 7,
+     "rows": 37906,
+     "table": "incidents.csv",
+     "withheld_columns": []
+    },
+    "group": "sffd_fire_incidents",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "sfo_passenger_statistics": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 13,
+     "continuous_columns": 2,
+     "rows": 40803,
+     "table": "passengers.csv",
+     "withheld_columns": []
+    },
+    "group": "sfo_passenger_statistics",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "sncf_tgv_regularite": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 23,
+     "continuous_columns": 19,
+     "rows": 12907,
+     "table": "tgv_regularity.csv",
+     "withheld_columns": []
+    },
+    "group": "sncf_tgv_regularite",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "stackexchange": [
+   {
+    "category": "C5",
+    "code": "no_relationship",
+    "facts": {},
+    "group": "stackexchange",
+    "ok": false,
+    "protocol": "P-REL",
+    "reason": "the view manifest declares no foreign key",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "steel_korea": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 6,
+     "rows": 35040,
+     "table": "uci_851.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "steel_korea",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "surf_lisa_slurm": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "columns": 8,
+     "continuous_columns": 4,
+     "rows": 199621,
+     "table": "jobs.csv",
+     "withheld_columns": []
+    },
+    "group": "surf_lisa_slurm",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "telecom_operator_kpis": [
+   {
+    "category": "C3",
+    "code": "no_time_axis",
+    "facts": {},
+    "group": "telecom_operator_kpis",
+    "ok": false,
+    "protocol": "P-TS",
+    "reason": "telecom_kpis.csv has no parseable instant column; numeric epoch or elapsed-time axes are not recognised by this adapter",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "terralore_chronicle_db": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 2,
+     "tables": 3
+    },
+    "group": "terralore_chronicle_db",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "tetouan_power": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 8,
+     "rows": 52416,
+     "table": "uci_849.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "tetouan_power",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "tue_travel_claims": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 4,
+     "events": 56437,
+     "order_column": "time",
+     "table": "events.csv",
+     "withheld_columns": []
+    },
+    "group": "tue_travel_claims",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "tx_hhsc_child_care_operations": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 29,
+     "continuous_columns": 10,
+     "rows": 14966,
+     "table": "operations.csv",
+     "withheld_columns": []
+    },
+    "group": "tx_hhsc_child_care_operations",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "tx_hotel_occupancy_tax_revenue": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 19,
+     "continuous_columns": 15,
+     "rows": 2395,
+     "table": "revenue.csv",
+     "withheld_columns": []
+    },
+    "group": "tx_hotel_occupancy_tax_revenue",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:101": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 10,
+     "continuous_columns": 0,
+     "rows": 958,
+     "table": "flat_uci_101_C2a.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:101",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:110": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 10,
+     "continuous_columns": 6,
+     "rows": 1484,
+     "table": "flat_uci_110_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:110",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:143": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 15,
+     "continuous_columns": 7,
+     "rows": 690,
+     "table": "flat_uci_143_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:143",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:146": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 37,
+     "continuous_columns": 36,
+     "rows": 6435,
+     "table": "flat_uci_146_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:146",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:148": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 8,
+     "continuous_columns": 7,
+     "rows": 29000,
+     "table": "flat_uci_148_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:148",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:149": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 19,
+     "continuous_columns": 18,
+     "rows": 846,
+     "table": "flat_uci_149_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:149",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:15": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 11,
+     "continuous_columns": 9,
+     "rows": 699,
+     "table": "flat_uci_15_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:15",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:159": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 11,
+     "continuous_columns": 10,
+     "rows": 19020,
+     "table": "flat_uci_159_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:159",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:162": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 61,
+     "continuous_columns": 45,
+     "rows": 39644,
+     "table": "flat_uci_162_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:162",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:165": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 9,
+     "continuous_columns": 9,
+     "rows": 1030,
+     "table": "flat_uci_165_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:165",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:189": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 10,
+     "continuous_columns": 4,
+     "rows": 768,
+     "table": "flat_uci_189_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:189",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:19": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 7,
+     "continuous_columns": 0,
+     "rows": 1728,
+     "table": "flat_uci_19_C2a.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:19",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:193": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 23,
+     "continuous_columns": 18,
+     "rows": 2126,
+     "table": "flat_uci_193_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:193",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:198": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 34,
+     "continuous_columns": 24,
+     "rows": 1941,
+     "table": "flat_uci_198_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:198",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:212": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 7,
+     "continuous_columns": 6,
+     "rows": 310,
+     "table": "flat_uci_212_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:212",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:22": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 36,
+     "continuous_columns": 0,
+     "rows": 3196,
+     "table": "flat_uci_22_C2a.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:22",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:247": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 10,
+     "continuous_columns": 9,
+     "rows": 536,
+     "table": "flat_uci_247_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:247",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:257": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 6,
+     "continuous_columns": 5,
+     "rows": 403,
+     "table": "flat_uci_257_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:257",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:26": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 43,
+     "continuous_columns": 0,
+     "rows": 33779,
+     "table": "flat_uci_26_C2a.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:26",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:264": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 15,
+     "continuous_columns": 14,
+     "rows": 14980,
+     "table": "flat_uci_264_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:264",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:267": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 5,
+     "continuous_columns": 4,
+     "rows": 1372,
+     "table": "flat_uci_267_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:267",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:27": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 16,
+     "continuous_columns": 6,
+     "rows": 690,
+     "table": "flat_uci_27_C2a.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:27",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:270": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 128,
+     "continuous_columns": 128,
+     "rows": 13910,
+     "table": "flat_uci_270_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:270",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:291": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 6,
+     "continuous_columns": 4,
+     "rows": 1503,
+     "table": "flat_uci_291_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:291",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:292": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 8,
+     "continuous_columns": 6,
+     "rows": 440,
+     "table": "flat_uci_292_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:292",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:294": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 5,
+     "continuous_columns": 5,
+     "rows": 9568,
+     "table": "flat_uci_294_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:294",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:296": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 82,
+     "continuous_columns": 77,
+     "rows": 1080,
+     "table": "flat_uci_296_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:296",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:31": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 55,
+     "continuous_columns": 10,
+     "rows": 48418,
+     "table": "flat_uci_31_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:31",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:312": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 16,
+     "continuous_columns": 7,
+     "rows": 750,
+     "table": "flat_uci_312_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:312",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:32": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 40,
+     "continuous_columns": 18,
+     "rows": 541,
+     "table": "flat_uci_32_C2a.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:32",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:327": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 31,
+     "continuous_columns": 0,
+     "rows": 11055,
+     "table": "flat_uci_327_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:327",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:329": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 20,
+     "continuous_columns": 16,
+     "rows": 1151,
+     "table": "flat_uci_329_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:329",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:352": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 9,
+     "continuous_columns": 3,
+     "rows": 541909,
+     "table": "lines.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:352",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:365": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 66,
+     "continuous_columns": 64,
+     "rows": 43405,
+     "table": "flat_uci_365_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:365",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:368": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 19,
+     "continuous_columns": 15,
+     "rows": 500,
+     "table": "flat_uci_368_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:368",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:372": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 9,
+     "continuous_columns": 8,
+     "rows": 17898,
+     "table": "flat_uci_372_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:372",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:379": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 10,
+     "continuous_columns": 0,
+     "rows": 1353,
+     "table": "flat_uci_379_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:379",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:381": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 13,
+     "continuous_columns": 10,
+     "rows": 43824,
+     "table": "flat_uci_381_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:381",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:396": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 107,
+     "continuous_columns": 106,
+     "rows": 811,
+     "table": "flat_uci_396_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:396",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:464": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 82,
+     "continuous_columns": 80,
+     "rows": 21263,
+     "table": "flat_uci_464_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:464",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:52": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 34,
+     "continuous_columns": 32,
+     "rows": 351,
+     "table": "flat_uci_52_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:52",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:536": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 8,
+     "continuous_columns": 4,
+     "rows": 4759,
+     "table": "flat_uci_536_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:536",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:545": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 8,
+     "continuous_columns": 7,
+     "rows": 3810,
+     "table": "flat_uci_545_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:545",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:551": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 12,
+     "continuous_columns": 11,
+     "rows": 36733,
+     "table": "flat_uci_551_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:551",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:555": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 20,
+     "continuous_columns": 8,
+     "rows": 49913,
+     "table": "flat_uci_555_C2a.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:555",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:572": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 95,
+     "continuous_columns": 93,
+     "rows": 6819,
+     "table": "flat_uci_572_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:572",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:59": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 17,
+     "continuous_columns": 16,
+     "rows": 20000,
+     "table": "flat_uci_59_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:59",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:597": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 15,
+     "continuous_columns": 9,
+     "rows": 1197,
+     "table": "flat_uci_597_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:597",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:601": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 14,
+     "continuous_columns": 6,
+     "rows": 10000,
+     "table": "flat_uci_601_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:601",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:602": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 17,
+     "continuous_columns": 16,
+     "rows": 13611,
+     "table": "flat_uci_602_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:602",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:69": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 62,
+     "continuous_columns": 0,
+     "rows": 3190,
+     "table": "flat_uci_69_C2a.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:69",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:73": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 22,
+     "continuous_columns": 0,
+     "rows": 8124,
+     "table": "flat_uci_73_C2a.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:73",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:75": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 169,
+     "continuous_columns": 166,
+     "rows": 6598,
+     "table": "flat_uci_75_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:75",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:755": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 8,
+     "continuous_columns": 7,
+     "rows": 31991,
+     "table": "flat_uci_755_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:755",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:76": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 9,
+     "continuous_columns": 0,
+     "rows": 12960,
+     "table": "flat_uci_76_C2a.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:76",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:760": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 7,
+     "continuous_columns": 3,
+     "rows": 45450,
+     "table": "flat_uci_760_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:760",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:78": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 11,
+     "continuous_columns": 10,
+     "rows": 5473,
+     "table": "flat_uci_78_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:78",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:80": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 17,
+     "continuous_columns": 17,
+     "rows": 10992,
+     "table": "flat_uci_80_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:80",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:848": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 16,
+     "continuous_columns": 3,
+     "rows": 30535,
+     "table": "flat_uci_848_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:848",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:850": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 8,
+     "continuous_columns": 7,
+     "rows": 900,
+     "table": "flat_uci_850_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:850",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:864": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 19,
+     "continuous_columns": 14,
+     "rows": 10129,
+     "table": "flat_uci_864_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:864",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:911": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 15,
+     "continuous_columns": 8,
+     "rows": 18182,
+     "table": "flat_uci_911_C2a.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:911",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:94": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 58,
+     "continuous_columns": 57,
+     "rows": 4601,
+     "table": "flat_uci_94_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:94",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:942": [
+   {
+    "category": "C1",
+    "code": "",
+    "facts": {
+     "columns": 84,
+     "continuous_columns": 70,
+     "rows": 41039,
+     "table": "flat_uci_942_C1.csv",
+     "withheld_columns": []
+    },
+    "group": "uci:942",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uci:967": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 55,
+     "continuous_columns": 24,
+     "rows": 47159,
+     "table": "flat_uci_967_C2a.csv",
+     "withheld_columns": [
+      "label"
+     ]
+    },
+    "group": "uci:967",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uk_charity_commission": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 4,
+     "tables": 5
+    },
+    "group": "uk_charity_commission",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uk_ledger_mhra": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 7,
+     "continuous_columns": 1,
+     "rows": 1330,
+     "table": "mhra.csv",
+     "withheld_columns": []
+    },
+    "group": "uk_ledger_mhra",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uk_ledger_nhsbsa": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 7,
+     "continuous_columns": 2,
+     "rows": 3477,
+     "table": "nhsbsa.csv",
+     "withheld_columns": []
+    },
+    "group": "uk_ledger_nhsbsa",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "uniprot_kb": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 1500,
+     "file": "entries.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 526,
+     "paths": 542
+    },
+    "group": "uniprot_kb",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "unisg_smart_factory": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 1,
+     "rows": 1727,
+     "table": "activities.csv",
+     "time_column": "start_time",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "unisg_smart_factory",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   },
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 5,
+     "events": 1727,
+     "order_column": "start_time",
+     "table": "activities.csv",
+     "withheld_columns": []
+    },
+    "group": "unisg_smart_factory",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "us_treasury_dts": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 10,
+     "continuous_columns": 4,
+     "rows": 91119,
+     "table": "dts_operating_cash.csv",
+     "withheld_columns": []
+    },
+    "group": "us_treasury_dts",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "usda_fdc": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 6,
+     "tables": 7
+    },
+    "group": "usda_fdc",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "usgs_water": [
+   {
+    "category": "C3",
+    "code": "",
+    "facts": {
+     "numeric_columns": 1,
+     "rows": 243474,
+     "table": "discharge.csv",
+     "time_column": "timestamp",
+     "time_ordered_in_probe": true,
+     "withheld_columns": []
+    },
+    "group": "usgs_water",
+    "ok": true,
+    "protocol": "P-TS",
+    "reason": "",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "vif_aegis": [
+   {
+    "category": "C3",
+    "code": "no_time_axis",
+    "facts": {},
+    "group": "vif_aegis",
+    "ok": false,
+    "protocol": "P-TS",
+    "reason": "obd.csv has no parseable instant column; numeric epoch or elapsed-time axes are not recognised by this adapter",
+    "unit": "time_window",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "volvo_it": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 5,
+     "events": 65533,
+     "order_column": "time",
+     "table": "events.csv",
+     "withheld_columns": []
+    },
+    "group": "volvo_it",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "wa_ecology_ghg_reports": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 22,
+     "continuous_columns": 12,
+     "rows": 2521,
+     "table": "emissions.csv",
+     "withheld_columns": []
+    },
+    "group": "wa_ecology_ghg_reports",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "wa_ev_population": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 11,
+     "continuous_columns": 3,
+     "rows": 30000,
+     "table": "vehicles.csv",
+     "withheld_columns": []
+    },
+    "group": "wa_ev_population",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "wals_cldf": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 9,
+     "tables": 8
+    },
+    "group": "wals_cldf",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "wikimedia_simplewiki": [
+   {
+    "category": "C4",
+    "code": "",
+    "facts": {
+     "event_type_candidates": 5,
+     "events": 296916,
+     "order_column": "timestamp",
+     "table": "revisions.csv",
+     "withheld_columns": []
+    },
+    "group": "wikimedia_simplewiki",
+    "ok": true,
+    "protocol": "P-SEQ",
+    "reason": "",
+    "unit": "event_sequence",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "wikimedia_wikidata": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 1611,
+     "file": "items.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 51566,
+     "paths": 51579
+    },
+    "group": "wikimedia_wikidata",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "wind_fragility_power_db": [
+   {
+    "category": "C5",
+    "code": "",
+    "facts": {
+     "relationships": 5,
+     "tables": 5
+    },
+    "group": "wind_fragility_power_db",
+    "ok": true,
+    "protocol": "P-REL",
+    "reason": "",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "world_bank_projects": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 17,
+     "continuous_columns": 7,
+     "rows": 5000,
+     "table": "projects.csv",
+     "withheld_columns": []
+    },
+    "group": "world_bank_projects",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "wri_global_power_plants": [
+   {
+    "category": "C2a",
+    "code": "",
+    "facts": {
+     "columns": 16,
+     "continuous_columns": 5,
+     "rows": 34936,
+     "table": "power_plants.csv",
+     "withheld_columns": []
+    },
+    "group": "wri_global_power_plants",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "zambia_procurement": [
+   {
+    "category": "C2b",
+    "code": "",
+    "facts": {
+     "columns": 8,
+     "continuous_columns": 2,
+     "rows": 2999,
+     "table": "awards.csv",
+     "withheld_columns": []
+    },
+    "group": "zambia_procurement",
+    "ok": true,
+    "protocol": "P-TAB",
+    "reason": "",
+    "unit": "row",
+    "unit_status": "protocol_defined"
+   },
+   {
+    "category": "C5",
+    "code": "no_relationship",
+    "facts": {},
+    "group": "zambia_procurement",
+    "ok": false,
+    "protocol": "P-REL",
+    "reason": "the view manifest declares no foreign key",
+    "unit": "relationship",
+    "unit_status": "protocol_defined"
+   },
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 5000,
+     "file": "releases.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 89,
+     "paths": 101
+    },
+    "group": "zambia_procurement",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ],
+  "zenodo_repository_records": [
+   {
+    "category": "C6",
+    "code": "",
+    "facts": {
+     "documents_probed": 4105,
+     "file": "records.jsonl",
+     "malformed_probed": 0,
+     "nested_paths": 108,
+     "paths": 125
+    },
+    "group": "zenodo_repository_records",
+    "ok": true,
+    "protocol": "P-NEST",
+    "reason": "",
+    "unit": "nested_path",
+    "unit_status": "protocol_defined"
+   }
+  ]
+ },
+ "summary": {
+  "by_category": {
+   "C1": {
+    "participations": 52,
+    "passed": 52
+   },
+   "C2a": {
+    "participations": 30,
+    "passed": 30
+   },
+   "C2b": {
+    "participations": 30,
+    "passed": 30
+   },
+   "C3": {
+    "participations": 40,
+    "passed": 37
+   },
+   "C4": {
+    "participations": 28,
+    "passed": 26
+   },
+   "C5": {
+    "participations": 36,
+    "passed": 31
+   },
+   "C6": {
+    "participations": 30,
+    "passed": 29
+   }
+  },
+  "failure_codes": {
+   "no_event_order": 2,
+   "no_relationship": 5,
+   "no_table": 1,
+   "no_time_axis": 3
+  }
+ }
+}
