@@ -80,9 +80,12 @@ and asyncio tasks. A child process inherits them through `environ(base)` (variab
 | MLflow | adapter: `MLFLOW_RUN_ID` provides `mlflow_run_id` | tested on the variable only |
 | Airflow | adapter: `AIRFLOW_CTX_DAG_RUN_ID` provides `dag_run_id` | tested on the variable only |
 
-The three adapters read documented environment variables of those systems. None of the systems is installed or
-run here, so end-to-end propagation through an orchestrated task is not demonstrated; the runtime profiles (#142) and
-the integration tickets (#164, #168) own that check. `ETL_CORR_*` values override the adapted ones.
+The three adapters read documented environment variables of those systems. They are tested on the variables, and
+end to end through the local Airflow and MLflow of the runtime profiles (`platform/orchestration_check.sh`, 2026-11-27;
+see [RUNTIME.md](RUNTIME.md)): a BashOperator task of a real DAG run logs the `dag_run_id` that Airflow exported
+(`AIRFLOW_CTX_DAG_RUN_ID`), a task that creates a run on the MLflow server logs that run's `mlflow_run_id` together with the
+`dag_run_id`, and a subprocess started with `oe.environ()` logs the identifiers its parent bound (`ETL_CORR_*`), including a
+`trace_id`. The `TRACEPARENT` adapter is tested on the variable only; no tracing service sends it yet (#167). `ETL_CORR_*` values override the adapted ones.
 
 **structlog.** `configure_structlog()` installs two processors and routes structlog through the standard library, so
 `obs_logging` still formats and writes every record: `structlog_processor` validates the event name and adds the schema
@@ -150,7 +153,12 @@ decision adopts this layer.
 - **No duplicate logging.** `log_failure` marks an exception as reported; the layers above can call it or `run_guarded`
   without producing a second record.
 - **Visible in orchestration.** `run_guarded(main, stage=..., logger=...)` returns the exit code of the failure class, so a
-  scheduler sees a non-zero status, and logs `run.failed` unless a lower layer already reported the failure.
+  scheduler sees a non-zero status, and logs `run.failed` unless a lower layer already reported the failure. Through
+  the local Airflow (`platform/orchestration_check.sh`, synthetic tasks, no dataset): a transient failure retried twice
+  ends `success` with two `stage.retrying` events and a `recovered` completion; retries stopped at the limit end `failed`
+  with an `exhausted` failure of class `infrastructure`; a data-quality failure ends `failed` with exit code 65, no retry
+  and a `run.failed` event of class `data_quality`; the task downstream of it is `upstream_failed`, and the DAG run is
+  `failed`. Every event carries the `dag_run_id`.
 - **Not changed.** The archived runners keep their recorded-outcome handling: the audit lists the `except Exception`
   blocks that turn a failure into scientific data (disclosed errors, ineligibility reasons) as "keep". This module does not
   replace them.

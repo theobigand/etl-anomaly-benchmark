@@ -55,11 +55,14 @@ services:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__CORE__PARALLELISM: "2"
       AIRFLOW__SCHEDULER__PARSING_PROCESSES: "1"
+      PYTHONPATH: /opt/airflow/research
       AIRFLOW__DAG_PROCESSOR__PARSING_PROCESSES: "1"
     ports: ["127.0.0.1:${AIRFLOW_PORT:-58080}:8080"]
     volumes:
       - airflow-data:/opt/airflow
       - ./dags:/opt/airflow/dags:ro
+      - ./probes:/opt/airflow/probes:ro
+      - ../research:/opt/airflow/research:ro
     mem_limit: 3g
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://127.0.0.1:8080/api/v2/monitor/health', timeout=4)"]

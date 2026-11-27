@@ -38,4 +38,24 @@ observability and relational) fit.
 - Alloy forwards OTLP logs to Loki and traces to Tempo; the log path is proven end to end, the trace path is configured but not yet exercised.
 - Airflow uses its own embedded database in standalone mode; sharing the relational profile is left to #148.
 
-Not done here: orchestrated correlation and retry visibility (#157, #158) and DAG content (#148, #164); trace delivery to Tempo; Compose on Linux.
+## Orchestration check (#157, #158)
+
+`platform/orchestration_check.sh` starts the orchestration and mlops profiles together, triggers the synthetic DAG
+`synthetic_orchestration` (`platform/dags`, tasks in `platform/probes`; no dataset, detector or scientific run) through
+Airflow's REST API, waits for the run and checks what Airflow itself reports: task states, task logs and the structured
+events in them. It exits non-zero on any deviation. It takes about 25 seconds from a cold start. The `research/` folder
+is mounted read-only in the Airflow container, so the platform modules that run are the ones of the working tree.
+
+| Check | Result |
+|---|---|
+| Airflow exports `AIRFLOW_CTX_DAG_RUN_ID` to a task; the platform adapts it | the events of the task carry the real `dag_run_id` |
+| `ETL_CORR_*` reaches a subprocess of a task | the child logs the parent's `scientific_run_id`, `trace_id` and `pipeline_run_id` |
+| A run created on the MLflow server is adopted through `MLFLOW_RUN_ID` | the logged `mlflow_run_id` is found on the server and sits beside the `dag_run_id` |
+| Transient failure within the limit | task `success`; two `stage.retrying` events and a `recovered` completion |
+| Transient failure beyond the limit | task `failed`; `exhausted` failure of class `infrastructure` after two retries |
+| Permanent failure | task `failed` with exit code 65; one `run.failed` event of class `data_quality`; no retry |
+| Task downstream of the failure | `upstream_failed` |
+| DAG run with failed tasks | `failed`, never `success` |
+
+Not done here: DAG content for the roadmap (#148, #164); trace delivery to Tempo; the `TRACEPARENT` path through a real
+tracing service; Compose on Linux; a restart of Airflow during a run.
