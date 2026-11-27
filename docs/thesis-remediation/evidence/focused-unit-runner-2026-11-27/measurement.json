@@ -1,0 +1,51 @@
+{
+ "base_head": "efc670681eab40882f55a7f529f4ba05a93972fc",
+ "command": "python -m mutmut run with research/tests/test_unit_runner.py, in a scratch copy holding research/*.py, src, verification/evidence/dataset_registry_v2 and a narrowed pyproject",
+ "date": "2026-11-27",
+ "environment": {
+  "mutmut": "3.8.x (etl-mutation-venv)",
+  "platform": "macOS-27.2-arm64",
+  "python": "3.13"
+ },
+ "kind": "local focused development measurement of the synthetic unit runner for issues #135, #137, #138 and #139; not the controller campaign, not attested",
+ "modules": {
+  "research/unit_runner.py": {
+   "eligible": 472,
+   "killed": 448,
+   "level": "L2",
+   "raw_score": 94.9,
+   "source_sha256": "f03dfa5e6bf3cd8896c48e35494c90d44b765def009ecda3a3303cfdafaabbe8",
+   "status": "PASS_RAW",
+   "survived": 24,
+   "threshold": 90
+  }
+ },
+ "note": "No mutant was marked equivalent. 24 mutants are not killed: the numeric ranges and constants of the seeded fixture generators of P-TAB, P-TS, P-SEQ, P-REL and P-NEST, and two logging details of execute.",
+ "survivors": [
+  "x__nest_make__mutmut_1",
+  "x__nest_make__mutmut_2",
+  "x__rel_make__mutmut_18",
+  "x__seq_make__mutmut_18",
+  "x__seq_make__mutmut_20",
+  "x__seq_make__mutmut_21",
+  "x__tab_make__mutmut_10",
+  "x__tab_make__mutmut_6",
+  "x__tab_make__mutmut_8",
+  "x__tab_make__mutmut_9",
+  "x__ts_make__mutmut_10",
+  "x__ts_make__mutmut_11",
+  "x__ts_make__mutmut_18",
+  "x__ts_make__mutmut_19",
+  "x__ts_make__mutmut_20",
+  "x__ts_make__mutmut_21",
+  "x__ts_make__mutmut_22",
+  "x__ts_make__mutmut_23",
+  "x__ts_make__mutmut_6",
+  "x__ts_make__mutmut_7",
+  "x__ts_make__mutmut_8",
+  "x__ts_make__mutmut_9",
+  "x_execute__mutmut_11",
+  "x_execute__mutmut_6"
+ ],
+ "working_tree": "clean apart from the measured module and its tests"
+}

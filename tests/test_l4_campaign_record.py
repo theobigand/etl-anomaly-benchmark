@@ -32,6 +32,7 @@ SUPPLEMENTS = (
     ROOT
     / "docs/thesis-remediation/evidence/focused-compatibility-model-2026-11-26/measurement.json",
     ROOT / "docs/thesis-remediation/evidence/focused-unit-dry-run-2026-11-27/measurement.json",
+    ROOT / "docs/thesis-remediation/evidence/focused-unit-runner-2026-11-27/measurement.json",
     ROOT / "docs/thesis-remediation/evidence/focused-mlflow-link-2026-11-27/measurement.json",
 )
 

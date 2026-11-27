@@ -619,6 +619,10 @@
     "research/mlflow_link.py": {
       "level": "L2",
       "reason": "It links MLflow runs to the scientific record and audits what is sent to the tracking server: a defect could drop or mislink a correlation identifier or let a synthetic run look scientific, never change a scientific result; it reads no dataset, fits nothing, and the scientific code does not import it (ADR-0001)."
+    },
+    "research/unit_runner.py": {
+      "level": "L2",
+      "reason": "It injects controlled faults into seeded synthetic fixtures and checks the ground-truth contract of each unit-level protocol: a defect could let an operator or a truth mask go unnoticed in engineering tests, never change a scientific result; it accepts only synthetic fixtures, refuses a scientific run, fits and scores nothing, and the scientific code does not import it (ADR-0001)."
     }
   }
 }
