@@ -74,6 +74,26 @@ observability)
     echo "$found" | grep -q "$marker" && break; sleep 2
   done
   echo "$found" | grep -q "$marker" ; ok "a log sent to Alloy over OTLP is stored in Loki"
+  trace="$(openssl rand -hex 16)"; span="$(openssl rand -hex 8)"
+  curl -fsS -X POST "http://127.0.0.1:${OTLP_HTTP_PORT:-54318}/v1/traces" -H 'Content-Type: application/json' -d "{\"resourceSpans\":[{\"resource\":{\"attributes\":[{\"key\":\"service.name\",\"value\":{\"stringValue\":\"smoke\"}}]},\"scopeSpans\":[{\"spans\":[{\"traceId\":\"$trace\",\"spanId\":\"$span\",\"name\":\"smoke-span\",\"kind\":1,\"startTimeUnixNano\":\"$ts\",\"endTimeUnixNano\":\"$((ts + 1000000))\"}]}]}]}" >/dev/null
+  seen=""
+  for _ in $(seq 1 30); do
+    seen="$(curl -fsS "http://127.0.0.1:${TEMPO_PORT:-53200}/api/traces/$trace" 2>/dev/null || true)"
+    echo "$seen" | grep -q "smoke-span" && break; sleep 2
+  done
+  echo "$seen" | grep -q "smoke-span" ; ok "a trace sent to Alloy over OTLP is found in Tempo"
+  curl -fsS -X POST "http://127.0.0.1:${OTLP_HTTP_PORT:-54318}/v1/metrics" -H 'Content-Type: application/json' -d "{\"resourceMetrics\":[{\"resource\":{\"attributes\":[{\"key\":\"service.name\",\"value\":{\"stringValue\":\"smoke\"}}]},\"scopeMetrics\":[{\"metrics\":[{\"name\":\"smoke_jobs\",\"gauge\":{\"dataPoints\":[{\"timeUnixNano\":\"$ts\",\"asDouble\":7}]}}]}]}]}" >/dev/null
+  value=""
+  for _ in $(seq 1 30); do
+    value="$(curl -fsS -G "http://127.0.0.1:${PROMETHEUS_PORT:-59090}/api/v1/query" --data-urlencode 'query=smoke_jobs' || true)"
+    echo "$value" | grep -q '"7"' && break; sleep 2
+  done
+  echo "$value" | grep -q '"7"' ; ok "a metric sent to Alloy over OTLP is queryable in Prometheus"
+  curl -fsS "http://127.0.0.1:${LOKI_PORT:-53100}/loki/api/v1/labels" | python3 -c '
+import json, sys
+labels = set(json.load(sys.stdin)["data"])
+assert labels <= {"exporter", "job", "service_name", "level"}, f"unexpected Loki labels: {labels}"
+' ; ok "Loki labels are low-cardinality (no run or trace identifier)"
   curl -fsS -u "admin:$GRAFANA_ADMIN_PASSWORD" "http://127.0.0.1:${GRAFANA_PORT:-53000}/api/datasources" | python3 -c '
 import json, sys
 names = sorted(d["name"] for d in json.load(sys.stdin))

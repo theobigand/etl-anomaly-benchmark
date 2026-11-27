@@ -1,10 +1,11 @@
-// OTLP in, logs to Loki. Traces stay local to Tempo through the same receiver.
+// OTLP in; logs to Loki, traces to Tempo, metrics to Prometheus (remote write). One collector, no second one.
 otelcol.receiver.otlp "default" {
   grpc { endpoint = "0.0.0.0:4317" }
   http { endpoint = "0.0.0.0:4318" }
   output {
-    logs   = [otelcol.exporter.loki.default.input]
-    traces = [otelcol.exporter.otlp.tempo.input]
+    logs    = [otelcol.exporter.loki.default.input]
+    traces  = [otelcol.exporter.otlp.tempo.input]
+    metrics = [otelcol.exporter.prometheus.default.input]
   }
 }
 
@@ -21,4 +22,12 @@ otelcol.exporter.otlp "tempo" {
     endpoint = "tempo:4317"
     tls { insecure = true }
   }
+}
+
+otelcol.exporter.prometheus "default" {
+  forward_to = [prometheus.remote_write.default.receiver]
+}
+
+prometheus.remote_write "default" {
+  endpoint { url = "http://prometheus:9090/api/v1/write" }
 }

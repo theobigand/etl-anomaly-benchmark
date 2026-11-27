@@ -30,12 +30,27 @@ images pulled for linux/arm64. Image sizes: Airflow 3.24 GB, Grafana 1.89 GB, Py
 1.37 GB, the others under 1 GB. Run one service profile at a time on a 16 GB host; two together (for example
 observability and relational) fit.
 
+## Observability budget and retention (#162)
+
+| Service | Retention | Storage bound | Memory limit | Measured idle |
+|---|---|---|---|---|
+| Prometheus | 2 days | 1 GB (`retention.size`) | 384 MiB | 48 MiB |
+| Loki | 48 hours (compactor with retention enabled) | filesystem volume | 512 MiB | 48 MiB |
+| Tempo | 48 hours (`backend_worker.compaction.block_retention`) | local volume | 512 MiB | 33 MiB |
+| Alloy | none (it forwards; no queue on disk) | none | 384 MiB | 48 MiB |
+| Grafana | none (dashboards and data sources come from files) | state volume | 768 MiB | 394 MiB |
+
+Loki labels seen after the smoke test are `service_name`, `job` and `exporter`; the test fails if any other label
+appears, so a run, trace or artifact identifier cannot become a label by accident. Short-lived job metrics use the OTLP
+push path through Alloy to Prometheus remote write, not a Pushgateway. Storage volumes are removed by `down -v`; none of
+them is under the repository.
+
 ## Findings
 
 - MLflow was killed for memory at 768 MiB with the default worker count; it now runs one worker with a 1.5 GiB limit and an explicit allowed-hosts list.
 - Loki, Tempo and Alloy images have no shell or HTTP client, so Compose health checks are not possible for them; readiness is probed from the host by the smoke script.
 - Tempo 3.x rejects the `compactor` block of earlier versions and runs standalone without an external queue; the configuration is minimal.
-- Alloy forwards OTLP logs to Loki and traces to Tempo; the log path is proven end to end, the trace path is configured but not yet exercised.
+- Alloy is the single collector: one OTLP receiver sends logs to Loki, traces to Tempo and metrics to Prometheus (remote write). The smoke test sends one log, one trace and one metric through it and finds each in its backend (#162).
 - Airflow uses its own embedded database in standalone mode; sharing the relational profile is left to #148.
 
 ## Orchestration check (#157, #158)
@@ -57,5 +72,5 @@ is mounted read-only in the Airflow container, so the platform modules that run 
 | Task downstream of the failure | `upstream_failed` |
 | DAG run with failed tasks | `failed`, never `success` |
 
-Not done here: DAG content for the roadmap (#148, #164); trace delivery to Tempo; the `TRACEPARENT` path through a real
+Not done here: DAG content for the roadmap (#148, #164); the `TRACEPARENT` path through a real
 tracing service; Compose on Linux; a restart of Airflow during a run.

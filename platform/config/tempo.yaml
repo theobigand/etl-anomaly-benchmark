@@ -7,3 +7,5 @@ storage:
     backend: local
     local: {path: /var/tempo/blocks}
     wal: {path: /var/tempo/wal}
+backend_worker:
+  compaction: {block_retention: 48h}
