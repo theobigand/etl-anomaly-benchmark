@@ -24,10 +24,11 @@ only") and the registry evidence. This is an assessment of existing rules, not a
 | 14 | Scientific evaluation | Forbidden | same |
 | 15 | Inclusion in scientific conclusions | Forbidden before approval of the unit definition (S03 / #154) | #137 to #139 non-goals |
 
-Row 9 is the one open interpretation. The safe reading, used for any work started from this document, is that a dry run
-works from the registry metadata (columns, types, declared keys, paths, row counts) and from synthetic fixtures, and
-that it does not open a benchmark view. If the owner wants dry runs that read the real views to prove they can be
-turned into units, that is a one-line authorization to record in #135, #137, #138 and #139.
+Row 9 was the one open interpretation. The owner resolved it on 2026-11-27: read-only structural dry runs on the real
+views are authorized (schema, data types, required columns, structural compatibility, adapter and input/output
+contracts, technical failure detection), with no access to ground truth for analysis, no detector fitting or
+inference, no score, metric, threshold or selection by performance, and the freeze stays active. What was done under
+that wording, and what it did not change, is in [UNIT_DRY_RUN.md](UNIT_DRY_RUN.md).
 
 ## What each issue still needs
 
