@@ -615,6 +615,10 @@
     "research/unit_dry_run.py": {
       "level": "L2",
       "reason": "It decides, per registry participation, whether the structure a protocol's unit needs is present and why not: a defect could report a source as structurally usable or unusable and misdirect engineering work or a ledger note, never change a scientific result; it never returns cell values, fits, scores or injects, and the scientific code does not import it (ADR-0001)."
+    },
+    "research/mlflow_link.py": {
+      "level": "L2",
+      "reason": "It links MLflow runs to the scientific record and audits what is sent to the tracking server: a defect could drop or mislink a correlation identifier or let a synthetic run look scientific, never change a scientific result; it reads no dataset, fits nothing, and the scientific code does not import it (ADR-0001)."
     }
   }
 }
