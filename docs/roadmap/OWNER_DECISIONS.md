@@ -1,103 +1,234 @@
 # Owner decision package (#154, with #153)
 
-Status: prepared 2026-11-27 for the owner. It is not an approval, not an authorization record and not a review. The
-experiment freeze stays active. Nothing below was run on benchmark data; every number is recomputed from
-`research/target_framework.py` (`sd_ratio_interval`, `effective_sd_interval`, `paired_sources`) and from the committed
-panel `verification/evidence/dataset_registry_v2/unit_pilot_panel.json`.
+Status: revised 2026-11-27 after a separate, model-assisted methodological assessment (verdict "accept with changes").
+It is not an approval, not an authorization record and not the independent review that #153 requires (that needs an
+independent human statistician or a reviewer the repository governance recognizes). The experiment freeze stays active.
+Nothing here was run on benchmark data. Every recommendation below is methodological advice, not an owner approval.
 
-Three gates stay separate: approving the design (#153), authorizing a pilot, and approving a confirmatory sample size.
-Approving a unit definition (S03, #154) is a fourth, independent gate. The independent statistical review (#153) has not
-been performed; its standalone prompt is section 6 of [`verification/pilot_review_package.md`](../../verification/pilot_review_package.md).
+Four gates stay separate: approving the design (#153), approving a unit definition (S03, #154), authorizing a pilot, and
+approving a confirmatory sample size. Details and calculations:
+[`verification/pilot_statistical_remediation.md`](../../verification/pilot_statistical_remediation.md); unit
+specifications: [`verification/unit_amendment_proposals.md`](../../verification/unit_amendment_proposals.md).
 
-## 1. The planning ratio, verified
+## 1. What changed since the previous package
 
-The ratio r multiplies the pilot estimate: the confirmatory size is computed with sigma = sigma-hat x r. The table
-`effective_sd_interval` gives r = sqrt((n-1) / chi2_{alpha/2}(n-1)) for n effective sources. Assurance below is the
-probability that the true sigma lies below sigma-hat x r when the source differences are independent and normal
-(two-sided level 1-alpha; the one-sided bound is in brackets). The design effect DE reduces n to floor(n / DE).
+- The coverage wording is corrected. The planning ratio r = 1.55 is the upper end of a two-sided 95 percent interval, a
+  97.5 percent one-sided upper bound at 16 effective clusters; 1.4 is 93.7 percent one-sided and 87.4 percent two-sided.
+  Neither is a guarantee of confirmatory power.
+- The largest-pool allocation concentrated larger panels. A balanced allocation (equal category shares, curator cap, new
+  domain, schema family and curator first) gives 16 floor-eligible clusters with one group per domain and at most 3 per
+  curator, at a cost of 9 confirmatory clusters.
+- The pilot should draw from floor-meeting clusters; only 7 of the 16 current groups do.
+- A family of 11 comparisons is infeasible in most scenarios; one or three primary comparisons are prepared.
+- The batch alert budget is not Beta(1, n); the expected false-alert probability at 16 to 100 validation batches is 10.3
+  to 5.9 percent, not 5.
+- 30 UCI groups of the registry were rows with detector outcomes in the earlier pool benchmark and are not recorded as
+  exposed; three of them are in the current 16-group proposal.
+- The percentile bootstrap is anti-conservative at 16 clusters; residual curator dependence inflates type I error to
+  14 to 21 percent unless curator-block resampling is used.
 
-| Pilot sources, DE | effective n | r = 1.4 | r = 1.55 (provisional) | r = 1.7 |
-|---|---:|---:|---:|---:|
-| 16, 1.0 | 16 | 87.4% (93.7%) | 95.1% (97.5%) | 98.1% (99.0%) |
-| 16, 1.3 | 12 | 79.6% (89.8%) | 90.0% (95.0%) | 95.0% (97.5%) |
-| 16, 2.0 | 8 | 65.5% (82.8%) | 78.6% (89.3%) | 86.6% (93.3%) |
-| 24, 1.0 | 24 | 94.9% (97.4%) | 98.7% (99.4%) | 99.7% (99.8%) |
+## 2. Decisions
 
-Confirmatory sources for effect 0.05, power 0.80, Holm family k (`paired_sources`), against 137 clusters that meet the
-1,000-test-unit floor in the unit-level holdout:
+Readiness: **ready for owner approval** = no further methodological work; **needs review** = the independent review of
+#153 should look at it first; **separate gate** = depends on other decisions.
 
-| sigma-hat | r | k = 1 | k = 3 | k = 11 | k = 11 fits 137 |
-|---:|---:|---:|---:|---:|---|
-| 0.07 | 1.4 | 33 | 44 | 57 | yes |
-| 0.07 | 1.55 | 39 | 53 | 68 | yes |
-| 0.07 | 1.7 | 47 | 63 | 81 | yes |
-| 0.10 | 1.4 | 64 | 85 | 111 | yes |
-| 0.10 | 1.55 | 78 | 104 | 135 | yes, by 2 clusters |
-| 0.10 | 1.7 | 93 | 124 | 161 | no |
-| 0.12 | 1.4 | 91 | 122 | 157 | no |
-| 0.12 | 1.55 | 111 | 148 | 192 | no |
-| 0.12 | 1.7 | 133 | 178 | 230 | no |
+### D-01 Unit-level pilot size
 
-Reading. 1.4 is an optimistic choice at 16 sources (87% two-sided, 80% if DE is 1.3). 1.55 is the 95% value at DE 1.0
-and still about 90% at DE 1.3. 1.7 is 95% at DE 1.3. Moving from 1.4 to 1.55 raises the requirement by 18 to 22
-percent. A larger sigma-hat (0.12) makes k = 11 infeasible whatever the ratio, so the Holm ceiling and the pooled claim
-must be re-decided after the pilot, not before. The ratio was not chosen to maximize feasible comparisons; 1.55 is
-provisional planning input only and the independent review must judge it.
+- Question: how many provenance clusters in the statistical pilot, and drawn how?
+- Options: 16, 24, 32; current allocation or balanced allocation.
+- Recommended: balanced allocation, 24 clusters (balanced 16 if capacity matters more than sigma precision); not 32.
+- Evidence: balanced 16 / 24 / 32 keep one group per domain, max curator 3 / 5 / 6, retain 127 / 119 / 111 floor-meeting
+  holdout clusters (current 16: 136). The upper ratio is 1.55 / 1.40 / 1.33. At sigma-hat 0.10, k = 3, DE 1.3 the
+  requirement is 136 / 111 / 101: 24 makes the family feasible, 32 adds nothing material.
+- Limits: the floor is a structural proxy; C4 and C6 have 14 and 8 eligible clusters, so no panel supports a C4- or
+  C6-specific confirmatory claim.
+- Depends on: D-02, D-07, D-08, D-12; D-11 for the seed.
+- Authorizes: the size and allocation rule. Does not authorize: running the pilot, or any group.
+- Readiness: needs review.
 
-## 2. Facts re-checked against the panel file
+### D-02 Exposure rule for the plumbing groups
 
-16 groups, 16 domain levels (one group each), 13 schema families (largest 4), 9 curators (largest 4), 0 exposed groups
-in the panel; 5 exposed groups in the registry (all C3, UCI). A domain effect is therefore not identifiable from the pilot
-and any domain statement stays exploratory; curator is the only factor with several groups per level.
+- Question: what happens to the five groups that informed Amendment 1 (`airquality_italy`, `candanedo_umons`,
+  `seoul_bike`, `steel_korea`, `tetouan_power`)?
+- Options: exclude from pilot and confirmation; allow in the pilot with a sensitivity analysis.
+- Recommended: exclude from both. Also decide the new question below.
+- Evidence: they are the only groups the registry records as exposed. The earlier pool benchmark ran detectors on 30
+  other registry groups (including `uci:193`, the cardio dataset); they are in none of the registry's exposure lists.
+  Treating them as exposed lowers the floor-meeting holdout to 114 / 106 / 98 (balanced 16 / 24 / 32).
+- Limits: the pool exposure is study-specific (native labels, another unit and protocol).
+- Depends on: D-08. Authorizes: the exclusion rule and, if chosen, the wider rule for the 30 groups. Does not authorize: any use.
+- Readiness: ready for owner approval; the 30-group rule is an additional choice (exclude: recommended for the confirmatory set).
 
-## 3. Decisions
+### D-03 Primary analysis
 
-Each decision is the owner's. "Authorizes" and "does not authorize" are literal.
+- Question: which estimator, test and resampling unit?
+- Options: Student t on cluster outcomes; percentile cluster bootstrap; sign-flip permutation; mixed model with a curator
+  effect.
+- Recommended: equal-weight mean of cluster outcomes with Student t and Holm across the family; curator-block resampling
+  as a mandatory sensitivity analysis; percentile bootstrap and permutation as robustness checks.
+- Evidence: simulations (2,000 repetitions): t holds 4.2 to 5.5 percent at 5 percent in the normal, heterogeneous and
+  80-cluster skewed cases (9.2 for 16 skewed clusters, where no procedure holds); the percentile bootstrap gives 7.7 percent at 16 clusters; dependence at icc 0.2 / 0.5 gives 14 / 21 percent for the
+  procedures that ignore it and 8 / 7 percent with curator blocks.
+- Limits: synthetic data, one sigma; the domain plus schema-family model stays unidentifiable and exploratory.
+- Depends on: D-06. Authorizes: the estimator. Does not authorize: a result.
+- Readiness: needs review.
 
-| ID | Question | Options | Recommended | Rationale | Authorizes | Does not authorize | Review first |
-|---|---|---|---|---|---|---|---|
-| D-01 | Unit-level pilot size | 16, 24, 32 | 16 | one group per domain, largest family 4; 24 and 32 add C1 groups from one curator and no information on unidentified factors; cost is a wider sigma (r 1.55 vs 1.40 at 24) | the panel size | running it | yes (#153) |
-| D-02 | Exposure rule for the five plumbing groups | exclude from both sides; allow in the pilot with sensitivity | exclude | they informed Amendment 1; the panel already excludes them | the exclusion rule | any use of them | no |
-| D-03 | Primary analysis | cluster bootstrap on per-cluster paired differences; mixed model with curator effect | cluster bootstrap | the domain effect is unestimable; a mixed model needs a dependency decision (ADR-0001) | the estimator | a result | yes (#153) |
-| D-04 | Planning ratio r | 1.4, 1.55, 1.7 | 1.55, with 1.4 and 1.7 reported as sensitivity | section 1 | the value used in sizing tables | a confirmatory size | yes (#153) |
-| D-05 | Smallest effect of interest | 0.05, other | 0.05 if the thesis claims justify it; otherwise state the claim first | only a convenient value so far | the effect in sizing | a claim | yes (#153) |
-| D-06 | Holm family ceiling | k up to 11, smaller | up to 11, revisit after sigma-hat | k = 11 fails at sigma-hat 0.12 for every r | the family limit | adding comparisons later | yes (#153) |
-| D-07 | Cluster in both pilots | allow, forbid | forbid | simple exposure bookkeeping, small cost in clusters | the rule | nothing else | no |
-| D-08 | Cross-study exposure | exposure in one study excludes the group from the other's confirmatory set: yes, no | yes | keeps confirmatory sets clean | the rule | nothing else | no |
-| D-09 | Cincinnati calls and fire dispatch | linked, independent | linked until evidence says otherwise | independent treatment inflates the effective sample | the cluster definition | nothing else | no |
-| D-10 | Batch pilot (T424): contrasts (at most 3), sizing sigma rule, P, M, seed, exposed groups | see design section 7 | no statistical default | protocol choices | the batch plan | running it | yes (#153) |
-| D-11 | Seed and sampling procedure for the unit-level panel | owner draws and records a seed | owner-drawn | the seed must be recorded by the owner | the panel | running it | no |
-| D-12 | Floors: 15 percent test share, 20 positives, k at least 10; pilot eligibility | accept, change | accept | they define when a group can count | the floors | inclusion of a specific group | yes (#153) |
-| D-13 | Experimental unit per protocol: P-TAB `row`, P-TS `time_window`, P-SEQ `event_sequence` (provisional `event_window`), P-REL `relationship` (provisional `relational_load`), P-NEST `nested_path` (provisional `document_batch`) | approve the protocol-defined unit; approve the provisional one; keep the registered `temporal_batch` only | approve the protocol-defined unit per protocol, one dated amendment each (S03) | the provisional units have no ground truth, metrics or operators yet | scientific use of that unit by its runner | execution | no |
-| D-14 | Pilot execution | authorize, defer | defer until D-01 to D-12 and the review are recorded | separate gate | a pilot run | confirmatory run | n/a |
-| D-15 | Confirmatory sample size | approve after the pilot | after the pilot | sigma-hat is what the pilot measures | the size | the run | n/a |
-| D-16 | Evaluation and inclusion boundaries | per-category and pooled claims; negative or inconclusive pilots reported without supporting or refuting the confirmatory hypotheses | pooled claim only where powered, categories exploratory | no category alone meets the figures (8 to 30 floor-meeting groups each) | the reporting rule | nothing else | yes (#153) |
-| D-17 | Lifting the freeze for a pilot | date and conditions | lift only after D-01 to D-13, D-14 and the review are recorded | the freeze guards the confirmatory sets | the lift | the confirmatory run | n/a |
+### D-04 Planning ratio and sizing rule
+
+- Question: which ratio r, and which rule turns pilot variance into a confirmatory size?
+- Options: 1.4, 1.55, 1.7; fixed ratio or an assurance-based rule.
+- Recommended: 1.55 provisionally (1.4 and 1.7 as sensitivity); after the pilot, choose the one-sided assurance (97.5
+  percent provisional), compute n_eff from the usable clusters and the pilot dependence, and size with sigma-hat x r.
+- Evidence: coverage table in the remediation section 6; the calculation was correct, only the wording was wrong.
+- Limits: independent normal differences; the realized sigma-hat is random.
+- Depends on: D-01, D-06. Authorizes: the planning input. Does not authorize: a confirmatory size (that is D-15).
+- Readiness: needs review.
+
+### D-05 Smallest effect of interest
+
+- Question: which effect is sized for?
+- Options: 0.05, other.
+- Recommended: 0.05, provisionally. It means five recall percentage points at the matched 1 percent budget (one more
+  injected defect in twenty caught for the same review effort), not a 5 percent relative gain.
+- Evidence: requirements at sigma-hat 0.10, r = 1.55: delta 0.03: 212 / 283 clusters (k = 1 / 3), 0.05: 78 / 104, 0.07:
+  41 / 55, 0.10: 21 / 29. Testing zero, detecting 0.05 with power 0.80 and showing an effect above 0.05 are three
+  different claims; only the first two are planned.
+- Limits: the value is not yet justified by a thesis claim beyond practical relevance; it must be fixed before any outcome.
+- Authorizes: the effect used in sizing. Does not authorize: a claim. Readiness: needs review.
+
+### D-06 Confirmatory family
+
+- Question: how many primary comparisons?
+- Options: 1, 3, up to 11.
+- Recommended: at most 3: A = rule-based against classical machine learning (k = 1), B = the three F1 contrasts (k = 3);
+  use B if its required clusters fit the contrast-specific eligible clusters, else A, else no confirmatory claim.
+  F2, F5, burden and AUPRC are exploratory with their own multiplicity treatment. 11 is a sensitivity scenario only.
+- Evidence: k = 11 fits only at sigma-hat 0.07; k = 3 is feasible at 0.10 with DE 1.0 and, at 24 clusters, with DE 1.3.
+- Limits: contrast-specific eligible counts do not exist yet (no detector applicability for the protocol-defined units).
+- Authorizes: the family limit and the selection rule. Does not authorize: adding comparisons later, or dropping a
+  detector or dataset from the evaluation. Readiness: needs review.
+
+### D-07 Cluster in both pilots
+
+- Question: may a provenance cluster be in the unit-level and the batch pilot?
+- Options: allow, forbid. Recommended: forbid. Evidence: simple exposure bookkeeping, small capacity cost.
+- Authorizes: the rule. Does not authorize: anything else. Readiness: ready for owner approval.
+
+### D-08 Cross-study exposure
+
+- Question: does exposure in one study exclude a cluster from the other study's confirmatory set?
+- Options: yes, no. Recommended: yes, applied at the cluster level. Evidence: keeps confirmatory sets clean.
+- Limits: it interacts with the 30-group question of D-02.
+- Authorizes: the rule. Does not authorize: anything else. Readiness: ready for owner approval.
+
+### D-09 Cincinnati sources
+
+- Question: are Cincinnati emergency calls and fire dispatch one source?
+- Options: linked, independent. Recommended: linked until evidence supports independence.
+- Evidence: the registry already draws them as one cluster (candidate link); independent treatment inflates the effective sample.
+- Authorizes: the cluster definition. Does not authorize: anything else. Readiness: ready for owner approval.
+
+### D-10 Batch pilot (T424)
+
+- Question: contrasts (at most three), sizing rule, pilot size, minimum, seed, exposed groups for the batch study.
+- Recommended: defer the final batch design until its specification and calibration assumptions are verified.
+- Evidence: the alert budget is a target, not an achieved rate (10.3 percent expected at 16 validation batches); the
+  threshold rule needs an amendment decision (conformal order statistic is a candidate); about 34 to 36 confirmatory
+  clusters make a confirmatory batch claim unlikely unless sigma-hat is about 0.07 or less.
+- Authorizes: nothing now. Does not authorize: running the batch pilot. Independent of the unit-level pilot authorization.
+- Readiness: separate gate; needs review.
+
+### D-11 Seed and sampling procedure
+
+- Question: who draws the unit-level panel seed, and when?
+- Options: owner draws and records one seed; implementer proposes one. Recommended: the owner draws and records one seed
+  once, after the selection rules (D-01, D-02, D-07, D-08, D-12) are fixed; the procedure then runs once. The procedure's
+  balance does not depend on the seed (curator maximum 2 to 3 over seeds 1 to 100 at 16).
+- Authorizes: the draw. Does not authorize: re-drawing for a preferred panel. Readiness: ready for owner approval.
+
+### D-12 Floors and pilot eligibility
+
+- Question: are 15 percent test share, 20 positives and k of at least 10 the floors, and must pilot clusters meet them?
+- Options: accept, change. Recommended: retain provisionally; require pilot clusters to meet the same structural floor;
+  verify protocol-specific adequacy (positives and k per mechanism) before confirmatory use. Below-floor clusters serve
+  a separate technical-validation panel.
+- Evidence: 150 groups meet the floor, 83 do not, 2 are unknown; the floor does not establish positives, runnability or
+  detector applicability.
+- Authorizes: the floors and the pilot eligibility rule. Does not authorize: inclusion of a specific group.
+- Readiness: needs review.
+
+### D-13 Experimental unit per protocol
+
+- Question: which unit does each protocol use, and under which specification?
+- Options: protocol-defined unit; the provisional unit; the registered `temporal_batch` only.
+- Recommended: the five protocol-defined units (P-TAB `row`, P-TS `time_window`, P-SEQ `event_sequence`, P-REL
+  `relationship`, P-NEST `nested_path`), each by one dated amendment, once its specification is complete. The drafts are in
+  `unit_amendment_proposals.md`; `event_window`, `relational_load` and `document_batch` stay provisional and are not
+  equivalent.
+- Limits: no detector interface or detector list is registered for any of the five units; P-REL needs an operator a rule
+  cannot see; P-NEST needs a budget definition.
+- Authorizes: scientific use of that unit by its runner, per protocol. Does not authorize: execution.
+- Readiness: needs review of each proposal; the owner can decide protocol by protocol.
+
+### D-14 Pilot execution
+
+- Question: authorize the pilot run now?
+- Options: authorize, defer. Recommended: defer until D-01 to D-12 and the independent review are recorded. Separate gate.
+- Authorizes: a pilot run. Does not authorize: a confirmatory run. Readiness: separate gate.
+
+### D-15 Confirmatory sample size
+
+- Question: how many clusters confirm?
+- Recommended: determine after the authorized pilot, with the rule of D-04 and the family of D-06, against
+  contrast-specific eligible clusters and the dependence sensitivity of the remediation section 7.
+- Authorizes: the size. Does not authorize: the run. Readiness: separate gate.
+
+### D-16 Evaluation and inclusion boundaries
+
+- Question: which claims are made, and how are negative or inconclusive results treated?
+- Options: per-category and pooled claims; pooled only.
+- Recommended: pooled claims where powered; per-category analyses exploratory (no category reaches the required figures:
+  6 to 29 floor-meeting holdout clusters); negative or inconclusive pilots reported without supporting or refuting the
+  confirmatory hypotheses; unit-level and temporal-batch results never pooled.
+- Authorizes: the reporting rule. Does not authorize: dropping a detector or dataset from the evaluation.
+- Readiness: needs review.
+
+### D-17 Lifting the freeze for a pilot
+
+- Question: when, and on which conditions?
+- Recommended: keep the freeze; lift only after D-01 to D-13, D-14 and the independent review are recorded.
+- Authorizes: the lift. Does not authorize: the confirmatory run. Readiness: separate gate.
+
+## 3. Summary of readiness
+
+Ready for owner approval: D-02 (and the 30-group choice), D-07, D-08, D-09, D-11. Need the independent review first:
+D-01, D-03, D-04, D-05, D-06, D-12, D-13, D-16. Separate gates: D-10, D-14, D-15, D-17. No decision here needs separate
+approval of ordinary engineering details.
 
 ## 4. Dependencies
 
-Runners #135 to #139 may be built and tested on synthetic fixtures now (see [ENGINE_PERMISSIONS.md](ENGINE_PERMISSIONS.md));
+Runners #135 to #139 are built and tested on synthetic fixtures (see [ENGINE_PERMISSIONS.md](ENGINE_PERMISSIONS.md));
 their scientific use waits for D-13. #153 closes only with a recorded independent review. #154 closes with one dated
-amendment per approved unit type. D-14 and D-17 depend on D-01 to D-13 and on the review.
+amendment per approved unit. D-14 and D-17 depend on D-01 to D-13 and on the review.
 
 ## 5. Owner response template
 
-Copy, fill in, and record in the repository yourself; nothing here creates an approval.
+Copy, fill in and record in the repository yourself; nothing here creates an approval.
 
 ```
-D-01: approve 16 | 24 | 32 | modify: ...
-D-02: approve exclude | allow | modify: ...
-D-03: approve cluster bootstrap | mixed model | modify: ...
-D-04: approve 1.4 | 1.55 | 1.7 | modify: ...
+D-01: approve balanced 16 | balanced 24 | modify: ...
+D-02: approve exclude five | allow | modify: ...; 30 labelled-pool groups: exclude from confirmation | keep eligible
+D-03: approve t + curator-block sensitivity | modify: ...
+D-04: approve 1.55 + assurance rule | 1.4 | 1.7 | modify: ...
 D-05: approve 0.05 | modify: ...
-D-06: approve k<=11 | modify: ...
+D-06: approve A (k=1) / B (k=3) with the selection rule | modify: ...
 D-07: approve forbid | allow
 D-08: approve yes | no
 D-09: approve linked | independent
-D-10: approve | modify: ... (contrasts, sigma rule, P, M, seed, exposed groups)
+D-10: defer | approve: ... (contrasts, sigma rule, P, M, seed, exposed groups)
 D-11: seed = ...
 D-12: approve | modify: ...
-D-13: per protocol P-TAB / P-TS / P-SEQ / P-REL / P-NEST: protocol unit | provisional unit | registered batch only
+D-13: P-TAB / P-TS / P-SEQ / P-REL / P-NEST: protocol unit | provisional unit | registered batch only
 D-14: authorize pilot on <date> | defer
 D-15: after pilot
 D-16: approve | modify: ...

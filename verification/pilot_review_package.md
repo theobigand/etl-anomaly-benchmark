@@ -22,9 +22,11 @@ figure of 34 to 36 confirmatory clusters, and the normality of source-level diff
 
 ## 1a. The planning ratio, defined
 
-`sd_ratio_interval(n, level)` in `research/target_framework.py` is the chi-square interval for sigma-hat / sigma from n
-independent normal source-level differences; the upper ratio used in sizing is its inverse, the largest plausible
-sigma divided by the estimate: sqrt((n-1) / chi2_{alpha/2}(n-1)). `effective_sd_interval(n, DE)` uses
+`sd_ratio_interval(n, level)` in `research/target_framework.py` returns the multiplicative chi-square bounds of
+sigma / sigma-hat from n independent normal source-level differences (its docstring said the reverse until 2026-11-27);
+its upper end is the largest plausible sigma divided by the estimate, sqrt((n-1) / chi2_{alpha/2}(n-1)). A two-sided
+95 percent interval is a 97.5 percent one-sided upper bound; the two figures must be reported separately
+(`pilot_statistical_remediation.md` section 5). `effective_sd_interval(n, DE)` uses
 floor(n / DE) effective sources instead of n, with a floor of two. The numerators and denominators of the tabulated
 ratio (1.55 at n = 16, DE 1.0) and of the planning ratio r = 1.4 are therefore the same quantity: sigma-hat times r is
 the sigma the confirmatory size is computed with.
@@ -58,7 +60,7 @@ floor-meeting clusters in the unit-level holdout):
 
 Reading: moving from 1.4 to the 95 percent value for n = 16 (1.55) raises the requirement by 18 to 22 percent and keeps
 every scenario but sigma-hat 0.10 with k = 11 comfortably inside the holdout; a larger pilot (24 groups, ratio 1.40 at 95
-percent when sources are independent) removes the gap but adds C1 groups from one curator and no information on the
+percent when sources are independent) removes the gap but, under the current allocation, adds C1 groups from one curator and no information on the
 unidentified factors (design section 4), and the design effect applies on top. The numerical comparison alone therefore
 proves no invalidity; it shows that the proposed 1.4 is an optimistic choice for n = 16 that the owner should either
 accept knowingly (decision 4) or replace by 1.55.

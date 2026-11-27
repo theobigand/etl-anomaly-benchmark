@@ -1,0 +1,43 @@
+{
+  "base_head": "172b7a7a45ec5251041e0c4636950d3d521f488e",
+  "command": "python -m mutmut run \"research.<module>.*\" in a scratch copy holding research/, src/etl_benchmark, verification/evidence/dataset_registry_v2 and a narrowed pyproject, with only the module's own test file",
+  "date": "2026-11-27",
+  "environment": {
+    "mutmut": "3.8.x (etl-mutation-venv)",
+    "platform": "macOS-27.2-arm64",
+    "python": "3.13"
+  },
+  "kind": "local focused development measurement of two new design-only modules (issue #153); not the controller campaign, not attested",
+  "modules": {
+    "research/pilot_panel_design.py": {
+      "eligible": 701,
+      "killed": 688,
+      "level": "L3",
+      "raw_score": 98.1,
+      "source_sha256": "ac62359ee812c459995f6c46d4fae1e1873b8df252bd4239cf9489c5785fa343",
+      "status": "PASS_RAW",
+      "survived": 13,
+      "threshold": 95
+    },
+    "research/analysis_design_simulation.py": {
+      "eligible": 570,
+      "killed": 528,
+      "level": "L2",
+      "raw_score": 92.6,
+      "source_sha256": "7ea7e5e20361d576dfd505672d2bf4305d62bdb17f1036fda09e9dabbdbe1592",
+      "status": "PASS_RAW",
+      "survived": 42,
+      "threshold": 90
+    }
+  },
+  "note": "No survivor was marked equivalent and none was individually reviewed. The 13 survivors of pilot_panel_design are argparse and print details of main(); the 42 of analysis_design_simulation are mostly constants inside the seeded random draws and the evidence builder, which no exact-value check pins.",
+  "survivors": {
+    "research/pilot_panel_design.py": [
+      "13 survived; not individually owner-reviewed"
+    ],
+    "research/analysis_design_simulation.py": [
+      "42 survived; not individually owner-reviewed"
+    ]
+  },
+  "working_tree": "clean apart from the measured modules and their tests"
+}

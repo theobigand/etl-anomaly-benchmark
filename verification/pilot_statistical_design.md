@@ -1,6 +1,6 @@
 # Pilot statistical design: both pilots (issue #153)
 
-Status: design consolidation, 2026-11-26. Nothing was run, no detector result was read, no approval is implied
+Status: design consolidation, 2026-11-26; corrected and extended by `pilot_statistical_remediation.md`, 2026-11-27. Nothing was run, no detector result was read, no approval is implied
 and the experiment freeze stays active. It reconciles the unit-level pilot (`variance_pilot_design.md`, sections 12
 and 13) with the batch pilot of T424 (`batch_pilot_addendum_proposal.md`, a proposal) in one place: estimands,
 alert budgets, identifiability, a conservative sample size and the exposure table. It was written by the
@@ -35,8 +35,9 @@ that may be pooled: different units, budgets and detectors. Neither pilot result
   20 positives and k at least 10 (so N at least 1,000). Maximum attainable recall is min(1, k / P).
 - **Batch level:** the registered threshold is the 0.95 quantile of validation scores (linear interpolation) and a batch
   alerts when strictly above it. With 16 to 21 validation batches that flags exactly one batch, with 22 to 40 two; the
-  realised false-alert rate of one source is Beta(1, n) with a standard deviation near 1/n (4 to 5 points at n = 20).
-  The budget is therefore a target: the achieved false-alert rate is reported beside every recall (addendum 10.1; the
+  probability that a new clean batch alerts is not Beta(1, n), which is the law for the sample maximum: for
+  exchangeable continuous scores its mean is 1 - (0.95 (n - 1) + 1) / (n + 1) (9.3 percent at n = 20) with a standard
+  deviation of 6.1 points (corrected in `pilot_statistical_remediation.md` section 9). The budget is therefore a target: the achieved false-alert rate is reported beside every recall (addendum 10.1; the
   rule itself is unchanged).
 
 ## 4. Identifiability of the random effects
@@ -57,8 +58,8 @@ a domain effect is not estimable from the pilot (16 levels, one group each); sch
 domain and schema-family effects is therefore not estimable as specified. Proposed analysis (as in addendum 10.2):
 mean of per-cluster paired differences with a cluster bootstrap interval, `variance_components` and curator-based
 sensitivity analyses for the pilot; intra-cluster correlations by domain and schema family stay hypothetical planning
-ranges (0.2 and 0.5) until a larger sample exists. Enlarging the pilot to 24 or 32 groups adds C1 groups from one
-curator and does not add information on the unidentified factors.
+ranges (0.2 and 0.5) until a larger sample exists. Under the current largest-pool allocation, enlarging the pilot to 24 or 32 groups adds C1 groups from one
+curator; a balanced allocation does not (`pilot_statistical_remediation.md` section 3), but domain stays unidentifiable.
 
 ## 5. Conservative sample size
 

@@ -188,10 +188,16 @@ batch alerts when its score is strictly above it. On its own validation scores t
 one batch for 16 to 21 validation batches (6.25, 5.9, 5.6, 5.3, 5.0, 4.8 percent) and two for 22 to
 40 (9.1 percent at 22), because the interpolated quantile lies between the two largest scores and
 the largest is the only one above it. Tied top scores flag nothing (a rules detector whose clean
-scores are constant has threshold 0 and alerts on any positive score). For a new clean batch the
-chance of exceeding the maximum of n validation scores is 1/(n+1) on average, but the realised
-false-alert rate of one source is Beta(1, n) distributed, with a standard deviation near 1/n, about
-4 to 5 points at n = 20. So "5 percent" is a target, not an achieved rate. Proposed clarification:
+scores are constant has threshold 0 and alerts on any positive score). Correction (2026-11-27): 1/(n+1) and Beta(1, n)
+describe the exceedance probability of the sample maximum, not of an interpolated empirical
+quantile. The registered threshold lies between the two largest validation scores for 16 to 21
+batches, so for exchangeable continuous scores the probability that a new clean batch alerts has
+mean 1 - (0.95 (n - 1) + 1) / (n + 1), that is 10.3 percent at n = 16, 9.3 at n = 20, 7.2 at n = 40
+and 5.9 at n = 100, with a standard deviation of 6.1 points at n = 20 (exact order-statistic moments,
+`research/analysis_design_simulation.py`; `verification/pilot_statistical_remediation.md` section 9).
+The false-alert rate observed on m clean test batches adds binomial noise, ties flag nothing, and
+temporal dependence between batches lowers the effective n. So "5 percent" is a target, not an
+achieved rate, and in expectation it is exceeded with fewer than about 100 validation batches. Proposed clarification:
 report the achieved false-alert rate on the clean test batches beside every recall, compare
 detectors only inside a source at their own achieved rate, and do not describe the budget as exact.
 The threshold rule itself is not changed.
