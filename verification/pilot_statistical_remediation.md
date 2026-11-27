@@ -152,24 +152,24 @@ dependence only inflates N (through DE_conf). A simple design effect does not ca
 curator and schema-family dependence, or heterogeneous variances; it is a sensitivity device, not a model.
 
 Confirmatory clusters needed (delta 0.05, power 0.80, Holm level alpha/k, ratio of the pilot size) against the floor-meeting
-holdout of the balanced panel. Plain number: fits the capacity; `*`: fits only if the 30 labelled-pool groups of section
-12.1 stay eligible; `x`: infeasible. All sigma-hat and DE values are hypothetical scenarios, not measurements.
+holdout of the balanced panel. Plain number: fits the capacity; `*`: fits only if the outcome-exposed clusters of section
+12.1a stay eligible; `x`: infeasible. All sigma-hat and DE values are hypothetical scenarios, not measurements.
 
 | Pilot, r, capacity (standard / strict) | sigma-hat | k=1 DE 1.0 | k=1 DE 1.3 | k=3 DE 1.0 | k=3 DE 1.3 | k=11 DE 1.0 | k=11 DE 1.3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| 16, 1.55, 127 / 114 | 0.07 | 39 | 51 | 53 | 69 | 68 | 89 |
-| | 0.10 | 78 | 102 | 104 | 136 x | 135 x | 176 x |
+| 16, 1.55, 127 / 103 | 0.07 | 39 | 51 | 53 | 69 | 68 | 89 |
+| | 0.10 | 78 | 102 | 104 * | 136 x | 135 x | 176 x |
 | | 0.12 | 111 | 145 x | 148 x | 193 x | 192 x | 250 x |
-| 24, 1.40, 119 / 106 | 0.07 | 33 | 43 | 44 | 58 | 57 | 75 |
+| 24, 1.40, 119 / 95 | 0.07 | 33 | 43 | 44 | 58 | 57 | 75 |
 | | 0.10 | 64 | 84 | 85 | 111 * | 111 * | 145 x |
 | | 0.12 | 91 | 119 * | 122 x | 159 x | 157 x | 205 x |
-| 32, 1.33, 111 / 98 | 0.07 | 30 | 39 | 40 | 52 | 51 | 67 |
+| 32, 1.33, 111 / 87 | 0.07 | 30 | 39 | 40 | 52 | 51 | 67 |
 | | 0.10 | 58 | 76 | 77 | 101 * | 100 * | 130 x |
 | | 0.12 | 82 | 107 * | 110 * | 143 x | 142 x | 185 x |
 
 (The k = 11 DE 1.0 and DE 1.3 entries at sigma-hat 0.10 and r = 1.55 are 135 and 176 as in the assessment.) A family of 11
 is infeasible in most hypothetical scenarios. A family of 3 is infeasible at sigma-hat 0.12 for pilots of 16 and 24 and,
-at sigma-hat 0.10 with DE 1.3, for a pilot of 16; at 24 or 32 it fits only while the labelled-pool groups stay eligible.
+at sigma-hat 0.10 with DE 1.3, for a pilot of 16; at 24 or 32 it fits only while the outcome-exposed clusters stay eligible.
 Infeasible comparisons are reported as such, not rescued.
 
 ## 8. Primary analysis and its operating characteristics (R6)
@@ -302,10 +302,38 @@ treat Cincinnati calls and fire dispatch as linked until evidence says otherwise
 Harmless metadata and authorized structural validation (units, partitions, schema) are not outcome exposure; reading a
 detector output, a recall or a label-derived score is.
 
+### 12.1a Reconciled inventory (2026-11-27, supersedes the 30-group figures above)
+
+The first overlap matched only registry groups literally named `uci:N`. `research/exposure_inventory.py` reads the file
+names of twelve earlier study folders under `verification/evidence` (no result is opened), maps UCI identifiers to
+groups through both group names and readiness facts, and counts each group once.
+
+| Class | Groups | Clusters |
+|---|---:|---:|
+| `plumbing` (registry `exposed_groups`; all five also appear in earlier studies, `candanedo_umons` in the labelled pool) | 5 | 5 |
+| `outcome` (an earlier study produced detector outcomes on the dataset; not plumbing) | 52 | 52 |
+| `structure` only (partitions, no outcome) | 0 | 0 |
+| outcome-exposed in total | 57 | 57 |
+
+The studies are the labelled pool, typed injection, typed train-only, the train-only replay, the pool extensions v1 to v3
+(chronological, typed-mixed, ETL repair, schema rules), the alert-budget study, the full registry run, the pipeline-level
+pilot and the natural temporal study. The 30 groups named `uci:N` were a subset; 22 more groups are exposed through named
+registry groups or through the later studies. Floor-meeting unexposed clusters: 143 when every member meets the floor,
+144 when any member does (the committed holdout counts 137 and 136 are these numbers minus the 7 floor-meeting groups of
+the 16-group proposal; the difference is one linked cluster with mixed members, and this document uses the stricter rule).
+
+Under the registry rule the balanced holdout keeps 127 / 119 / 111 floor-meeting clusters (16 / 24 / 32). If every
+outcome-exposed cluster is treated as unavailable for confirmation (a provisional planning rule, not an approval), it keeps
+103 / 95 / 87. These are structural upper bounds before contrast-specific eligibility. Outcome generation is established
+by file names and the thesis documents; that outcomes influenced a current design decision is established only for the
+five plumbing groups (Amendment 1). The other 52 are recorded with their studies in `exposure_inventory.json` so the owner
+can set a rule per study (D-02, D-08), for example exposure by studies that produced typed-injection outcomes only.
+
 ### 12.2 Reproduction
 
 ```
 python research/pilot_panel_design.py --output verification/evidence/dataset_registry_v2/pilot_panel_alternatives.json
+python research/exposure_inventory.py --output verification/evidence/dataset_registry_v2/exposure_inventory.json
 python research/analysis_design_simulation.py --output verification/evidence/dataset_registry_v2/analysis_design_simulation.json
 ```
 

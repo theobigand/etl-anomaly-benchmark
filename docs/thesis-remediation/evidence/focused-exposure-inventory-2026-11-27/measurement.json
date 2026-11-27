@@ -1,0 +1,30 @@
+{
+  "base_head": "837e1b3f0c787711fcc0ff9d1157105a00f74abc",
+  "command": "python -m mutmut run \"research.exposure_inventory.*\" in a scratch copy with a narrowed pyproject (process_isolation = forkserver) and only test_exposure_inventory.py",
+  "date": "2026-11-27",
+  "environment": {
+    "mutmut": "3.8.x (etl-mutation-venv)",
+    "platform": "macOS-27.2-arm64",
+    "python": "3.13"
+  },
+  "kind": "local focused development measurement of one new accounting module (issue #153); not the controller campaign, not attested",
+  "modules": {
+    "research/exposure_inventory.py": {
+      "eligible": 293,
+      "killed": 281,
+      "level": "L3",
+      "raw_score": 95.9,
+      "source_sha256": "28f11765b80481d5817e1c03e8d04aa1f6b70fad5a4d2cd9cba1fc7894d5eda7",
+      "status": "PASS_RAW",
+      "survived": 12,
+      "threshold": 95
+    }
+  },
+  "note": "No survivor was marked equivalent and none was individually reviewed.",
+  "survivors": {
+    "research/exposure_inventory.py": [
+      "12 survived; not individually owner-reviewed"
+    ]
+  },
+  "working_tree": "clean apart from the measured module and its tests"
+}
