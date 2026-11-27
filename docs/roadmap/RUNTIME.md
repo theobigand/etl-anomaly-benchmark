@@ -74,3 +74,17 @@ is mounted read-only in the Airflow container, so the platform modules that run 
 
 Not done here: DAG content for the roadmap (#148, #164); the `TRACEPARENT` path through a real
 tracing service; Compose on Linux; a restart of Airflow during a run.
+
+## MLflow linkage check (#168)
+
+`research/mlflow_link.py` tracks a run on the local MLflow server (REST, standard library) and stores a link row in a
+local SQLite table: kind, status, scientific run id, MLflow run id, pipeline run id, DAG run id, trace id and the SHA-256
+digests of the artifacts. Artifacts are referenced by digest and never uploaded. A run is `synthetic`, `integration` or
+`scientific`; only a `scientific` run may carry a scientific run id. Tag, parameter and metric names and values go
+through the ground-truth and secret audit of `obs_redaction`; a finding refuses the run before anything is sent. When the
+server is unreachable the work continues and the row is stored as `UNTRACKED`.
+
+`platform/mlflow_check.sh` starts the `mlops` profile, tracks one successful and one failing synthetic run, and compares
+the link table with what the server stored (identifiers, kind, digests, status, parameters and metric). It reads no
+dataset and runs no detector. Result on 2026-11-27 (MLflow 3.18.0, SQLite backend, no network access needed): 7 of 7 checks
+passed. The link table is the only new store; MLflow does not replace the scientific record.

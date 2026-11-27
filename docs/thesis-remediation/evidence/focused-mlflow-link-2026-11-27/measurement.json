@@ -1,0 +1,60 @@
+{
+ "base_head": "efc670681eab40882f55a7f529f4ba05a93972fc",
+ "command": "python -m mutmut run with research/tests/test_mlflow_link.py, in a scratch copy holding research/*.py, src, verification/evidence/dataset_registry_v2 and a narrowed pyproject",
+ "date": "2026-11-27",
+ "environment": {
+  "mutmut": "3.8.x (etl-mutation-venv)",
+  "platform": "macOS-27.2-arm64",
+  "python": "3.13"
+ },
+ "kind": "local focused development measurement of the MLflow linkage module for issue #168; not the controller campaign, not attested",
+ "modules": {
+  "research/mlflow_link.py": {
+   "eligible": 356,
+   "killed": 323,
+   "level": "L2",
+   "raw_score": 90.7,
+   "source_sha256": "5769a78fd009c4f774228eaec2a37e1628f880c1284c3fb05bdad27872289e5b",
+   "status": "PASS_RAW",
+   "survived": 33,
+   "threshold": 90
+  }
+ },
+ "note": "No mutant was marked equivalent. 33 mutants are not killed (31 survived, 2 timed out and are counted as survived): case-only changes to SQL keywords and URL path segments that SQLite and the fake server accept, the read block size of sha256_file, constructor defaults and keyword arguments with no observable effect against the fake server.",
+ "survivors": [
+  "x_sha256_file__mutmut_10",
+  "x_sha256_file__mutmut_12",
+  "x_sha256_file__mutmut_13",
+  "x_sha256_file__mutmut_14",
+  "x_sha256_file__mutmut_6",
+  "x\u01c1LinkTable\u01c1add__mutmut_30",
+  "x\u01c1LinkTable\u01c1rows__mutmut_11",
+  "x\u01c1LinkTable\u01c1rows__mutmut_4",
+  "x\u01c1LinkTable\u01c1rows__mutmut_5",
+  "x\u01c1MlflowRest\u01c1__init____mutmut_4",
+  "x\u01c1MlflowRest\u01c1__init____mutmut_5",
+  "x\u01c1MlflowRest\u01c1__init____mutmut_6",
+  "x\u01c1MlflowRest\u01c1_call__mutmut_11",
+  "x\u01c1MlflowRest\u01c1_call__mutmut_15",
+  "x\u01c1MlflowRest\u01c1_call__mutmut_18",
+  "x\u01c1MlflowRest\u01c1_call__mutmut_19",
+  "x\u01c1MlflowRest\u01c1_call__mutmut_23",
+  "x\u01c1MlflowRest\u01c1_call__mutmut_25",
+  "x\u01c1MlflowRest\u01c1_call__mutmut_28",
+  "x\u01c1MlflowRest\u01c1_call__mutmut_4",
+  "x\u01c1MlflowRest\u01c1create_run__mutmut_9",
+  "x\u01c1MlflowRest\u01c1end_run__mutmut_1",
+  "x\u01c1MlflowRest\u01c1experiment__mutmut_12",
+  "x\u01c1MlflowRest\u01c1experiment__mutmut_17",
+  "x\u01c1MlflowRest\u01c1experiment__mutmut_18",
+  "x\u01c1MlflowRest\u01c1experiment__mutmut_2",
+  "x\u01c1MlflowRest\u01c1experiment__mutmut_20",
+  "x\u01c1MlflowRest\u01c1get_run__mutmut_10",
+  "x\u01c1MlflowRest\u01c1get_run__mutmut_2",
+  "x\u01c1MlflowRest\u01c1get_run__mutmut_54",
+  "x\u01c1MlflowRest\u01c1get_run__mutmut_60",
+  "x\u01c1MlflowRest\u01c1get_run__mutmut_61",
+  "x\u01c1MlflowRest\u01c1log_batch__mutmut_27"
+ ],
+ "working_tree": "clean apart from the measured module and its tests"
+}
