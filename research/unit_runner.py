@@ -30,6 +30,7 @@ import fault_protocols as fp
 import numpy as np
 import obs_events
 import obs_failures as of
+import obs_tracing
 import pandas as pd
 
 LOG = logging.getLogger("etl.unit_runner")
@@ -264,38 +265,43 @@ def execute(item: Fixture, faults: int, seed: int, *, scientific: bool = False) 
     runner = RUNNERS[item.protocol]
     if faults < 1:
         raise of.DataQualityFailure("at least one fault must be injected")
-    obs_events.emit(LOG, "stage.started", stage=f"unit_runner.{runner.protocol}")
-    before = copy.deepcopy(item.data)
-    try:
-        after, truth = runner.inject(item.data, faults, seed)
-        again, repeat = runner.inject(item.data, faults, seed)
-    except fp.ProtocolError as error:
-        raise of.InapplicableFailure(str(error)) from None
-    units = runner.units(item.data)
-    checks = {
-        "truth_inside_units": set(truth) <= set(units),
-        "exactly_the_truth_changed": sorted(runner.changed(item.data, after), key=str)
-        == sorted(truth, key=str),
-        "input_unmodified": _same(before, item.data),
-        "deterministic": repeat == truth and _same(after, again),
-        "fault_count": len(truth) == faults,
-    }
-    result = UnitRun(
-        protocol=runner.protocol,
-        unit=runner.unit,
-        unit_status=cm.UNITS[runner.unit][1],
-        synthetic=True,
-        seed=seed,
-        faults=faults,
-        units=len(units),
-        truth=_ids(truth),
-        baseline=runner.baseline(item.data),
-        checks=checks,
-    )
-    if not all(checks.values()):
-        failed = [name for name, ok in checks.items() if not ok]
-        raise of.ProcessingFailure(f"{runner.protocol} contract broken: {', '.join(failed)}")
-    obs_events.emit(LOG, "stage.completed", stage=f"unit_runner.{runner.protocol}", rows=len(units))
+    with obs_tracing.span("unit_runner.execute", protocol=runner.protocol, faults=faults):
+        obs_events.emit(LOG, "stage.started", stage=f"unit_runner.{runner.protocol}")
+        before = copy.deepcopy(item.data)
+        with obs_tracing.span("unit_runner.inject", faults=faults):
+            try:
+                after, truth = runner.inject(item.data, faults, seed)
+                again, repeat = runner.inject(item.data, faults, seed)
+            except fp.ProtocolError as error:
+                raise of.InapplicableFailure(str(error)) from None
+        units = runner.units(item.data)
+        with obs_tracing.span("unit_runner.check", units=len(units)):
+            checks = {
+                "truth_inside_units": set(truth) <= set(units),
+                "exactly_the_truth_changed": sorted(runner.changed(item.data, after), key=str)
+                == sorted(truth, key=str),
+                "input_unmodified": _same(before, item.data),
+                "deterministic": repeat == truth and _same(after, again),
+                "fault_count": len(truth) == faults,
+            }
+        result = UnitRun(
+            protocol=runner.protocol,
+            unit=runner.unit,
+            unit_status=cm.UNITS[runner.unit][1],
+            synthetic=True,
+            seed=seed,
+            faults=faults,
+            units=len(units),
+            truth=_ids(truth),
+            baseline=runner.baseline(item.data),
+            checks=checks,
+        )
+        if not all(checks.values()):
+            failed = [name for name, ok in checks.items() if not ok]
+            raise of.ProcessingFailure(f"{runner.protocol} contract broken: {', '.join(failed)}")
+        obs_events.emit(
+            LOG, "stage.completed", stage=f"unit_runner.{runner.protocol}", rows=len(units)
+        )
     return result
 
 

@@ -206,3 +206,20 @@ lc.prune(
 
 OpenTelemetry (#161), and the adoption of the schema by the scientific runners (a separate
 replayed decision). The existing `src/etl_benchmark/logging_setup.py` and the runners are unchanged.
+
+## Tracing (#161)
+
+`research/obs_tracing.py` wraps a unit of work in an OpenTelemetry span (`span(name, **attributes)`); it is optional
+(group `observability`, ADR-0009) and does nothing when the API is absent. A span closes with an error status and a
+scrubbed `exception` event when the block raises, the exception itself is re-raised unchanged, and the trace id of the
+current span is bound with `obs_events` so every log line inside the block carries it. Every call into OpenTelemetry is
+guarded: a telemetry error is reported once as a warning and the work goes on. Attributes are scalars that pass the
+ground-truth and secret audit; the rest are dropped and counted (`dropped_attributes`). There is no span per row or
+prediction. `unit_runner.execute` is instrumented as the engine path (`unit_runner.execute` with child spans
+`unit_runner.inject` and `unit_runner.check`); the scientific code under `src/` and `experiments/` is not touched.
+
+Evidence: the wrapper logic is tested against a recording fake in the governed environment; `platform/otel_check.sh`
+runs `platform/tests/test_tracing_otel.py` with the real SDK (1.45.2) and an in-memory exporter in a container: span
+hierarchy and one trace, error status and scrubbed exception event, the log trace id equal to the span trace id,
+unsafe attributes dropped, and 50 stages run unchanged and in under a second with an unreachable OTLP endpoint.
+Collector and Tempo export is the part of #162 that follows from this module and is not demonstrated yet.

@@ -1,0 +1,26 @@
+{
+ "base_head": "efc670681eab40882f55a7f529f4ba05a93972fc",
+ "command": "python -m mutmut run with research/tests/test_obs_tracing.py, in a scratch copy holding research/*.py, src, verification/evidence/dataset_registry_v2 and a narrowed pyproject",
+ "date": "2026-11-27",
+ "environment": {
+  "mutmut": "3.8.x (etl-mutation-venv)",
+  "platform": "macOS-27.2-arm64",
+  "python": "3.13"
+ },
+ "kind": "local focused development measurement of the optional tracing module for issue #161; not the controller campaign, not attested",
+ "modules": {
+  "research/obs_tracing.py": {
+   "eligible": 86,
+   "killed": 86,
+   "level": "L2",
+   "raw_score": 100.0,
+   "source_sha256": "a2fc22638dddadfdc9fc8c537d76a89ffcfffd116b0ef083e09fb1d1fcccb65a",
+   "status": "PASS_RAW",
+   "survived": 0,
+   "threshold": 90
+  }
+ },
+ "note": "No mutant survived and none was marked equivalent. The tests use a recording fake of the OpenTelemetry API; the real SDK with an in-memory exporter runs in platform/tests through platform/otel_check.sh.",
+ "survivors": [],
+ "working_tree": "clean apart from the measured module and its tests"
+}
