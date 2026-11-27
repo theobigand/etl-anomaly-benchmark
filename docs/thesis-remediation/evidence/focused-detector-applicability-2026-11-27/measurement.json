@@ -1,0 +1,43 @@
+{
+  "base_head": "924d20522a33f8f4d12595f7f096e88658e887aa",
+  "command": "python -m mutmut run \"research.<module>.*\" in a scratch copy with a narrowed pyproject (process_isolation = forkserver) and only the module's own test file",
+  "date": "2026-11-27",
+  "environment": {
+    "mutmut": "3.8.x (etl-mutation-venv)",
+    "platform": "macOS-27.2-arm64",
+    "python": "3.13"
+  },
+  "kind": "local focused development measurement of two new modules (issues #136 to #139); not the controller campaign, not attested",
+  "modules": {
+    "research/unit_scoring.py": {
+      "eligible": 352,
+      "killed": 335,
+      "level": "L3",
+      "raw_score": 95.2,
+      "source_sha256": "e44e388bb0498fb4ece0d91e385bf2825594271eb37a19790eada3521ef71f60",
+      "status": "PASS_RAW",
+      "survived": 17,
+      "threshold": 95
+    },
+    "research/detector_applicability.py": {
+      "eligible": 335,
+      "killed": 329,
+      "level": "L3",
+      "raw_score": 98.2,
+      "source_sha256": "d68c002e165ac03947370dd901b42b1248cc7cb5f5f13ec2892e3317692baaa2",
+      "status": "PASS_RAW",
+      "survived": 6,
+      "threshold": 95
+    }
+  },
+  "note": "No survivor was marked equivalent and none was individually reviewed.",
+  "survivors": {
+    "research/unit_scoring.py": [
+      "17 survived; not individually owner-reviewed"
+    ],
+    "research/detector_applicability.py": [
+      "6 survived; not individually owner-reviewed"
+    ]
+  },
+  "working_tree": "clean apart from the measured modules and their tests"
+}
