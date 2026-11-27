@@ -1,0 +1,216 @@
+# Local runtime profiles (#142). Each profile starts alone: `docker compose -f platform/compose.yaml --profile <name> up`.
+# Versions follow docs/architecture/adr. Every published port is bound to 127.0.0.1 and every service has a memory limit.
+# No secret is stored here: credentials come from the environment and the smoke script generates them per run.
+name: etl-platform
+
+x-hardening: &hardening
+  restart: "no"
+  security_opt: ["no-new-privileges:true"]
+
+services:
+  # relational: PostgreSQL 18 (ADR-0006)
+  postgres:
+    <<: *hardening
+    profiles: [relational]
+    image: postgres:18.7
+    environment:
+      POSTGRES_USER: etl
+      POSTGRES_DB: etl
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+    ports: ["127.0.0.1:${POSTGRES_PORT:-55432}:5432"]
+    volumes: ["postgres-data:/var/lib/postgresql"]
+    mem_limit: 512m
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U etl -d etl"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  # mlops: MLflow tracking server with a local file store (ADR-0008)
+  mlflow:
+    <<: *hardening
+    profiles: [mlops]
+    image: ghcr.io/mlflow/mlflow:v3.18.0
+    command: >
+      mlflow server --host 0.0.0.0 --port 5000 --workers 1
+      --allowed-hosts 127.0.0.1:*,localhost:*,mlflow:*
+      --backend-store-uri sqlite:////mlflow/mlflow.db --default-artifact-root /mlflow/artifacts
+    ports: ["127.0.0.1:${MLFLOW_PORT:-55000}:5000"]
+    volumes: ["mlflow-data:/mlflow"]
+    mem_limit: 1536m
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://127.0.0.1:5000/health', timeout=3)"]
+      interval: 5s
+      timeout: 4s
+      retries: 30
+
+  # orchestration: Airflow standalone with the local executor (ADR-0002)
+  airflow:
+    <<: *hardening
+    profiles: [orchestration]
+    image: apache/airflow:3.4.0
+    command: standalone
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__PARALLELISM: "2"
+      AIRFLOW__SCHEDULER__PARSING_PROCESSES: "1"
+      AIRFLOW__DAG_PROCESSOR__PARSING_PROCESSES: "1"
+    ports: ["127.0.0.1:${AIRFLOW_PORT:-58080}:8080"]
+    volumes:
+      - airflow-data:/opt/airflow
+      - ./dags:/opt/airflow/dags:ro
+    mem_limit: 3g
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://127.0.0.1:8080/api/v2/monitor/health', timeout=4)"]
+      interval: 10s
+      timeout: 5s
+      retries: 60
+      start_period: 60s
+
+  # observability: Prometheus, Loki, Tempo, Alloy, Grafana (ADR-0010 to ADR-0014)
+  prometheus:
+    <<: *hardening
+    profiles: [observability]
+    image: prom/prometheus:v3.16.0
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.retention.time=2d
+      - --web.listen-address=:9090
+    ports: ["127.0.0.1:${PROMETHEUS_PORT:-59090}:9090"]
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    mem_limit: 384m
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:9090/-/ready"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  loki:
+    <<: *hardening
+    profiles: [observability]
+    image: grafana/loki:3.7.10
+    command: ["-config.file=/etc/loki/loki.yaml"]
+    ports: ["127.0.0.1:${LOKI_PORT:-53100}:3100"]
+    volumes:
+      - ./config/loki.yaml:/etc/loki/loki.yaml:ro
+      - loki-data:/loki
+    mem_limit: 512m
+    # Loki, Tempo and Alloy images carry no shell or HTTP client: readiness is probed from the host by platform/smoke.sh
+
+  tempo:
+    <<: *hardening
+    profiles: [observability]
+    image: grafana/tempo:3.1.1
+    command: ["-config.file=/etc/tempo/tempo.yaml"]
+    ports: ["127.0.0.1:${TEMPO_PORT:-53200}:3200"]
+    volumes:
+      - ./config/tempo.yaml:/etc/tempo/tempo.yaml:ro
+      - tempo-data:/var/tempo
+    mem_limit: 512m
+
+  alloy:
+    <<: *hardening
+    profiles: [observability]
+    image: grafana/alloy:v1.22.0
+    command: ["run", "--server.http.listen-addr=0.0.0.0:12345", "/etc/alloy/config.alloy"]
+    ports:
+      - "127.0.0.1:${ALLOY_PORT:-52345}:12345"
+      - "127.0.0.1:${OTLP_GRPC_PORT:-54317}:4317"
+      - "127.0.0.1:${OTLP_HTTP_PORT:-54318}:4318"
+    volumes: ["./config/alloy.alloy:/etc/alloy/config.alloy:ro"]
+    mem_limit: 384m
+    depends_on:
+      loki: {condition: service_started}
+      tempo: {condition: service_started}
+
+  grafana:
+    <<: *hardening
+    profiles: [observability]
+    image: grafana/grafana:13.3.2
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:?set GRAFANA_ADMIN_PASSWORD}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+    ports: ["127.0.0.1:${GRAFANA_PORT:-53000}:3000"]
+    volumes:
+      - ./config/grafana-datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml:ro
+      - grafana-data:/var/lib/grafana
+    mem_limit: 768m
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/api/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  # core: the research tooling that needs nothing but the standard library (no platform service)
+  core:
+    <<: *hardening
+    profiles: [core]
+    build: {context: ., dockerfile: tools.Dockerfile}
+    working_dir: /repo
+    volumes: ["..:/repo:ro"]
+    command: ["python", "research/roadmap_tasks.py", "docs/thesis-remediation"]
+    mem_limit: 256m
+
+  # elt: DuckDB over Parquet (ADR-0004)
+  elt:
+    <<: *hardening
+    profiles: [elt]
+    build:
+      context: .
+      dockerfile: tools.Dockerfile
+      args: {PACKAGES: "duckdb==2.0.1 pyarrow"}
+    command: ["python", "-c", "import duckdb; print(duckdb.__version__)"]
+    mem_limit: 1g
+
+  # etl: PySpark in local mode (ADR-0003)
+  etl:
+    <<: *hardening
+    profiles: [etl]
+    build:
+      context: .
+      dockerfile: tools.Dockerfile
+      args: {PACKAGES: "pyspark==4.3.0", JAVA: "yes"}
+    command: ["python", "-c", "import pyspark; print(pyspark.__version__)"]
+    mem_limit: 2g
+
+  # aiops: log template mining (ADR-0016)
+  aiops:
+    <<: *hardening
+    profiles: [aiops]
+    build:
+      context: .
+      dockerfile: tools.Dockerfile
+      args: {PACKAGES: "drain3==0.9.11"}
+    command: ["python", "-c", "import drain3; print('drain3')"]
+    mem_limit: 512m
+
+  # analytics: Streamlit dashboards (ADR-0015)
+  analytics:
+    <<: *hardening
+    profiles: [analytics]
+    build:
+      context: .
+      dockerfile: tools.Dockerfile
+      args: {PACKAGES: "streamlit==1.67.0"}
+    command: ["streamlit", "run", "/work/app.py", "--server.address=0.0.0.0", "--server.port=8501", "--server.headless=true", "--browser.gatherUsageStats=false"]
+    ports: ["127.0.0.1:${STREAMLIT_PORT:-58501}:8501"]
+    volumes: ["./analytics_app.py:/work/app.py:ro"]
+    mem_limit: 512m
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://127.0.0.1:8501/_stcore/health', timeout=3)"]
+      interval: 5s
+      timeout: 4s
+      retries: 30
+
+volumes:
+  postgres-data:
+  mlflow-data:
+  airflow-data:
+  prometheus-data:
+  loki-data:
+  tempo-data:
+  grafana-data:
