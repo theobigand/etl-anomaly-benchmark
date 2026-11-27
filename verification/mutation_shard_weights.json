@@ -28,6 +28,7 @@
   "research/dataset_registry.py": 417,
   "research/deep_support.py": 14,
   "research/deep_typed.py": 442,
+  "research/elt_duckdb.py": 352,
   "research/experimental_views.py": 18236,
   "research/fault_protocols.py": 870,
   "research/flat_readiness.py": 708,
