@@ -14,10 +14,13 @@
       ]
      },
      "now": {
-      "clusters": 62,
+      "clusters": 95,
       "protocols": [
        "P-TAB",
-       "P-TS"
+       "P-TS",
+       "P-SEQ",
+       "P-REL",
+       "P-NEST"
       ]
      }
     },
@@ -55,10 +58,13 @@
       ]
      },
      "now": {
-      "clusters": 62,
+      "clusters": 95,
       "protocols": [
        "P-TAB",
-       "P-TS"
+       "P-TS",
+       "P-SEQ",
+       "P-REL",
+       "P-NEST"
       ]
      }
     }
@@ -86,10 +92,13 @@
       ]
      },
      "now": {
-      "clusters": 85,
+      "clusters": 119,
       "protocols": [
        "P-TAB",
-       "P-TS"
+       "P-TS",
+       "P-SEQ",
+       "P-REL",
+       "P-NEST"
       ]
      }
     },
@@ -127,10 +136,13 @@
       ]
      },
      "now": {
-      "clusters": 85,
+      "clusters": 119,
       "protocols": [
        "P-TAB",
-       "P-TS"
+       "P-TS",
+       "P-SEQ",
+       "P-REL",
+       "P-NEST"
       ]
      }
     }
@@ -595,9 +607,10 @@
    "kind": "constraint_rule_deterministic",
    "note": "deterministic baseline from the declared schema, keys or order",
    "protocol": "P-SEQ",
+   "representation": "rule_baselines.SequenceConstraints",
    "scientific": "pending_unit_approval",
-   "status": "requires_implementation",
-   "technical": "requires_implementation",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
    "unit": "event_sequence"
   },
   {
@@ -809,9 +822,10 @@
    "kind": "constraint_rule_deterministic",
    "note": "deterministic baseline from the declared schema, keys or order",
    "protocol": "P-REL",
+   "representation": "rule_baselines.ForeignKeyIntegrity",
    "scientific": "pending_unit_approval",
-   "status": "requires_implementation",
-   "technical": "requires_implementation",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
    "unit": "relationship"
   },
   {
@@ -1023,9 +1037,10 @@
    "kind": "constraint_rule_deterministic",
    "note": "deterministic baseline from the declared schema, keys or order",
    "protocol": "P-NEST",
+   "representation": "rule_baselines.SchemaPathRules",
    "scientific": "pending_unit_approval",
-   "status": "requires_implementation",
-   "technical": "requires_implementation",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
    "unit": "nested_path"
   },
   {

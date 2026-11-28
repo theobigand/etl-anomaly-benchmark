@@ -39,11 +39,16 @@ UNITS = {
 RULES = ("zscore", "iqr", "great_expectations")
 CLASSICAL = ("isolation_forest", "lof", "ocsvm", "ecod", "copod", "hbos", "knn", "pca")
 NEURAL = ("autoencoder", "vae", "deep_svdd", "dif", "ae1svm", "lunar")
-#: unit-specific deterministic rule baselines that do not exist yet
+#: unit-specific deterministic rule baselines (``rule_baselines``, synthetic validation only)
 CONSTRAINT_RULES = {
     "sequence_constraints": "P-SEQ",
     "fk_integrity": "P-REL",
     "schema_path_rules": "P-NEST",
+}
+RULE_CLASS = {
+    "sequence_constraints": "SequenceConstraints",
+    "fk_integrity": "ForeignKeyIntegrity",
+    "schema_path_rules": "SchemaPathRules",
 }
 FAMILY = {
     **{d: "rule" for d in (*RULES, *CONSTRAINT_RULES)},
@@ -159,9 +164,10 @@ def cell(detector: str, protocol: str) -> dict[str, Any]:
             }
         return {
             **base,
-            "technical": "requires_implementation",
+            "technical": "adapter_implemented",
             "scientific": "pending_unit_approval",
-            "status": "requires_implementation",
+            "status": "adapter_implemented_pending_approval",
+            "representation": f"rule_baselines.{RULE_CLASS[detector]}",
             "note": "deterministic baseline from the declared schema, keys or order",
         }
     if (detector, protocol) in INAPPROPRIATE:

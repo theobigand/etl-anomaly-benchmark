@@ -28,15 +28,15 @@ Statuses: `supported_existing_adapter`, `adapter_implemented_pending_approval`, 
 
 Detectors: 3 rules (`zscore`, `iqr`, `great_expectations`), 8 classical models, 6 neural models (the 17 of
 `detector_inventory.md`; the temporal `drift` detector is opt-in and excluded), and three unit-specific deterministic rule
-baselines that do not exist yet.
+baselines (`research/rule_baselines.py`, implemented, validated on synthetic fixtures only).
 
 | Unit | 17 existing detectors | Unit-specific rule | Notes |
 |---|---|---|---|
 | P-TAB `row` | supported with the existing adapter (17) | none needed | numeric columns only; categorical codes, missing values and duplicate rows are invisible to the numeric representation |
 | P-TS `time_window` | adapter implemented (17): window statistics | none needed | `seasonal_deviation`, `missing_interval`, `delayed_arrival` invisible; `point_outlier`, `contextual_anomaly`, `gradual_drift` limited |
-| P-SEQ `event_sequence` | adapter implemented (16); `great_expectations` inappropriate | `sequence_constraints`: requires implementation | z-score and IQR degenerate when training traces have constant counts; the meaningful rule baseline is a sequence constraint rule |
-| P-REL `relationship` | adapter implemented (16); `great_expectations` inappropriate | `fk_integrity`: requires implementation | `duplicate_entity` and `inconsistent_aggregate` need parent-child features not in the child-row representation |
-| P-NEST `nested_path` | adapter implemented (16); `great_expectations` inappropriate | `schema_path_rules`: requires implementation | nesting is kept: the unit is a (record, path) pair, absent paths are units with `present = 0` |
+| P-SEQ `event_sequence` | adapter implemented (16); `great_expectations` inappropriate | `sequence_constraints`: adapter implemented, pending approval | z-score and IQR degenerate when training traces have constant counts; the meaningful rule baseline is a sequence constraint rule |
+| P-REL `relationship` | adapter implemented (16); `great_expectations` inappropriate | `fk_integrity`: adapter implemented, pending approval | `duplicate_entity` and `inconsistent_aggregate` need parent-child features not in the child-row representation |
+| P-NEST `nested_path` | adapter implemented (16); `great_expectations` inappropriate | `schema_path_rules`: adapter implemented, pending approval | nesting is kept: the unit is a (record, path) pair, absent paths are units with `present = 0` |
 
 The batch-level detectors registered for `temporal_batch` (`constraint_rules`, `volume_freshness`,
 `distribution_distance`, the PyOD and compact variants and `random`) are not applicable to the unit-level units; they
@@ -73,21 +73,25 @@ Provenance clusters that are unexposed, meet the structural size floor, are not 
 part in a protocol where both sides of the contrast can be run. A structural upper bound only: not verified eligibility, not
 mechanism- or size-checked per contrast, not paired observations.
 
-| Contrast | Protocols runnable now | Clusters, registry exposure rule | Clusters, outcome-exposed excluded | After the missing rules exist |
-|---|---|---:|---:|---:|
-| F1a rule vs classical | P-TAB, P-TS | 85 | 62 | 119 / 95 |
-| F1b classical vs neural | all five | 119 | 95 | 119 / 95 |
-| F1c rule vs neural | P-TAB, P-TS | 85 | 62 | 119 / 95 |
+| Contrast | Protocols runnable now | Clusters, registry exposure rule | Clusters, outcome-exposed excluded |
+|---|---|---:|---:|
+| F1a rule vs classical | all five (statistical rules on P-TAB and P-TS, constraint rules on the other three) | 119 | 95 |
+| F1b classical vs neural | all five | 119 | 95 |
+| F1c rule vs neural | all five | 119 | 95 |
+
+The three rule baselines are implemented, so the contrasts are technically runnable in every protocol and the structural
+upper bound equals the pool. That is not eligibility: no cell is approved, mechanisms are not checked per contrast, and
+the constraint rules answer a different question from the statistical rules (section 3).
 
 The pool is 119 clusters under the registry rule and 95 when every outcome-exposed cluster is excluded (provisional
-planning rule, D-02 and D-08). With 85 or 62 potential clusters, a family of three is feasible only for sigma-hat of about
-0.07 to 0.10 and no confirmatory dependence inflation; with 62 it is infeasible whenever the requirement is above 62 (for
-example sigma-hat 0.10, k = 3: 104). These counts are before the P-TAB and P-TS mechanism limits above and before any
-paired-outcome loss, so they overstate what a contrast can use.
+planning rule, D-02 and D-08). These counts are before the P-TAB and P-TS mechanism limits above and before any
+paired-outcome loss, so they overstate what a contrast can use. Whether the 95 clusters suffice is the sizing question of
+`verification/pilot_statistical_remediation.md`; this document does not answer it.
 
 ## 6. Remaining requirements
 
 1. S03 amendment per unit (D-13), including the featurizer as part of the unit's method.
-2. Implementation of `sequence_constraints`, `fk_integrity` and `schema_path_rules` (declared constraints only).
+2. Review of the three rule baselines as methods: what each learns from training data, what it never reads, and the
+   exact meaning of its score per operator (`research/rule_baselines.py`).
 3. A unit-level mechanism list per contrast (which operators carry the contrast) before eligibility is verified.
 4. Owner decisions D-02 and D-08 on exposure, which change the pool from 119 to 95.

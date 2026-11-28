@@ -41,7 +41,9 @@ def test_featurized_units_are_implemented_but_never_scientifically_approved():
         implemented = [
             c
             for c in da.matrix()
-            if c["protocol"] == protocol and c["technical"] == "adapter_implemented"
+            if c["protocol"] == protocol
+            and c["technical"] == "adapter_implemented"
+            and c["kind"] != "constraint_rule_deterministic"
         ]
         assert implemented
         assert {c["scientific"] for c in implemented} == {"pending_representation_approval"}
@@ -57,15 +59,20 @@ def test_a_detector_that_cannot_answer_the_units_question_is_inappropriate_not_a
     assert "degenerates" in cells[("zscore", "P-SEQ")]["note"]
 
 
-def test_the_unit_specific_constraint_rules_exist_for_one_unit_each_and_need_implementation():
+def test_the_unit_specific_constraint_rules_exist_for_one_unit_each_and_await_approval():
     cells = [c for c in da.matrix() if c["kind"] == "constraint_rule_deterministic"]
     assert {(c["detector"], c["protocol"]) for c in cells} == {
         ("sequence_constraints", "P-SEQ"),
         ("fk_integrity", "P-REL"),
         ("schema_path_rules", "P-NEST"),
     }
-    assert {c["status"] for c in cells} == {"requires_implementation"}
+    assert {c["status"] for c in cells} == {"adapter_implemented_pending_approval"}
     assert all("declared" in c["note"] for c in cells)
+    assert {c["representation"] for c in cells} == {
+        "rule_baselines.SequenceConstraints",
+        "rule_baselines.ForeignKeyIntegrity",
+        "rule_baselines.SchemaPathRules",
+    }
 
 
 def test_no_cell_is_listed_for_a_detector_defined_for_another_unit():
@@ -86,9 +93,14 @@ def test_a_rule_counts_as_the_rule_side_only_where_it_is_a_meaningful_baseline()
     cells = da.matrix()
     now = da.protocols_for_contrast(cells, "F1a rule vs classical", da._usable)
     later = da.protocols_for_contrast(cells, "F1a rule vs classical", da._possible)
-    assert now == ["P-TAB", "P-TS"] and later == list(da.UNITS)
+    assert now == later == list(da.UNITS)  # each unit has its deterministic constraint rule
     assert da.protocols_for_contrast(cells, "F1b classical vs neural", da._usable) == list(da.UNITS)
-    assert da.protocols_for_contrast(cells, "F1c rule vs neural", da._usable) == ["P-TAB", "P-TS"]
+    assert da.protocols_for_contrast(cells, "F1c rule vs neural", da._usable) == list(da.UNITS)
+    statistical = [c for c in cells if c["kind"] != "constraint_rule_deterministic"]
+    assert da.protocols_for_contrast(statistical, "F1a rule vs classical", da._usable) == [
+        "P-TAB",
+        "P-TS",
+    ]
 
 
 def _row(cluster, category, floor=True):
@@ -128,8 +140,8 @@ def test_potential_eligibility_excludes_exposed_pilot_and_below_floor_clusters()
     assert out["pool_clusters"] == 3  # tab1, ts1, rel1
     assert out["per_protocol"] == {"P-TAB": 1, "P-TS": 1, "P-SEQ": 0, "P-REL": 1, "P-NEST": 0}
     assert out["contrasts"]["F1a rule vs classical"]["now"] == {
-        "protocols": ["P-TAB", "P-TS"],
-        "clusters": 2,
+        "protocols": ["P-TAB", "P-TS", "P-SEQ", "P-REL", "P-NEST"],
+        "clusters": 3,
     }
     assert out["contrasts"]["F1a rule vs classical"]["after_implementation"]["clusters"] == 3
 
@@ -192,7 +204,7 @@ def test_cells_are_pinned_exactly():
         "scientifically_inappropriate",
     )
     fk = da.cell("fk_integrity", "P-REL")
-    assert fk["technical"] == "requires_implementation" and fk["family"] == "rule"
+    assert fk["technical"] == "adapter_implemented" and fk["family"] == "rule"
     assert fk["scientific"] == "pending_unit_approval" and "never" not in fk["note"]
     other = da.cell("fk_integrity", "P-TAB")
     assert (other["status"], other["technical"], other["scientific"]) == ("not_applicable",) * 3
