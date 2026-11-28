@@ -31,6 +31,7 @@
   "research/dbt_runner.py": 263,
   "research/elt_duckdb.py": 352,
   "research/experimental_views.py": 18236,
+  "research/exposure_inventory.py": 293,
   "research/fault_protocols.py": 870,
   "research/flat_readiness.py": 708,
   "research/full_registry.py": 571,

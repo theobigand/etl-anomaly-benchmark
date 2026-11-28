@@ -1,0 +1,1612 @@
+{
+ "floor_met_unexposed_clusters": {
+  "any_member": 144,
+  "every_member": 143
+ },
+ "inventory": {
+  "classes": {
+   "outcome": [
+    "elder_home",
+    "uci:110",
+    "uci:146",
+    "uci:148",
+    "uci:149",
+    "uci:15",
+    "uci:159",
+    "uci:162",
+    "uci:165",
+    "uci:189",
+    "uci:193",
+    "uci:198",
+    "uci:212",
+    "uci:247",
+    "uci:257",
+    "uci:267",
+    "uci:27",
+    "uci:270",
+    "uci:291",
+    "uci:292",
+    "uci:294",
+    "uci:296",
+    "uci:31",
+    "uci:312",
+    "uci:32",
+    "uci:327",
+    "uci:329",
+    "uci:365",
+    "uci:368",
+    "uci:372",
+    "uci:379",
+    "uci:381",
+    "uci:464",
+    "uci:52",
+    "uci:545",
+    "uci:551",
+    "uci:555",
+    "uci:572",
+    "uci:59",
+    "uci:597",
+    "uci:601",
+    "uci:602",
+    "uci:73",
+    "uci:75",
+    "uci:78",
+    "uci:80",
+    "uci:848",
+    "uci:850",
+    "uci:864",
+    "uci:911",
+    "uci:94",
+    "uci:967"
+   ],
+   "plumbing": [
+    "airquality_italy",
+    "candanedo_umons",
+    "seoul_bike",
+    "steel_korea",
+    "tetouan_power"
+   ],
+   "structure": []
+  },
+  "groups": {
+   "airquality_italy": {
+    "class": "plumbing",
+    "cluster": "airquality_italy",
+    "plumbing": true,
+    "studies": {
+     "outcome": [
+      "full_registry",
+      "pipeline_batch",
+      "pool_extension",
+      "pool_extension_v2",
+      "typed_injection",
+      "typed_train_only"
+     ]
+    }
+   },
+   "candanedo_umons": {
+    "class": "plumbing",
+    "cluster": "candanedo_umons",
+    "plumbing": true,
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "full_registry",
+      "labelled_pool",
+      "pipeline_batch",
+      "pool_extension",
+      "pool_extension",
+      "pool_extension_v2",
+      "pool_train_only_replay",
+      "typed_injection",
+      "typed_injection",
+      "typed_train_only",
+      "typed_train_only"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "elder_home": {
+    "class": "outcome",
+    "cluster": "elder_home",
+    "studies": {
+     "outcome": [
+      "full_registry",
+      "pool_extension",
+      "pool_extension_v2",
+      "typed_injection",
+      "typed_train_only"
+     ]
+    }
+   },
+   "seoul_bike": {
+    "class": "plumbing",
+    "cluster": "seoul_bike",
+    "plumbing": true,
+    "studies": {
+     "outcome": [
+      "full_registry",
+      "pipeline_batch",
+      "pool_extension",
+      "pool_extension_v2",
+      "typed_injection",
+      "typed_train_only"
+     ]
+    }
+   },
+   "steel_korea": {
+    "class": "plumbing",
+    "cluster": "steel_korea",
+    "plumbing": true,
+    "studies": {
+     "outcome": [
+      "full_registry",
+      "pipeline_batch",
+      "pool_extension",
+      "pool_extension_v2",
+      "typed_injection",
+      "typed_train_only"
+     ]
+    }
+   },
+   "tetouan_power": {
+    "class": "plumbing",
+    "cluster": "tetouan_power",
+    "plumbing": true,
+    "studies": {
+     "outcome": [
+      "full_registry",
+      "pipeline_batch",
+      "pool_extension",
+      "pool_extension_v2",
+      "typed_injection",
+      "typed_train_only"
+     ]
+    }
+   },
+   "uci:110": {
+    "class": "outcome",
+    "cluster": "uci:110",
+    "studies": {
+     "outcome": [
+      "pool_extension_v2",
+      "pool_extension_v3"
+     ]
+    }
+   },
+   "uci:146": {
+    "class": "outcome",
+    "cluster": "uci:146",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_train_only_replay",
+      "typed_injection",
+      "typed_train_only"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:148": {
+    "class": "outcome",
+    "cluster": "uci:148",
+    "studies": {
+     "outcome": [
+      "full_registry",
+      "pool_extension",
+      "typed_injection",
+      "typed_train_only"
+     ]
+    }
+   },
+   "uci:149": {
+    "class": "outcome",
+    "cluster": "uci:149",
+    "studies": {
+     "outcome": [
+      "pool_extension_v2",
+      "pool_extension_v3"
+     ]
+    }
+   },
+   "uci:15": {
+    "class": "outcome",
+    "cluster": "uci:15",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_extension_v2",
+      "pool_extension_v3",
+      "pool_train_only_replay"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:159": {
+    "class": "outcome",
+    "cluster": "uci:159",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_train_only_replay",
+      "typed_injection",
+      "typed_train_only"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:162": {
+    "class": "outcome",
+    "cluster": "uci:162",
+    "studies": {
+     "outcome": [
+      "pool_extension_v2",
+      "pool_extension_v3"
+     ]
+    }
+   },
+   "uci:165": {
+    "class": "outcome",
+    "cluster": "uci:165",
+    "studies": {
+     "outcome": [
+      "pool_extension_v2",
+      "pool_extension_v3"
+     ]
+    }
+   },
+   "uci:189": {
+    "class": "outcome",
+    "cluster": "uci:189",
+    "studies": {
+     "outcome": [
+      "full_registry",
+      "pool_extension",
+      "typed_injection",
+      "typed_train_only"
+     ]
+    }
+   },
+   "uci:193": {
+    "class": "outcome",
+    "cluster": "uci:193",
+    "studies": {
+     "outcome": [
+      "pool_extension_v2",
+      "pool_extension_v3"
+     ]
+    }
+   },
+   "uci:198": {
+    "class": "outcome",
+    "cluster": "uci:198",
+    "studies": {
+     "outcome": [
+      "pool_extension_v2",
+      "pool_extension_v3"
+     ]
+    }
+   },
+   "uci:212": {
+    "class": "outcome",
+    "cluster": "uci:212",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_extension_v2",
+      "pool_extension_v3",
+      "pool_train_only_replay"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:247": {
+    "class": "outcome",
+    "cluster": "uci:247",
+    "studies": {
+     "outcome": [
+      "pipeline_batch",
+      "pool_extension_v2",
+      "pool_extension_v3"
+     ]
+    }
+   },
+   "uci:257": {
+    "class": "outcome",
+    "cluster": "uci:257",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_extension_v2",
+      "pool_extension_v3",
+      "pool_train_only_replay"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:267": {
+    "class": "outcome",
+    "cluster": "uci:267",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_extension_v2",
+      "pool_extension_v3",
+      "pool_train_only_replay"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:27": {
+    "class": "outcome",
+    "cluster": "uci:27",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_extension_v2",
+      "pool_extension_v3",
+      "pool_train_only_replay"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:270": {
+    "class": "outcome",
+    "cluster": "uci:270",
+    "studies": {
+     "outcome": [
+      "full_registry",
+      "pool_extension",
+      "typed_injection",
+      "typed_train_only"
+     ]
+    }
+   },
+   "uci:291": {
+    "class": "outcome",
+    "cluster": "uci:291",
+    "studies": {
+     "outcome": [
+      "pool_extension_v2",
+      "pool_extension_v3"
+     ]
+    }
+   },
+   "uci:292": {
+    "class": "outcome",
+    "cluster": "uci:292",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_extension_v2",
+      "pool_extension_v3",
+      "pool_train_only_replay"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:294": {
+    "class": "outcome",
+    "cluster": "uci:294",
+    "studies": {
+     "outcome": [
+      "full_registry",
+      "pool_extension",
+      "typed_injection",
+      "typed_train_only"
+     ]
+    }
+   },
+   "uci:296": {
+    "class": "outcome",
+    "cluster": "uci:296",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_train_only_replay",
+      "typed_injection",
+      "typed_train_only"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:31": {
+    "class": "outcome",
+    "cluster": "uci:31",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_train_only_replay",
+      "typed_injection",
+      "typed_train_only"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:312": {
+    "class": "outcome",
+    "cluster": "uci:312",
+    "studies": {
+     "outcome": [
+      "pool_extension_v2",
+      "pool_extension_v3"
+     ]
+    }
+   },
+   "uci:32": {
+    "class": "outcome",
+    "cluster": "uci:32",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_extension_v2",
+      "pool_extension_v3",
+      "pool_train_only_replay"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:327": {
+    "class": "outcome",
+    "cluster": "uci:327",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_extension_v2",
+      "pool_extension_v3",
+      "pool_train_only_replay"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:329": {
+    "class": "outcome",
+    "cluster": "uci:329",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_extension_v2",
+      "pool_extension_v3",
+      "pool_train_only_replay"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:365": {
+    "class": "outcome",
+    "cluster": "uci:365",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_train_only_replay",
+      "typed_injection",
+      "typed_train_only"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:368": {
+    "class": "outcome",
+    "cluster": "uci:368",
+    "studies": {
+     "outcome": [
+      "pool_extension_v2",
+      "pool_extension_v3"
+     ]
+    }
+   },
+   "uci:372": {
+    "class": "outcome",
+    "cluster": "uci:372",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_train_only_replay",
+      "typed_injection",
+      "typed_train_only"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:379": {
+    "class": "outcome",
+    "cluster": "uci:379",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_extension_v2",
+      "pool_extension_v3",
+      "pool_train_only_replay"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:381": {
+    "class": "outcome",
+    "cluster": "uci:381",
+    "studies": {
+     "outcome": [
+      "full_registry",
+      "pool_extension",
+      "typed_injection",
+      "typed_train_only"
+     ]
+    }
+   },
+   "uci:464": {
+    "class": "outcome",
+    "cluster": "uci:464",
+    "studies": {
+     "outcome": [
+      "full_registry",
+      "pool_extension",
+      "typed_injection",
+      "typed_train_only"
+     ]
+    }
+   },
+   "uci:52": {
+    "class": "outcome",
+    "cluster": "uci:52",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_extension_v2",
+      "pool_extension_v3",
+      "pool_train_only_replay"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:545": {
+    "class": "outcome",
+    "cluster": "uci:545",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_extension_v2",
+      "pool_extension_v3",
+      "pool_train_only_replay"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:551": {
+    "class": "outcome",
+    "cluster": "uci:551",
+    "studies": {
+     "outcome": [
+      "full_registry",
+      "pool_extension",
+      "typed_injection",
+      "typed_train_only"
+     ]
+    }
+   },
+   "uci:555": {
+    "class": "outcome",
+    "cluster": "uci:555",
+    "studies": {
+     "outcome": [
+      "full_registry",
+      "pool_extension",
+      "typed_injection",
+      "typed_train_only"
+     ]
+    }
+   },
+   "uci:572": {
+    "class": "outcome",
+    "cluster": "uci:572",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_train_only_replay",
+      "typed_injection",
+      "typed_train_only"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:59": {
+    "class": "outcome",
+    "cluster": "uci:59",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_train_only_replay",
+      "typed_injection",
+      "typed_train_only"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:597": {
+    "class": "outcome",
+    "cluster": "uci:597",
+    "studies": {
+     "outcome": [
+      "pool_extension_v2",
+      "pool_extension_v3"
+     ]
+    }
+   },
+   "uci:601": {
+    "class": "outcome",
+    "cluster": "uci:601",
+    "studies": {
+     "outcome": [
+      "full_registry",
+      "pool_extension",
+      "typed_injection",
+      "typed_train_only"
+     ]
+    }
+   },
+   "uci:602": {
+    "class": "outcome",
+    "cluster": "uci:602",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_train_only_replay",
+      "typed_injection",
+      "typed_train_only"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:73": {
+    "class": "outcome",
+    "cluster": "uci:73",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_extension_v2",
+      "pool_extension_v3",
+      "pool_train_only_replay"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:75": {
+    "class": "outcome",
+    "cluster": "uci:75",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_train_only_replay",
+      "typed_injection",
+      "typed_train_only"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:78": {
+    "class": "outcome",
+    "cluster": "uci:78",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_train_only_replay",
+      "typed_injection",
+      "typed_train_only"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:80": {
+    "class": "outcome",
+    "cluster": "uci:80",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_train_only_replay",
+      "typed_injection",
+      "typed_train_only"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:848": {
+    "class": "outcome",
+    "cluster": "uci:848",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_extension_v2",
+      "pool_extension_v3",
+      "pool_train_only_replay"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:850": {
+    "class": "outcome",
+    "cluster": "uci:850",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_extension_v2",
+      "pool_extension_v3",
+      "pool_train_only_replay"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:864": {
+    "class": "outcome",
+    "cluster": "uci:864",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_train_only_replay",
+      "typed_injection",
+      "typed_train_only"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:911": {
+    "class": "outcome",
+    "cluster": "uci:911",
+    "studies": {
+     "outcome": [
+      "full_registry",
+      "pool_extension",
+      "typed_injection",
+      "typed_train_only"
+     ]
+    }
+   },
+   "uci:94": {
+    "class": "outcome",
+    "cluster": "uci:94",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_extension_v2",
+      "pool_extension_v3",
+      "pool_train_only_replay"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   },
+   "uci:967": {
+    "class": "outcome",
+    "cluster": "uci:967",
+    "studies": {
+     "outcome": [
+      "alert_budgets",
+      "full_registry",
+      "labelled_pool",
+      "pool_extension",
+      "pool_train_only_replay",
+      "typed_injection",
+      "typed_train_only"
+     ],
+     "structure": [
+      "pool_partitions"
+     ]
+    }
+   }
+  },
+  "outcome_exposed_clusters": [
+   "airquality_italy",
+   "candanedo_umons",
+   "elder_home",
+   "seoul_bike",
+   "steel_korea",
+   "tetouan_power",
+   "uci:110",
+   "uci:146",
+   "uci:148",
+   "uci:149",
+   "uci:15",
+   "uci:159",
+   "uci:162",
+   "uci:165",
+   "uci:189",
+   "uci:193",
+   "uci:198",
+   "uci:212",
+   "uci:247",
+   "uci:257",
+   "uci:267",
+   "uci:27",
+   "uci:270",
+   "uci:291",
+   "uci:292",
+   "uci:294",
+   "uci:296",
+   "uci:31",
+   "uci:312",
+   "uci:32",
+   "uci:327",
+   "uci:329",
+   "uci:365",
+   "uci:368",
+   "uci:372",
+   "uci:379",
+   "uci:381",
+   "uci:464",
+   "uci:52",
+   "uci:545",
+   "uci:551",
+   "uci:555",
+   "uci:572",
+   "uci:59",
+   "uci:597",
+   "uci:601",
+   "uci:602",
+   "uci:73",
+   "uci:75",
+   "uci:78",
+   "uci:80",
+   "uci:848",
+   "uci:850",
+   "uci:864",
+   "uci:911",
+   "uci:94",
+   "uci:967"
+  ],
+  "outcome_exposed_groups": [
+   "airquality_italy",
+   "candanedo_umons",
+   "elder_home",
+   "seoul_bike",
+   "steel_korea",
+   "tetouan_power",
+   "uci:110",
+   "uci:146",
+   "uci:148",
+   "uci:149",
+   "uci:15",
+   "uci:159",
+   "uci:162",
+   "uci:165",
+   "uci:189",
+   "uci:193",
+   "uci:198",
+   "uci:212",
+   "uci:247",
+   "uci:257",
+   "uci:267",
+   "uci:27",
+   "uci:270",
+   "uci:291",
+   "uci:292",
+   "uci:294",
+   "uci:296",
+   "uci:31",
+   "uci:312",
+   "uci:32",
+   "uci:327",
+   "uci:329",
+   "uci:365",
+   "uci:368",
+   "uci:372",
+   "uci:379",
+   "uci:381",
+   "uci:464",
+   "uci:52",
+   "uci:545",
+   "uci:551",
+   "uci:555",
+   "uci:572",
+   "uci:59",
+   "uci:597",
+   "uci:601",
+   "uci:602",
+   "uci:73",
+   "uci:75",
+   "uci:78",
+   "uci:80",
+   "uci:848",
+   "uci:850",
+   "uci:864",
+   "uci:911",
+   "uci:94",
+   "uci:967"
+  ],
+  "overlap_plumbing_and_outcome_studies": [
+   "airquality_italy",
+   "candanedo_umons",
+   "seoul_bike",
+   "steel_korea",
+   "tetouan_power"
+  ],
+  "unmatched_ids": {
+   "alert_budgets": [
+    2,
+    17,
+    30,
+    33,
+    47,
+    50,
+    81,
+    105,
+    117,
+    144,
+    161,
+    176,
+    222,
+    225,
+    277,
+    342,
+    350,
+    426,
+    468,
+    503,
+    529,
+    544,
+    563,
+    582,
+    603,
+    697,
+    722,
+    759,
+    863,
+    878,
+    887,
+    915,
+    936
+   ],
+   "full_registry": [
+    1,
+    2,
+    17,
+    30,
+    33,
+    47,
+    50,
+    81,
+    105,
+    117,
+    144,
+    161,
+    176,
+    186,
+    222,
+    225,
+    275,
+    277,
+    332,
+    342,
+    350,
+    426,
+    468,
+    503,
+    529,
+    544,
+    563,
+    582,
+    603,
+    697,
+    722,
+    759,
+    863,
+    878,
+    887,
+    915,
+    936
+   ],
+   "labelled_pool": [
+    2,
+    17,
+    30,
+    33,
+    47,
+    50,
+    81,
+    105,
+    117,
+    144,
+    161,
+    176,
+    222,
+    225,
+    277,
+    342,
+    350,
+    426,
+    468,
+    503,
+    529,
+    544,
+    563,
+    582,
+    603,
+    697,
+    722,
+    759,
+    863,
+    878,
+    887,
+    915,
+    936
+   ],
+   "natural_temporal": [
+    387,
+    451
+   ],
+   "pipeline_batch": [
+    275
+   ],
+   "pool_extension": [
+    1,
+    2,
+    17,
+    30,
+    33,
+    47,
+    50,
+    81,
+    105,
+    117,
+    144,
+    161,
+    176,
+    186,
+    222,
+    225,
+    275,
+    277,
+    332,
+    342,
+    350,
+    426,
+    468,
+    503,
+    529,
+    544,
+    563,
+    582,
+    603,
+    697,
+    722,
+    759,
+    863,
+    878,
+    887,
+    915,
+    936
+   ],
+   "pool_extension_v2": [
+    3,
+    9,
+    17,
+    30,
+    33,
+    39,
+    45,
+    47,
+    60,
+    83,
+    89,
+    90,
+    144,
+    161,
+    176,
+    183,
+    225,
+    242,
+    275,
+    277,
+    320,
+    336,
+    342,
+    373,
+    383,
+    390,
+    426,
+    445,
+    477,
+    503,
+    544,
+    563,
+    571,
+    579,
+    582,
+    603,
+    722,
+    759,
+    863,
+    878,
+    887,
+    913,
+    915,
+    936
+   ],
+   "pool_extension_v3": [
+    3,
+    9,
+    17,
+    30,
+    33,
+    39,
+    45,
+    47,
+    60,
+    83,
+    89,
+    90,
+    144,
+    161,
+    176,
+    183,
+    225,
+    242,
+    277,
+    320,
+    336,
+    342,
+    373,
+    383,
+    390,
+    426,
+    445,
+    477,
+    503,
+    544,
+    563,
+    571,
+    579,
+    582,
+    603,
+    722,
+    759,
+    863,
+    878,
+    887,
+    913,
+    915,
+    936
+   ],
+   "pool_partitions": [
+    2,
+    17,
+    30,
+    33,
+    47,
+    50,
+    81,
+    105,
+    117,
+    144,
+    161,
+    176,
+    222,
+    225,
+    277,
+    342,
+    350,
+    426,
+    468,
+    503,
+    529,
+    544,
+    563,
+    582,
+    603,
+    697,
+    722,
+    759,
+    863,
+    878,
+    887,
+    915,
+    936
+   ],
+   "pool_train_only_replay": [
+    2,
+    17,
+    30,
+    33,
+    47,
+    50,
+    81,
+    105,
+    117,
+    144,
+    161,
+    176,
+    222,
+    225,
+    277,
+    342,
+    350,
+    426,
+    468,
+    503,
+    529,
+    544,
+    563,
+    582,
+    603,
+    697,
+    722,
+    759,
+    863,
+    878,
+    887,
+    915,
+    936
+   ],
+   "typed_injection": [
+    1,
+    2,
+    81,
+    117,
+    186,
+    222,
+    275,
+    332,
+    350,
+    468,
+    697
+   ],
+   "typed_train_only": [
+    1,
+    2,
+    81,
+    117,
+    186,
+    222,
+    275,
+    332,
+    350,
+    468,
+    697
+   ]
+  }
+ },
+ "note": "accounting only; file names were read, no result was opened, no detector was run",
+ "scenarios": {
+  "plus_outcome_studies": {
+   "balanced": {
+    "16": {
+     "category_clusters": {
+      "C1": 2,
+      "C2a": 2,
+      "C2b": 2,
+      "C3": 3,
+      "C4": 2,
+      "C5": 3,
+      "C6": 2
+     },
+     "clusters": 16,
+     "curators": 15,
+     "domains": 16,
+     "exposed": 0,
+     "floor_met": 16,
+     "holdout_clusters": 158,
+     "holdout_floor_met": 103,
+     "holdout_floor_met_by_category": {
+      "C1": 2,
+      "C2a": 16,
+      "C2b": 20,
+      "C3": 26,
+      "C4": 12,
+      "C5": 29,
+      "C6": 6
+     },
+     "max_per_curator": 2,
+     "max_per_schema_family": 2,
+     "schema_families": 15,
+     "uci_clusters": 2
+    },
+    "24": {
+     "category_clusters": {
+      "C1": 3,
+      "C2a": 3,
+      "C2b": 4,
+      "C3": 4,
+      "C4": 3,
+      "C5": 4,
+      "C6": 3
+     },
+     "clusters": 24,
+     "curators": 21,
+     "domains": 24,
+     "exposed": 0,
+     "floor_met": 24,
+     "holdout_clusters": 150,
+     "holdout_floor_met": 95,
+     "holdout_floor_met_by_category": {
+      "C1": 1,
+      "C2a": 15,
+      "C2b": 18,
+      "C3": 25,
+      "C4": 11,
+      "C5": 28,
+      "C6": 5
+     },
+     "max_per_curator": 3,
+     "max_per_schema_family": 3,
+     "schema_families": 22,
+     "uci_clusters": 3
+    },
+    "32": {
+     "category_clusters": {
+      "C1": 4,
+      "C2a": 5,
+      "C2b": 5,
+      "C3": 5,
+      "C4": 4,
+      "C5": 6,
+      "C6": 5
+     },
+     "clusters": 32,
+     "curators": 27,
+     "domains": 31,
+     "exposed": 0,
+     "floor_met": 32,
+     "holdout_clusters": 142,
+     "holdout_floor_met": 87,
+     "holdout_floor_met_by_category": {
+      "C1": 0,
+      "C2a": 13,
+      "C2b": 17,
+      "C3": 24,
+      "C4": 10,
+      "C5": 26,
+      "C6": 3
+     },
+     "max_per_curator": 4,
+     "max_per_schema_family": 4,
+     "schema_families": 29,
+     "uci_clusters": 4
+    }
+   },
+   "exposed_clusters": 57
+  },
+  "registry_exposed_only": {
+   "balanced": {
+    "16": {
+     "category_clusters": {
+      "C1": 2,
+      "C2a": 2,
+      "C2b": 2,
+      "C3": 3,
+      "C4": 2,
+      "C5": 3,
+      "C6": 2
+     },
+     "clusters": 16,
+     "curators": 14,
+     "domains": 16,
+     "exposed": 0,
+     "floor_met": 16,
+     "holdout_clusters": 210,
+     "holdout_floor_met": 127,
+     "holdout_floor_met_by_category": {
+      "C1": 21,
+      "C2a": 20,
+      "C2b": 20,
+      "C3": 27,
+      "C4": 12,
+      "C5": 29,
+      "C6": 6
+     },
+     "max_per_curator": 3,
+     "max_per_schema_family": 3,
+     "schema_families": 14,
+     "uci_clusters": 3
+    },
+    "24": {
+     "category_clusters": {
+      "C1": 4,
+      "C2a": 3,
+      "C2b": 3,
+      "C3": 4,
+      "C4": 3,
+      "C5": 4,
+      "C6": 3
+     },
+     "clusters": 24,
+     "curators": 20,
+     "domains": 24,
+     "exposed": 0,
+     "floor_met": 24,
+     "holdout_clusters": 202,
+     "holdout_floor_met": 119,
+     "holdout_floor_met_by_category": {
+      "C1": 19,
+      "C2a": 19,
+      "C2b": 19,
+      "C3": 26,
+      "C4": 11,
+      "C5": 28,
+      "C6": 5
+     },
+     "max_per_curator": 5,
+     "max_per_schema_family": 5,
+     "schema_families": 20,
+     "uci_clusters": 5
+    },
+    "32": {
+     "category_clusters": {
+      "C1": 5,
+      "C2a": 5,
+      "C2b": 4,
+      "C3": 5,
+      "C4": 4,
+      "C5": 5,
+      "C6": 4
+     },
+     "clusters": 32,
+     "curators": 25,
+     "domains": 32,
+     "exposed": 0,
+     "floor_met": 32,
+     "holdout_clusters": 194,
+     "holdout_floor_met": 111,
+     "holdout_floor_met_by_category": {
+      "C1": 18,
+      "C2a": 17,
+      "C2b": 18,
+      "C3": 25,
+      "C4": 10,
+      "C5": 27,
+      "C6": 4
+     },
+     "max_per_curator": 6,
+     "max_per_schema_family": 6,
+     "schema_families": 27,
+     "uci_clusters": 6
+    }
+   },
+   "exposed_clusters": 5
+  }
+ },
+ "seed": 20261121
+}
