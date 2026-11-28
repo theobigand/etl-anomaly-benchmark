@@ -1,14 +1,34 @@
 {
-  "base_head": "924d20522a33f8f4d12595f7f096e88658e887aa",
+  "base_head": "bfff3d653e8fbe732bb32a49646c801da2bdd2b7",
   "command": "python -m mutmut run \"research.<module>.*\" in a scratch copy with a narrowed pyproject (process_isolation = forkserver) and only the module's own test file",
-  "date": "2026-11-27",
+  "date": "2026-11-28",
   "environment": {
     "mutmut": "3.8.x (etl-mutation-venv)",
     "platform": "macOS-27.2-arm64",
     "python": "3.13"
   },
-  "kind": "local focused development measurement of two new modules (issues #136 to #139); not the controller campaign, not attested",
+  "kind": "local focused development measurement of three new modules (issues #136 to #139); not the controller campaign, not attested",
   "modules": {
+    "research/detector_applicability.py": {
+      "eligible": 337,
+      "killed": 331,
+      "level": "L3",
+      "raw_score": 98.2,
+      "source_sha256": "66ce6f923090a22b4442792c1e3313042ed2d24a757817f9a14cba735f39788d",
+      "status": "PASS_RAW",
+      "survived": 6,
+      "threshold": 95
+    },
+    "research/rule_baselines.py": {
+      "eligible": 188,
+      "killed": 188,
+      "level": "L3",
+      "raw_score": 100.0,
+      "source_sha256": "aaf3fcdd3cfe63b82466c915b9412046e8543e70fb97efbf3b92cdb5cb1a0f1e",
+      "status": "PASS_RAW",
+      "survived": 0,
+      "threshold": 95
+    },
     "research/unit_scoring.py": {
       "eligible": 352,
       "killed": 335,
@@ -18,25 +38,16 @@
       "status": "PASS_RAW",
       "survived": 17,
       "threshold": 95
-    },
-    "research/detector_applicability.py": {
-      "eligible": 335,
-      "killed": 329,
-      "level": "L3",
-      "raw_score": 98.2,
-      "source_sha256": "d68c002e165ac03947370dd901b42b1248cc7cb5f5f13ec2892e3317692baaa2",
-      "status": "PASS_RAW",
-      "survived": 6,
-      "threshold": 95
     }
   },
   "note": "No survivor was marked equivalent and none was individually reviewed.",
   "survivors": {
-    "research/unit_scoring.py": [
-      "17 survived; not individually owner-reviewed"
-    ],
     "research/detector_applicability.py": [
       "6 survived; not individually owner-reviewed"
+    ],
+    "research/rule_baselines.py": [],
+    "research/unit_scoring.py": [
+      "17 survived; not individually owner-reviewed"
     ]
   },
   "working_tree": "clean apart from the measured modules and their tests"

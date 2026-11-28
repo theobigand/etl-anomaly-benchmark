@@ -580,6 +580,10 @@
       "level": "L3",
       "reason": "It states which detector can be run on which unit and how many provenance clusters could take part in each contrast, so a defect changes which comparisons are called feasible; it reads registry metadata only and runs no detector."
     },
+    "research/rule_baselines.py": {
+      "level": "L3",
+      "reason": "It scores the deterministic constraint baselines of the sequence, relationship and nested-path units, so a defect changes which units a rule baseline alerts on and the recall computed from them; it is validated on synthetic fixtures only, reads no benchmark view and never reads an injection log or truth."
+    },
     "research/exposure_inventory.py": {
       "level": "L3",
       "reason": "It lists which registry groups and provenance clusters were the subject of earlier detector studies and states how many floor-meeting clusters remain unexposed, so a defect changes which clusters are proposed as available for confirmation; it reads file names only, opens no result and fits no detector."
