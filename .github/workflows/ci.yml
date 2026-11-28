@@ -78,12 +78,9 @@ jobs:
         run: |
           bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
           echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
-          "$RUNNER_TEMP/venv/bin/python" -m pip install --quiet "pip>=25.1"
-          "$RUNNER_TEMP/venv/bin/python" -m pip install --quiet --group elt
+          bash verification/runner/install_platform.sh "$RUNNER_TEMP/venv" elt
           # dbt keeps its own environment (ADR-0001, ADR-0005)
-          python -m venv "$RUNNER_TEMP/dbt-venv"
-          "$RUNNER_TEMP/dbt-venv/bin/python" -m pip install --quiet "pip>=25.1"
-          "$RUNNER_TEMP/dbt-venv/bin/python" -m pip install --quiet --group dbt --group elt
+          bash verification/runner/install_platform.sh "$RUNNER_TEMP/dbt-venv" dbt
           echo "DBT_BIN=$RUNNER_TEMP/dbt-venv/bin/dbt" >> "$GITHUB_ENV"
 
       - name: Platform extension tests
