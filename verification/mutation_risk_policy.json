@@ -572,6 +572,18 @@
       "level": "L3",
       "reason": "It proposes the seeded, balanced pilot panel and the planning-ratio coverage, and states how many floor-meeting clusters remain for the confirmatory holdout, so a defect changes which groups are proposed and which sample sizes are called feasible; it reads provenance metadata only, fits no detector and reads no detector output."
     },
+    "research/unit_scoring.py": {
+      "level": "L3",
+      "reason": "It defines the alert budget, tie-breaking, recall and the unit featurizers of the five protocol-defined units, so a defect changes which units a detector alerts on and the recall computed from them; it is validated on synthetic fixtures only, reads no benchmark view and fits no detector on benchmark data."
+    },
+    "research/detector_applicability.py": {
+      "level": "L3",
+      "reason": "It states which detector can be run on which unit and how many provenance clusters could take part in each contrast, so a defect changes which comparisons are called feasible; it reads registry metadata only and runs no detector."
+    },
+    "research/rule_baselines.py": {
+      "level": "L3",
+      "reason": "It scores the deterministic constraint baselines of the sequence, relationship and nested-path units, so a defect changes which units a rule baseline alerts on and the recall computed from them; it is validated on synthetic fixtures only, reads no benchmark view and never reads an injection log or truth."
+    },
     "research/elt_duckdb.py": {
       "level": "L2",
       "reason": "It runs a synthetic ELT through DuckDB and writes the provenance manifest of the platform tooling, so a defect changes which engineering artifacts are written or recorded, never a scientific result; it reads no benchmark view, fits no detector, refuses archived evidence paths, and no scientific code imports it (ADR-0004)."

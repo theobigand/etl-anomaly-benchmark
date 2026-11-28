@@ -166,7 +166,9 @@ Readiness: **ready for owner approval** = no further methodological work; **need
   `relationship`, P-NEST `nested_path`), each by one dated amendment, once its specification is complete. The drafts are in
   `unit_amendment_proposals.md`; `event_window`, `relational_load` and `document_batch` stay provisional and are not
   equivalent.
-- Limits: no detector interface or detector list is registered for any of the five units; P-REL needs an operator a rule
+- Limits: the applicability matrix (`verification/detector_applicability.md`) now lists, per unit, which detectors run through
+  an implemented featurizer (synthetic only) and which rule baselines still need implementation; no cell is scientifically
+  approved. Earlier note: no detector interface or detector list was registered for any of the five units; P-REL needs an operator a rule
   cannot see; P-NEST needs a budget definition.
 - Authorizes: scientific use of that unit by its runner, per protocol. Does not authorize: execution.
 - Readiness: needs review of each proposal; the owner can decide protocol by protocol.

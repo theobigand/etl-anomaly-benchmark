@@ -31,6 +31,9 @@ SUPPLEMENTS = (
     ROOT
     / "docs/thesis-remediation/evidence/focused-exposure-inventory-2026-11-27"
     / "measurement.json",
+    ROOT
+    / "docs/thesis-remediation/evidence/focused-detector-applicability-2026-11-27"
+    / "measurement.json",
     ROOT / "docs/thesis-remediation/evidence/focused-obs-logging-2026-11-26/measurement.json",
     ROOT / "docs/thesis-remediation/evidence/focused-obs-events-2026-11-26/measurement.json",
     ROOT / "docs/thesis-remediation/evidence/focused-roadmap-tasks-2026-11-26/measurement.json",
