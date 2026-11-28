@@ -2,13 +2,14 @@
 
 ``e2e_check.sh`` starts MLflow, Prometheus, Loki, Tempo and Alloy and then runs this file. The
 pipeline (``research/elt_pipeline.py``) runs in a container of its own with the OpenTelemetry
-distribution, writes its JSON log to the volume that Alloy tails, and exports its spans to Alloy over
-OTLP. Three runs are made and each is read back through the backends' query APIs:
+distribution, writes its JSON log to the volume that Alloy tails and exports its spans to Alloy
+over OTLP. Three runs are made and each is read back through the backends' query APIs:
 
-- a successful run: one trace in Tempo with the run and both stage spans, its events in Loki found by
-  the pipeline run id, and an MLflow run that carries the same trace id and pipeline run id;
-- a failed run (dbt cannot be started): exit code 75 (infrastructure), an error span, ``run.failed`` in
-  Loki, and an MLflow run that ended FAILED;
+- a successful run: one trace in Tempo with the run and both stage spans, its events in Loki
+  found by the pipeline run id, and an MLflow run that carries the same trace id and
+  pipeline run id;
+- a failed run (dbt cannot be started): exit code 75 (infrastructure), an error span,
+  ``run.failed`` in Loki, and an MLflow run that ended FAILED;
 - a run while the collector is stopped: telemetry is lost but the pipeline still succeeds.
 
 Metrics: the pipeline exports none today; Prometheus is checked for readiness only and the gap is
@@ -176,7 +177,10 @@ def failure() -> None:
     search = urllib.request.Request(
         f"{MLFLOW}/api/2.0/mlflow/runs/search",
         data=json.dumps(
-            {"experiment_ids": [e["experiment_id"] for e in experiments()], "filter": "tags.`etl.pipeline_run_id` = 'e2e-fail'"}
+            {
+                "experiment_ids": [e["experiment_id"] for e in experiments()],
+                "filter": "tags.`etl.pipeline_run_id` = 'e2e-fail'",
+            }
         ).encode(),
         headers={"Content-Type": "application/json"},
     )  # fmt: skip
