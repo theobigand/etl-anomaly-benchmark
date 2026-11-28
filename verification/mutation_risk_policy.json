@@ -572,6 +572,10 @@
       "level": "L3",
       "reason": "It proposes the seeded, balanced pilot panel and the planning-ratio coverage, and states how many floor-meeting clusters remain for the confirmatory holdout, so a defect changes which groups are proposed and which sample sizes are called feasible; it reads provenance metadata only, fits no detector and reads no detector output."
     },
+    "research/exposure_inventory.py": {
+      "level": "L3",
+      "reason": "It lists which registry groups and provenance clusters were the subject of earlier detector studies and states how many floor-meeting clusters remain unexposed, so a defect changes which clusters are proposed as available for confirmation; it reads file names only, opens no result and fits no detector."
+    },
     "research/analysis_design_simulation.py": {
       "level": "L2",
       "reason": "It simulates the candidate cluster-level analysis on synthetic differences and derives the alert probability after the registered quantile threshold, so a defect changes a design recommendation, never a scientific result; it reads no dataset, fits no detector, and no scientific code imports it."
