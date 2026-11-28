@@ -17,5 +17,18 @@ case "$name" in
 esac
 [ "$(uname -s)-$(uname -m)" = "Linux-x86_64" ] || { echo "the lock is for Linux x86_64" >&2; exit 1; }
 [ -x "$venv/bin/python" ] || python -m venv "$venv"
-"$venv/bin/python" -m pip install --quiet --disable-pip-version-check --no-input --retries 10 \
-  --timeout 60 --require-hashes --no-deps --only-binary=:all: -r "$lock"
+pip_install=("$venv/bin/python" -m pip install --quiet --disable-pip-version-check --no-input
+  --retries 10 --timeout 60 --require-hashes --no-deps)
+if [ "$name" = dbt ]; then
+  # dbt-core-experimental-parser is published as a source archive only; its in-tree build backend
+  # needs just `packaging`, so that pin is installed first and the archive is built without isolation
+  # (no build-time resolution).
+  pin=$(mktemp)
+  awk '/^packaging==/{p=1} p{print} p&&!/\\$/{exit}' "$lock" > "$pin"
+  "${pip_install[@]}" --only-binary=:all: -r "$pin"
+  "${pip_install[@]}" --only-binary=:all: --no-binary=dbt-core-experimental-parser \
+    --no-build-isolation -r "$lock"
+  rm -f "$pin"
+else
+  "${pip_install[@]}" --only-binary=:all: -r "$lock"
+fi
