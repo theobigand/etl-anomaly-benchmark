@@ -220,11 +220,9 @@ def main() -> int:
     failure()
     outage()
     print(
-        "NOTE: metrics are not exported by the pipeline yet; only the trace and log paths are demonstrated"
+        "NOTE: the pipeline exports no metrics yet; only its trace and log paths are demonstrated"
     )
-    print(
-        "PASS: traces, logs and the MLflow run are retrievable and correlated; failure and outage behave as designed"
-    )
+    print("PASS: traces, logs and the MLflow run are retrievable and correlated")
     return 0
 
 
