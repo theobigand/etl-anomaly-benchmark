@@ -151,7 +151,7 @@ Analytical data products, interactive dashboard, architecture documentation, ope
 
 ### Scientific preparation inside the Thesis milestones
 
-Outputs: [unit-level pilot panel and authorization draft](../../verification/variance_pilot_design.md) (section 13, #152) and [statistical design of both pilots](../../verification/pilot_statistical_design.md) (#153).
+Outputs: [unit-level pilot panel and authorization draft](../../verification/variance_pilot_design.md) (section 13, #152) and [statistical design of both pilots](../../verification/pilot_statistical_design.md) (#153), its [remediation](../../verification/pilot_statistical_remediation.md), the [owner decision package](OWNER_DECISIONS.md) and the [unit specification drafts](../../verification/unit_amendment_proposals.md) (#154).
 
 | Issue | Title | Scope | Authorization | Blocked by |
 | --- | --- | --- | --- | --- |

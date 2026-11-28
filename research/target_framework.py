@@ -153,7 +153,12 @@ def log_ratio_delta(relative_reduction: float) -> float:
 
 
 def sd_ratio_interval(n: int, level: float = 0.95) -> tuple[float, float]:
-    """Confidence interval of sigma-hat / sigma from n sources (chi-square, normal differences)."""
+    """Multiplicative two-sided bounds of sigma / sigma-hat from n sources (chi-square, normal).
+
+    The upper end is the planning ratio r: sigma <= r x sigma-hat with one-sided coverage
+    1 - (1 - level) / 2, so a 95 percent two-sided interval is a 97.5 percent upper bound
+    (``pilot_panel_design.sd_upper_coverage``). Neither is a guarantee of confirmatory power.
+    """
     tail = (1.0 - level) / 2.0
     low = math.sqrt((n - 1) / stats.chi2.ppf(1.0 - tail, n - 1))
     high = math.sqrt((n - 1) / stats.chi2.ppf(tail, n - 1))
