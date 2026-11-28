@@ -31,3 +31,40 @@ otelcol.exporter.prometheus "default" {
 prometheus.remote_write "default" {
   endpoint { url = "http://prometheus:9090/api/v1/write" }
 }
+
+// Structured JSON log files of the pipeline containers (e2e_check.sh): event and level are labels,
+// the correlation identifiers are structured metadata, so a run is found by its identifier.
+local.file_match "etl" {
+  path_targets = [{"__path__" = "/var/log/etl/*.log", "job" = "etl-pipeline"}]
+}
+
+loki.source.file "etl" {
+  targets    = local.file_match.etl.targets
+  forward_to = [loki.process.etl.receiver]
+}
+
+loki.process "etl" {
+  stage.json {
+    expressions = {
+      event           = "event",
+      level           = "level",
+      pipeline_run_id = "pipeline_run_id",
+      dag_run_id      = "dag_run_id",
+      trace_id        = "trace_id",
+    }
+  }
+  stage.labels {
+    values = {
+      event = "",
+      level = "",
+    }
+  }
+  stage.structured_metadata {
+    values = {
+      pipeline_run_id = "",
+      dag_run_id      = "",
+      trace_id        = "",
+    }
+  }
+  forward_to = [loki.write.default.receiver]
+}
