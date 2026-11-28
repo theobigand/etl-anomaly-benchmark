@@ -211,8 +211,10 @@ def main() -> int:
     with urllib.request.urlopen(f"{PROMETHEUS}/-/ready", timeout=10) as ready:
         check(ready.status == 200, "Prometheus is ready")
     subprocess.run(
-        ["docker", "run", "--rm", "--user", "0", "-v", f"{LOGS}:/logs", IMAGE, "chown", "runner", "/logs"],
-        check=True, capture_output=True,
+        ["docker", "run", "--rm", "--user", "0", "-v", f"{LOGS}:/logs", IMAGE]
+        + ["chown", "runner", "/logs"],
+        check=True,
+        capture_output=True,
     )  # fmt: skip
     success()
     failure()
