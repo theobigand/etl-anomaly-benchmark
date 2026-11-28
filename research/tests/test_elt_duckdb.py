@@ -3,14 +3,16 @@
 import hashlib
 import importlib.util
 import json
+import os
 import sys
 from pathlib import Path
 
 import pytest
 
-if importlib.util.find_spec("duckdb") is None:  # imported only inside the tests that need it:
-    pytest.skip("duckdb is not installed", allow_module_level=True)  # a forked mutation worker
-    # that inherits a loaded duckdb hangs
+# duckdb is imported only inside the tests that need it: a forked mutation worker that
+# inherits a loaded duckdb hangs
+if importlib.util.find_spec("duckdb") is None and os.environ.get("PLATFORM_REQUIRE") != "1":
+    pytest.skip("duckdb is not installed", allow_module_level=True)
 pa = pytest.importorskip("pyarrow")
 pq = pytest.importorskip("pyarrow.parquet")
 

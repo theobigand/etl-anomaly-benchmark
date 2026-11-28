@@ -38,4 +38,4 @@ written. One DuckDB thread keeps the output bytes reproducible: two runs with on
 
 Linking the manifest to MLflow or the observability events (#146, #164), the dbt models (#146) and the Airflow task
 (#148) are separate issues. DuckDB is not installed in the governed scientific environment; the tests of this module
-skip there and run in an environment with the `elt` group.
+are not collected there. `make verify-platform` runs them in an environment with the `elt` group, and CI runs it in the `platform` job.
