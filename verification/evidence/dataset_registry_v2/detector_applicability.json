@@ -1,0 +1,1346 @@
+{
+ "eligibility": {
+  "plus_outcome_studies": {
+   "contrasts": {
+    "F1a rule vs classical": {
+     "after_implementation": {
+      "clusters": 95,
+      "protocols": [
+       "P-TAB",
+       "P-TS",
+       "P-SEQ",
+       "P-REL",
+       "P-NEST"
+      ]
+     },
+     "now": {
+      "clusters": 95,
+      "protocols": [
+       "P-TAB",
+       "P-TS",
+       "P-SEQ",
+       "P-REL",
+       "P-NEST"
+      ]
+     }
+    },
+    "F1b classical vs neural": {
+     "after_implementation": {
+      "clusters": 95,
+      "protocols": [
+       "P-TAB",
+       "P-TS",
+       "P-SEQ",
+       "P-REL",
+       "P-NEST"
+      ]
+     },
+     "now": {
+      "clusters": 95,
+      "protocols": [
+       "P-TAB",
+       "P-TS",
+       "P-SEQ",
+       "P-REL",
+       "P-NEST"
+      ]
+     }
+    },
+    "F1c rule vs neural": {
+     "after_implementation": {
+      "clusters": 95,
+      "protocols": [
+       "P-TAB",
+       "P-TS",
+       "P-SEQ",
+       "P-REL",
+       "P-NEST"
+      ]
+     },
+     "now": {
+      "clusters": 95,
+      "protocols": [
+       "P-TAB",
+       "P-TS",
+       "P-SEQ",
+       "P-REL",
+       "P-NEST"
+      ]
+     }
+    }
+   },
+   "per_protocol": {
+    "P-NEST": 5,
+    "P-REL": 28,
+    "P-SEQ": 8,
+    "P-TAB": 37,
+    "P-TS": 25
+   },
+   "pool_clusters": 95
+  },
+  "registry_exposed_only": {
+   "contrasts": {
+    "F1a rule vs classical": {
+     "after_implementation": {
+      "clusters": 119,
+      "protocols": [
+       "P-TAB",
+       "P-TS",
+       "P-SEQ",
+       "P-REL",
+       "P-NEST"
+      ]
+     },
+     "now": {
+      "clusters": 119,
+      "protocols": [
+       "P-TAB",
+       "P-TS",
+       "P-SEQ",
+       "P-REL",
+       "P-NEST"
+      ]
+     }
+    },
+    "F1b classical vs neural": {
+     "after_implementation": {
+      "clusters": 119,
+      "protocols": [
+       "P-TAB",
+       "P-TS",
+       "P-SEQ",
+       "P-REL",
+       "P-NEST"
+      ]
+     },
+     "now": {
+      "clusters": 119,
+      "protocols": [
+       "P-TAB",
+       "P-TS",
+       "P-SEQ",
+       "P-REL",
+       "P-NEST"
+      ]
+     }
+    },
+    "F1c rule vs neural": {
+     "after_implementation": {
+      "clusters": 119,
+      "protocols": [
+       "P-TAB",
+       "P-TS",
+       "P-SEQ",
+       "P-REL",
+       "P-NEST"
+      ]
+     },
+     "now": {
+      "clusters": 119,
+      "protocols": [
+       "P-TAB",
+       "P-TS",
+       "P-SEQ",
+       "P-REL",
+       "P-NEST"
+      ]
+     }
+    }
+   },
+   "per_protocol": {
+    "P-NEST": 5,
+    "P-REL": 28,
+    "P-SEQ": 9,
+    "P-TAB": 59,
+    "P-TS": 26
+   },
+   "pool_clusters": 119
+  }
+ },
+ "matrix": [
+  {
+   "detector": "zscore",
+   "family": "rule",
+   "kind": "statistical_rule",
+   "note": "",
+   "protocol": "P-TAB",
+   "representation": "numeric columns of the row",
+   "scientific": "pending_unit_approval",
+   "status": "supported_existing_adapter",
+   "technical": "existing_adapter",
+   "unit": "row"
+  },
+  {
+   "detector": "iqr",
+   "family": "rule",
+   "kind": "statistical_rule",
+   "note": "",
+   "protocol": "P-TAB",
+   "representation": "numeric columns of the row",
+   "scientific": "pending_unit_approval",
+   "status": "supported_existing_adapter",
+   "technical": "existing_adapter",
+   "unit": "row"
+  },
+  {
+   "detector": "great_expectations",
+   "family": "rule",
+   "kind": "declarative_rule",
+   "note": "",
+   "protocol": "P-TAB",
+   "representation": "numeric columns of the row",
+   "scientific": "pending_unit_approval",
+   "status": "supported_existing_adapter",
+   "technical": "existing_adapter",
+   "unit": "row"
+  },
+  {
+   "detector": "isolation_forest",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TAB",
+   "representation": "numeric columns of the row",
+   "scientific": "pending_unit_approval",
+   "status": "supported_existing_adapter",
+   "technical": "existing_adapter",
+   "unit": "row"
+  },
+  {
+   "detector": "lof",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TAB",
+   "representation": "numeric columns of the row",
+   "scientific": "pending_unit_approval",
+   "status": "supported_existing_adapter",
+   "technical": "existing_adapter",
+   "unit": "row"
+  },
+  {
+   "detector": "ocsvm",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TAB",
+   "representation": "numeric columns of the row",
+   "scientific": "pending_unit_approval",
+   "status": "supported_existing_adapter",
+   "technical": "existing_adapter",
+   "unit": "row"
+  },
+  {
+   "detector": "ecod",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TAB",
+   "representation": "numeric columns of the row",
+   "scientific": "pending_unit_approval",
+   "status": "supported_existing_adapter",
+   "technical": "existing_adapter",
+   "unit": "row"
+  },
+  {
+   "detector": "copod",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TAB",
+   "representation": "numeric columns of the row",
+   "scientific": "pending_unit_approval",
+   "status": "supported_existing_adapter",
+   "technical": "existing_adapter",
+   "unit": "row"
+  },
+  {
+   "detector": "hbos",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TAB",
+   "representation": "numeric columns of the row",
+   "scientific": "pending_unit_approval",
+   "status": "supported_existing_adapter",
+   "technical": "existing_adapter",
+   "unit": "row"
+  },
+  {
+   "detector": "knn",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TAB",
+   "representation": "numeric columns of the row",
+   "scientific": "pending_unit_approval",
+   "status": "supported_existing_adapter",
+   "technical": "existing_adapter",
+   "unit": "row"
+  },
+  {
+   "detector": "pca",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TAB",
+   "representation": "numeric columns of the row",
+   "scientific": "pending_unit_approval",
+   "status": "supported_existing_adapter",
+   "technical": "existing_adapter",
+   "unit": "row"
+  },
+  {
+   "detector": "autoencoder",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TAB",
+   "representation": "numeric columns of the row",
+   "scientific": "pending_unit_approval",
+   "status": "supported_existing_adapter",
+   "technical": "existing_adapter",
+   "unit": "row"
+  },
+  {
+   "detector": "vae",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TAB",
+   "representation": "numeric columns of the row",
+   "scientific": "pending_unit_approval",
+   "status": "supported_existing_adapter",
+   "technical": "existing_adapter",
+   "unit": "row"
+  },
+  {
+   "detector": "deep_svdd",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TAB",
+   "representation": "numeric columns of the row",
+   "scientific": "pending_unit_approval",
+   "status": "supported_existing_adapter",
+   "technical": "existing_adapter",
+   "unit": "row"
+  },
+  {
+   "detector": "dif",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TAB",
+   "representation": "numeric columns of the row",
+   "scientific": "pending_unit_approval",
+   "status": "supported_existing_adapter",
+   "technical": "existing_adapter",
+   "unit": "row"
+  },
+  {
+   "detector": "ae1svm",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TAB",
+   "representation": "numeric columns of the row",
+   "scientific": "pending_unit_approval",
+   "status": "supported_existing_adapter",
+   "technical": "existing_adapter",
+   "unit": "row"
+  },
+  {
+   "detector": "lunar",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TAB",
+   "representation": "numeric columns of the row",
+   "scientific": "pending_unit_approval",
+   "status": "supported_existing_adapter",
+   "technical": "existing_adapter",
+   "unit": "row"
+  },
+  {
+   "detector": "zscore",
+   "family": "rule",
+   "kind": "statistical_rule",
+   "note": "",
+   "protocol": "P-TS",
+   "representation": "unit_scoring.window_features (mean, std, min, max, slope, mean absolute difference)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "time_window"
+  },
+  {
+   "detector": "iqr",
+   "family": "rule",
+   "kind": "statistical_rule",
+   "note": "",
+   "protocol": "P-TS",
+   "representation": "unit_scoring.window_features (mean, std, min, max, slope, mean absolute difference)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "time_window"
+  },
+  {
+   "detector": "great_expectations",
+   "family": "rule",
+   "kind": "declarative_rule",
+   "note": "",
+   "protocol": "P-TS",
+   "representation": "unit_scoring.window_features (mean, std, min, max, slope, mean absolute difference)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "time_window"
+  },
+  {
+   "detector": "isolation_forest",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TS",
+   "representation": "unit_scoring.window_features (mean, std, min, max, slope, mean absolute difference)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "time_window"
+  },
+  {
+   "detector": "lof",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TS",
+   "representation": "unit_scoring.window_features (mean, std, min, max, slope, mean absolute difference)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "time_window"
+  },
+  {
+   "detector": "ocsvm",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TS",
+   "representation": "unit_scoring.window_features (mean, std, min, max, slope, mean absolute difference)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "time_window"
+  },
+  {
+   "detector": "ecod",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TS",
+   "representation": "unit_scoring.window_features (mean, std, min, max, slope, mean absolute difference)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "time_window"
+  },
+  {
+   "detector": "copod",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TS",
+   "representation": "unit_scoring.window_features (mean, std, min, max, slope, mean absolute difference)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "time_window"
+  },
+  {
+   "detector": "hbos",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TS",
+   "representation": "unit_scoring.window_features (mean, std, min, max, slope, mean absolute difference)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "time_window"
+  },
+  {
+   "detector": "knn",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TS",
+   "representation": "unit_scoring.window_features (mean, std, min, max, slope, mean absolute difference)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "time_window"
+  },
+  {
+   "detector": "pca",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TS",
+   "representation": "unit_scoring.window_features (mean, std, min, max, slope, mean absolute difference)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "time_window"
+  },
+  {
+   "detector": "autoencoder",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TS",
+   "representation": "unit_scoring.window_features (mean, std, min, max, slope, mean absolute difference)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "time_window"
+  },
+  {
+   "detector": "vae",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TS",
+   "representation": "unit_scoring.window_features (mean, std, min, max, slope, mean absolute difference)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "time_window"
+  },
+  {
+   "detector": "deep_svdd",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TS",
+   "representation": "unit_scoring.window_features (mean, std, min, max, slope, mean absolute difference)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "time_window"
+  },
+  {
+   "detector": "dif",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TS",
+   "representation": "unit_scoring.window_features (mean, std, min, max, slope, mean absolute difference)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "time_window"
+  },
+  {
+   "detector": "ae1svm",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TS",
+   "representation": "unit_scoring.window_features (mean, std, min, max, slope, mean absolute difference)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "time_window"
+  },
+  {
+   "detector": "lunar",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-TS",
+   "representation": "unit_scoring.window_features (mean, std, min, max, slope, mean absolute difference)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "time_window"
+  },
+  {
+   "detector": "zscore",
+   "family": "rule",
+   "kind": "statistical_rule",
+   "note": "training traces with constant counts have zero deviation: the score degenerates",
+   "protocol": "P-SEQ",
+   "representation": "unit_scoring.SequenceFeaturizer (length, unseen bigrams, train bigram counts)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "event_sequence"
+  },
+  {
+   "detector": "iqr",
+   "family": "rule",
+   "kind": "statistical_rule",
+   "note": "training traces with constant counts have zero deviation: the score degenerates",
+   "protocol": "P-SEQ",
+   "representation": "unit_scoring.SequenceFeaturizer (length, unseen bigrams, train bigram counts)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "event_sequence"
+  },
+  {
+   "detector": "great_expectations",
+   "family": "rule",
+   "kind": "declarative_rule",
+   "note": "an expectation suite on bigram counts is not a sequence constraint",
+   "protocol": "P-SEQ",
+   "scientific": "inappropriate",
+   "status": "scientifically_inappropriate",
+   "technical": "requires_implementation",
+   "unit": "event_sequence"
+  },
+  {
+   "detector": "sequence_constraints",
+   "family": "rule",
+   "kind": "constraint_rule_deterministic",
+   "note": "deterministic baseline from the declared schema, keys or order",
+   "protocol": "P-SEQ",
+   "representation": "rule_baselines.SequenceConstraints",
+   "scientific": "pending_unit_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "event_sequence"
+  },
+  {
+   "detector": "isolation_forest",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-SEQ",
+   "representation": "unit_scoring.SequenceFeaturizer (length, unseen bigrams, train bigram counts)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "event_sequence"
+  },
+  {
+   "detector": "lof",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-SEQ",
+   "representation": "unit_scoring.SequenceFeaturizer (length, unseen bigrams, train bigram counts)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "event_sequence"
+  },
+  {
+   "detector": "ocsvm",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-SEQ",
+   "representation": "unit_scoring.SequenceFeaturizer (length, unseen bigrams, train bigram counts)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "event_sequence"
+  },
+  {
+   "detector": "ecod",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-SEQ",
+   "representation": "unit_scoring.SequenceFeaturizer (length, unseen bigrams, train bigram counts)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "event_sequence"
+  },
+  {
+   "detector": "copod",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-SEQ",
+   "representation": "unit_scoring.SequenceFeaturizer (length, unseen bigrams, train bigram counts)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "event_sequence"
+  },
+  {
+   "detector": "hbos",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-SEQ",
+   "representation": "unit_scoring.SequenceFeaturizer (length, unseen bigrams, train bigram counts)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "event_sequence"
+  },
+  {
+   "detector": "knn",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-SEQ",
+   "representation": "unit_scoring.SequenceFeaturizer (length, unseen bigrams, train bigram counts)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "event_sequence"
+  },
+  {
+   "detector": "pca",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-SEQ",
+   "representation": "unit_scoring.SequenceFeaturizer (length, unseen bigrams, train bigram counts)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "event_sequence"
+  },
+  {
+   "detector": "autoencoder",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-SEQ",
+   "representation": "unit_scoring.SequenceFeaturizer (length, unseen bigrams, train bigram counts)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "event_sequence"
+  },
+  {
+   "detector": "vae",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-SEQ",
+   "representation": "unit_scoring.SequenceFeaturizer (length, unseen bigrams, train bigram counts)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "event_sequence"
+  },
+  {
+   "detector": "deep_svdd",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-SEQ",
+   "representation": "unit_scoring.SequenceFeaturizer (length, unseen bigrams, train bigram counts)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "event_sequence"
+  },
+  {
+   "detector": "dif",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-SEQ",
+   "representation": "unit_scoring.SequenceFeaturizer (length, unseen bigrams, train bigram counts)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "event_sequence"
+  },
+  {
+   "detector": "ae1svm",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-SEQ",
+   "representation": "unit_scoring.SequenceFeaturizer (length, unseen bigrams, train bigram counts)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "event_sequence"
+  },
+  {
+   "detector": "lunar",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-SEQ",
+   "representation": "unit_scoring.SequenceFeaturizer (length, unseen bigrams, train bigram counts)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "event_sequence"
+  },
+  {
+   "detector": "zscore",
+   "family": "rule",
+   "kind": "statistical_rule",
+   "note": "",
+   "protocol": "P-REL",
+   "representation": "unit_scoring.relationship_features (child numeric columns)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "relationship"
+  },
+  {
+   "detector": "iqr",
+   "family": "rule",
+   "kind": "statistical_rule",
+   "note": "",
+   "protocol": "P-REL",
+   "representation": "unit_scoring.relationship_features (child numeric columns)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "relationship"
+  },
+  {
+   "detector": "great_expectations",
+   "family": "rule",
+   "kind": "declarative_rule",
+   "note": "an expectation suite on child attributes does not check references; use fk_integrity",
+   "protocol": "P-REL",
+   "scientific": "inappropriate",
+   "status": "scientifically_inappropriate",
+   "technical": "requires_implementation",
+   "unit": "relationship"
+  },
+  {
+   "detector": "fk_integrity",
+   "family": "rule",
+   "kind": "constraint_rule_deterministic",
+   "note": "deterministic baseline from the declared schema, keys or order",
+   "protocol": "P-REL",
+   "representation": "rule_baselines.ForeignKeyIntegrity",
+   "scientific": "pending_unit_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "relationship"
+  },
+  {
+   "detector": "isolation_forest",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-REL",
+   "representation": "unit_scoring.relationship_features (child numeric columns)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "relationship"
+  },
+  {
+   "detector": "lof",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-REL",
+   "representation": "unit_scoring.relationship_features (child numeric columns)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "relationship"
+  },
+  {
+   "detector": "ocsvm",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-REL",
+   "representation": "unit_scoring.relationship_features (child numeric columns)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "relationship"
+  },
+  {
+   "detector": "ecod",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-REL",
+   "representation": "unit_scoring.relationship_features (child numeric columns)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "relationship"
+  },
+  {
+   "detector": "copod",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-REL",
+   "representation": "unit_scoring.relationship_features (child numeric columns)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "relationship"
+  },
+  {
+   "detector": "hbos",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-REL",
+   "representation": "unit_scoring.relationship_features (child numeric columns)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "relationship"
+  },
+  {
+   "detector": "knn",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-REL",
+   "representation": "unit_scoring.relationship_features (child numeric columns)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "relationship"
+  },
+  {
+   "detector": "pca",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-REL",
+   "representation": "unit_scoring.relationship_features (child numeric columns)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "relationship"
+  },
+  {
+   "detector": "autoencoder",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-REL",
+   "representation": "unit_scoring.relationship_features (child numeric columns)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "relationship"
+  },
+  {
+   "detector": "vae",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-REL",
+   "representation": "unit_scoring.relationship_features (child numeric columns)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "relationship"
+  },
+  {
+   "detector": "deep_svdd",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-REL",
+   "representation": "unit_scoring.relationship_features (child numeric columns)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "relationship"
+  },
+  {
+   "detector": "dif",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-REL",
+   "representation": "unit_scoring.relationship_features (child numeric columns)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "relationship"
+  },
+  {
+   "detector": "ae1svm",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-REL",
+   "representation": "unit_scoring.relationship_features (child numeric columns)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "relationship"
+  },
+  {
+   "detector": "lunar",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-REL",
+   "representation": "unit_scoring.relationship_features (child numeric columns)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "relationship"
+  },
+  {
+   "detector": "zscore",
+   "family": "rule",
+   "kind": "statistical_rule",
+   "note": "",
+   "protocol": "P-NEST",
+   "representation": "unit_scoring.PathFeaturizer (presence, type, depth, number, size of each leaf path)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "nested_path"
+  },
+  {
+   "detector": "iqr",
+   "family": "rule",
+   "kind": "statistical_rule",
+   "note": "",
+   "protocol": "P-NEST",
+   "representation": "unit_scoring.PathFeaturizer (presence, type, depth, number, size of each leaf path)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "nested_path"
+  },
+  {
+   "detector": "great_expectations",
+   "family": "rule",
+   "kind": "declarative_rule",
+   "note": "the wrapper checks tabular columns, not paths; use schema_path_rules",
+   "protocol": "P-NEST",
+   "scientific": "inappropriate",
+   "status": "scientifically_inappropriate",
+   "technical": "requires_implementation",
+   "unit": "nested_path"
+  },
+  {
+   "detector": "schema_path_rules",
+   "family": "rule",
+   "kind": "constraint_rule_deterministic",
+   "note": "deterministic baseline from the declared schema, keys or order",
+   "protocol": "P-NEST",
+   "representation": "rule_baselines.SchemaPathRules",
+   "scientific": "pending_unit_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "nested_path"
+  },
+  {
+   "detector": "isolation_forest",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-NEST",
+   "representation": "unit_scoring.PathFeaturizer (presence, type, depth, number, size of each leaf path)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "nested_path"
+  },
+  {
+   "detector": "lof",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-NEST",
+   "representation": "unit_scoring.PathFeaturizer (presence, type, depth, number, size of each leaf path)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "nested_path"
+  },
+  {
+   "detector": "ocsvm",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-NEST",
+   "representation": "unit_scoring.PathFeaturizer (presence, type, depth, number, size of each leaf path)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "nested_path"
+  },
+  {
+   "detector": "ecod",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-NEST",
+   "representation": "unit_scoring.PathFeaturizer (presence, type, depth, number, size of each leaf path)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "nested_path"
+  },
+  {
+   "detector": "copod",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-NEST",
+   "representation": "unit_scoring.PathFeaturizer (presence, type, depth, number, size of each leaf path)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "nested_path"
+  },
+  {
+   "detector": "hbos",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-NEST",
+   "representation": "unit_scoring.PathFeaturizer (presence, type, depth, number, size of each leaf path)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "nested_path"
+  },
+  {
+   "detector": "knn",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-NEST",
+   "representation": "unit_scoring.PathFeaturizer (presence, type, depth, number, size of each leaf path)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "nested_path"
+  },
+  {
+   "detector": "pca",
+   "family": "classical",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-NEST",
+   "representation": "unit_scoring.PathFeaturizer (presence, type, depth, number, size of each leaf path)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "nested_path"
+  },
+  {
+   "detector": "autoencoder",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-NEST",
+   "representation": "unit_scoring.PathFeaturizer (presence, type, depth, number, size of each leaf path)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "nested_path"
+  },
+  {
+   "detector": "vae",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-NEST",
+   "representation": "unit_scoring.PathFeaturizer (presence, type, depth, number, size of each leaf path)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "nested_path"
+  },
+  {
+   "detector": "deep_svdd",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-NEST",
+   "representation": "unit_scoring.PathFeaturizer (presence, type, depth, number, size of each leaf path)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "nested_path"
+  },
+  {
+   "detector": "dif",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-NEST",
+   "representation": "unit_scoring.PathFeaturizer (presence, type, depth, number, size of each leaf path)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "nested_path"
+  },
+  {
+   "detector": "ae1svm",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-NEST",
+   "representation": "unit_scoring.PathFeaturizer (presence, type, depth, number, size of each leaf path)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "nested_path"
+  },
+  {
+   "detector": "lunar",
+   "family": "neural",
+   "kind": "learned",
+   "note": "",
+   "protocol": "P-NEST",
+   "representation": "unit_scoring.PathFeaturizer (presence, type, depth, number, size of each leaf path)",
+   "scientific": "pending_representation_approval",
+   "status": "adapter_implemented_pending_approval",
+   "technical": "adapter_implemented",
+   "unit": "nested_path"
+  }
+ ],
+ "mechanisms": {
+  "P-NEST": {
+   "broken_hierarchy": {
+    "note": "depth and presence of the path",
+    "representation": "limited"
+   },
+   "invalid_nested_type": {
+    "note": "type code of the path",
+    "representation": "visible"
+   },
+   "missing_required_field": {
+    "note": "presence of the path",
+    "representation": "visible"
+   },
+   "structural_inconsistency": {
+    "note": "depends on the inconsistency",
+    "representation": "limited"
+   },
+   "unexpected_array_or_object": {
+    "note": "type code of the path",
+    "representation": "visible"
+   }
+  },
+  "P-REL": {
+   "duplicate_entity": {
+    "note": "needs entity keys across child rows",
+    "representation": "invisible"
+   },
+   "inconsistent_aggregate": {
+    "note": "needs parent-child aggregates, not child attributes",
+    "representation": "invisible"
+   },
+   "invalid_relationship": {
+    "note": "depends on the relationship semantics",
+    "representation": "limited"
+   },
+   "referential_violation": {
+    "note": "only with reference_present, which is the constraint itself",
+    "representation": "visible"
+   }
+  },
+  "P-SEQ": {
+   "abnormal_transition": {
+    "note": "unseen or rare bigrams",
+    "representation": "visible"
+   },
+   "duplicate_event": {
+    "note": "length and bigram counts",
+    "representation": "visible"
+   },
+   "missing_event": {
+    "note": "length and unseen bigrams",
+    "representation": "visible"
+   },
+   "order_violation": {
+    "note": "unseen bigrams",
+    "representation": "visible"
+   },
+   "unexpected_sequence": {
+    "note": "unseen bigrams",
+    "representation": "visible"
+   }
+  },
+  "P-TAB": {
+   "abnormal_entity_behaviour": {
+    "note": "needs an entity key and per-entity features",
+    "representation": "invisible"
+   },
+   "cross_field_violation": {
+    "note": "visible only if the violation moves the joint position",
+    "representation": "limited"
+   },
+   "duplicate_rows": {
+    "note": "a duplicate row equals a normal row",
+    "representation": "invisible"
+   },
+   "invalid_category_code": {
+    "note": "categorical columns are dropped by the numeric featurizer",
+    "representation": "invisible"
+   },
+   "missing_values": {
+    "note": "train-only median imputation hides the gap",
+    "representation": "invisible"
+   },
+   "multivariate_outlier": {
+    "note": "joint position in the numeric space",
+    "representation": "visible"
+   },
+   "univariate_outlier": {
+    "note": "a numeric column leaves its training range",
+    "representation": "visible"
+   }
+  },
+  "P-TS": {
+   "collective_anomaly": {
+    "note": "window statistics change",
+    "representation": "visible"
+   },
+   "contextual_anomaly": {
+    "note": "needs the seasonal context, not the window values",
+    "representation": "limited"
+   },
+   "delayed_arrival": {
+    "note": "needs arrival times, not values",
+    "representation": "invisible"
+   },
+   "gradual_drift": {
+    "note": "slope changes only inside the window",
+    "representation": "limited"
+   },
+   "level_shift": {
+    "note": "window mean changes",
+    "representation": "visible"
+   },
+   "missing_interval": {
+    "note": "the featurizer assumes complete windows",
+    "representation": "invisible"
+   },
+   "point_outlier": {
+    "note": "a single point moves max and min of its window",
+    "representation": "limited"
+   },
+   "seasonal_deviation": {
+    "note": "needs the position in the season",
+    "representation": "invisible"
+   }
+  }
+ },
+ "note": "design and metadata only: no dataset was read, no detector was run; potential eligibility is a structural upper bound, not verified eligibility and not paired observations",
+ "pilot_size": 24,
+ "seed": 20261121
+}
