@@ -25,6 +25,7 @@ SUPPLEMENTS = (
     ROOT
     / "docs/thesis-remediation/evidence/focused-statistical-remediation-2026-11-27"
     / "measurement.json",
+    ROOT / "docs/thesis-remediation/evidence/focused-elt-duckdb-2026-11-27" / "measurement.json",
     ROOT
     / "docs/thesis-remediation/evidence/focused-exposure-inventory-2026-11-27"
     / "measurement.json",
