@@ -576,6 +576,10 @@
       "level": "L2",
       "reason": "It runs a synthetic ELT through DuckDB and writes the provenance manifest of the platform tooling, so a defect changes which engineering artifacts are written or recorded, never a scientific result; it reads no benchmark view, fits no detector, refuses archived evidence paths, and no scientific code imports it (ADR-0004)."
     },
+    "research/dbt_runner.py": {
+      "level": "L2",
+      "reason": "It runs the dbt project over the synthetic DuckDB ELT output through a separate dbt executable and writes the provenance record of the platform tooling, so a defect changes which engineering artifacts are written or recorded, never a scientific result; it reads no benchmark view, fits no detector, refuses archived evidence paths, and no scientific code imports it (ADR-0005)."
+    },
     "research/analysis_design_simulation.py": {
       "level": "L2",
       "reason": "It simulates the candidate cluster-level analysis on synthetic differences and derives the alert probability after the registered quantile threshold, so a defect changes a design recommendation, never a scientific result; it reads no dataset, fits no detector, and no scientific code imports it."

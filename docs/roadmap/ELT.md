@@ -34,8 +34,28 @@ written. One DuckDB thread keeps the output bytes reproducible: two runs with on
 - Nothing is flattened: nested columns stay nested in staging and are queried with struct and list functions.
 - DuckDB 2.0 rejects the old `x -> expr` lambda; the SQL uses `lambda x: expr`.
 
+## dbt over the ELT output (#146)
+
+`platform/dbt_orders` is a dbt Core project (dbt-core 1.12.7 and dbt-duckdb 1.11.1, ADR-0005) that reads `raw/orders.parquet`
+of an ELT run as a source and builds `stg_orders` and `int_order_units` (views) and `mart_tier_summary` (table). Its tests
+are `not_null`, `unique` and `accepted_values` on the keys and tiers, plus a singular test that the dbt mart equals the
+DuckDB mart of the same run (`marts/orders_by_tier.parquet`). `research/dbt_runner.py` runs `dbt build` and
+`dbt docs generate` through a separate dbt executable (`DBT_BIN` or `--dbt`), so dbt's Jinja and adapter stack never
+enter the scientific or ELT environment.
+
+```
+uv venv ~/.cache/etl-dbt-venv && uv pip install --python ~/.cache/etl-dbt-venv/bin/python \
+    dbt-core==1.12.7 dbt-duckdb==1.11.1 duckdb==2.0.1 pyarrow      # the `dbt` and `elt` groups of pyproject.toml
+~/.cache/etl-elt-venv/bin/python research/elt_duckdb.py --out /tmp/elt-demo --seed 0 --rows 1000
+python research/dbt_runner.py --elt-out /tmp/elt-demo --dbt ~/.cache/etl-dbt-venv/bin/dbt
+```
+
+`<out>/dbt/dbt_run.json` holds the dbt invocation id, the dbt version, the status of every node, the parents of every
+node (the lineage the generated docs draw), the SHA-256 of `manifest.json`, `run_results.json` and `catalog.json` and the
+`run_id` of the ELT run it was built on. A failed node, a missing result file or a failed docs generation is an error
+that names the node and writes no record. `make verify-platform` runs the real dbt build in CI (job `platform`).
+
 ## Not done here
 
-Linking the manifest to MLflow or the observability events (#146, #164), the dbt models (#146) and the Airflow task
-(#148) are separate issues. DuckDB is not installed in the governed scientific environment; the tests of this module
+Linking the manifest to MLflow or the observability events (#164) and the Airflow task (#148) are separate issues. DuckDB is not installed in the governed scientific environment; the tests of this module
 are not collected there. `make verify-platform` runs them in an environment with the `elt` group, and CI runs it in the `platform` job.

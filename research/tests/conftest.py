@@ -53,9 +53,20 @@ collect_ignore = (
 # collected where it is missing, so the FAST gate never counts a skip. `make verify-platform`
 # sets PLATFORM_REQUIRE=1 in a job that installs the dependency: there a missing package is an
 # error, never a silent skip.
-PLATFORM_TESTS = {"test_elt_duckdb.py": "duckdb"}
+PLATFORM_TESTS = {
+    "test_elt_duckdb.py": ("duckdb",),
+    "test_dbt_integration.py": ("duckdb", "DBT_BIN"),  # a package, or an environment variable
+}
+
+
+def _missing(requirement: str) -> bool:
+    if requirement.isupper():
+        return not os.environ.get(requirement)
+    return importlib.util.find_spec(requirement) is None
+
+
 collect_ignore = [
     name
-    for name, package in PLATFORM_TESTS.items()
-    if os.environ.get("PLATFORM_REQUIRE") != "1" and importlib.util.find_spec(package) is None
+    for name, requirements in PLATFORM_TESTS.items()
+    if os.environ.get("PLATFORM_REQUIRE") != "1" and any(_missing(r) for r in requirements)
 ]

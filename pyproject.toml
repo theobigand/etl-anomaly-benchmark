@@ -129,3 +129,6 @@ observability = [
 # Local ELT engine over Parquet (research/elt_duckdb.py, #143; ADR-0004), optional. Pinned exactly: the
 # 2.0 release is new and every ELT artifact records the engine version.
 elt = ["duckdb==2.0.1"]
+# dbt Core with the DuckDB adapter (research/dbt_runner.py, #146; ADR-0005). Installed in its own
+# environment with the elt group, never in the scientific one.
+dbt = ["dbt-core==1.12.7", "dbt-duckdb==1.11.1"]
