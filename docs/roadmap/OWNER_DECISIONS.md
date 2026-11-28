@@ -22,8 +22,8 @@ specifications: [`verification/unit_amendment_proposals.md`](../../verification/
 - A family of 11 comparisons is infeasible in most scenarios; one or three primary comparisons are prepared.
 - The batch alert budget is not Beta(1, n); the expected false-alert probability at 16 to 100 validation batches is 10.3
   to 5.9 percent, not 5.
-- 30 UCI groups of the registry were rows with detector outcomes in the earlier pool benchmark and are not recorded as
-  exposed; three of them are in the current 16-group proposal.
+- The reconciled inventory (`exposure_inventory.json`) finds 57 registry groups and clusters, 52 of them not recorded as
+  exposed, that were the subject of detector outcomes in earlier studies; 3 to 10 are in the current panels.
 - The percentile bootstrap is anti-conservative at 16 clusters; residual curator dependence inflates type I error to
   14 to 21 percent unless curator-block resampling is used.
 
@@ -52,12 +52,13 @@ Readiness: **ready for owner approval** = no further methodological work; **need
   `seoul_bike`, `steel_korea`, `tetouan_power`)?
 - Options: exclude from pilot and confirmation; allow in the pilot with a sensitivity analysis.
 - Recommended: exclude from both. Also decide the new question below.
-- Evidence: they are the only groups the registry records as exposed. The earlier pool benchmark ran detectors on 30
+- Evidence: they are the only groups the registry records as exposed. Earlier studies ran detectors on 52
   other registry groups (including `uci:193`, the cardio dataset); they are in none of the registry's exposure lists.
-  Treating them as exposed lowers the floor-meeting holdout to 114 / 106 / 98 (balanced 16 / 24 / 32).
+  Treating all 57 outcome-exposed clusters as unavailable lowers the floor-meeting holdout from 127 / 119 / 111 to
+  103 / 95 / 87 (balanced 16 / 24 / 32); a per-study rule lies in between.
 - Limits: the pool exposure is study-specific (native labels, another unit and protocol).
-- Depends on: D-08. Authorizes: the exclusion rule and, if chosen, the wider rule for the 30 groups. Does not authorize: any use.
-- Readiness: ready for owner approval; the 30-group rule is an additional choice (exclude: recommended for the confirmatory set).
+- Depends on: D-08. Authorizes: the exclusion rule and, if chosen, the wider rule for the 52 groups. Does not authorize: any use.
+- Readiness: ready for owner approval; the wider rule is an additional choice (exclude: recommended for the confirmatory set).
 
 ### D-03 Primary analysis
 
@@ -118,7 +119,7 @@ Readiness: **ready for owner approval** = no further methodological work; **need
 
 - Question: does exposure in one study exclude a cluster from the other study's confirmatory set?
 - Options: yes, no. Recommended: yes, applied at the cluster level. Evidence: keeps confirmatory sets clean.
-- Limits: it interacts with the 30-group question of D-02.
+- Limits: it interacts with the wider-rule question of D-02.
 - Authorizes: the rule. Does not authorize: anything else. Readiness: ready for owner approval.
 
 ### D-09 Cincinnati sources
@@ -201,7 +202,7 @@ Readiness: **ready for owner approval** = no further methodological work; **need
 
 ## 3. Summary of readiness
 
-Ready for owner approval: D-02 (and the 30-group choice), D-07, D-08, D-09, D-11. Need the independent review first:
+Ready for owner approval: D-02 (and the wider-rule choice), D-07, D-08, D-09, D-11. Need the independent review first:
 D-01, D-03, D-04, D-05, D-06, D-12, D-13, D-16. Separate gates: D-10, D-14, D-15, D-17. No decision here needs separate
 approval of ordinary engineering details.
 
@@ -217,7 +218,7 @@ Copy, fill in and record in the repository yourself; nothing here creates an app
 
 ```
 D-01: approve balanced 16 | balanced 24 | modify: ...
-D-02: approve exclude five | allow | modify: ...; 30 labelled-pool groups: exclude from confirmation | keep eligible
+D-02: approve exclude five | allow | modify: ...; 52 outcome-exposed groups: exclude from confirmation | keep eligible
 D-03: approve t + curator-block sensitivity | modify: ...
 D-04: approve 1.55 + assurance rule | 1.4 | 1.7 | modify: ...
 D-05: approve 0.05 | modify: ...
