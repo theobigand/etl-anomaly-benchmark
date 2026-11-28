@@ -78,8 +78,7 @@ jobs:
         run: |
           bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
           echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
-          "$RUNNER_TEMP/venv/bin/python" -m pip install --quiet "pip>=25.1"
-          "$RUNNER_TEMP/venv/bin/python" -m pip install --quiet --group elt
+          bash verification/runner/install_platform.sh "$RUNNER_TEMP/venv" elt
 
       - name: Platform extension tests
         run: make verify-platform
