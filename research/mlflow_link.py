@@ -215,7 +215,9 @@ def track(
 
     The correlation identifiers bound with ``obs_events`` (scientific run, pipeline run, DAG run,
     trace) go on the MLflow run as tags and into the link row; the MLflow run id is bound for the
-    block so every log line carries it. The yielded dict collects ``metrics`` the block adds.
+    block so every log line carries it. The yielded dict collects ``metrics`` the block adds and
+    ``artifacts`` (name -> path) the block writes: their digests are taken when the block ends,
+    and a file the block did not write is left out.
     """
     if kind not in KINDS:
         raise ValueError(f"unknown run kind {kind!r}; choose one of {', '.join(KINDS)}")
@@ -225,7 +227,7 @@ def track(
     digests = {name: sha256_file(path) for name, path in (artifacts or {}).items()}
     tags = {"etl.kind": kind, **{f"etl.{k}": v for k, v in ids.items()}}
     params = dict(params or {})
-    result: dict[str, Any] = {"metrics": dict(metrics or {})}
+    result: dict[str, Any] = {"metrics": dict(metrics or {}), "artifacts": {}}
     _audited(kind, {"tags": tags, "params": params, "artifacts": digests})
     run_id: str | None = None
     status = "FINISHED"
@@ -244,8 +246,15 @@ def track(
     finally:
         ended = clock()
         refused: ValueError | None = None
+        digests.update(
+            {
+                name: sha256_file(path)
+                for name, path in result["artifacts"].items()
+                if path.is_file()
+            }
+        )
         try:
-            _audited(kind, {"metrics": result["metrics"]})
+            _audited(kind, {"metrics": result["metrics"], "artifacts": digests})
         except ValueError as error:
             refused, status, result["metrics"] = error, "FAILED", {}
         if run_id:

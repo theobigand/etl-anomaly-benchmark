@@ -576,6 +576,10 @@
       "level": "L2",
       "reason": "It runs a synthetic ELT through DuckDB and writes the provenance manifest of the platform tooling, so a defect changes which engineering artifacts are written or recorded, never a scientific result; it reads no benchmark view, fits no detector, refuses archived evidence paths, and no scientific code imports it (ADR-0004)."
     },
+    "research/elt_pipeline.py": {
+      "level": "L2",
+      "reason": "It runs the synthetic DuckDB ELT and the dbt project as one pipeline and ties them to the MLflow link table and the structured events of the platform tooling, so a defect changes which engineering runs, artifacts and failures are recorded, never a scientific result; it reads no benchmark view, fits no detector and no scientific code imports it (ADR-0004, ADR-0005, ADR-0008)."
+    },
     "research/dbt_runner.py": {
       "level": "L2",
       "reason": "It runs the dbt project over the synthetic DuckDB ELT output through a separate dbt executable and writes the provenance record of the platform tooling, so a defect changes which engineering artifacts are written or recorded, never a scientific result; it reads no benchmark view, fits no detector, refuses archived evidence paths, and no scientific code imports it (ADR-0005)."

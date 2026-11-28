@@ -25,18 +25,34 @@ from pathlib import Path
 from typing import Any
 
 import elt_duckdb as elt
+import obs_failures
 
 PROJECT = elt.ROOT / "platform" / "dbt_orders"
 ARTIFACTS = ("manifest.json", "run_results.json", "catalog.json")
 TIMEOUT = 600
 
 
-class DbtError(RuntimeError):
-    """dbt could not run or reported a failed node."""
+class DbtError(obs_failures.ProcessingFailure):
+    """dbt reported a failed model or produced no result (failure class ``processing``)."""
 
 
 class DbtUnavailable(DbtError):
-    """No dbt executable was given or it cannot be started."""
+    """No dbt executable was given or it cannot be started: a permanent infrastructure failure."""
+
+    failure_class = "infrastructure"
+
+
+class DbtTimeout(DbtError):
+    """dbt did not finish in time: a transient infrastructure failure."""
+
+    failure_class = "infrastructure"
+    transient = True
+
+
+class DbtDataTestFailure(DbtError):
+    """Only data tests failed: the data violates a declared expectation."""
+
+    failure_class = "data_quality"
 
 
 def dbt_command(dbt: str | None) -> str:
@@ -59,7 +75,7 @@ def _invoke(command: str, args: list[str], env: dict[str, str]) -> subprocess.Co
     except (FileNotFoundError, PermissionError) as error:
         raise DbtUnavailable(f"cannot start dbt: {error}") from error
     except subprocess.TimeoutExpired as error:
-        raise DbtError(f"dbt timed out after {TIMEOUT} s: {args[0]}") from error
+        raise DbtTimeout(f"dbt timed out after {TIMEOUT} s: {args[0]}") from error
 
 
 def read_results(target: Path) -> dict[str, Any]:
@@ -111,7 +127,8 @@ def run_dbt(elt_out: Path, dbt: str | None = None) -> dict[str, Any]:
     results = read_results(target) if written else {"nodes": {}}
     failed = sorted(n for n, s in results["nodes"].items() if s not in ("pass", "success"))
     if build.returncode != 0 or failed:
-        raise DbtError(
+        only_tests = bool(failed) and all(node.startswith("test.") for node in failed)
+        raise (DbtDataTestFailure if only_tests else DbtError)(
             f"dbt build failed (exit {build.returncode}): {', '.join(failed) or 'no node result'}"
         )
     results = read_results(target)  # a clean exit without results is an error too

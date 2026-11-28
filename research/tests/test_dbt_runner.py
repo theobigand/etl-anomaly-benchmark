@@ -208,3 +208,31 @@ def test_the_subprocess_is_bounded_captured_and_never_raises_on_a_bad_exit(monke
         "timeout": dr.TIMEOUT,
         "check": False,
     }
+
+
+def test_failures_follow_the_platform_taxonomy(fake, monkeypatch):
+    import obs_failures
+
+    path, out = fake
+    assert obs_failures.classify(dr.DbtError("x")) == ("processing", False)
+    assert obs_failures.classify(dr.DbtUnavailable("x")) == ("infrastructure", False)
+    assert obs_failures.classify(dr.DbtTimeout("x")) == ("infrastructure", True)
+    monkeypatch.setenv("FAKE_MODE", "fail_node")  # only a data test fails
+    with pytest.raises(dr.DbtDataTestFailure) as tests:
+        dr.run_dbt(out, str(path))
+    assert obs_failures.classify(tests.value) == ("data_quality", False)
+    monkeypatch.setenv("FAKE_MODE", "fail_two")  # a model fails too
+    with pytest.raises(dr.DbtError) as model:
+        dr.run_dbt(out, str(path))
+    assert not isinstance(model.value, dr.DbtDataTestFailure)
+
+
+def test_a_timeout_is_a_transient_infrastructure_failure(monkeypatch):
+    import subprocess
+
+    def slow(*args, **kwargs):
+        raise subprocess.TimeoutExpired("dbt", 1)
+
+    monkeypatch.setattr(dr.subprocess, "run", slow)
+    with pytest.raises(dr.DbtTimeout):
+        dr._invoke("dbt", ["build"], {})

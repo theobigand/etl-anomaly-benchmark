@@ -67,3 +67,26 @@ def test_a_corrupted_mart_makes_the_singular_test_fail(tmp_path):
     )
     with pytest.raises(dr.DbtError, match="test.orders.mart_matches_the_elt_marts"):
         dr.run_dbt(out, os.environ["DBT_BIN"])
+
+
+def test_the_tracked_pipeline_runs_the_real_elt_and_dbt_and_links_them(tmp_path):
+    import elt_pipeline as ep
+    import mlflow_link as ml
+
+    summary = ep.run_pipeline(
+        tmp_path / "out",
+        seed=2,
+        rows=200,
+        link_db=tmp_path / "links.sqlite",
+        dbt=os.environ["DBT_BIN"],
+        dag_run_id="dag-1",
+    )
+    (row,) = ml.LinkTable(tmp_path / "links.sqlite").rows()
+    assert row["pipeline_run_id"] == summary["pipeline_run_id"] == "elt-2-200"
+    assert row["dag_run_id"] == "dag-1"
+    record = json.loads((tmp_path / "out" / "dbt" / "dbt_run.json").read_text())
+    assert summary["dbt_invocation_id"] == record["invocation_id"]
+    assert summary["elt_run_id"] == record["elt_run_id"]
+    assert row["artifact_digests"]["dbt_run"] == ml.sha256_file(
+        tmp_path / "out" / "dbt" / "dbt_run.json"
+    )

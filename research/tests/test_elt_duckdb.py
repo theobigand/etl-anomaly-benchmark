@@ -247,6 +247,16 @@ def test_the_install_hint_is_exact(tmp_path, monkeypatch):
     )
 
 
+def test_failures_follow_the_platform_taxonomy(tmp_path, monkeypatch):
+    import obs_failures
+
+    assert obs_failures.classify(elt.ELTError("x")) == ("processing", False)
+    assert obs_failures.classify(elt.ELTUnavailable("x")) == ("infrastructure", False)
+    monkeypatch.setitem(sys.modules, "duckdb", None)
+    with pytest.raises(elt.ELTUnavailable):
+        elt.run_elt(tmp_path, seed=1, rows=5)
+
+
 def test_the_logical_schema_describes_nested_types_exactly():
     schema = pa.schema(
         [

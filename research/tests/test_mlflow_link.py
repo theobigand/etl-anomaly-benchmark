@@ -413,3 +413,23 @@ def test_link_ids_increase_and_digests_are_stored_sorted(table):
 
     stored = sqlite3.connect(table.path).execute("select artifact_digests from links").fetchall()
     assert stored == [('{"a": "2", "b": "1"}',), ("{}",)]
+
+
+def test_artifacts_written_inside_the_block_are_digested_when_it_ends(
+    client, table, server, tmp_path
+):
+    written, absent = tmp_path / "out.json", tmp_path / "never.json"
+    with _t(client, table) as run:
+        written.write_text("{}")
+        run["artifacts"]["out"] = written
+        run["artifacts"]["never"] = absent
+    (row,) = table.rows()
+    assert row["artifact_digests"] == {"out": ml.sha256_file(written)}
+    assert server.state["runs"]["run1"]["params"] == {"digest.out": ml.sha256_file(written)}
+
+
+def test_a_late_artifact_is_audited_like_an_early_one(client, table, tmp_path):
+    secret = tmp_path / "ground_truth.csv"
+    secret.write_text("x")
+    with pytest.raises(ValueError, match="ground_truth"), _t(client, table) as run:
+        run["artifacts"]["ground_truth"] = secret
