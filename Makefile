@@ -2,7 +2,7 @@ CONDA_ENV := etl-benchmark
 # any Chromium-family binary that supports --print-to-pdf (chrome, chromium, chrome-headless-shell)
 CHROME ?= chromium
 
-.PHONY: help env update test lint verify-fast verify-preprocessing verify-deep verify-faults verify-real verify-pool verify-scale lock verify-types verify-tools verify-slides mutation-focus verify-reproduce verify-release verify-all pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves slides run clean
+.PHONY: help env update test lint verify-platform verify-fast verify-preprocessing verify-deep verify-faults verify-real verify-pool verify-scale lock verify-types verify-tools verify-slides mutation-focus verify-reproduce verify-release verify-all pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves slides run clean
 
 help:
 	@echo "Available targets:"
@@ -12,6 +12,7 @@ help:
 	@echo "  make lint       Run ruff check + format"
 	@echo "  make verify-fast  Lint, test, measure exact line/branch coverage, write evidence"
 	@echo "  make verify-preprocessing  Test frozen pool preparation, separate 100% coverage and three isolation defects"
+	@echo "  make verify-platform Tests of the optional platform extensions (needs the elt dependency group)"
 	@echo "  make verify-deep  Mutation campaign on src/etl_benchmark and experiments, enforce 95%"
 	@echo "  make verify-faults Apply deliberate scientific defects to a temporary copy and require a failure"
 	@echo "  make verify-real  Inspect available full datasets and record provenance"
@@ -129,6 +130,11 @@ verify-types:
 		gate=$$?; python -m verification.evidence_schema types \
 		--report experiments/results/types_report.json --output $(EVIDENCE)/types.json; \
 		evidence_status=$$?; test $$gate -eq 0 -a $$evidence_status -eq 0
+
+# Tests of the optional platform extensions (the `elt` dependency group). Not part of FAST: they need packages the
+# scientific lock does not pin. PLATFORM_REQUIRE turns a missing package into an error instead of a skip.
+verify-platform:
+	PLATFORM_REQUIRE=1 python -m pytest research/tests/test_elt_duckdb.py -o addopts="-ra -q" -p no:cacheprovider
 
 verify-tools:
 	@mkdir -p $(EVIDENCE) experiments/results

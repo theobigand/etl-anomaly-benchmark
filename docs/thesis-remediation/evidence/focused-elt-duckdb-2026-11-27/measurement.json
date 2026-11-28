@@ -1,0 +1,31 @@
+{
+  "base_head": "172b7a7a45ec5251041e0c4636950d3d521f488e",
+  "command": "python -m mutmut run \"research.elt_duckdb.*\" in a scratch copy holding research/, src/etl_benchmark and a narrowed pyproject with process_isolation = forkserver, with only test_elt_duckdb.py; duckdb 2.0.1 and pyarrow installed in the mutation venv",
+  "date": "2026-11-27",
+  "environment": {
+    "duckdb": "2.0.1",
+    "mutmut": "3.8.x (etl-mutation-venv)",
+    "platform": "macOS-27.2-arm64",
+    "python": "3.13"
+  },
+  "kind": "local focused development measurement of one new engineering module (issue #143); not the controller campaign, not attested",
+  "modules": {
+    "research/elt_duckdb.py": {
+      "eligible": 352,
+      "killed": 322,
+      "level": "L2",
+      "raw_score": 91.5,
+      "source_sha256": "6562c93b3d796504178cbe122358e0abf1429c713555204669743cd7ee870394",
+      "status": "PASS_RAW",
+      "survived": 30,
+      "threshold": 90
+    }
+  },
+  "note": "No survivor was marked equivalent and none was individually reviewed. An earlier run with the default fork isolation reported 81 timeouts: DuckDB threads do not survive a fork, and the repository's forkserver isolation removed all of them (no timeout in this run). Most survivors are file-name case mutants that survive only on a case-insensitive volume, plus formatting details of the CLI.",
+  "survivors": {
+    "research/elt_duckdb.py": [
+      "30 survived; not individually owner-reviewed"
+    ]
+  },
+  "working_tree": "clean apart from the measured module and its tests"
+}

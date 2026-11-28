@@ -12,6 +12,7 @@ from __future__ import annotations
 import importlib
 import importlib.abc
 import importlib.util
+import os
 import sys
 from pathlib import Path
 
@@ -46,3 +47,15 @@ collect_ignore = (
     if importlib.util.find_spec("torch") is not None
     else ["test_deep_typed.py", "test_lstm_detector.py", "test_lstm_pilot.py"]
 )
+
+
+# Tests that need an optional platform dependency (not in the scientific lock) are not
+# collected where it is missing, so the FAST gate never counts a skip. `make verify-platform`
+# sets PLATFORM_REQUIRE=1 in a job that installs the dependency: there a missing package is an
+# error, never a silent skip.
+PLATFORM_TESTS = {"test_elt_duckdb.py": "duckdb"}
+collect_ignore = [
+    name
+    for name, package in PLATFORM_TESTS.items()
+    if os.environ.get("PLATFORM_REQUIRE") != "1" and importlib.util.find_spec(package) is None
+]

@@ -60,6 +60,29 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
+  # Optional platform extensions (ELT over DuckDB). FAST counts a skip as a failure and the scientific lock does not
+  # pin these packages, so they run here with the dependency group installed; a missing package is an error.
+  platform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
+          bash verification/runner/install_platform.sh "$RUNNER_TEMP/venv" elt
+
+      - name: Platform extension tests
+        run: make verify-platform
+
   faults:
     runs-on: ubuntu-latest
     steps:
