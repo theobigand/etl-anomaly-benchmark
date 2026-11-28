@@ -14,13 +14,13 @@
    "killed": 323,
    "level": "L2",
    "raw_score": 90.7,
-   "source_sha256": "5769a78fd009c4f774228eaec2a37e1628f880c1284c3fb05bdad27872289e5b",
+   "source_sha256": "7a35942b56466756aec4d85c230777d56977ef6cc0a07148138b8b7fa0a4a2c6",
    "status": "PASS_RAW",
    "survived": 33,
    "threshold": 90
   }
  },
- "note": "No mutant was marked equivalent. 33 mutants are not killed (31 survived, 2 timed out and are counted as survived): case-only changes to SQL keywords and URL path segments that SQLite and the fake server accept, the read block size of sha256_file, constructor defaults and keyword arguments with no observable effect against the fake server.",
+ "note": "No mutant was marked equivalent. 33 mutants are not killed (31 survived, 2 timed out and are counted as survived): case-only changes to SQL keywords and URL path segments that SQLite and the fake server accept, the read block size of sha256_file, constructor defaults and keyword arguments with no observable effect against the fake server. Re-measured on 2026-11-28 after the late-artifact extension of track: 323 killed, 31 survived, 2 timed out of 356.",
  "survivors": [
   "x_sha256_file__mutmut_10",
   "x_sha256_file__mutmut_12",

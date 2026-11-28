@@ -1,0 +1,28 @@
+{
+  "base_head": "0ceffb1ab093c9e180a2c2842c05df5c5a4e0bd2",
+  "command": "python -m mutmut run \"research.dbt_runner.*\" in a scratch copy on a case-sensitive volume holding research/, src/etl_benchmark, platform/ and a narrowed pyproject with process_isolation = forkserver, with only test_dbt_runner.py (a stand-in dbt executable that records its arguments and environment)",
+  "date": "2026-11-28",
+  "environment": {
+    "mutmut": "3.8.x (etl-mutation-venv)",
+    "platform": "macOS-27.2-arm64 (case-sensitive volume)",
+    "python": "3.13"
+  },
+  "kind": "local focused development measurement of one new engineering module (issue #146); not the controller campaign, not attested",
+  "modules": {
+    "research/dbt_runner.py": {
+      "eligible": 272,
+      "killed": 272,
+      "level": "L2",
+      "raw_score": 100.0,
+      "source_sha256": "3404a3464183080df4ed37fd22c594491ff84b4e9581c5a8b974d275eef46add",
+      "status": "PASS_RAW",
+      "survived": 0,
+      "threshold": 90
+    }
+  },
+  "note": "No timeout and no survivor. The real dbt build is covered by test_dbt_integration.py, which runs in the platform job and is not part of the mutation selection. Re-measured on 2026-11-28 after the failure classes were added (taxonomy of obs_failures).",
+  "survivors": {
+    "research/dbt_runner.py": []
+  },
+  "working_tree": "clean apart from the measured module and its tests"
+}

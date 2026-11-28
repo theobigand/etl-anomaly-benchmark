@@ -132,9 +132,11 @@ verify-types:
 		evidence_status=$$?; test $$gate -eq 0 -a $$evidence_status -eq 0
 
 # Tests of the optional platform extensions (the `elt` dependency group). Not part of FAST: they need packages the
-# scientific lock does not pin. PLATFORM_REQUIRE turns a missing package into an error instead of a skip.
+# scientific lock does not pin (DBT_BIN names the dbt executable of its own environment). PLATFORM_REQUIRE turns a
+# missing package into an error instead of a skip.
 verify-platform:
-	PLATFORM_REQUIRE=1 python -m pytest research/tests/test_elt_duckdb.py -o addopts="-ra -q" -p no:cacheprovider
+	PLATFORM_REQUIRE=1 python -m pytest research/tests/test_elt_duckdb.py \
+		research/tests/test_dbt_integration.py -o addopts="-ra -q" -p no:cacheprovider
 
 verify-tools:
 	@mkdir -p $(EVIDENCE) experiments/results

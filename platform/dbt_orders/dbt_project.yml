@@ -1,0 +1,14 @@
+name: orders
+version: "1.0.0"
+config-version: 2
+profile: orders
+model-paths: ["models"]
+test-paths: ["tests"]
+models:
+  orders:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: view
+    marts:
+      +materialized: table

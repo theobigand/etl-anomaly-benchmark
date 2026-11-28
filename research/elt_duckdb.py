@@ -25,6 +25,8 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+import obs_failures
+
 ROOT = Path(__file__).resolve().parent.parent
 ARCHIVED = ("verification/evidence", "experiments/results", "docs/thesis-remediation/evidence")
 TIERS = ("basic", "plus", "premium")
@@ -48,8 +50,14 @@ class ArchivedPathError(ValueError):
     """The output directory lies inside an archived evidence path."""
 
 
-class ELTError(RuntimeError):
-    """A stage failed or an optional dependency is missing."""
+class ELTError(obs_failures.ProcessingFailure):
+    """A stage failed on valid input (failure class ``processing``)."""
+
+
+class ELTUnavailable(ELTError):
+    """An optional dependency is missing: a permanent infrastructure failure."""
+
+    failure_class = "infrastructure"
 
 
 def check_output_dir(out: Path) -> Path:
@@ -136,7 +144,7 @@ def run_elt(out: Path, seed: int, rows: int) -> dict[str, Any]:
         import pyarrow as pa
         import pyarrow.parquet as pq
     except ImportError as error:
-        raise ELTError(
+        raise ELTUnavailable(
             "duckdb is not installed; install the optional group: pip install --group elt "
             "(see [dependency-groups] in pyproject.toml)"
         ) from error

@@ -125,7 +125,9 @@ services:
       - "127.0.0.1:${ALLOY_PORT:-52345}:12345"
       - "127.0.0.1:${OTLP_GRPC_PORT:-54317}:4317"
       - "127.0.0.1:${OTLP_HTTP_PORT:-54318}:4318"
-    volumes: ["./config/alloy.alloy:/etc/alloy/config.alloy:ro"]
+    volumes:
+      - ./config/alloy.alloy:/etc/alloy/config.alloy:ro
+      - etl-logs:/var/log/etl:ro  # JSON log files written by the pipeline containers of e2e_check.sh
     mem_limit: 384m
     depends_on:
       loki: {condition: service_started}
@@ -220,3 +222,4 @@ volumes:
   loki-data:
   tempo-data:
   grafana-data:
+  etl-logs:

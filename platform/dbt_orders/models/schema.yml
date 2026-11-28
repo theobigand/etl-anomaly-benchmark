@@ -1,0 +1,26 @@
+version: 2
+models:
+  - name: stg_orders
+    description: Typed view of the raw orders with the nested items kept.
+    columns:
+      - name: order_id
+        description: Order key.
+        data_tests: [not_null, unique]
+      - name: tier
+        description: Customer tier, null when unknown.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [basic, plus, premium]
+  - name: int_order_units
+    description: Units per order from the nested items.
+    columns:
+      - name: order_id
+        data_tests: [not_null, unique]
+      - name: units
+        data_tests: [not_null]
+  - name: mart_tier_summary
+    description: Orders, units and amount per customer tier.
+    columns:
+      - name: orders
+        data_tests: [not_null]

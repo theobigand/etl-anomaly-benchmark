@@ -34,8 +34,49 @@ written. One DuckDB thread keeps the output bytes reproducible: two runs with on
 - Nothing is flattened: nested columns stay nested in staging and are queried with struct and list functions.
 - DuckDB 2.0 rejects the old `x -> expr` lambda; the SQL uses `lambda x: expr`.
 
+## dbt over the ELT output (#146)
+
+`platform/dbt_orders` is a dbt Core project (dbt-core 1.12.7 and dbt-duckdb 1.11.1, ADR-0005) that reads `raw/orders.parquet`
+of an ELT run as a source and builds `stg_orders` and `int_order_units` (views) and `mart_tier_summary` (table). Its tests
+are `not_null`, `unique` and `accepted_values` on the keys and tiers, plus a singular test that the dbt mart equals the
+DuckDB mart of the same run (`marts/orders_by_tier.parquet`). `research/dbt_runner.py` runs `dbt build` and
+`dbt docs generate` through a separate dbt executable (`DBT_BIN` or `--dbt`), so dbt's Jinja and adapter stack never
+enter the scientific or ELT environment.
+
+```
+uv venv ~/.cache/etl-dbt-venv && uv pip install --python ~/.cache/etl-dbt-venv/bin/python \
+    dbt-core==1.12.7 dbt-duckdb==1.11.1 duckdb==2.0.1 pyarrow      # the `dbt` and `elt` groups of pyproject.toml
+~/.cache/etl-elt-venv/bin/python research/elt_duckdb.py --out /tmp/elt-demo --seed 0 --rows 1000
+python research/dbt_runner.py --elt-out /tmp/elt-demo --dbt ~/.cache/etl-dbt-venv/bin/dbt
+```
+
+`<out>/dbt/dbt_run.json` holds the dbt invocation id, the dbt version, the status of every node, the parents of every
+node (the lineage the generated docs draw), the SHA-256 of `manifest.json`, `run_results.json` and `catalog.json` and the
+`run_id` of the ELT run it was built on. A failed node, a missing result file or a failed docs generation is an error
+that names the node and writes no record. `make verify-platform` runs the real dbt build in CI (job `platform`).
+
+## One tracked pipeline: ELT, dbt, MLflow and events
+
+`research/elt_pipeline.py` runs the ELT and then the dbt project as one pipeline and reuses the platform's tracking
+instead of adding a registry: the correlation identifiers of `obs_events` (`pipeline_run_id`, `dag_run_id` when an
+orchestrator gives one, `trace_id` from the span) are bound for the whole run; every stage emits `stage.started` and
+`stage.completed`, is retried by `obs_failures.run_with_retries` when the failure is transient (both stages are
+idempotent) and ends in `run.completed` or `run.failed` with its failure class. ELT and dbt errors belong to the failure
+taxonomy: a failed model or ELT step is `processing`, failing data tests are `data_quality`, a missing executable or
+dependency is a permanent `infrastructure` failure and a dbt timeout a transient one.
+
+With `--mlflow-url` the run is an `integration` run on the MLflow server (`mlflow_link.track`): seed and rows as
+parameters, stage durations and node count as metrics, the SHA-256 of `manifest.json` and `dbt/dbt_run.json` as digests,
+and a link row ties the MLflow run, pipeline run, DAG run, trace and digests together. Without a URL, or when the
+server cannot be reached, the link row is stored untracked and the work continues. A failed stage fails the run and the
+MLflow run; nothing is reported as successful.
+
+```
+python research/elt_pipeline.py --out /tmp/elt-demo --link-db /tmp/links.sqlite --seed 0 --rows 1000 \
+    --dbt ~/.cache/etl-dbt-venv/bin/dbt [--mlflow-url http://127.0.0.1:55000] [--dag-run-id <id>]
+```
+
 ## Not done here
 
-Linking the manifest to MLflow or the observability events (#146, #164), the dbt models (#146) and the Airflow task
-(#148) are separate issues. DuckDB is not installed in the governed scientific environment; the tests of this module
+The Airflow task (#148) and the observability backends of the signal path (#164) are separate issues. DuckDB is not installed in the governed scientific environment; the tests of this module
 are not collected there. `make verify-platform` runs them in an environment with the `elt` group, and CI runs it in the `platform` job.

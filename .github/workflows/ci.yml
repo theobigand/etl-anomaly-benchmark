@@ -60,7 +60,7 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
-  # Optional platform extensions (ELT over DuckDB). FAST counts a skip as a failure and the scientific lock does not
+  # Optional platform extensions (ELT over DuckDB, dbt). FAST counts a skip as a failure and the scientific lock does not
   # pin these packages, so they run here with the dependency group installed; a missing package is an error.
   platform:
     runs-on: ubuntu-latest
@@ -79,6 +79,9 @@ jobs:
           bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
           echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
           bash verification/runner/install_platform.sh "$RUNNER_TEMP/venv" elt
+          # dbt keeps its own environment (ADR-0001, ADR-0005)
+          bash verification/runner/install_platform.sh "$RUNNER_TEMP/dbt-venv" dbt
+          echo "DBT_BIN=$RUNNER_TEMP/dbt-venv/bin/dbt" >> "$GITHUB_ENV"
 
       - name: Platform extension tests
         run: make verify-platform

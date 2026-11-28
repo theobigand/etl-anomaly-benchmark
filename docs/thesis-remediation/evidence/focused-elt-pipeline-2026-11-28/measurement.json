@@ -1,0 +1,30 @@
+{
+  "base_head": "831317ee891383f52bcdef9dca90323baf63b856",
+  "command": "python -m mutmut run \"research.elt_pipeline.*\" in a scratch copy on a case-sensitive volume holding research/, src/etl_benchmark, platform/ and a narrowed pyproject with process_isolation = forkserver, with only test_elt_pipeline.py (stand-in stages and the MLflow REST fake)",
+  "date": "2026-11-28",
+  "environment": {
+    "mutmut": "3.8.x (etl-mutation-venv)",
+    "platform": "macOS-27.2-arm64 (case-sensitive volume)",
+    "python": "3.13"
+  },
+  "kind": "local focused development measurement of one new engineering module (issues #143, #146, #164); not the controller campaign, not attested",
+  "modules": {
+    "research/elt_pipeline.py": {
+      "eligible": 381,
+      "killed": 369,
+      "level": "L2",
+      "raw_score": 96.9,
+      "source_sha256": "dcd4572c9a3f01c0f0690d43dd0ca905d6321261bbafe1d46ed14e9bfe497df0",
+      "status": "PASS_RAW",
+      "survived": 12,
+      "threshold": 90
+    }
+  },
+  "note": "No survivor was marked equivalent and none was individually reviewed; no timeout. The real ELT and dbt run through the pipeline is covered by test_dbt_integration.py in the platform job.",
+  "survivors": {
+    "research/elt_pipeline.py": [
+      "12 survived; not individually owner-reviewed"
+    ]
+  },
+  "working_tree": "clean apart from the measured module and its tests"
+}

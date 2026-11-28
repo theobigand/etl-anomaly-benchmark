@@ -1,0 +1,9 @@
+version: 2
+sources:
+  - name: elt
+    description: Parquet stages written by research/elt_duckdb.py (synthetic orders only).
+    meta:
+      external_location: "read_parquet('{{ env_var('ELT_RAW') }}')"
+    tables:
+      - name: raw_orders
+        description: One row per synthetic order; the customer struct and the items list are kept nested.
